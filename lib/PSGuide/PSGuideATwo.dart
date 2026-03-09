@@ -194,7 +194,7 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                 ),
                 SizedBox(height: 20.h),
                 _animatedItem(
-                  PSImg(name: 'ps_b_pig_icon', width: 227, height: 224),
+                  PSImg(name: 'ps_b_pig_icon_2', width: 227, height: 224),
                   2,
                 ),
                 _animatedItem(

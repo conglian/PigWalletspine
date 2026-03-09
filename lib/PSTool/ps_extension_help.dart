@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 extension PigWalletSpinearnExtension on String {
   void log() {
     assert(() {
-      print("<Scratch Joy Debug> ============: $this");
+      print("<Pig Wallets Debug> ============: $this");
       return true;
     }());
   }

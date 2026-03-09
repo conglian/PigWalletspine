@@ -571,11 +571,14 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
         PSLocalProvider.instance.ps_pig_levelName,
         1,
       );
-    }
-    if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
+    } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
       await PSLocalProvider.instance.updateint(
         PSLocalProvider.instance.ps_pig_level_indexName,
         10,
+      );
+      await PSLocalProvider.instance.updateint(
+        PSLocalProvider.instance.ps_pig_levelName,
+        2,
       );
     }
     if (PSLocalProvider.instance.ps_quzi_row >= 3) {

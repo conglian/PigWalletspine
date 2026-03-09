@@ -393,12 +393,15 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
               ],
             ),
           ),
-
           /// =================== 6 个按钮渐显 + 缩放 ===================
-          Positioned(
-            left: (0.width(context) - 227) * 0.5,
-            top: 148.h,
-            child: PSImg(name: 'ps_b_pig_icon', width: 227, height: 224),
+          Consumer<PSLocalProvider>(
+            builder: (context, provider, child) {
+              return Positioned(
+                left: (0.width(context) - 227) * 0.5,
+                top: 148.h,
+                child: PSImg(name: provider.ps_pig_level <= 1 ? 'ps_b_pig_icon_${provider.ps_pig_level}' : 'ps_b_pig_icon_2', width: 227, height: 224),
+              );
+            },
           ),
           Positioned(
             right: 24.w,
@@ -414,11 +417,36 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                     PSAdAHelper().show(
                       context,
                       (hasCache) {
-                        PSAdAHelper().resetBlock();
+                        if (!hasCache){
+                          PSAdAHelper().resetBlock();
+                        }
                       },
-                      (finished) {
-                        PSAdAHelper().resetBlock();
+                      (finished) async {
                         // X2
+                        await PSLocalProvider.instance.updateint(
+                          PSLocalProvider.instance.ps_pig_level_indexName,
+                          PSLocalProvider.instance.ps_pig_level_index + 2,
+                        );
+                        if (PSLocalProvider.instance.ps_pig_level == 0 && PSLocalProvider.instance.ps_pig_level_index >= 20){
+                          await PSLocalProvider.instance.updateint(
+                            PSLocalProvider.instance.ps_pig_level_indexName,
+                            0,
+                          );
+                          await PSLocalProvider.instance.updateint(
+                            PSLocalProvider.instance.ps_pig_levelName,
+                            1,
+                          );
+                        } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
+                          await PSLocalProvider.instance.updateint(
+                            PSLocalProvider.instance.ps_pig_level_indexName,
+                            10,
+                          );
+                          await PSLocalProvider.instance.updateint(
+                            PSLocalProvider.instance.ps_pig_levelName,
+                            2,
+                          );
+                        }
+                        PSAdAHelper().resetBlock();
                       },
                     );
                   },
@@ -459,11 +487,15 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                   },
                   child: Stack(
                     children: [
-                      PSBouncyImage(
-                        imagePath: 'ps_domand_bubble',
-                        width: 68.44,
-                        height: 69.2,
-                        enableAnimation: true,
+                      Consumer<PSLocalProvider>(
+                        builder: (context, provider, child) {
+                          return PSBouncyImage(
+                            imagePath: provider.ps_pig_level == 0 ? 'ps_domand_bubble' : 'ps_zhuan_bubble',
+                            width: 68.44,
+                            height: 69.2,
+                            enableAnimation: true,
+                          );
+                        },
                       ),
                       Positioned(
                         left: 20,
@@ -496,11 +528,15 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                   },
                   child: Stack(
                     children: [
-                      PSBouncyImage(
-                        imagePath: 'ps_domand_bubble',
-                        width: 68.44,
-                        height: 69.2,
-                        enableAnimation: true,
+                      Consumer<PSLocalProvider>(
+                        builder: (context, provider, child) {
+                          return PSBouncyImage(
+                            imagePath: provider.ps_pig_level == 0 ? 'ps_domand_bubble' : 'ps_zhuan_bubble',
+                            width: 68.44,
+                            height: 69.2,
+                            enableAnimation: true,
+                          );
+                        },
                       ),
                       Positioned(
                         left: 20,
@@ -533,11 +569,15 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                   },
                   child: Stack(
                     children: [
-                      PSBouncyImage(
-                        imagePath: 'ps_domand_bubble',
-                        width: 68.44,
-                        height: 69.2,
-                        enableAnimation: true,
+                      Consumer<PSLocalProvider>(
+                        builder: (context, provider, child) {
+                          return PSBouncyImage(
+                            imagePath: provider.ps_pig_level == 0 ? 'ps_domand_bubble' : 'ps_zhuan_bubble',
+                            width: 68.44,
+                            height: 69.2,
+                            enableAnimation: true,
+                          );
+                        },
                       ),
                       Positioned(
                         left: 20,
@@ -613,7 +653,7 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                   MaterialPageRoute(
                     builder: (builder) {
                       return PSWebkitview(
-                        url: "https://simulatedcardscrajoycc.com/privacy/",
+                        url: "https://sites.google.com/view/piggywallet-pp/home",
                         title: 'Privacy Policy',
                       );
                     },

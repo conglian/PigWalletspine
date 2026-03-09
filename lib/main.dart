@@ -19,7 +19,10 @@ final trigger = PSThresholdTrigger();
 Future<void> main() async {
   // 初始化Flutter绑定（确保async操作在runApp前执行）
   WidgetsFlutterBinding.ensureInitialized();
-
+  // 只允许竖屏
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏背景透明

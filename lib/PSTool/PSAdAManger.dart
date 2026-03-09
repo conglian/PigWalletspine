@@ -36,6 +36,7 @@ class PSAdAHelper {
           _saveCurrentAds(ad.adUnitId);
         },
         onAdLoadFailedCallback: (adUnitId, error) {
+          "pigwalletspinearn Reward Failed error ${error}".log();
           _reLoadad(adUnitId, error.message);
         },
         onAdDisplayedCallback: (ad) async {

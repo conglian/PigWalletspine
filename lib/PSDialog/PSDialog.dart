@@ -158,10 +158,11 @@ class PSPopDomandAwardADialogState extends State<PSPopDomandAwardADialog>
               PSAdAHelper().show(
                 context,
                 (hasCache) {
-                  PSAdAHelper().resetBlock();
+                  if (!hasCache){
+                    PSAdAHelper().resetBlock();
+                  }
                 },
                 (finished) async {
-                  PSAdAHelper().resetBlock();
                   // X2
                   await PSLocalProvider.instance.updateint(
                     PSLocalProvider.instance.ps_pig_level_indexName,
@@ -176,13 +177,17 @@ class PSPopDomandAwardADialogState extends State<PSPopDomandAwardADialog>
                       PSLocalProvider.instance.ps_pig_levelName,
                       1,
                     );
-                  }
-                  if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
+                  } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
                     await PSLocalProvider.instance.updateint(
                       PSLocalProvider.instance.ps_pig_level_indexName,
                       10,
                     );
+                    await PSLocalProvider.instance.updateint(
+                      PSLocalProvider.instance.ps_pig_levelName,
+                      2,
+                    );
                   }
+                  PSAdAHelper().resetBlock();
                 },
               );
             },
