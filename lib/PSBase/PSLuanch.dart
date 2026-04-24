@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
+import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 import '../PSGuide/PSGuideAOne.dart';
@@ -70,8 +71,10 @@ class PSLaunchState extends State<PSLaunch>
           Column(
             children: [
               SizedBox(height: 25.h),
-              PSImg(name: 'ps_logo_icons', width: 352, height: 236),
+              PSImg(name: 'ps_luanch_icon', width: 352, height: 236),
               Spacer(),
+              PSStrokeText(text: "Grow your piggy, unlock real cash", size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#4C0E0E'.color()),
+              SizedBox(height: 12.h),
               SJGradientProgressBar(
                 onCompleted: () {
                   Navigator.pushReplacement(
@@ -84,7 +87,7 @@ class PSLaunchState extends State<PSLaunch>
                   );
                 },
               ),
-              SizedBox(height: 195.h),
+              SizedBox(height: 120.h),
             ],
           ),
         ],

@@ -5,6 +5,10 @@ import 'package:piggywalletspinearn/PSHome/PSHome.dart';
 import 'package:piggywalletspinearn/PSHome/PSQuiz.dart';
 import 'package:piggywalletspinearn/PSHome/PSWheel.dart';
 import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
+import '../PSPigVC/PSPigCash.dart';
+import '../PSPigVC/PSPigHome.dart';
+import '../PSPigVC/PSPigQuiz.dart';
+import '../PSPigVC/PSPigWheel.dart';
 import '../PSTool/ps_extension_help.dart';
 
 class PigTabController {
@@ -32,6 +36,8 @@ class _PigBottomExampleState extends State<PigBottomExample> {
 
   final List<Widget> _screens = const [PSHome(), PSQuiz(), PSWheel()];
 
+  final List<Widget> _screenbs = const [PSPigHome(), PSPigQuiz(), PSPigWheel(), PSPigCash()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +47,7 @@ class _PigBottomExampleState extends State<PigBottomExample> {
       body: ValueListenableBuilder<int>(
         valueListenable: _indexNotifier,
         builder: (_, index, __) {
-          return IndexedStack(index: index, children: _screens);
+          return IndexedStack(index: index, children: _screenbs);
         },
       ),
 
@@ -49,6 +55,44 @@ class _PigBottomExampleState extends State<PigBottomExample> {
       bottomNavigationBar: ValueListenableBuilder<int>(
         valueListenable: _indexNotifier,
         builder: (_, index, __) {
+          return CustomNavBarWidget(
+            [
+              PersistentBottomNavBarItem(
+                icon: Image.asset('ps_home_icon'.image()),
+                inactiveIcon: Image.asset('ps_home_icon'.image()),
+                title: 'Earn',
+                activeColorPrimary: Colors.transparent,
+                inactiveColorPrimary: Colors.transparent,
+              ),
+              PersistentBottomNavBarItem(
+                icon: Image.asset('ps_quiz_icon'.image()),
+                inactiveIcon: Image.asset('ps_quiz_icon'.image()),
+                title: 'Quiz',
+                activeColorPrimary: Colors.transparent,
+                inactiveColorPrimary: Colors.transparent,
+              ),
+              PersistentBottomNavBarItem(
+                icon: Image.asset('ps_wheel_icon'.image()),
+                inactiveIcon: Image.asset('ps_wheel_icon'.image()),
+                title: 'Wheel',
+                activeColorPrimary: Colors.transparent,
+                inactiveColorPrimary: Colors.transparent,
+              ),
+              PersistentBottomNavBarItem(
+                icon: Image.asset('ps_cash_icon'.image()),
+                inactiveIcon: Image.asset('ps_cash_icon'.image()),
+                title: 'Cash',
+                activeColorPrimary: Colors.transparent,
+                inactiveColorPrimary: Colors.transparent,
+              ),
+            ],
+            selectedIndex: index,
+
+            /// ✅ 不再 setState
+            onItemSelected: (i) {
+              PigTabController.switchTo(i);
+            },
+          );
           return CustomNavBarWidget(
             [
               PersistentBottomNavBarItem(
@@ -109,7 +153,7 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('ps_tabbar_bg'.image()),
+          image: AssetImage(widget.items.length == 3 ? 'ps_tabbar_bg'.image() : 'ps_pig_tab_bg'.image()),
           fit: BoxFit.fill,
         ),
       ),
@@ -146,7 +190,7 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
               left: 0,
               top: 6, // 背景可以稍微比icon大
               child: SizedBox(
-                width: 0.width(context) / 3,
+                width: 0.width(context) / widget.items.length,
                 height: 78,
                 child: Image.asset(
                   'ps_tabbar_s'.image(), // 你的背景图资源

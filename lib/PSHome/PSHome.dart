@@ -282,22 +282,23 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                           child: ParticleButton(
                             onTap: () async {
                               if (index == 0) {
-                                await PSLocalProvider.instance.updateint(
-                                  PSLocalProvider
-                                      .instance
-                                      .ps_quiz_num_indexName,
-                                  0,
-                                );
-                                await PSLocalProvider.instance.updateint(
-                                  PSLocalProvider
-                                      .instance
-                                      .ps_quiz_model_indexName,
-                                  1,
-                                );
-                                PSPigQuizUpdateNotificationService.sendToDomandNumberNotification(
-                                  0,
-                                );
-                                PigTabController.switchTo(1);
+                                context.tipShow(PSPopAwardToolDialog(type: .dolas));
+                                // await PSLocalProvider.instance.updateint(
+                                //   PSLocalProvider
+                                //       .instance
+                                //       .ps_quiz_num_indexName,
+                                //   0,
+                                // );
+                                // await PSLocalProvider.instance.updateint(
+                                //   PSLocalProvider
+                                //       .instance
+                                //       .ps_quiz_model_indexName,
+                                //   1,
+                                // );
+                                // PSPigQuizUpdateNotificationService.sendToDomandNumberNotification(
+                                //   0,
+                                // );
+                                // PigTabController.switchTo(1);
                               } else if (index == 1) {
                                 await PSLocalProvider.instance.updateint(
                                   PSLocalProvider

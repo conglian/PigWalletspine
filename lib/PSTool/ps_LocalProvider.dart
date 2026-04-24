@@ -108,6 +108,7 @@ class PSLocalProvider extends ChangeNotifier {
   int ps_domand_number = 0;
   int ps_tx_card_first = 0;
   int ps_tx_dice_index = 0;
+  int ps_quiz_task_index = 0;
 
   // int ps_login_index = 0;
   // int ps_tx_probability_index = 0;
@@ -273,6 +274,8 @@ class PSLocalProvider extends ChangeNotifier {
 
   String get ps_pig_level_indexName => 'ps_pig_level_index';
 
+  String get ps_quiz_task_indexName => 'ps_quiz_task_index';
+
   // 3. 初始化：从本地存储加载数据（组件初始化时调用）
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
@@ -296,6 +299,7 @@ class PSLocalProvider extends ChangeNotifier {
     ps_all_ranking = prefs.getInt('ps_all_ranking') ?? 388;
     ps_rank_ad_count = prefs.getInt('ps_rank_ad_count') ?? 388;
     ps_tx_task_index = prefs.getInt('ps_tx_task_index') ?? 0;
+    ps_quiz_task_index = prefs.getInt('ps_quiz_task_index') ?? 0;
     ps_tx_ing_account = prefs.getInt('ps_tx_ing_account') ?? 0;
     ps_tx_ing_number = prefs.getInt('ps_tx_ing_number') ?? 0;
     ps_card_a_number = prefs.getInt('ps_card_a_number') ?? 0;
