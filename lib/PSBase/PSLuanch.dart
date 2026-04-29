@@ -5,12 +5,12 @@ import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import '../PSDialog/PSGuideManager.dart';
 import '../PSGuide/PSGuideAOne.dart';
 import '../PSHome/PSHome.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import 'PSTbaBar.dart';
-
 class PSLaunch extends StatefulWidget {
   PSLaunch({super.key});
 
@@ -64,7 +64,7 @@ class PSLaunchState extends State<PSLaunch>
         fit: StackFit.expand,
         children: [
           PSImg(
-            name: 'ps_luanch_bg',
+            name: 'ps_luanch_bgs',
             width: 0.width(context),
             height: 0.height(context),
           ),
@@ -77,14 +77,7 @@ class PSLaunchState extends State<PSLaunch>
               SizedBox(height: 12.h),
               SJGradientProgressBar(
                 onCompleted: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => !PSLocalProvider.instance.ps_newA_guide
-                          ? PSGuideOne(key: homeKey)
-                          : PigBottomExample(key: homeKey),
-                    ),
-                  );
+                  pushToGuide();
                 },
               ),
               SizedBox(height: 120.h),
@@ -93,6 +86,35 @@ class PSLaunchState extends State<PSLaunch>
         ],
       ),
     );
+  }
+
+  Future<void> pushToGuide() async {
+
+    final state = await PSGuideManager.getState();
+
+    int step = state.currentStep;
+
+    if (step >= 12) {
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PigBottomExample(key: homeKey),
+        ),
+      );
+
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (_) => !PSLocalProvider.instance.ps_newA_guide
+      //         ? PSGuideOne(key: homeKey)
+      //         : PigBottomExample(key: homeKey),
+      //   ),
+      // );
+
+    } else {
+      PSGuideManager.showStep(context);
+    }
   }
 }
 

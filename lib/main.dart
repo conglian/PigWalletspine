@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:piggywalletspinearn/PSHome/PSHome.dart';
 import 'package:provider/provider.dart';
 import 'package:spine_flutter/spine_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ import 'PSTool/ps_extension_help.dart';
 import 'PSTool/ps_init_sdk.dart';
 
 final trigger = PSThresholdTrigger();
+
 
 Future<void> main() async {
   // 初始化Flutter绑定（确保async操作在runApp前执行）

@@ -294,7 +294,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-
+                                       context.tipShow(PSdolls100Dialog());
                                       },
                                       child: Stack(
                                         children: [
@@ -398,8 +398,8 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
 
             ),
             child: Row(
+              mainAxisAlignment: .center,
               children: [
-                SizedBox(width: 24,),
                 PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                 SizedBox(width: 5,),
                 PSText(text: '\$158.00', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)

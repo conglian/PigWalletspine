@@ -84,6 +84,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
       // 当前帧构建完成后
       WidgetsBinding.instance.addPostFrameCallback((_) {
         getCurrentModel();
+        PSPigQuizProgressNotificationService.sendToQuizProgressNotification(0);
       });
     });
   }
@@ -188,10 +189,13 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                   child: PigblancePage(),
                 ),
                 SizedBox(height: 20.h),
-                SizedBox(
-                  width: 0.width(context),
-                  height: 50,
-                  child: ProgressPage(),
+                Padding(
+                  padding: EdgeInsets.only(left: 39),
+                  child: SizedBox(
+                    width: 0.width(context) - 39,
+                    height: 50,
+                    child: ProgressPage(),
+                  ),
                 ),
                 SizedBox(height: 20.h),
                 // 底部 Container 自动动画
@@ -277,6 +281,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                   anwer_a = false;
                                 });
                                 next_quiz();
+                                PSPigQuizProgressNotificationService.sendToQuizProgressNotification(32);
                               });
                             },
                             child: Container(
@@ -344,6 +349,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                   anwer_b = false;
                                   anwer_a = false;
                                 });
+                                PSPigQuizProgressNotificationService.sendToQuizProgressNotification(64);
                                 next_quiz();
                               });
                             },
@@ -372,7 +378,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                   skWidth: 2,
                                   skColor: '#711A00'.color(),
                                 ),
-                              ),
+                            ),
                             ),
                           ),
                         ),
@@ -475,25 +481,67 @@ class ProgressPage extends StatefulWidget {
 }
 
 class _ProgressPageState extends State<ProgressPage> {
-  int currentProgress = 1; // Start from 1 (This controls the current position on the track)
+  int currentProgress = 0; // Start from 20, the current position on the track
 
-  // Increase progress by 1 each time
-  void incrementProgress() {
-    if (currentProgress < 100) {
-      setState(() {
-        currentProgress++;
-      });
-    }
-  }
+  late double currentW = (0.width(context) - 42) / 10;
+
+  ScrollController _scrollController = ScrollController();
 
   // This function will be used to calculate the number on the wheel
   int getNumberOnWheel(int index) {
     return 2 + (index * 3); // Starting from 2 and incrementing by 3
   }
 
+  int getProgressForWheel(int progress) {
+    // 进度从 2 开始，每次增加 3
+    return progress;
+  }
+
+  // Method to update the scroll position based on current progress
+  void updateScrollPosition() {
+    // Cap the progress at 8 if it's greater
+    int cappedProgress = currentProgress;
+
+    if (cappedProgress <= 8) {
+      _scrollController.animateTo(
+        0,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      int offset = getProgressForWheel(cappedProgress);
+      offset -= 5;
+      if (offset > 36.w){
+        offset += (offset ~/ 36.w);
+      }
+      ('offset=$offset').log();
+      ('currentW=$currentW').log();
+      _scrollController.animateTo(
+        (offset.toDouble() * currentW),
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // External notification example (e.g., from a service or callback)
+    PSPigQuizProgressNotificationService.stream.listen((value) {
+      setState(() {
+        currentProgress = value;
+        updateScrollPosition();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -501,92 +549,103 @@ class _ProgressPageState extends State<ProgressPage> {
           Stack(
             children: [
               // Background Image
-              Container(
-                width: double.infinity,
-                height: 25,
-                child: PSImg(name: 'ps_quiz_pro_bg'),
-              ),
-              // Progress Bar
               Positioned(
-                top: 25,
-                left: 0,
+                top: 8,
+                child: SizedBox(
+                  width: screenWidth - 39, // Adjust to screen width - 39
+                  height: 25,
+                  child: PSImg(name: 'ps_quiz_pro_bg'),
+                ),
+              ),
+              Positioned(
+                top: 12.5,
+                left: 3,
                 right: 0,
                 child: Container(
-                  height: 20,
+                  height: 11,
                   decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(10), // Adding rounded corners
                   ),
                   child: FractionallySizedBox(
                     alignment: Alignment.centerLeft,
-                    widthFactor: currentProgress / 100,
+                    widthFactor: currentProgress <= 8 ? currentProgress * 0.09 : 0.5, // Calculate progress based on current progress, capped at 8
                     child: Container(
-                      color: Colors.blue,
+                      decoration: BoxDecoration(
+                        color: '#E6F207'.color(),
+                        borderRadius: BorderRadius.circular(10), // Rounded corners for the progress bar
+                      ),
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-          // Wheels with Numbers
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 100,
-              itemBuilder: (context, index) {
-                int wheelNumber = getNumberOnWheel(index);
-                bool isClickable = index < currentProgress;
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: GestureDetector(
-                    onTap: isClickable
-                        ? () {
-                      print('Wheel $wheelNumber clicked!');
-                    }
-                        : null,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // The wheel image with the number
-                        Container(
-                          width: 38,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: AssetImage('assets/your_wheel_image.png'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '$wheelNumber',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
+              // Wheels with Numbers
+              SizedBox(
+                width: double.infinity,
+                height: 44,
+                child: ListView.builder(
+                  controller: _scrollController, // Attach the scroll controller
+                  scrollDirection: Axis.horizontal,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 100,
+                  itemBuilder: (context, index) {
+                    int wheelNumber = getNumberOnWheel(index);
+                    bool isClickable = wheelNumber <= currentProgress; // Only clickable if the wheel number is <= current progress
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      child: GestureDetector(
+                        onTap: isClickable
+                            ? () {
+                          // Logic for handling user taps
+                        }
+                            : null,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 38,
+                              height: 38,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: PSDImg('ps_quiz_wheel_icon'),
                               ),
                             ),
-                          ),
+                            Positioned(
+                              left: 14,
+                              bottom: 2,
+                              child: PSStrokeText(
+                                text: '$wheelNumber',
+                                size: 16.sp,
+                                color: '#FFF67B'.color(),
+                                weight: FontWeight.w900,
+                                skWidth: 1,
+                                skColor: '#440F02'.color(),
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 20),
-          // Button to increment progress
-          ElevatedButton(
-            onPressed: incrementProgress,
-            child: Text('Increase Progress +1'),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
+  }
+}
+class PSPigQuizProgressNotificationService {
+  static final StreamController<int> _streamController =
+  StreamController<int>.broadcast();
+
+  static Stream<int> get stream => _streamController.stream;
+
+  static void sendToQuizProgressNotification(int value) {
+    _streamController.sink.add(value);
+  }
+
+  static void close() {
+    _streamController.close();
   }
 }

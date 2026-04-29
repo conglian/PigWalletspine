@@ -282,7 +282,7 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                           child: ParticleButton(
                             onTap: () async {
                               if (index == 0) {
-                                context.tipShow(PSPopAwardToolDialog(type: .dolas));
+                                context.tipShow(PSPopAwardToolDialog(type: .dolas, isGuide: false));
                                 // await PSLocalProvider.instance.updateint(
                                 //   PSLocalProvider
                                 //       .instance
