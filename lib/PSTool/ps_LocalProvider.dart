@@ -6,6 +6,7 @@ import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
 import 'package:piggywalletspinearn/PSTool/PSTBAEventTool.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../PSBase/PSTbaBar.dart';
 import '../PSDialog/PSDialog.dart';
 import '../PSPigVC/PSPigCash.dart';
 import '../main.dart';
@@ -472,7 +473,7 @@ class PSLocalProvider extends ChangeNotifier {
     if (key == PSLocalProvider.instance.ps_dolas_numberName && value >= PSNumberHelpers().intModel!.eqRange.first && ps_pig_level == 0){
       await updateBool(ps_tx_ing_statusName, true);
       await updateint(ps_pig_levelName, ps_pig_level + 1);
-      await updateint(ps_Level_inedxName, 0);
+      await updateint(ps_pig_level_indexName, 0);
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
       if (homeKey.currentState!.mounted){
         // 到达100升级钻石猪
@@ -480,9 +481,9 @@ class PSLocalProvider extends ChangeNotifier {
       }
     }
     // +2
-    if (key == PSLocalProvider.instance.ps_Level_inedxName && value >= 20 && ps_pig_level == 1){
+    if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 20 && ps_pig_level == 1){
       await updateint(ps_pig_levelName, ps_pig_level + 1);
-      await updateint(ps_Level_inedxName, 0);
+      await updateint(ps_pig_level_indexName, 0);
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
       if (homeKey.currentState!.mounted){
         // 到达100升级钻石猪
@@ -490,7 +491,7 @@ class PSLocalProvider extends ChangeNotifier {
       }
     }
     // 开始提现
-    if (key == PSLocalProvider.instance.ps_Level_inedxName && value >= 10 && ps_pig_level == 2 && ps_show_rank == false){
+    if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 10 && ps_pig_level == 2 && ps_show_rank == false){
       if (homeKey.currentState!.mounted){
         // 到达100升级钻石猪
         homeKey.currentState!.context.tipShow(PSTXRankDialog());
@@ -499,7 +500,7 @@ class PSLocalProvider extends ChangeNotifier {
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
     }
 
-    if (key == PSLocalProvider.instance.ps_Level_inedxName) {
+    if (key == PSLocalProvider.instance.ps_pig_level_indexName) {
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
     }
 

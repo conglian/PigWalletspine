@@ -13,8 +13,6 @@ import '../PSDialog/PSDialog.dart';
 import '../PSGuide/PSGuideAThree.dart';
 import '../PSTool/PSAdAManger.dart';
 
-final GlobalKey<_PSHomeState> homeKey = GlobalKey<_PSHomeState>();
-
 class PSHome extends StatefulWidget {
   const PSHome({super.key});
 

@@ -965,15 +965,47 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                     Positioned(
                       top: 0,
                       right: 42.w,
-                      child: SizedBox(
-                      width: 55,
-                      height: 88,
-                      child: spine.SpineWidget.fromAsset(
-                        'assets/spine/shouzhi/skeleton.atlas',
-                        'assets/spine/shouzhi/skeleton.skel',
-                        _controller1,
-                      ),
-                    ),)
+                      child: ParticleButton(
+                        onTap: () async {
+                          ps_event_fire('new_apple_guide_c', {});
+                          //
+                          if (PSLocalProvider.instance.new_ad_console == 1) {
+                            // ad
+                            PSPigAds().ps_showAd(context, 'asd_rv', onCacheResponse: (onCacheResponse){
+                              Navigator.pop(context,0);
+                              PSGuideManager.nextStep(context);
+                            }, adDidClosed: (adDidClosed) async {
+                              double award = PSNumberHelpers().getPrizeWithDolasNum();
+                              await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
+                              if (!context.mounted) return;
+                              int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                              if (code >= 0){
+                                Navigator.pop(context,0);
+                                PSGuideManager.nextStep(context);
+                              }
+                            });
+                          } else {
+                            Navigator.pop(context,0);
+                            double award = PSNumberHelpers().getPrizeWithDolasNum();
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
+                            if (!context.mounted) return;
+                            int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                            if (code >= 0){
+                              PSGuideManager.nextStep(context);
+                            }
+                          }
+
+                        },
+                        child: SizedBox(
+                        width: 55,
+                        height: 88,
+                        child: spine.SpineWidget.fromAsset(
+                          'assets/spine/shouzhi/skeleton.atlas',
+                          'assets/spine/shouzhi/skeleton.skel',
+                          _controller1,
+                        ),
+                                            ),
+                      ),)
                 ],
               ),
             ),
@@ -1231,10 +1263,17 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
   List<String> ques = ['Who gives you money here?', 'When can you withdraw your cash?', 'What’s the fastest way to fill your PiggyBoost?'];
   List<String> answerA = ['Advertisers', 'When you get a Golden Pig', 'Watch more ads'];
   List<String> answerB = ['Other players', 'Any time', 'Wait without playing'];
+  late spine.SpineWidgetController _controller1;
   @override
   void initState() {
     super.initState();
     ps_event_fire('new_quiz_guide', {});
+
+    _controller1 = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
 
   }
 
@@ -1471,6 +1510,15 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                       ),
                     ),
                   ),
+                  Positioned(right: 4.w,bottom: 74.h,child: SizedBox(
+                    width: 58,
+                    height: 89,
+                    child: spine.SpineWidget.fromAsset(
+                      'assets/spine/shouzhi/skeleton.atlas',
+                      'assets/spine/shouzhi/skeleton.skel',
+                      _controller1,
+                    ),
+                  ),)
                 ],
               ),
             )

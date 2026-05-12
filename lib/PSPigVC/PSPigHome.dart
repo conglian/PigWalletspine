@@ -525,7 +525,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                   children: [
                     PSImg(name: provider.ps_pig_level == 0 ? 'ps_dolas_2' : provider.ps_pig_level == 1 ? 'ps_domand_icon' : 'ps_zhuan_smail', width: 26, height: 21),
                     SizedBox(width: 5,),
-                    PSText(text: '\$${provider.ps_pig_level == 0 ? provider.ps_dolas_number : provider.ps_pig_level == 1 ? provider.ps_domand_number : provider.ps_zhuan_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                    PSText(text: '${provider.ps_pig_level == 0 ? '\$' : ''}${provider.ps_pig_level == 0 ? 0.to2Double(provider.ps_dolas_number) : provider.ps_pig_level == 1 ? provider.ps_pig_level_index : provider.ps_pig_level_index}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                   ],
                 );
               },
@@ -1142,8 +1142,7 @@ class PigblancePage2 extends StatelessWidget {
                     Positioned(
                       left: 180.w,
                       top: 37,
-                      child: PSStrokeText(text: '${PSLocalProvider.instance
-                          .ps_pig_level_index}/${PSLocalProvider.instance
+                      child: PSStrokeText(text: '${0.to2Double(provider.ps_pig_level_index)}/${PSLocalProvider.instance
                           .ps_pig_level == 1 ? 10 : 20}',
                           size: 10,
                           color: '#FFFFFF'.color(),

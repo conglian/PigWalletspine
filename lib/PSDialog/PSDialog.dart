@@ -2432,28 +2432,8 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                         ],
                       ),
                     ),
-                    // if (widget.type == .dolas)
-                    //   SizedBox(height: 34.h),
-                    // if (widget.type == .diamonds)
-                    //   SizedBox(height: 10.h,),
-                    // if (widget.type == .diamonds)
-                    //   Container(
-                    //     width: 273.w,
-                    //     height: 22.h,
-                    //     decoration: BoxDecoration(
-                    //       color: '#F54E00'.color(),
-                    //       borderRadius: BorderRadius.circular(11.h)
-                    //     ),
-                    //     child: Center(
-                    //       child: PSText(text: '5 diamonds can be exchanged for \$0.01', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900),
-                    //     ),
-                    //   ),
-                    // if (widget.type == .diamonds)
-                    //   SizedBox(height: 19.h,),
-                    // if (widget.type == .dolas)
-                    //   PSImg(name: "ps_dolas_b", width: 90.w, height: 79.h),
-                    // if (widget.type == .diamonds)
-                    //   PSImg(name: "ps_doamond_b", width: 119.w, height: 88.h),
+                    SizedBox(height: 34.h),
+                    PSImg(name: "ps_dolas_b", width: 90.w, height: 79.h),
                     PSText(text: '+\$${widget.award}', size: 24, color:'#199E24'.color() , weight: FontWeight.w900),
                     SizedBox(height:13.h),
                     Row(
@@ -2496,7 +2476,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                           SizedBox(width: 8.w,),
                           PSImg(name: 'ps_payment_icon', width: 67.w, height: 21.h),
                           SizedBox(width: 8.w,),
-                          PSText(text: 'My Cash :\$${PSLocalProvider.instance.ps_dolas_number}', size: 14, color: '#0C7A29'.color(), weight: FontWeight.w900)
+                          PSText(text: 'My Cash :\$${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 14, color: '#0C7A29'.color(), weight: FontWeight.w900)
                         ],
                       ),
                     ),
@@ -3383,7 +3363,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
                 Navigator.pop(context, 1);
               }, adDidClosed: (adDidClosed) async {
                 Navigator.pop(context, 1);
-                await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, widget.award * 2.0);
+                await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, (widget.award * 2.0) + PSLocalProvider.instance.ps_pig_level_index);
                 if (!context.mounted) return;
                 context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
               });
@@ -4080,7 +4060,7 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
               children: [
                 SizedBox(height: 18),
                 if (PSLocalProvider.instance.ps_pig_level == 0)
-                  PSStrokeText(text: 'Earned \$${widget.award}0', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  PSStrokeText(text: 'Earned \$${widget.award}', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
                 if (PSLocalProvider.instance.ps_pig_level == 0)
                   SizedBox(
                     width: 111,

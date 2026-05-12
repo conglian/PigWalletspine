@@ -22,6 +22,7 @@ class PigTabController {
     currentIndex.value = index;
   }
 }
+final GlobalKey<_PigBottomExampleState> homeKey = GlobalKey<_PigBottomExampleState>();
 
 class PigBottomExample extends StatefulWidget {
   const PigBottomExample({Key? key}) : super(key: key);
