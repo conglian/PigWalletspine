@@ -558,7 +558,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
       PSLocalProvider.instance.ps_quzi_rowName,
       PSLocalProvider.instance.ps_quzi_row + 1,
     );
-    await PSLocalProvider.instance.updateint(
+    await PSLocalProvider.instance.updatedouble(
       PSLocalProvider.instance.ps_pig_level_indexName,
       PSLocalProvider.instance.ps_pig_level_index + 1,
     );

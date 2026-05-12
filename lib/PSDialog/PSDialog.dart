@@ -1,17 +1,29 @@
+import 'dart:async';
+import 'dart:ffi' hide Size;
 import 'dart:math';
-
+import 'package:app_settings/app_settings.dart';
 import 'package:fl_toast/fl_toast.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' hide Size;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:piggywalletspinearn/PSBase/PSTbaBar.dart';
+import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
+import 'package:piggywalletspinearn/PSTool/ps_GradientNumber.dart';
+import 'package:piggywalletspinearn/PSTool/ps_GradientText.dart';
+import 'package:piggywalletspinearn/PSTool/ps_ad_manger.dart';
 import 'package:piggywalletspinearn/PSTool/ps_img.dart';
 import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
 import 'package:piggywalletspinearn/PSTool/ps_text.dart';
-
+import 'package:provider/provider.dart';
+import 'package:spine_flutter/spine_widget.dart' as spine;
+import '../PSPigVC/PSPigCash.dart';
 import '../PSTool/PSAdAManger.dart';
+import '../PSTool/PSMarqueeText.dart';
+import '../PSTool/PSRankData.dart';
+import '../PSTool/PSTBAEventTool.dart';
 import '../PSTool/ps_LocalProvider.dart';
 import '../PSTool/ps_extension_help.dart';
+import 'PSGuideDialog.dart';
 
 enum AdStatus {
   adLoadfaild,
@@ -22,9 +34,11 @@ enum AdStatus {
 }
 
 enum AwardType {
-  dolas,
-  diamonds,
-  ingots,
+  quiz,
+  wheel,
+  other,
+  apple,
+  buble
 }
 // 信息确认
 class PSConfirmInformationDialog extends StatefulWidget {
@@ -74,7 +88,7 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
                     Row(
                       children: [
                         SizedBox(width: 12.w),
-                        PSText(text: 'Account Name：12***22.@gamial', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
+                        PSText(text: 'Account Name：${PSLocalProvider.instance.ps_account_id}', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
                       ],
                     ),
                     SizedBox(height: 12.h),
@@ -83,7 +97,7 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
                         SizedBox(width: 12.w),
                         PSText(text: 'Payment Method:', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
                         SizedBox(width: 14.w),
-                        PSImg(name: 'ps_pangle_icon', width: 116, height: 40)
+                        PSImg(name: 'ps_act_${PSLocalProvider.instance.ps_tx_ing_account}${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 116, height: 40)
                       ],
                     ),
                   ],
@@ -101,7 +115,9 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
               SizedBox(height: 10.h),
               ParticleButton(
                 onTap: (){
-
+                   Navigator.pop(context);
+                   ps_event_fire('confirm_account_toast', {});
+                   context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
                 },
                 child: Container(
                   width: 239.w,
@@ -125,6 +141,7 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
           child: ParticleButton(
             onTap: (){
               Navigator.pop(context, 0);
+              context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
             },
             child: Center(
               child: Container(
@@ -141,10 +158,19 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
     );
   }
 
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
+  }
+
 }
 // 准备提现
 class PSAboutTXDialog extends StatefulWidget {
-  const PSAboutTXDialog({super.key});
+  final bool isConfim;
+  const PSAboutTXDialog({super.key, required this.isConfim});
 
   @override
   State<PSAboutTXDialog> createState() => PSAboutTXDialogState();
@@ -155,6 +181,7 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
   @override
   void initState() {
     super.initState();
+    ps_event_fire('process_confirm_account_pop', {});
   }
 
   @override
@@ -187,14 +214,28 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$100', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
               SizedBox(height: 26.h),
               ParticleButton(
                 onTap: (){
-
+                  Navigator.pop(context, 0);
+                  ps_event_fire('process_confirm_account_pop_c', {'type' : PSLocalProvider.instance.ps_account_id.length <= 0 ? 'no' : 'yes'});
+                  if (widget.isConfim){
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (_) => PSConfirmInformationDialog(),
+                        )
+                    );
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                          builder: (_) => PSInfoSubmitDialog(),
+                        )
+                    );
+                  }
                 },
                 child: Container(
                   width: 239.w,
@@ -218,6 +259,19 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
           child: ParticleButton(
             onTap: (){
               Navigator.pop(context, 0);
+              if (widget.isConfim){
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (_) => PSConfirmInformationDialog(),
+                    )
+                );
+              } else {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (_) => PSInfoSubmitDialog(),
+                    )
+                );
+              }
             },
             child: Center(
               child: Container(
@@ -247,9 +301,14 @@ class PSInfoSubmitDialog extends StatefulWidget {
 class PSInfoSubmitDialogState extends State<PSInfoSubmitDialog>
     with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
+  var seletecd = 0;
   @override
   void initState() {
     super.initState();
+    setState(() {
+      seletecd = PSLocalProvider.instance.ps_tx_ing_account;
+      _controller.text = PSLocalProvider.instance.ps_account_id;
+    });
   }
 
   @override
@@ -285,26 +344,32 @@ class PSInfoSubmitDialogState extends State<PSInfoSubmitDialog>
                   SizedBox(width: 28.w),
                   ParticleButton(
                     onTap: (){
-
+                      setState(() {
+                        seletecd = 0;
+                        PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 0);
+                      });
                     },
                     child: Container(
                       width: 116.w,
                       height: 44.h,
                       decoration: BoxDecoration(
-                          image: PSDImg('ps_act_0')
+                          image: PSDImg('ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}')
                       ),
                     ),
                   ),
                   SizedBox(width: 22.w),
                   ParticleButton(
                     onTap: (){
-
+                      setState(() {
+                        seletecd = 0;
+                        PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 0);
+                      });
                     },
                     child: Container(
                       width: 116.w,
                       height: 44.h,
                       decoration: BoxDecoration(
-                          image: PSDImg('ps_act_1')
+                          image: PSDImg('ps_act_1${isBrazilianPortuguese(context) == true ? 'pt' : ''}')
                       ),
                     ),
                   ),
@@ -359,10 +424,11 @@ class PSInfoSubmitDialogState extends State<PSInfoSubmitDialog>
               SizedBox(height: 19.h),
               ParticleButton(
                 onTap: (){
+                  Navigator.pop(context);
                   if (_controller.text.length <= 0){
                     PSDialogTool.toast(context, 'Please input your account ID');
                   } else {
-                    
+                    context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
                   }
                 },
                 child: Container(
@@ -401,6 +467,14 @@ class PSInfoSubmitDialogState extends State<PSInfoSubmitDialog>
         )
       ],
     );
+  }
+
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
   }
 
 }
@@ -618,7 +692,8 @@ class PSQuizRankOneDialogState extends State<PSQuizRankOneDialog>
 
 // 答题排行榜2
 class PSQuizRankTwoDialog extends StatefulWidget {
-  const PSQuizRankTwoDialog({super.key});
+  final int quiz_num;
+  const PSQuizRankTwoDialog({super.key, required this.quiz_num});
 
   @override
   State<PSQuizRankTwoDialog> createState() => PSQuizRankTwoDialogState();
@@ -626,245 +701,251 @@ class PSQuizRankTwoDialog extends StatefulWidget {
 
 class PSQuizRankTwoDialogState extends State<PSQuizRankTwoDialog>
     with SingleTickerProviderStateMixin {
+  static final Random _random = Random();
+
+  // 初始顺序 1~4
+  List<int> cellOrder = [0, 1, 2, 3];
+
+  bool showExtras = false; // 控制顶部文案和底部按钮显示
+  bool showBreath = false; // 控制呼吸动画
+
+  late AnimationController _breathController;
+  late Animation<double> _breathAnimation;
+
+  final double cellHeight = 70;
+  final double spacing = 19;
+
+  // 固定头像和文案，保证随机一次
+  late final List<String> avatars;
+  late final List<String> names;
+
   @override
   void initState() {
     super.initState();
+    ps_event_fire('process_rank_pop', {});
+    // 初始化头像和文案
+    avatars = List.generate(4, (_) => 'ps_user_s_${random0to55()}');
+    names = List.generate(4, (_) => '1****${random1000to9999()}.@gamial');
+
+    avatars[3] = 'ps_user_icon_s';
+
+    names[3] = PSLocalProvider.instance.ps_account_id;
+
+    _breathController =
+    AnimationController(vsync: this, duration: const Duration(seconds: 1))
+      ..repeat(reverse: true);
+    _breathAnimation = Tween<double>(begin: 1.0, end: 1.15).animate(
+        CurvedAnimation(parent: _breathController, curve: Curves.easeInOut));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startSwapAnimation();
+    });
   }
 
   @override
   void dispose() {
+    _breathController.dispose();
     super.dispose();
+  }
+
+  static int random0to55() => _random.nextInt(56);
+  static int random1000to9999() => 1000 + _random.nextInt(9000);
+
+  Future<void> startSwapAnimation() async {
+    Future<void> swapTwo(int index1, int index2) async {
+      setState(() {
+        final tmp = cellOrder[index1];
+        cellOrder[index1] = cellOrder[index2];
+        cellOrder[index2] = tmp;
+      });
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+
+    await swapTwo(3, 2); // 4 <-> 3
+    await swapTwo(2, 1); // 4 <-> 2
+    await swapTwo(1, 0); // 4 <-> 1
+
+    setState(() {
+      showExtras = true;
+      showBreath = true; // 第一个 cell 开始呼吸动画
+    });
+  }
+
+  double yOffset(int displayIndex) => displayIndex * (cellHeight + spacing);
+
+  Widget buildCell(int displayIndex) {
+    final int order = cellOrder[displayIndex];
+    final bool isBreathingCell = showBreath && displayIndex == 0;
+
+    Widget cellContent = Container(
+      width: 336.w,
+      height: 70.h,
+      decoration: BoxDecoration(
+        image: PSDImg(isBreathingCell ? 'ps_ranks_bg_s' : 'ps_rank_list'),
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 18),
+          PSImg(name: avatars[order], width: 49, height: 49),
+          SizedBox(width: 12),
+          PSText(
+            text: isBreathingCell
+                ? PSLocalProvider.instance.ps_account_id
+                : names[order],
+            size: 12,
+            color: '#733A1B'.color(),
+            weight: FontWeight.w900,
+          ),
+          SizedBox(width: 24),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'Black_mianfeiziti',
+                color: '#733A1B'.color(),
+              ),
+              children: <TextSpan>[
+                const TextSpan(text: 'Answer '),
+                TextSpan(
+                    text: '${widget.quiz_num + (displayIndex)} ',
+                    style: TextStyle(color: '#0A8A33'.color())),
+                const TextSpan(text: 'right'),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    // 添加 AnimatedBuilder 包裹 Transform.scale 让呼吸动画生效
+    if (isBreathingCell) {
+      cellContent = AnimatedBuilder(
+        animation: _breathAnimation,
+        builder: (_, child) {
+          return Transform.scale(
+            scale: _breathAnimation.value,
+            child: child,
+          );
+        },
+        child: cellContent,
+      );
+    }
+
+    return AnimatedPositioned(
+      key: ValueKey(order),
+      left: 15,
+      right: 15,
+      top: yOffset(displayIndex) + 221.h,
+      duration: const Duration(milliseconds: 500),
+      child: cellContent,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: .center,
+    return Stack(
       children: [
-        SizedBox(
-          width: 270.w,
-          height: 50.h,
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Black_mianfeiziti',
-                  color: '#FFFFFF'.color()
+        Column(
+          children: [
+            SizedBox(height: 142.h),
+            Center(
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: TextStyle(
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Black_mianfeiziti',
+                      color: '#FFFFFF'.color()),
+                  children: const <TextSpan>[
+                    TextSpan(text: 'Top Answerer\n'),
+                    TextSpan(
+                        text: 'Withdrawal Made Easy!! ',
+                        style: TextStyle(color: Color(0xFFFFB300))),
+                  ],
+                ),
               ),
-              children: <TextSpan>[
-                TextSpan(
-                  text: 'Top Answerer\n',
-                ),
-                TextSpan(
-                  text: 'withdrawal made easy!! ',
-                  style: TextStyle(color: '#FFB300'.color()),
-                ),
-              ],
             ),
-          ),
+            SizedBox(height: 30),
+            SizedBox(height: 4 * (cellHeight + spacing)), // 占位
+          ],
         ),
-        SizedBox(height: 30.h),
-        Container(
-          width: 336.w,
-          height: 70.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_rank_list')
-          ),
-          child: Row(
-            children: [
-              SizedBox(width: 18.w),
-              PSImg(name: 'ps_user_icon_0', width: 49, height: 49),
-              SizedBox(width: 12.w),
-              PSText(text: '12***22.@gamial', size: 12, color: '#733A1B'.color(), weight: FontWeight.w900),
-              SizedBox(width: 24.w),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Black_mianfeiziti',
-                      color: '#733A1B'.color()
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Answer ',
-                    ),
-                    TextSpan(
-                      text: '20 ',
-                      style: TextStyle(color: '#0A8A33'.color()),
-                    ),
-                    TextSpan(
-                      text: 'right',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 30.h),
-        Container(
-          width: 336.w,
-          height: 70.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_rank_list')
-          ),
-          child: Row(
-            children: [
-              SizedBox(width: 18.w),
-              PSImg(name: 'ps_user_icon_0', width: 49, height: 49),
-              SizedBox(width: 12.w),
-              PSText(text: '12***22.@gamial', size: 12, color: '#733A1B'.color(), weight: FontWeight.w900),
-              SizedBox(width: 24.w),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Black_mianfeiziti',
-                      color: '#733A1B'.color()
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Answer ',
-                    ),
-                    TextSpan(
-                      text: '20 ',
-                      style: TextStyle(color: '#0A8A33'.color()),
-                    ),
-                    TextSpan(
-                      text: 'right',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Container(
-          width: 336.w,
-          height: 70.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_rank_list')
-          ),
-          child: Row(
-            children: [
-              SizedBox(width: 18.w),
-              PSImg(name: 'ps_user_icon_0', width: 49, height: 49),
-              SizedBox(width: 12.w),
-              PSText(text: '12***22.@gamial', size: 12, color: '#733A1B'.color(), weight: FontWeight.w900),
-              SizedBox(width: 24.w),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Black_mianfeiziti',
-                      color: '#733A1B'.color()
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Answer ',
-                    ),
-                    TextSpan(
-                      text: '20 ',
-                      style: TextStyle(color: '#0A8A33'.color()),
-                    ),
-                    TextSpan(
-                      text: 'right',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Container(
-          width: 336.w,
-          height: 70.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_rank_list')
-          ),
-          child: Row(
-            children: [
-              SizedBox(width: 18.w),
-              PSImg(name: 'ps_user_icon_0', width: 49, height: 49),
-              SizedBox(width: 12.w),
-              PSText(text: '12***22.@gamial', size: 12, color: '#733A1B'.color(), weight: FontWeight.w900),
-              SizedBox(width: 24.w),
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Black_mianfeiziti',
-                      color: '#733A1B'.color()
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Answer ',
-                    ),
-                    TextSpan(
-                      text: '20 ',
-                      style: TextStyle(color: '#0A8A33'.color()),
-                    ),
-                    TextSpan(
-                      text: 'right',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 30.h),
-        Container(
-          width: 280.w,
-          height: 58.5.h,
-          decoration: BoxDecoration(
-            image: PSDImg('ps_keep_btn')
-          ),
-          child: InkWell(
-            onTap: (){
 
-            },
-          ),
-        ),
-        SizedBox(height: 30.h),
-        SizedBox(
-          width: 40,
-          height: 40,
-          child: ParticleButton(
-            onTap: (){
-              Navigator.pop(context, 0);
-            },
-            child: Center(
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                    image: PSDImg('ps_whine_close')
+        // 四个 cell
+        for (int i = 0; i < 4; i++) buildCell(i),
+
+        // 底部按钮
+        Visibility(
+          visible: showExtras,
+          child: Positioned(
+            bottom: 155.h,
+            left: 0,
+            right: 0,
+            child: ParticleButton(
+              onTap: (){
+                ps_event_fire('process_rank_pop_c', {});
+                Navigator.pop(context, 0);
+              },
+              child: Center(
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    width: 271,
+                    height: 70.5,
+                    decoration: BoxDecoration(image: PSDImg('ps_keep_btn')),
+                  ),
                 ),
               ),
             ),
           ),
-        )
+        ),
+
+        // 右下角关闭按钮
+        Visibility(
+          visible: showExtras,
+          child: Positioned(
+            bottom: 100.h,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: ParticleButton(
+                  onTap: () {
+                    ps_event_fire('process_rank_pop_close', {});
+                    Navigator.pop(context, 0);
+                  },
+                  child: Center(
+                    child: Container(
+                      width: 18,
+                      height: 18,
+                      decoration: BoxDecoration(image: PSDImg('ps_whine_close')),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        // 顶部光圈
+        Visibility(
+          visible: showExtras,
+          child: Positioned(
+              right: 4, top: 208.h, child: PSImg(name: 'ps_guang_icon', width: 31, height: 26)),
+        ),
       ],
     );
   }
-
 }
 // 信息确认1
 class PSConfimOneDialog extends StatefulWidget {
-  const PSConfimOneDialog({super.key});
+  final bool isConfim;
+  final String contentStr;
+  const PSConfimOneDialog({super.key, required this.isConfim, required this.contentStr});
 
   @override
   State<PSConfimOneDialog> createState() => PSConfimOneDialogState();
@@ -931,7 +1012,7 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
     _controller.forward().then((_) {
       Future.delayed(const Duration(seconds: 1), () {
         if (context.mounted) {
-          Navigator.of(context).pop(); // 动画结束后关闭弹框
+          Navigator.pop(context); // 动画结束后关闭弹框
         }
       });
     });
@@ -948,9 +1029,12 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
     return Column(
       children: [
         SizedBox(height: 177.h),
-        FadeTransition(
-          opacity: _iconFadeAnimation,
-          child: PSImg(name: 'ps_dui_b_icon', width: 131, height: 131),
+        Visibility(
+          visible: widget.isConfim,
+          child: FadeTransition(
+            opacity: _iconFadeAnimation,
+            child: PSImg(name: 'ps_dui_b_icon', width: 131, height: 131),
+          ),
         ),
         SlideTransition(
           position: _rightImageAnimation,
@@ -970,7 +1054,7 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
               image: PSDImg('ps_tip_tx_bg'),
             ),
             child: Center(
-              child: PSImg(name: 'ps_tip_title_center', width: 301.5, height: 70.5),
+              child: SizedBox(width: 301, height: 70.5, child: PSStrokeText(text: widget.contentStr, size: 18, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#711A00'.color(), maxLines: 2, align: TextAlign.center,))
             ),
           ),
         ),
@@ -1102,7 +1186,8 @@ class PSConfimTwoDialogState extends State<PSConfimTwoDialog> with SingleTickerP
 
 // 余额不足
 class PSTXOutDialog extends StatefulWidget {
-  const PSTXOutDialog({super.key});
+  final int seletcd_row;
+  const PSTXOutDialog({super.key, required this.seletcd_row});
 
   @override
   State<PSTXOutDialog> createState() => PSTXOutDialogState();
@@ -1113,6 +1198,7 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
   @override
   void initState() {
     super.initState();
+    ps_event_fire('cash_not_pop', {});
   }
 
   @override
@@ -1145,7 +1231,7 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$100', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange[widget.seletcd_row]}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
@@ -1164,7 +1250,7 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
                       text: 'Only ',
                     ),
                     TextSpan(
-                      text: '\$4 ',
+                      text: '\$${PSNumberHelpers().intModel!.eqRange[widget.seletcd_row] - PSLocalProvider.instance.ps_dolas_number}0 ',
                       style: TextStyle(color: '#0A8A33'.color()),
                     ),
                     TextSpan(
@@ -1176,7 +1262,9 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
               SizedBox(height: 19.h),
               ParticleButton(
                 onTap: (){
-
+                  ps_event_fire('cash_not_pop_c', {});
+                  Navigator.pop(context);
+                   PigTabController.switchTo(1);
                 },
                 child: Container(
                   width: 239.w,
@@ -1199,6 +1287,7 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
           height: 40,
           child: ParticleButton(
             onTap: (){
+              ps_event_fire('cash_not_pop_c', {});
               Navigator.pop(context, 0);
             },
             child: Center(
@@ -1219,7 +1308,8 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
 }
 // 提现最后一步
 class PSTXLastDialog extends StatefulWidget {
-  const PSTXLastDialog({super.key});
+  final int type;
+  const PSTXLastDialog({super.key, required this.type});
 
   @override
   State<PSTXLastDialog> createState() => PSTXLastDialogState();
@@ -1230,6 +1320,29 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
   @override
   void initState() {
     super.initState();
+    ps_event_fire('one_last_step_pop', {'type' : gettypeString()});
+  }
+
+  String gettypeString(){
+    if (widget.type == 0){
+      return 'quiz';
+    } else if (widget.type == 1){
+      return 'spine';
+    } else if (widget.type == 2){
+      return 'ad';
+    } else if (widget.type == 3){
+      return 'quiz';
+    } else if (widget.type == 4){
+      return 'spine';
+    } else if (widget.type == 5){
+      return 'ad';
+    } else if (widget.type == 6){
+      return 'quiz';
+    } else if (widget.type == 7){
+      return 'spine';
+    } else {
+      return 'ad';
+    }
   }
 
   @override
@@ -1257,17 +1370,17 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
                 width: 167.w,
                 height: 103.h,
                 decoration: BoxDecoration(
-                    image: PSDImg('ps_act_bg_0')
+                    image: PSDImg('ps_act_bg_${PSLocalProvider.instance.ps_tx_ing_account}${isBrazilianPortuguese(context) == true ? 'pt' : ''}')
                 ),
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$100', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
               SizedBox(height: 14.h),
-              SizedBox(width: 205, height: 38,child: PSText(text: 'Only one step away from successful withdrawal', size: 16, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 2,align: .center)),
+              SizedBox(width: 205, height: 38,child: PSText(text: 'Only One Step Away From Successful Withdrawal', size: 16, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 2,align: .center)),
               SizedBox(height: 12.h),
               Container(
                 width: 283.w,
@@ -1279,7 +1392,7 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 12.h),
-                    PSText(text: 'Answer 10/50 question right', size: 16, color: '#12881E'.color(), weight: FontWeight.w900),
+                    PSText(text: getTaskString(), size: 16, color: '#12881E'.color(), weight: FontWeight.w900),
                     SizedBox(height: 15.h),
                     Container(
                       width: 249.w,
@@ -1291,14 +1404,14 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
                       child: Stack(
                         children: [
                           Container(
-                            width: 249.w * 0.5,
+                            width: 249.w * (PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data),
                             height: 20.h,
                             decoration: BoxDecoration(
                               color: '#1757B1'.color(),
                               borderRadius: BorderRadius.circular(10.h),
                             ),
                           ),
-                          Positioned(top: 5.h,left: 110.w,child: PSStrokeText(text: '100%', size: 10, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#113996'.color()))
+                          Positioned(top: 5.h,left: 110.w,child: PSStrokeText(text: '${((PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) * 100).toInt()}%', size: 10, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#113996'.color()))
                         ],
                       ),
                     )
@@ -1308,7 +1421,26 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
               SizedBox(height: 16.h),
               ParticleButton(
                 onTap: (){
-
+                  Navigator.pop(context, 0);
+                  if (PSLocalProvider.instance.ps_tx_task_index == 0){
+                    PigTabController.switchTo(1);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
+                    PigTabController.switchTo(2);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
+                    PigTabController.switchTo(0);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
+                    PigTabController.switchTo(1);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
+                    PigTabController.switchTo(2);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
+                    PigTabController.switchTo(0);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
+                    PigTabController.switchTo(1);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
+                    PigTabController.switchTo(2);
+                  } else if (PSLocalProvider.instance.ps_tx_task_index == 9){
+                    PigTabController.switchTo(0);
+                  }
                 },
                 child: Container(
                   width: 239.w,
@@ -1332,6 +1464,25 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
           child: ParticleButton(
             onTap: (){
               Navigator.pop(context, 0);
+              if (PSLocalProvider.instance.ps_tx_task_index == 0){
+                PigTabController.switchTo(1);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
+                PigTabController.switchTo(2);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
+                PigTabController.switchTo(0);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
+                PigTabController.switchTo(1);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
+                PigTabController.switchTo(2);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
+                PigTabController.switchTo(0);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
+                PigTabController.switchTo(1);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
+                PigTabController.switchTo(2);
+              } else if (PSLocalProvider.instance.ps_tx_task_index == 9){
+                PigTabController.switchTo(0);
+              }
             },
             child: Center(
               child: Container(
@@ -1348,6 +1499,36 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
     );
   }
 
+  String getTaskString(){
+    if (PSLocalProvider.instance.ps_tx_task_index == 0){
+      return 'Answer ${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Question Right';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
+      return 'Spin ${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Times';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 2){
+      return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
+      return 'Answer ${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Question Right';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
+      return 'Spin ${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Times';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
+      return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
+      return 'Answer ${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Question Right';
+    } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
+      return 'Spin ${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Times';
+    } else {
+      return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
+    }
+  }
+
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
+  }
+
 }
 // 排行榜
 class PSTXRankDialog extends StatefulWidget {
@@ -1361,6 +1542,8 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
     with SingleTickerProviderStateMixin {
 
   final List<String> texts = List.generate(PSLocalProvider.instance.ps_all_ranking, (index) => '${index+1}');
+
+  late ScrollController _scrollController = ScrollController();
 
   List<String> _generateList() {
     final random = Random(); // 创建一个随机数生成器
@@ -1378,7 +1561,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
 
   final random = Random(); // 创建一个随机数生成器
   // 定义可能的金额值
-  List possibleValues = ["\$100", "\$150", "\$200", "\$500"];
+  List possibleValues = PSNumberHelpers().intModel!.eqRange;
   // 生成列表
   List<String> _generateDolasList() {
     List<String> list = List.filled(PSLocalProvider.instance.ps_all_ranking, ""); // 初始化一个长度为200的空字符串列表
@@ -1388,7 +1571,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
         list[i] = "\$${possibleValues[PSLocalProvider.instance.ps_tx_ing_number]}";
       } else {
         // 随机选择一个可能的金额值
-        list[i] = possibleValues[random.nextInt(possibleValues.length)];
+        list[i] = '\$${possibleValues[random.nextInt(possibleValues.length)]}';
       }
     }
     return list;
@@ -1397,6 +1580,11 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
   @override
   void initState() {
     super.initState();
+    ps_event_fire('cash_queue_pop', {});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToIndex(PSLocalProvider.instance.ps_current_ranking);
+    });
+
   }
 
   @override
@@ -1429,7 +1617,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$100', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '\$${possibleValues.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
@@ -1521,6 +1709,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
                       width: 261.0,
                       height: 119.0,
                       child: ListView.builder(
+                        controller: _scrollController,
                         padding: const EdgeInsets.only(top: 0.0),
                         itemCount: texts.length, // 计算需要多少行
                         itemBuilder: (context, index) {
@@ -1569,7 +1758,12 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
               SizedBox(height: 15.h),
               ParticleButton(
                 onTap: (){
+                  ps_event_fire('cash_queue_po_c', {});
+                  PSPigAds().ps_showAd(context, 'nskdh_queue_rv', onCacheResponse: (onCacheResponse){
 
+                    }, adDidClosed: (adDidClosed){
+                      rankupdate();
+                    });
                 },
                 child: Container(
                   width: 239.w,
@@ -1578,8 +1772,13 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
                       color: '#0E79C6'.color(),
                       borderRadius: BorderRadius.circular(25.h)
                   ),
-                  child: Center(
-                    child: PSText(text: 'Skip Wait', size: 20, color: '#FFFFFF'.color(), weight: FontWeight.w900),
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: PSText(text: 'Skip Wait', size: 20, color: '#FFFFFF'.color(), weight: FontWeight.w900),
+                      ),
+                      Positioned(right: 0,child: PSImg(name: 'ps_ad_icon', width: 37, height: 40))
+                    ],
                   ),
                 ),
               )
@@ -1593,6 +1792,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
           child: ParticleButton(
             onTap: (){
               Navigator.pop(context, 0);
+              ps_event_fire('cash_queue_po_close', {});
             },
             child: Center(
               child: Container(
@@ -1631,7 +1831,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
                       text: 'watch ads and cash out ',
                     ),
                     TextSpan(
-                      text: '\$60 ',
+                      text: '\$${PSNumberHelpers().intModel!.eqRange.first} ',
                       style: TextStyle(color: '#0F7E29'.color()),
                     ),
                     TextSpan(
@@ -1647,6 +1847,57 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
     );
   }
 
+  Future<void> rankupdate() async {
+    int row = randomIntInRange(min: PSNumberHelpers().intModel!.queueNumber.last.intCurrentDelete.first, max: PSNumberHelpers().intModel!.queueNumber.last.intCurrentDelete.last);
+    if (PSLocalProvider.instance.ps_current_ranking - row <= 1) {
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_current_rankingName, 1);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+      if (!mounted) return;
+      context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
+      PSPigCashNotificationService.sendToQuizProgressNotification(0);
+    } else {
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_all_rankingName, PSLocalProvider.instance.ps_all_ranking - randomIntInRange(min: PSNumberHelpers().intModel!.queueNumber.first.intAllDelete.first, max: PSNumberHelpers().intModel!.queueNumber.first.intAllDelete.last));
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_current_rankingName, PSLocalProvider.instance.ps_current_ranking - row);
+      Future.delayed(Duration(milliseconds: 200),(){
+        if (!mounted) return;
+        setState(() {
+          _scrollToIndex(PSLocalProvider.instance.ps_current_ranking);
+          PSDialogTool.toastRanking(context, PSLocalProvider.instance.ps_current_ranking);
+          PSPigCashNotificationService.sendToQuizProgressNotification(0);
+        });
+      });
+    }
+  }
+
+
+  void _scrollToIndex(int index) {
+    // 每个 item 的高度固定为 38（根据你的例子）
+    double itemHeight = 23;
+
+    // 计算目标位置
+    final double offset = (index - 1) * itemHeight;
+
+    // 平滑滚动动画
+    if (_scrollController.positions.isEmpty) return;
+    _scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
+    );
+  }
+  
+  /// Returns a random integer between [min] and [max] (inclusive).
+  int randomIntInRange({required int min, required int max}) {
+    if (min > max) {
+      throw ArgumentError('min should be less than or equal to max');
+    }
+    final random = Random();
+    return min + random.nextInt(max - min + 1);
+  }
+
 }
 // 引导4
 class PSGuide4Dialog extends StatefulWidget {
@@ -1658,9 +1909,16 @@ class PSGuide4Dialog extends StatefulWidget {
 
 class PSGuide4DialogState extends State<PSGuide4Dialog>
     with SingleTickerProviderStateMixin {
+  late spine.SpineWidgetController _controller;
   @override
   void initState() {
     super.initState();
+    ps_event_fire('gold_pig_getpop', {});
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
   }
 
   @override
@@ -1670,109 +1928,116 @@ class PSGuide4DialogState extends State<PSGuide4Dialog>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: .center,
+    return Stack(
       children: [
-        PSImg(name: 'ps_guide4_top', width: 317, height: 77),
-        Container(
-          width: 211.w,
-          height: 208.h,
-          decoration: BoxDecoration(
-            image: PSDImg('ps_guide_jin')
-          ),
-          child: Column(
-            children: [
-              Spacer(),
-              Container(
-                width: 141,
-                height: 34,
-                decoration: BoxDecoration(
-                    image: PSDImg('ps_act_bg')
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PSImg(name: 'ps_dolas_2', width: 26, height: 21),
-                    SizedBox(width: 5,),
-                    PSText(text: '\$158.00', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
-                  ],
-                ),
+        Positioned(width: 0.width(context), height: 0.height(context),child: spine.SpineWidget.fromAsset('assets/spine/caidai/skeleton.atlas', 'assets/spine/caidai/skeleton.skel', _controller)),
+        Column(
+          mainAxisAlignment: .center,
+          children: [
+            PSImg(name: 'ps_guide4_top', width: 317, height: 77),
+            Container(
+              width: 211.w,
+              height: 208.h,
+              decoration: BoxDecoration(
+                  image: PSDImg('ps_guide_jin')
               ),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Container(
-          width: 335,
-          height: 259,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_guide4_bg')
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 25),
-              SizedBox(width: 270, height: 40,child:
-              PSStrokeText(text: 'Advertiser apologized for the\ndelay and sent you a Golden Pig!', size: 16, color: '#FFE11C'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color(),maxLines: 2,)
-              ),
-              SizedBox(height: 16),
-              SizedBox(
-                width: 276,
-                height: 48,
-                child:
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Black_mianfeiziti',
-                      color: '#2A1B1B'.color(),
+              child: Column(
+                children: [
+                  Spacer(),
+                  Container(
+                    width: 141,
+                    height: 34,
+                    decoration: BoxDecoration(
+                        image: PSDImg('ps_act_bg')
                     ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Collect ',
-                      ),
-                      TextSpan(
-                        text: '10 Gold Bars ',
-                        style: TextStyle(color: '#E18300'.color()),
-                      ),
-                      TextSpan(
-                        text: 'to speed up your ',
-                      ),
-                      TextSpan(
-                        text: '\$100 ',
-                        style: TextStyle(color: '#17931B'.color()),
-                      ),
-                      TextSpan(
-                        text: ' payout',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 28),
-              InkWell(
-                onTap: (){
-                  Navigator.pop(context, 1);
-                },
-                child: Container(
-                  width: 272,
-                  height: 71,
-                  decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
-                  child: Center(
-                    child: PSStrokeText(
-                      text: 'Start Now',
-                      size: 24,
-                      color: '#FFFFFF'.color(),
-                      weight: FontWeight.w900,
-                      skWidth: 2,
-                      skColor: '#025003'.color(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PSImg(name: 'ps_dolas_2', width: 26, height: 21),
+                        SizedBox(width: 5,),
+                        PSText(text: '\$${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                      ],
                     ),
                   ),
-                ),
-              )
-            ],
-          ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Container(
+              width: 335,
+              height: 259,
+              decoration: BoxDecoration(
+                  image: PSDImg('ps_guide4_bg')
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 25),
+                  SizedBox(width: 270, height: 40,child:
+                  PSStrokeText(text: 'Advertiser apologized for the\ndelay and sent you a Golden Pig!', size: 16, color: '#FFE11C'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color(),maxLines: 2,)
+                  ),
+                  SizedBox(height: 16),
+                  SizedBox(
+                    width: 276,
+                    height: 48,
+                    child:
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Black_mianfeiziti',
+                          color: '#2A1B1B'.color(),
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Collect ',
+                          ),
+                          TextSpan(
+                            text: '10 Gold Bars ',
+                            style: TextStyle(color: '#E18300'.color()),
+                          ),
+                          TextSpan(
+                            text: 'To Speed Up Your ',
+                          ),
+                          TextSpan(
+                            text: '\$${PSNumberHelpers().intModel!.eqRange.first} ',
+                            style: TextStyle(color: '#17931B'.color()),
+                          ),
+                          TextSpan(
+                            text: ' Payout',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 28),
+                  InkWell(
+                    onTap: (){
+                      ps_event_fire('gold_pig_getpop_c', {});
+                      Navigator.pop(context, 1);
+                      PigTabController.switchTo(1);
+                    },
+                    child: Container(
+                      width: 272,
+                      height: 71,
+                      decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
+                      child: Center(
+                        child: PSStrokeText(
+                          text: 'Start Now',
+                          size: 24,
+                          color: '#FFFFFF'.color(),
+                          weight: FontWeight.w900,
+                          skWidth: 2,
+                          skColor: '#025003'.color(),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
         )
       ],
     );
@@ -1790,9 +2055,16 @@ class PSdolls100Dialog extends StatefulWidget {
 
 class PSdolls100DialogState extends State<PSdolls100Dialog>
     with SingleTickerProviderStateMixin {
+  late spine.SpineWidgetController _controller;
   @override
   void initState() {
     super.initState();
+    ps_event_fire('diamond_pig_getpop', {});
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
   }
 
   @override
@@ -1802,72 +2074,79 @@ class PSdolls100DialogState extends State<PSdolls100Dialog>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: .center,
+    return Stack(
       children: [
-        PSImg(name: 'ps_100_top', width: 311, height: 82),
-        Container(
-          width: 211.w,
-          height: 208.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_doamond_pigs')
-          ),
-          child: Column(
-            children: [
-              Spacer(),
-              Container(
-                width: 141,
-                height: 34,
-                decoration: BoxDecoration(
-                    image: PSDImg('ps_act_bg')
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PSImg(name: 'ps_dolas_2', width: 26, height: 21),
-                    SizedBox(width: 5,),
-                    PSText(text: '\$158.00', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
-                  ],
-                ),
+        Positioned(width: 0.width(context), height: 0.height(context),child: spine.SpineWidget.fromAsset('assets/spine/caidai/skeleton.atlas', 'assets/spine/caidai/skeleton.skel', _controller)),
+        Column(
+          mainAxisAlignment: .center,
+          children: [
+            PSImg(name: 'ps_100_top', width: 311, height: 82),
+            Container(
+              width: 211.w,
+              height: 208.h,
+              decoration: BoxDecoration(
+                  image: PSDImg('ps_doamond_pigs')
               ),
-            ],
-          ),
-        ),
-        SizedBox(height: 20.h),
-        Container(
-          width: 335,
-          height: 139,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_100_bg')
-          ),
-          child: Column(
-            children: [
-              Padding(padding: EdgeInsetsGeometry.only(top: 0),child: PSImg(name: 'ps_100_dui', width: 66, height: 67)),
-              SizedBox(height: 0),
-              PSText(text: 'Platform approved.\nFunds are ready.', size: 24, color: '#179C0B'.color(), weight: FontWeight.w900, maxLines: 2, align: TextAlign.center,),
-            ],
-          ),
-        ),
-        SizedBox(height: 44),
-        InkWell(
-          onTap: (){
-            Navigator.pop(context, 1);
-          },
-          child: Container(
-            width: 272,
-            height: 71,
-            decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
-            child: Center(
-              child: PSStrokeText(
-                text: 'Try It Now',
-                size: 24,
-                color: '#FFFFFF'.color(),
-                weight: FontWeight.w900,
-                skWidth: 2,
-                skColor: '#025003'.color(),
+              child: Column(
+                children: [
+                  Spacer(),
+                  Container(
+                    width: 141,
+                    height: 34,
+                    decoration: BoxDecoration(
+                        image: PSDImg('ps_act_bg')
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PSImg(name: 'ps_dolas_2', width: 26, height: 21),
+                        SizedBox(width: 5,),
+                        PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}0', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
+            SizedBox(height: 20.h),
+            Container(
+              width: 335,
+              height: 139,
+              decoration: BoxDecoration(
+                  image: PSDImg('ps_100_bg')
+              ),
+              child: Column(
+                children: [
+                  Padding(padding: EdgeInsetsGeometry.only(top: 0),child: PSImg(name: 'ps_100_dui', width: 66, height: 67)),
+                  SizedBox(height: 0),
+                  PSText(text: 'Platform approved.\nFunds are ready.', size: 24, color: '#179C0B'.color(), weight: FontWeight.w900, maxLines: 2, align: TextAlign.center,),
+                ],
+              ),
+            ),
+            SizedBox(height: 44),
+            InkWell(
+              onTap: (){
+                ps_event_fire('diamond_pig_getpop_next_step', {});
+                Navigator.pop(context, 1);
+                context.tipShow(PSReviewingDialog());
+              },
+              child: Container(
+                width: 272,
+                height: 71,
+                decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
+                child: Center(
+                  child: PSStrokeText(
+                    text: 'Next Step',
+                    size: 24,
+                    color: '#FFFFFF'.color(),
+                    weight: FontWeight.w900,
+                    skWidth: 2,
+                    skColor: '#025003'.color(),
+                  ),
+                ),
+              ),
+            )
+          ],
         )
       ],
     );
@@ -1916,6 +2195,15 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
   @override
   void initState() {
     super.initState();
+    if (widget.adStatus == .noticeOpen){
+      ps_event_fire('inform_back_pop', {});
+    } else if (widget.adStatus == .notWifi){
+      ps_event_fire('no_network_pop', {});
+    } else if (widget.adStatus == .adLoadfaild){
+      ps_event_fire('ad_fail_pop', {});
+    } else if (widget.adStatus == .adLimit){
+      ps_event_fire('ad_limit_pop', {});
+    }
   }
 
   @override
@@ -1970,13 +2258,19 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
                 ),
               ), onTap: (){
                 if (widget.adStatus == .adLoadfaild) {
-
+                  Navigator.pop(context, 1);
+                  PSPigAds().init();
                 } else if (widget.adStatus == .notWifi) {
-
+                  Navigator.pop(context, 1);
                 } else if (widget.adStatus == .adLimit) {
-
+                  Navigator.pop(context, 1);
                 } else if (widget.adStatus == .noticeOpen) {
-
+                  ps_event_fire('noti_confirm_pop_allow', {});
+                  Navigator.pop(context, 1);
+                  AppSettings.openAppSettings(
+                    type: AppSettingsType.notification,
+                  );
+                  ps_event_fire('noti_confirm_pop_suc', {});
                 } else if (widget.adStatus == .notWheel) {
 
                 }
@@ -2069,11 +2363,12 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
     return size;
   }
 }
-// 奖励通用
+// 奖励通用1
 class PSPopAwardToolDialog extends StatefulWidget {
   final AwardType type;
   final bool isGuide;
-  const PSPopAwardToolDialog({super.key, required this.type, required this.isGuide});
+  final double award;
+  const PSPopAwardToolDialog({super.key, required this.type, required this.isGuide, required this.award});
 
   @override
   State<PSPopAwardToolDialog> createState() => PSPopAwardToolDialogState();
@@ -2084,6 +2379,11 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
   @override
   void initState() {
     super.initState();
+    if (widget.isGuide){
+      ps_event_fire('new_quiz_correct_pop', {});
+    }
+    ps_event_fire('double_pop', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+
   }
 
   @override
@@ -2113,7 +2413,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                       textAlign: TextAlign.center,
                       text: TextSpan(
                         style: TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Black_mianfeiziti',
                             color: '#134475'.color()
@@ -2123,7 +2423,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                             text: 'Only ',
                           ),
                           TextSpan(
-                            text: '\$4',
+                            text: '\$${PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : double.parse((PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number).toStringAsFixed(2))}',
                             style: TextStyle(color: '#0E731E'.color()),
                           ),
                           TextSpan(
@@ -2132,30 +2432,30 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                         ],
                       ),
                     ),
-                    if (widget.type == .dolas)
-                      SizedBox(height: 34.h),
-                    if (widget.type == .diamonds)
-                      SizedBox(height: 10.h,),
-                    if (widget.type == .diamonds)
-                      Container(
-                        width: 273.w,
-                        height: 22.h,
-                        decoration: BoxDecoration(
-                          color: '#F54E00'.color(),
-                          borderRadius: BorderRadius.circular(11.h)
-                        ),
-                        child: Center(
-                          child: PSText(text: '5 diamonds can be exchanged for \$0.01', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900),
-                        ),
-                      ),
-                    if (widget.type == .diamonds)
-                      SizedBox(height: 19.h,),
-                    if (widget.type == .dolas)
-                      PSImg(name: "ps_dolas_b", width: 90.w, height: 79.h),
-                    if (widget.type == .diamonds)
-                      PSImg(name: "ps_doamond_b", width: 119.w, height: 88.h),
-                    PSText(text: '+\$2.0', size: 24, color: widget.type == .dolas ? '#199E24'.color() : '#1562CD'.color(), weight: FontWeight.w900),
-                    SizedBox(height: widget.type == .dolas ? 13.h : 5.h),
+                    // if (widget.type == .dolas)
+                    //   SizedBox(height: 34.h),
+                    // if (widget.type == .diamonds)
+                    //   SizedBox(height: 10.h,),
+                    // if (widget.type == .diamonds)
+                    //   Container(
+                    //     width: 273.w,
+                    //     height: 22.h,
+                    //     decoration: BoxDecoration(
+                    //       color: '#F54E00'.color(),
+                    //       borderRadius: BorderRadius.circular(11.h)
+                    //     ),
+                    //     child: Center(
+                    //       child: PSText(text: '5 diamonds can be exchanged for \$0.01', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900),
+                    //     ),
+                    //   ),
+                    // if (widget.type == .diamonds)
+                    //   SizedBox(height: 19.h,),
+                    // if (widget.type == .dolas)
+                    //   PSImg(name: "ps_dolas_b", width: 90.w, height: 79.h),
+                    // if (widget.type == .diamonds)
+                    //   PSImg(name: "ps_doamond_b", width: 119.w, height: 88.h),
+                    PSText(text: '+\$${widget.award}', size: 24, color:'#199E24'.color() , weight: FontWeight.w900),
+                    SizedBox(height:13.h),
                     Row(
                       children: [
                         SizedBox(width: 38.w),
@@ -2182,7 +2482,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                         PSText(text: '1M+ User Trusted', size: 20, color: '#24313F'.color(), weight: FontWeight.w900)
                       ],
                     ),
-                    SizedBox(height: widget.type == .dolas ? 36.h : 20.h),
+                    SizedBox(height:36.h),
                     Container(
                       width: 301.w,
                       height: 40.h,
@@ -2191,19 +2491,30 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                       ),
                       child: Row(
                         children: [
-                          SizedBox(width: 25.w,),
-                          PSImg(name: 'ps_act_samil_0', width: 54.w, height: 27.h),
-                          SizedBox(width: 15.w,),
+                          SizedBox(width: 12.w,),
+                          PSImg(name: 'ps_act_samil_${PSLocalProvider.instance.ps_account_seled_index}', width: 54.w, height: 27.h),
+                          SizedBox(width: 8.w,),
                           PSImg(name: 'ps_payment_icon', width: 67.w, height: 21.h),
-                          SizedBox(width: 24.w,),
-                          PSText(text: 'My Cash :\$516', size: 14, color: '#0C7A29'.color(), weight: FontWeight.w900)
+                          SizedBox(width: 8.w,),
+                          PSText(text: 'My Cash :\$${PSLocalProvider.instance.ps_dolas_number}', size: 14, color: '#0C7A29'.color(), weight: FontWeight.w900)
                         ],
                       ),
                     ),
                     SizedBox(height: 19.h),
                     ParticleButton(
                       onTap: (){
-                        Navigator.pop(context, 1);
+                        ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+                        if (widget.isGuide){
+                          ps_event_fire('new_quiz_correct_pop_c', {});
+                        }
+                        PSPigAds().ps_showAd(context, adRewardPod_idName(), onCacheResponse: (onCacheResponse) async {
+                          Navigator.pop(context, 1);
+                        }, adDidClosed: (adDidClosed) async {
+                          Navigator.pop(context, 1);
+                          await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, widget.award);
+                          if (!context.mounted) return;
+                          context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                        });
                       },
                       child: Container(
                         width: 301.w,
@@ -2225,10 +2536,46 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
         ),
         SizedBox(height: 16.h),
         ParticleButton(child: SizedBox(width: 40,height: 40,child: Center(child: PSImg(name: 'ps_whine_close', width: 18, height: 18 , fit: BoxFit.fill,))), onTap: (){
-          Navigator.pop(context, 0);
+          if (PSNumberHelpers().checkProbability()){
+            PSPigAds().ps_showAd(context, adIntPod_idName(), onCacheResponse: (onCacheResponse){
+              Navigator.pop(context, 0);
+            }, adDidClosed: (adDidClosed){
+              Navigator.pop(context, 0);
+            });
+          } else {
+            Navigator.pop(context, 0);
+          }
         })
       ],
     );
+  }
+
+  String adIntPod_idName(){
+    if (widget.type == .apple) {
+      return 'nskdh_applebub_getpop_int';
+    } else if (widget.type == .quiz){
+      return 'nskdh_quizgetinfor_int';
+    } else if (widget.type == .buble){
+      return 'nskdh_moneybub_getpop_int';
+    } else if (widget.type == .wheel){
+      return 'nskdh_wheel_int';
+    } else {
+      return 'nskdh_launch';
+    }
+  }
+
+  String adRewardPod_idName(){
+    if (widget.type == .apple) {
+      return 'asd_rv';
+    } else if (widget.type == .quiz){
+      return 'nskdh_quizgetc_rv';
+    } else if (widget.type == .buble){
+      return 'nskdh_moneybub_getpop_rv';
+    } else if (widget.type == .wheel){
+      return 'nskdh_wheel_rv';
+    } else {
+      return 'nskdh_launch';
+    }
   }
 
 }
@@ -2242,42 +2589,77 @@ class PSReviewingDialog extends StatefulWidget {
 
 class PSReviewingDialogState extends State<PSReviewingDialog>
     with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
+    ps_event_fire('ad_review_pop', {});
+    // Animate progress from 0 to 1 in 2 seconds
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    // When animation completes, pop the dialog
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed && mounted) {
+        Navigator.pop(context);
+        context.tipShow(PSReviewFaildDialog());
+      }
+    });
+
+    _controller.forward();
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    double progressBarWidth = 249.w; // total width of progress bar
+    double progressBarHeight = 20.h;
+
     return Column(
-      mainAxisAlignment: .center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: 309.w,
           height: 325.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_about_bg')
-          ),
+          decoration: BoxDecoration(image: PSDImg('ps_about_bg')),
           child: Column(
             children: [
               SizedBox(height: 32.h),
-              PSText(text: '⚡ Advertiser Review Pending', size: 18, color: '#264077'.color(), weight: FontWeight.w900),
+              PSText(
+                text: '⚡ Advertiser Review Pending',
+                size: 18,
+                color: '#264077'.color(),
+                weight: FontWeight.w900,
+              ),
               SizedBox(height: 20.h),
               Container(
                 width: 167.w,
                 height: 103.h,
-                decoration: BoxDecoration(
-                    image: PSDImg('ps_act_bg_0')
-                ),
+                decoration: BoxDecoration(image: PSDImg('ps_act_bg_0')),
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$100', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(
+                      text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
+                      size: 24,
+                      color: '#FFFFFF'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 1,
+                      skColor: '#000000'.color(),
+                    ),
                   ],
                 ),
               ),
@@ -2287,34 +2669,56 @@ class PSReviewingDialogState extends State<PSReviewingDialog>
                 height: 80.h,
                 decoration: BoxDecoration(
                     color: '#E4E9EC'.color(),
-                    borderRadius: BorderRadius.circular(16.h)
-                ),
+                    borderRadius: BorderRadius.circular(16.h)),
                 child: Column(
-                  mainAxisAlignment: .center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 249.w,
-                      height: 20.h,
-                      decoration: BoxDecoration(
-                          color: '#C3CBD3'.color(),
-                          borderRadius: BorderRadius.circular(10.h)
-                      ),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 249.w * 0.4,
-                            height: 20.h,
-                            decoration: BoxDecoration(
-                              color: '#1757B1'.color(),
-                              borderRadius: BorderRadius.circular(10.h),
+                    AnimatedBuilder(
+                      animation: _animation,
+                      builder: (context, child) {
+                        double progress = _animation.value; // 0.0 - 1.0
+                        double percentage = (progress * 100).clamp(0, 100);
+                        return Stack(
+                          children: [
+                            Container(
+                              width: progressBarWidth,
+                              height: progressBarHeight,
+                              decoration: BoxDecoration(
+                                color: '#C3CBD3'.color(),
+                                borderRadius: BorderRadius.circular(10.h),
+                              ),
                             ),
-                          ),
-                          Positioned(top: 5.h,left: 110.w,child: PSStrokeText(text: '40%', size: 10, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#113996'.color()))
-                        ],
-                      ),
+                            Container(
+                              width: progressBarWidth * progress,
+                              height: progressBarHeight,
+                              decoration: BoxDecoration(
+                                color: '#1757B1'.color(),
+                                borderRadius: BorderRadius.circular(10.h),
+                              ),
+                            ),
+                            Positioned(
+                              top: 5.h,
+                              left: progressBarWidth * progress - 30, // adjust text position
+                              child: PSStrokeText(
+                                text: '${percentage.toInt()}%',
+                                size: 10,
+                                color: '#FFFFFF'.color(),
+                                weight: FontWeight.w900,
+                                skWidth: 1,
+                                skColor: '#113996'.color(),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     SizedBox(height: 8),
-                    PSText(text: 'Review in progress...', size: 14, color: '#6B7C8B'.color(), weight: FontWeight.w900),
+                    PSText(
+                      text: 'Review in progress...',
+                      size: 14,
+                      color: '#6B7C8B'.color(),
+                      weight: FontWeight.w900,
+                    ),
                   ],
                 ),
               ),
@@ -2322,28 +2726,9 @@ class PSReviewingDialogState extends State<PSReviewingDialog>
           ),
         ),
         SizedBox(height: 30.h),
-        SizedBox(
-          width: 40,
-          height: 40,
-          child: ParticleButton(
-            onTap: (){
-              Navigator.pop(context, 0);
-            },
-            child: Center(
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                    image: PSDImg('ps_whine_close')
-                ),
-              ),
-            ),
-          ),
-        )
       ],
     );
   }
-
 }
 // 审核失败
 class PSReviewFaildDialog extends StatefulWidget {
@@ -2358,6 +2743,7 @@ class PSReviewFaildDialogState extends State<PSReviewFaildDialog>
   @override
   void initState() {
     super.initState();
+    ps_event_fire('collect_diamond_pop', {});
   }
 
   @override
@@ -2399,7 +2785,9 @@ class PSReviewFaildDialogState extends State<PSReviewFaildDialog>
               SizedBox(height: 19.h),
               ParticleButton(
                 onTap: (){
-
+                  ps_event_fire('collect_diamond_pop_c', {});
+                  Navigator.pop(context, 0);
+                  PigTabController.switchTo(1);
                 },
                 child: Container(
                   width: 239.w,
@@ -2563,11 +2951,11 @@ class PSPopDomandAwardADialogState extends State<PSPopDomandAwardADialog>
                 ),
 
                 /// 中间图标（不旋转）
-                PSImg(name: PSLocalProvider.instance.ps_pig_level == 0 ? 'ps_domand_icon' : 'ps_zhuan_big', width: 136, height: 119),
+                PSImg(name: PSLocalProvider.instance.ps_pig_level == 0 ? 'ps_domand_icon' : PSLocalProvider.instance.ps_pig_level == 1 ? 'ps_domand_icon' : 'ps_zhuan_big', width: 136, height: 119),
                 Positioned(
                   bottom: 0,
                   child: PSStrokeText(
-                    text: 'X2',
+                    text: PSLocalProvider.instance.ps_pig_level == 0 ? 'X1' : PSLocalProvider.instance.ps_pig_level == 1 ? 'X1' : 'X2',
                     size: 40,
                     color: '#FFFFFF'.color(),
                     weight: FontWeight.w900,
@@ -2593,7 +2981,7 @@ class PSPopDomandAwardADialogState extends State<PSPopDomandAwardADialog>
                 },
                 (finished) async {
                   // X2
-                  await PSLocalProvider.instance.updateint(
+                  await PSLocalProvider.instance.updatedouble(
                     PSLocalProvider.instance.ps_pig_level_indexName,
                     PSLocalProvider.instance.ps_pig_level_index + 2,
                   );
@@ -2753,6 +3141,977 @@ class PSPopMoreChanceDialogState extends State<PSPopMoreChanceDialog>
               ],
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+// 转盘奖励
+class PSPopWheelAwaradDialog extends StatefulWidget {
+  final double award;
+  final bool is_wheel;
+  final bool is_rv;
+  final AwardType type;
+  PSPopWheelAwaradDialog({super.key, required this.award, required this.is_wheel, required this.is_rv, required this.type});
+
+  @override
+  State<PSPopWheelAwaradDialog> createState() => PSPopWheelAwaradDialogState();
+}
+
+class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
+    with SingleTickerProviderStateMixin {
+
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    ps_event_fire('double_pop', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 3), // 旋转周期，可调节速度
+    )..repeat(); // 无限循环
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 0.width(context),
+      height: 0.height(context),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 323,
+            height: 93,
+            child: Stack(
+              children: [
+                Positioned(
+                  left: (349 - 260) * 0.5,
+                  top: 32,
+                  child: SizedBox(
+                    width: 260,
+                    height: 20,
+                    child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        Container(
+                          width: 260,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            image: PSDImg('ps_pro_bg_t',fit: BoxFit.fill),
+                          ),
+                        ),
+                        Positioned(
+                          left: 7,
+                          child: Container(
+                            width:
+                            251 * (PSLocalProvider.instance.ps_pig_level == 1 ? PSLocalProvider.instance.ps_pig_level_index / 20 : PSLocalProvider.instance.ps_pig_level_index / 10),
+                            height: 12,
+                            decoration: BoxDecoration(
+                              color: '#80F207'.color(),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  left: 180.w,
+                  top: 36,
+                  child: PSStrokeText(
+                    text: PSLocalProvider.instance.ps_pig_level == 0 ? '${PSLocalProvider.instance.ps_dolas_number}0' :
+                    '${PSLocalProvider.instance.ps_pig_level_index}/${PSLocalProvider.instance.ps_pig_level == 1 ? '20' : '10'}',
+                    size: 10,
+                    color: '#FFFFFF'.color(),
+                    weight: FontWeight.w900,
+                    skWidth: 1,
+                    skColor: '#15235B'.color(),
+                  ),
+                ),
+                Positioned(
+                  left: 158.w,
+                  top: 36,
+                  child: PSImg(
+                    name: PSLocalProvider.instance.ps_pig_level == 0 ? 'ps_dolas_2' : PSLocalProvider.instance.ps_pig_level == 1 ? 'ps_domand_s' : 'ps_zhuan_smail',
+                    width: PSLocalProvider.instance.ps_pig_level == 0 ? 18 : 13,
+                    height: PSLocalProvider.instance.ps_pig_level == 0 ? 17 : 11,
+                  ),
+                ),
+                Positioned(
+                  left: 20,
+                  top: 12,
+                  child: PSImg(
+                    name: PSLocalProvider.instance.ps_pig_level == 0 ? 'ps_pig_0' : PSLocalProvider.instance.ps_pig_level == 1
+                        ? 'ps_pig_1'
+                        : 'ps_pig_2',
+                    width: 47,
+                    height: 47,
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 30,
+                  child: PSImg(name: 'ps_act_top_${PSLocalProvider.instance.ps_tx_ing_account}', width: 72, height: 25),
+                ),
+                Positioned(
+                  left: 29,
+                  top: 42,
+                  child: PSStrokeText(
+                      text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
+                      size: 12,
+                      color: '#FFE711'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 1,
+                      skColor: '#042267'.color()),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: 0.width(context),
+            height: 66.h,
+            child: Row(
+              children: [
+                SizedBox(width: (0.width(context) - 254.w - 30) * 0.5),
+                SizedBox(
+                    width: 254.w,
+                    height: 66.h,
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.w500,
+                            color: '#FFFFF3'.color(),
+                            fontFamily: 'Black_mianfeiziti'),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Just ',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          TextSpan(
+                            text: PSLocalProvider.instance.ps_pig_level == 1
+                                ? '20 Diamonds'
+                                : '10 Gold Brick',
+                            style: TextStyle(
+                                color: PSLocalProvider.instance.ps_pig_level == 1
+                                    ? '#03D5FF'.color()
+                                    : '#FFE203'.color()),
+                          ),
+                          TextSpan(
+                            text: ' To Cash Out!',
+                          ),
+                        ],
+                      ),
+                    )),
+                SizedBox(width: 8),
+                SizedBox(
+                    width: 22,
+                    height: 19,
+                    child: PSImg(
+                        name: PSLocalProvider.instance.ps_pig_level == 1
+                            ? 'ps_domand_s'
+                            : 'ps_zhuan_smail',
+                        width: 22,
+                        height: 19))
+              ],
+            ),
+          ),
+          SizedBox(height: 36.h),
+          SizedBox(
+            width: 239,
+            height: 228,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // 背景旋转
+                RotationTransition(
+                  turns: _controller,
+                  child: Container(
+                    width: 239,
+                    height: 228,
+                    decoration: BoxDecoration(
+                      image: PSDImg('ps_wheel_award_bg'),
+                    ),
+                  ),
+                ),
+                // 上层静止内容
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 20),
+                    PSImg(
+                      name: PSLocalProvider.instance.ps_pig_level == 1
+                          ? 'ps_wheel_domand_b'
+                          : 'ps_wheel_zhuan_b',
+                      width: 136,
+                      height: 136,
+                    ),
+                    PSStrokeText(
+                      text: 'X${widget.award}',
+                      size: 40,
+                      color: '#FFFFFF'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 2,
+                      skColor: '#5F2605'.color(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 22.h),
+          PSText(
+              text: 'Money’s in-ready To Withdraw!',
+              size: 18,
+              color: '#E8E893'.color(),
+              weight: FontWeight.w900),
+          SizedBox(height: 20.h),
+          ParticleButton(
+            onTap: () {
+              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+              PSPigAds().ps_showAd(context, adRewardPod_idName(), onCacheResponse: (onCacheResponse) async {
+                Navigator.pop(context, 1);
+              }, adDidClosed: (adDidClosed) async {
+                Navigator.pop(context, 1);
+                await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, widget.award * 2.0);
+                if (!context.mounted) return;
+                context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+              });
+            },
+            child: Container(
+              width: 272,
+              height: 71,
+              decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
+              child: Stack(
+                children: [
+                  Center(
+                    child: PSStrokeText(
+                      text: 'Collect Double',
+                      size: 24,
+                      color: '#FFFFFF'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 2,
+                      skColor: '#025003'.color(),
+                    ),
+                  ),
+                  Positioned(
+                    top: -8,
+                    right: 0,
+                    child: PSImg(name: 'ps_ad_icon', width: 37, height: 40),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 8.h),
+          PSUnderlineTextButton(
+            text: 'Claim',
+            underlineColor: '#F1EFB2'.color(),
+            textColor: '#F1EFB2'.color(),
+            fontSize: 20,
+            onPressed: (){
+              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+              if (PSNumberHelpers().checkProbability()){
+                PSPigAds().ps_showAd(context, adIntPod_idName(), onCacheResponse: (onCacheResponse){
+                  Navigator.pop(context, 0);
+                }, adDidClosed: (adDidClosed){
+                  Navigator.pop(context, 0);
+                });
+              } else {
+                Navigator.pop(context, 0);
+              }
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  String adIntPod_idName(){
+    if (widget.type == .apple) {
+      return 'nskdh_applebub_getpop_int';
+    } else if (widget.type == .quiz){
+      return 'nskdh_quizgetinfor_int';
+    } else if (widget.type == .buble){
+      return 'nskdh_moneybub_getpop_int';
+    } else if (widget.type == .wheel){
+      return 'nskdh_wheel_int';
+    } else {
+      return 'nskdh_launch';
+    }
+  }
+
+  String adRewardPod_idName(){
+    if (widget.type == .apple) {
+      return 'asd_rv';
+    } else if (widget.type == .quiz){
+      return 'nskdh_quizgetc_rv';
+    } else if (widget.type == .buble){
+      return 'nskdh_moneybub_getpop_rv';
+    } else if (widget.type == .wheel){
+      return 'nskdh_wheel_rv';
+    } else {
+      return 'nskdh_launch';
+    }
+  }
+}
+
+// 老用户弹窗
+class PSPopWheelOldDog extends StatefulWidget {
+  PSPopWheelOldDog({super.key});
+
+  @override
+  State<PSPopWheelOldDog> createState() => PSPopWheelOldDogState();
+}
+
+class PSPopWheelOldDogState extends State<PSPopWheelOldDog>
+    with SingleTickerProviderStateMixin {
+
+
+  @override
+  void initState() {
+    super.initState();
+    ps_event_fire('no_chance_pop', {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 0.width(context),
+      height: 0.height(context),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              Spacer(),
+              ParticleButton(child: PSImg(name: "ps_close_icon", width: 40, height: 40), onTap: (){
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context, 0);
+                }
+              }),
+              SizedBox(width: 27)
+            ],
+          ),
+          SizedBox(height: 18),
+          Container(
+            width: 335,
+            height: 341,
+            decoration: BoxDecoration(
+              image: PSDImg('ps_old_wheel_bg')
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 29),
+                PSStrokeText(text: 'Daily Bonus', size: 22, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1051A4'.color()),
+                SizedBox(height: 36),
+                PSText(text: 'Spin The Wheel Daily For Prize!', size: 14, color: '#733A1B'.color(), weight: FontWeight.w900),
+                SizedBox(height: 152),
+                ParticleButton(
+                  onTap: () {
+                    ps_event_fire('no_chance_pop_c', {});
+                    if (Navigator.canPop(context)) {
+                      Navigator.pop(context, 0);
+                    }
+                    PigTabController.switchTo(1);
+                  },
+                  child: Container(
+                    width: 272,
+                    height: 71,
+                    decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
+                    child: Center(
+                      child: PSStrokeText(
+                        text: 'Go Earn',
+                        size: 24,
+                        color: '#FFFFFF'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 2,
+                        skColor: '#025003'.color(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+// 存钱罐弹窗
+class PSPopCunCashDog extends StatefulWidget {
+  final PSUserData userData;
+  final bool is_gold;
+  PSPopCunCashDog({
+    super.key, required this.userData, required this.is_gold,
+  });
+
+  @override
+  State<PSPopCunCashDog> createState() => PSPopCunCashDogState();
+}
+
+class PSPopCunCashDogState extends State<PSPopCunCashDog>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late int row = Random().nextInt(3);
+
+  // 3条不重复文案
+  late List<String> msgs = getRandomMessages(
+      widget.is_gold ? _messages : _messages2);
+
+  final List<String> _messages = [
+    "Just withdrew \$12.75—this app really pays!",
+    "Just got \$10 on PayPal — it’s real!",
+    "Cashed out \$15 today, straight to my account.",
+    "\$20 received instantly, no fees at all.",
+    "Got my payout! Earning while watching ads works.",
+    "Withdrawn \$25 successfully, money in my PayPal now.",
+  ];
+
+  final List<String> _messages2 = [
+    "Just started, already made \$0.85 by watching ads!",
+    "Watched a couple of ads and boom — \$0.85 in my balance!",
+    "Didn’t think it’d work, but after a few minutes I got my first cents. Feels real!",
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    ps_event_fire('showpig_page', {});
+
+    // 初始化动画控制器，持续时间为5秒，可以调整速度
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 8),
+    );
+
+    // Tween从0到1，重复无限循环
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _controller.repeat(); // 无限循环
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  /// 随机取 [count] 条不重复消息，默认 3 条
+  List<String> getRandomMessages(List<String> msg, {int count = 3}) {
+    if (count >= msg.length) {
+      return List.from(msg); // 如果请求数 >= 总数，返回所有
+    }
+
+    final random = Random();
+    final tempList = List<String>.from(msg); // 复制一份防止修改原始列表
+    final result = <String>[];
+
+    for (int i = 0; i < count; i++) {
+      int index = random.nextInt(tempList.length);
+      result.add(tempList[index]);
+      tempList.removeAt(index); // 移除已选的，保证不重复
+    }
+
+    return result;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
+    double bgWidth = 210; // ps_pop_act_bg 宽度
+    double bg2Width = 302; // ps_pop_act_bg 宽度
+
+    // 计算平移距离
+    double translateX =
+        -((_animation.value * (bgWidth + screenWidth)) %
+            (bgWidth + screenWidth)) + screenWidth;
+    double translateX2 =
+        -((_animation.value * (bg2Width + screenWidth)) %
+            (bg2Width + screenWidth)) + screenWidth;
+
+    return Stack(
+      children: [
+        Column(
+          children: [
+            SizedBox(height: 32.h),
+            Row(
+              children: [
+                Spacer(),
+                // 添加平移动画
+                Transform.translate(
+                  offset: Offset(translateX, 0),
+                  child: Container(
+                    width: bgWidth,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      image: PSDImg('ps_pop_act_bg'),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(width: 7),
+                        PSImg(name: 'ps_act_pop_icon', width: 34, height: 34),
+                        SizedBox(width: 9),
+                        SizedBox(
+                          width: 134,
+                          height: 32,
+                          child: RichText(
+                            textAlign: TextAlign.left,
+                            maxLines: 3,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 9.0,
+                                fontWeight: FontWeight.w900,
+                                color: '#000000'.color(),
+                                fontFamily: 'Black_mianfeiziti',
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'PayPal ',
+                                  style: TextStyle(color: '#1E60EF'.color()),
+                                ),
+                                TextSpan(text: 'Sent '),
+                                TextSpan(
+                                  text:
+                                  '\$${PSNumberHelpers().intModel!
+                                      .eqRange[row]} ',
+                                  style: TextStyle(color: '#19912B'.color()),
+                                ),
+                                TextSpan(
+                                  text: ' To ${widget.userData.username}.',
+                                ),
+                                TextSpan(text: 'Withdrawal Completed'),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20.w),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Transform.translate(
+              offset: Offset(translateX2, 0),
+              child: SizedBox(
+                width: 0.width(context),
+                height: 49,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 40.w,
+                      top: 10.h,
+                      child: Container(
+                        width: 302,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            image: PSDImg('ps_text_bg')
+                        ),
+                        child: Center(
+                          child: PSText(text: msgs.first,
+                              size: 10,
+                              color: '#691C1C'.color(),
+                              weight: FontWeight.w900),
+                        ),
+                      ),
+                    ),
+                    PSImg(name: 'ps_user_n_${widget.userData.id}',
+                        width: 49,
+                        height: 49),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Transform.translate(
+              offset: Offset(translateX2 + 30.w, 0),
+              child: SizedBox(
+                width: 0.width(context),
+                height: 49,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 40.w,
+                      top: 10.h,
+                      child: Container(
+                        width: 302,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            image: PSDImg('ps_text_bg')
+                        ),
+                        child: Center(
+                          child: PSText(text: msgs[1],
+                              size: 10,
+                              color: '#691C1C'.color(),
+                              weight: FontWeight.w900),
+                        ),
+                      ),
+                    ),
+                    PSImg(name: 'ps_user_n_${widget.userData.id}',
+                        width: 49,
+                        height: 49),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Transform.translate(
+              offset: Offset(translateX2 + 70.w, 0),
+              child: SizedBox(
+                width: 0.width(context),
+                height: 49,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 40.w,
+                      top: 10.h,
+                      child: Container(
+                        width: 302,
+                        height: 25,
+                        decoration: BoxDecoration(
+                            image: PSDImg('ps_text_bg')
+                        ),
+                        child: Center(
+                          child: PSText(text: msgs.last,
+                              size: 10,
+                              color: '#691C1C'.color(),
+                              weight: FontWeight.w900),
+                        ),
+                      ),
+                    ),
+                    PSImg(name: 'ps_user_n_${widget.userData.id}',
+                        width: 49,
+                        height: 49),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 198.h),
+            Transform.translate(
+              offset: Offset(translateX2 + 0.w, 0),
+              child: Container(
+                width: 210,
+                height: 32,
+                decoration: BoxDecoration(
+                    color: '#F3D516'.color(),
+                    borderRadius: BorderRadius.circular(16)
+                ),
+                child: Center(
+                  child: PSStrokeText(text: 'Earnings From Quiz Game',
+                      size: 14,
+                      color: '#FFFFFF'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 1,
+                      skColor: '#000000'.color()),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Transform.translate(
+              offset: Offset(translateX2 + 70.w, 0),
+              child: Container(
+                width: 210,
+                height: 32,
+                decoration: BoxDecoration(
+                    color: '#24A7ED'.color(),
+                    borderRadius: BorderRadius.circular(16)
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 43.w),
+                    PSStrokeText(text: 'Ads Watched:',
+                        size: 14,
+                        color: '#FFFFFF'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 1,
+                        skColor: '#000000'.color()),
+                    PSStrokeText(text: ' ${widget.userData.adsWatched}',
+                        size: 14,
+                        color: '#F3D515'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 1,
+                        skColor: '#000000'.color()),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Transform.translate(
+              offset: Offset(translateX2 + 10.w, 0),
+              child: Container(
+                width: 210,
+                height: 32,
+                decoration: BoxDecoration(
+                    color: '#3BC14F'.color(),
+                    borderRadius: BorderRadius.circular(16)
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(width: 28.w),
+                    PSStrokeText(text: 'Total Earning:',
+                        size: 14,
+                        color: '#FFFFFF'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 1,
+                        skColor: '#000000'.color()),
+                    PSStrokeText(text: ' \$${widget.userData.totalEarning}',
+                        size: 14,
+                        color: '#F3D515'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 1,
+                        skColor: '#000000'.color()),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 64.h),
+            ParticleButton(
+              onTap: () {
+                ps_event_fire('showpig_page_c', {});
+              if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                PigTabController.switchTo(Random().nextInt(2) + 1);
+              },
+              child: Container(
+                width: 272,
+                height: 71,
+                decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
+                child: Center(
+                  child: PSStrokeText(
+                    text: 'Go Earn',
+                    size: 24,
+                    color: '#FFFFFF'.color(),
+                    weight: FontWeight.w900,
+                    skWidth: 2,
+                    skColor: '#025003'.color(),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Positioned(
+          left: (0.width(context) - 211) * 0.5,
+          top: 148.h,
+          child: PSImg(
+            name:
+            'ps_b_pig_icon_${widget.is_gold == true ? 2 : 0}',
+            width: 211,
+            height: 208,
+          ),
+        ),
+        Positioned(
+          top: 330.h,
+          left: (0.width(context) - 141) * 0.5,
+          child: Container(
+            width: 141,
+            height: 34,
+            decoration: BoxDecoration(
+              image: PSDImg('ps_act_bg'),
+            ),
+            child: Consumer<PSLocalProvider>(
+              builder: (context, provider, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PSImg(
+                        name: 'ps_dolas_2',
+                        width: 26,
+                        height: 21),
+                    SizedBox(width: 5),
+                    PSText(
+                      text:
+                      '\$${widget.userData.totalEarning}',
+                      size: 20,
+                      color: '#8B0002'.color(),
+                      weight: FontWeight.w900,
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+        Positioned(
+          right: 27.w,
+          top: 128.h,
+          child: ParticleButton(
+            child: PSImg(name: "ps_close_icon", width: 40, height: 40),
+            onTap: () {
+              Navigator.pop(context, 0);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// 获取收益
+class PSPoGetAwardDog extends StatefulWidget {
+  final double award;
+  PSPoGetAwardDog({super.key, required this.award});
+
+  @override
+  State<PSPoGetAwardDog> createState() => PSPoGetAwardDogState();
+}
+
+class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
+    with SingleTickerProviderStateMixin {
+
+  late spine.SpineWidgetController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
+    // 页面 2 秒后自动关闭
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        Navigator.pop(context, 0);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 0.width(context),
+      height: 0.height(context),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 256,
+            height: 57,
+            decoration: BoxDecoration(
+                color: '#000000'.color(opacity: 0.7),
+                borderRadius: BorderRadius.circular(12)
+            ),
+            child: Row(
+              mainAxisAlignment: .center,
+              children: [
+                if (PSLocalProvider.instance.ps_pig_level == 0)
+                 PSGradientStrokeText(text: 'My Account: ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
+                if (PSLocalProvider.instance.ps_pig_level == 0)
+                  PSGradientNumberRoller(
+                  value: PSLocalProvider.instance.ps_dolas_number,
+                  duration: 800,
+                  fontSize: 22.0,
+                  gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
+                  borderColor: Colors.transparent,
+                  borderWidth: 0.0,
+                  decimalPlaces: 2,
+                ),
+                if (PSLocalProvider.instance.ps_pig_level == 1)
+                  PSGradientStrokeText(text: 'My Diamond:  ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
+                if (PSLocalProvider.instance.ps_pig_level == 1)
+                  PSGradientNumberRoller(
+                    value: PSLocalProvider.instance.ps_pig_level_index,
+                    duration: 800,
+                    fontSize: 22.0,
+                    gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
+                    borderColor: Colors.transparent,
+                    borderWidth: 0.0,
+                    decimalPlaces: 2,
+                    showDolas: false,
+                  ),
+                if (PSLocalProvider.instance.ps_pig_level == 2)
+                  PSGradientStrokeText(text: 'My Gold:  ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
+                if (PSLocalProvider.instance.ps_pig_level == 2)
+                  PSGradientNumberRoller(
+                    value: PSLocalProvider.instance.ps_pig_level_index,
+                    duration: 800,
+                    fontSize: 22.0,
+                    gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
+                    borderColor: Colors.transparent,
+                    borderWidth: 0.0,
+                    decimalPlaces: 2,
+                    showDolas: false,
+                  ),
+              ],
+            ),
+          ),
+          SizedBox(height: 28.h),
+          Container(
+            width: 256,
+            height: 219,
+            decoration: BoxDecoration(
+                color: '#000000'.color(opacity: 0.7),
+                borderRadius: BorderRadius.circular(16)
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 18),
+                if (PSLocalProvider.instance.ps_pig_level == 0)
+                  PSStrokeText(text: 'Earned \$${widget.award}0', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                if (PSLocalProvider.instance.ps_pig_level == 0)
+                  SizedBox(
+                    width: 111,
+                    height: 109,
+                    child: spine.SpineWidget.fromAsset('assets/spine/pink/skeleton.atlas', 'assets/spine/pink/skeleton.skel', _controller),
+                  ),
+                if (PSLocalProvider.instance.ps_pig_level == 1)
+                  PSStrokeText(text: 'Earned X${widget.award} Daimond', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                if (PSLocalProvider.instance.ps_pig_level == 1)
+                 SizedBox(
+                  width: 111,
+                  height: 109,
+                  child: spine.SpineWidget.fromAsset('assets/spine/blue/skeleton.atlas', 'assets/spine/blue/skeleton.skel', _controller),
+                 ),
+                if (PSLocalProvider.instance.ps_pig_level == 2)
+                  PSStrokeText(text: 'Earned X${widget.award} Gold', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                if (PSLocalProvider.instance.ps_pig_level == 2)
+                  SizedBox(
+                    width: 111,
+                    height: 109,
+                    child: spine.SpineWidget.fromAsset('assets/spine/golden/skeleton.atlas', 'assets/spine/golden/skeleton.skel', _controller),
+                  ),
+                SizedBox(height: 11),
+                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                 PSText(text: 'X${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
+                if (PSLocalProvider.instance.ps_pig_level == 0)
+                  PSText(text: '+\$${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
+              ],
+            ),
+          ),
+
         ],
       ),
     );

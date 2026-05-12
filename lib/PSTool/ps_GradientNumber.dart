@@ -13,6 +13,7 @@ class PSGradientNumberRoller extends StatefulWidget {
   final double borderWidth; // 边线宽度
   final int decimalPlaces; // 小数位数，默认2位
   final num currentValue; // 初始值
+  final bool showDolas; // 初始值
 
   const PSGradientNumberRoller({
     Key? key,
@@ -24,6 +25,7 @@ class PSGradientNumberRoller extends StatefulWidget {
     this.borderWidth = 1.0,
     this.decimalPlaces = 2,
     this.currentValue = 0,
+    this.showDolas = true,
   }) : super(key: key);
 
   @override
@@ -89,10 +91,10 @@ class _PSGradientNumberRollerState extends State<PSGradientNumberRoller>
   String _formatNumber(num number) {
     // 如果是整数类型且不需要小数位，直接返回整数格式
     if (number is int && widget.decimalPlaces == 0) {
-      return '${PSLocalProvider.instance.ps_login_status ? '\$' : ''}${number.toString()}';
+      return '${widget.showDolas ? '\$' : ''}${number.toString()}';
     }
     // 否则按小数处理，保留指定小数位数
-    return '${PSLocalProvider.instance.ps_login_status ? '\$' : ''}${number.toStringAsFixed(widget.decimalPlaces)}';
+    return '${widget.showDolas ? '\$' : ''}${number.toStringAsFixed(widget.decimalPlaces)}';
   }
 
   @override

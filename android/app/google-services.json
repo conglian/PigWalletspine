@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "340165238624",
+    "project_id": "gp-21735",
+    "storage_bucket": "gp-21735.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340165238624:android:93cc65b1a64f1cefaac805",
+        "android_client_info": {
+          "package_name": "com.piggywallet.spinfun.pro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDGyR6SdZEwBeju-sHYQ2eWX9H1h3gi24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:gs152webkit/gs152webkit.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
@@ -30,10 +31,10 @@ class _PSWebkitviewState extends State<PSWebkitview> {
             final url = request.url;
             "$TAG intercept: $url".log();
 
-            // if (navRedirect(url)) {
-            //   urlJump(url);
-            //   return NavigationDecision.prevent; // 拦截特殊 scheme，不加载
-            // }
+            if (navRedirect(url)) {
+              urlJump(url);
+              return NavigationDecision.prevent; // 拦截特殊 scheme，不加载
+            }
 
             return NavigationDecision.navigate; // 正常加载
           },
@@ -42,30 +43,30 @@ class _PSWebkitviewState extends State<PSWebkitview> {
       ..loadRequest(Uri.parse(widget.url));
   }
 
-  // urlJump(String url) async {
-  //   "$TAG==_jumpNext=canJump:$url=".log();
-  //   if (url.startsWith("intent://")) {
-  //     try {
-  //       // StepWinUtils().parse_android_intent(data: u);
-  //       Gs130pacess().openBrowser(url.toString());
-  //     } catch (e) {
-  //       //
-  //     }
-  //   } else {
-  //     try {
-  //       String u_go = url;
-  //       if (u_go.startsWith("market://details?id=")) {
-  //         u_go = u_go.replaceAll(
-  //           "market://details",
-  //           "https://play.google.com/store/apps/details",
-  //         );
-  //       }
-  //       launchUrl(Uri.parse(u_go), mode: LaunchMode.externalApplication);
-  //     } catch (e) {
-  //       //
-  //     }
-  //   }
-  // }
+  urlJump(String url) async {
+    "$TAG==_jumpNext=canJump:$url=".log();
+    if (url.startsWith("intent://")) {
+      try {
+        // StepWinUtils().parse_android_intent(data: u);
+        Gs152webkit().openBrowser(url.toString());
+      } catch (e) {
+        //
+      }
+    } else {
+      try {
+        String u_go = url;
+        if (u_go.startsWith("market://details?id=")) {
+          u_go = u_go.replaceAll(
+            "market://details",
+            "https://play.google.com/store/apps/details",
+          );
+        }
+        launchUrl(Uri.parse(u_go), mode: LaunchMode.externalApplication);
+      } catch (e) {
+        //
+      }
+    }
+  }
 
   bool navRedirect(String uuuu) {
     if (uuuu.startsWith("market:") ||

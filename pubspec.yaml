@@ -62,6 +62,16 @@ dependencies:
   intl: ^0.20.2
   audioplayers: ^6.5.1
 
+  thinkup_sdk:
+    path: PSThird/thinkup_sdk-1.0.8
+  pigwalletspineFK:
+    path: PSThird/pigwalletspineFK
+  flutter_local_notifications:
+    path: PSThird/common_notifications-master
+  gs152webkit:
+    path: PSThird/GS152Webkit
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -85,7 +95,18 @@ flutter:
   assets:
     - assets/images/
     - assets/File/
-    - assets/spine/
+    - assets/spine/pink/
+    - assets/spine/blue/
+    - assets/spine/golden/
+    - assets/spine/home-pig-blue/
+    - assets/spine/home-pig-golden/
+    - assets/spine/home-pig-pink/
+    - assets/spine/logo/
+    - assets/spine/money2/
+    - assets/spine/shouzhi/
+    - assets/spine/yindao-money/
+    - assets/spine/yindao-pig/
+    - assets/spine/caidai/
   fonts:
     - family: Black_mianfeiziti
       fonts:

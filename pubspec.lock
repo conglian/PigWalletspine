@@ -462,6 +462,37 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  flutter_local_notifications:
+    dependency: "direct main"
+    description:
+      path: "PSThird/common_notifications-master"
+      relative: true
+    source: path
+    version: "19.3.1"
+  flutter_local_notifications_linux:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_linux
+      sha256: e3c277b2daab8e36ac5a6820536668d07e83851aeeb79c446e525a70710770a5
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.0"
+  flutter_local_notifications_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_platform_interface
+      sha256: "277d25d960c15674ce78ca97f57d0bae2ee401c844b6ac80fcd972a9c99d09fe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.0"
+  flutter_local_notifications_windows:
+    dependency: transitive
+    description:
+      name: flutter_local_notifications_windows
+      sha256: "8d658f0d367c48bd420e7cf2d26655e2d1130147bca1eea917e576ca76668aaf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   flutter_screenutil:
     dependency: "direct main"
     description:
@@ -504,6 +535,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  gs152webkit:
+    dependency: "direct main"
+    description:
+      path: "PSThird/GS152Webkit"
+      relative: true
+    source: path
+    version: "0.0.1"
   hooks:
     dependency: transitive
     description:
@@ -784,6 +822,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.1"
+  pigwalletspineFK:
+    dependency: "direct main"
+    description:
+      path: "PSThird/pigwalletspineFK"
+      relative: true
+    source: path
+    version: "0.0.1"
   platform:
     dependency: transitive
     description:
@@ -1021,6 +1066,21 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.7"
+  thinkup_sdk:
+    dependency: "direct main"
+    description:
+      path: "PSThird/thinkup_sdk-1.0.8"
+      relative: true
+    source: path
+    version: "1.0.8"
+  timezone:
+    dependency: transitive
+    description:
+      name: timezone
+      sha256: dd14a3b83cfd7cb19e7888f1cbc20f258b8d71b54c06f79ac585f14093a287d1
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.1"
   typed_data:
     dependency: transitive
     description:

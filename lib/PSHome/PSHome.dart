@@ -282,7 +282,6 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                           child: ParticleButton(
                             onTap: () async {
                               if (index == 0) {
-                                context.tipShow(PSPopAwardToolDialog(type: .dolas, isGuide: false));
                                 // await PSLocalProvider.instance.updateint(
                                 //   PSLocalProvider
                                 //       .instance
@@ -424,7 +423,7 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                       },
                       (finished) async {
                         // X2
-                        await PSLocalProvider.instance.updateint(
+                        await PSLocalProvider.instance.updatedouble(
                           PSLocalProvider.instance.ps_pig_level_indexName,
                           PSLocalProvider.instance.ps_pig_level_index + 2,
                         );

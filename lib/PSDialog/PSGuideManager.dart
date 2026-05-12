@@ -92,7 +92,7 @@ class PSGuideManager {
             ),
           );
           Future.delayed(Duration(seconds: 1),(){
-            homeKey.currentContext!.tipShow(PSGuideNew5Dialog());
+            homeKey.currentContext!.tipShow2(PSGuideNew5Dialog());
           });
         } else {
           contexts.tipShow(PSGuideNew5Dialog());
@@ -174,14 +174,14 @@ class PSGuideManager {
           Future.delayed(Duration(seconds: 1),(){
             Navigator.push(homeKey.currentContext!,
                 MaterialPageRoute(
-                  builder: (_) => PSGuideNew10Dialog(),
+                  builder: (_) => PSGuideNew10Dialog(showToast: false),
                 )
             );
           });
         } else {
           Navigator.push(contexts,
             MaterialPageRoute(
-              builder: (_) => PSGuideNew10Dialog(),
+              builder: (_) => PSGuideNew10Dialog(showToast: false),
             )
           );
         }
@@ -212,10 +212,10 @@ class PSGuideManager {
             ),
           );
           Future.delayed(Duration(seconds: 1),(){
-            homeKey.currentContext!.tipShow(PSGuideNew12Dialog());
+            homeKey.currentContext!.tipShow(PSGuideNew12Dialog(is_old: false));
           });
         } else {
-          contexts.tipShow(PSGuideNew12Dialog());
+          contexts.tipShow(PSGuideNew12Dialog(is_old: false));
         }
         break;
       case 12:

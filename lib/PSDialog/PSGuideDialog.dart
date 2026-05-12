@@ -3,10 +3,17 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:piggywalletspinearn/PSBase/PSTbaBar.dart';
 import 'package:piggywalletspinearn/PSDialog/PSGuideManager.dart';
 import 'package:piggywalletspinearn/PSHome/PSHome.dart';
+import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
+import 'package:piggywalletspinearn/PSTool/PSTBAEventTool.dart';
+import 'package:piggywalletspinearn/PSTool/ps_GradientNumber.dart';
+import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
+import 'package:piggywalletspinearn/PSTool/ps_ad_manger.dart';
+import 'package:spine_flutter/spine_widget.dart' as spine;
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import '../PSTool/ps_stroke_text.dart';
@@ -24,10 +31,11 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-
+  late spine.SpineWidgetController _controller1;
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_guide_one', {});
     // 初始化 AnimationController
     _controller = AnimationController(
       vsync: this,
@@ -42,6 +50,12 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
 
     // 启动动画
     _controller.forward();
+
+    _controller1 = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
   }
 
   @override
@@ -101,14 +115,22 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                         ),
                         children: <TextSpan>[
                           TextSpan(text: 'Growing Balance: '),
-                          TextSpan(
-                            text: '\$100',
-                            style: TextStyle(color: '#0BA408'.color()),
-                          ),
                         ],
                       ),
                     ),
                   ),
+                  Positioned(
+                      left: 174,
+                      top: 27,
+                    child: PSGradientNumberRoller(
+                    value: PSNumberHelpers().intModel!.eqRange.first,
+                    duration: 800,
+                    fontSize: 16.0,
+                    gradientColors: ['#0BA408'.color(), '#0BA408'.color()],
+                    borderColor: Colors.transparent,
+                    borderWidth: 0.0,
+                    decimalPlaces: 2,
+                  ),),
                   Positioned(
                     left: 30,
                     top: 56,
@@ -154,7 +176,7 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                     right: 26,
                     bottom: 30,
                     child: PSStrokeText(
-                      text: '\$100',
+                      text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
                       size: 12,
                       color: '#FFE711'.color(),
                       weight: FontWeight.w900,
@@ -172,7 +194,7 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                 children: [
                   Positioned(
                       left: (0.width(context) - 156) * 0.45,
-                      child: PSImg(name: 'ps_b_pig_icon_0', width: 156, height: 154)),
+                      child: SizedBox(width: 156, height: 154, child: spine.SpineWidget.fromAsset('assets/spine/pink/skeleton.atlas', 'assets/spine/pink/skeleton.skel', _controller1),)),
                   Positioned(
                       left: (0.width(context) - 327) * 0.45,
                       top: 120,
@@ -210,6 +232,7 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
             SizedBox(height: 20.h),
             InkWell(
               onTap: () {
+                ps_event_fire('new_guide_one_c', {});
                 PSGuideManager.nextStep(context);
               },
               child: Container(
@@ -257,6 +280,7 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_guide_two', {});
 
     // 初始化控制器
     _fade1Ctrl = AnimationController(
@@ -387,6 +411,7 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
 
             InkWell(
               onTap: () {
+                ps_event_fire('new_guide_two_c', {});
                 PSGuideManager.nextStep(context);
               },
               child: Container(
@@ -425,11 +450,17 @@ class PSGuideNew3DialogState extends State<PSGuideNew3Dialog> with TickerProvide
   late AnimationController _controller;
   late Animation<Offset> _animation;
   late double screenWidth = 0.width(context); // 用于保存屏幕宽度
-
+  late spine.SpineWidgetController _controller1;
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_guide_three', {});
 
+    _controller1 = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
 
     // 初始化动画控制器，设置为无限循环
     _controller = AnimationController(
@@ -503,10 +534,11 @@ class PSGuideNew3DialogState extends State<PSGuideNew3Dialog> with TickerProvide
                 ],
               ),
             ),
-            PSImg(name: 'ps_guide3_3', width: 375, height: 245),
+            SizedBox(width: 375, height: 245, child: spine.SpineWidget.fromAsset('assets/spine/yindao-money/skeleton.atlas', 'assets/spine/yindao-money/skeleton.skel', _controller1)),
             SizedBox(height: 10.h),
             InkWell(
               onTap: () {
+                ps_event_fire('new_guide_three_c', {});
                 PSGuideManager.nextStep(context);
               },
               child: Container(
@@ -557,6 +589,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_home_guide', {});
 
     // 初始化动画控制器
     _controller = AnimationController(
@@ -636,7 +669,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
                       width: 211,
                       height: 208,
                       decoration: BoxDecoration(
-                          image: PSDImg('ps_b_pig_icon_2')
+                          image: PSDImg('ps_b_pig_icon_0')
                       ),
                       child: Column(
                         children: [
@@ -652,7 +685,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
                               children: [
                                 PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                                 SizedBox(width: 5,),
-                                PSText(text: '\$0.00', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                                PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}0', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                               ],
                             ),
                           )
@@ -725,6 +758,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
               maintainAnimation: true, // Maintain animation as well
               child: InkWell(
                 onTap: () {
+                  ps_event_fire('new_home_guide_c', {});
                   PSGuideManager.nextStep(context);
                 },
                 child: Container(
@@ -768,9 +802,13 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
 
   final firstText = 'Fed it more apples, and boom — it evolved into a Gold Pig.That’s when the payout unlocked.';
 
+  late spine.SpineWidgetController _controller1;
+
   @override
   void initState() {
     super.initState();
+
+    ps_event_fire('new_apple_guide', {});
 
     // 初始化动画控制器
     _controller = AnimationController(
@@ -793,6 +831,12 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
           showAppleBubble = true; // 文字显示完成后，显示ps_apple_bubble
         });
       }
+    });
+
+    _controller1 = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
     });
   }
 
@@ -874,9 +918,34 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                       top: 0,
                       right: 42.w,
                       child: InkWell(
-                        onTap: (){
-                          Navigator.pop(context,0);
-                          PSGuideManager.nextStep(context);
+                        onTap: () async {
+                          ps_event_fire('new_apple_guide_c', {});
+                          //
+                          if (PSLocalProvider.instance.new_ad_console == 1) {
+                             // ad
+                             PSPigAds().ps_showAd(context, 'asd_rv', onCacheResponse: (onCacheResponse){
+                               Navigator.pop(context,0);
+                               PSGuideManager.nextStep(context);
+                             }, adDidClosed: (adDidClosed) async {
+                               double award = PSNumberHelpers().getPrizeWithDolasNum();
+                               await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
+                               if (!context.mounted) return;
+                               int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                               if (code >= 0){
+                                 Navigator.pop(context,0);
+                                 PSGuideManager.nextStep(context);
+                               }
+                             });
+                          } else {
+                            Navigator.pop(context,0);
+                            double award = PSNumberHelpers().getPrizeWithDolasNum();
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
+                            if (!context.mounted) return;
+                            int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                            if (code >= 0){
+                              PSGuideManager.nextStep(context);
+                            }
+                          }
                         },
                         child: Container(
                           width: 62,
@@ -892,6 +961,19 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                         ),
                       ),
                     ),
+                  if (showAppleBubble)
+                    Positioned(
+                      top: 0,
+                      right: 42.w,
+                      child: SizedBox(
+                      width: 55,
+                      height: 88,
+                      child: spine.SpineWidget.fromAsset(
+                        'assets/spine/shouzhi/skeleton.atlas',
+                        'assets/spine/shouzhi/skeleton.skel',
+                        _controller1,
+                      ),
+                    ),)
                 ],
               ),
             ),
@@ -910,6 +992,8 @@ class PSGuideNew6Dialog extends StatefulWidget {
 }
 
 class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProviderStateMixin {
+
+
   @override
   void initState() {
     super.initState();
@@ -935,7 +1019,7 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
               width: 211,
               height: 208,
               decoration: BoxDecoration(
-                  image: PSDImg('ps_b_pig_icon_2')
+                  image: PSDImg('ps_b_pig_icon_0')
               ),
               child: Column(
                 children: [
@@ -951,7 +1035,7 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
                       children: [
                         PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                         SizedBox(width: 5,),
-                        PSText(text: '\$0.00', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                       ],
                     ),
                   )
@@ -970,18 +1054,22 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
                 decoration: BoxDecoration(
                   image: PSDImg('ps_guide6_0')
                 ),
-                child: Column(
+                child: Stack(
                   children: [
-                    Spacer(),
-                    Row(
-                      mainAxisAlignment: .center,
+                    Column(
                       children: [
-                        PSImg(name: 'ps_act_0', width: 120, height: 32),
-                        SizedBox(width: 10.w),
-                        PSText(text: '+\$20.00', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        Spacer(),
+                        Row(
+                          mainAxisAlignment: .center,
+                          children: [
+                            PSImg(name: 'ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 120, height: 32),
+                            SizedBox(width: 10.w),
+                            PSText(text: '+\$${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
+                          ],
+                        ),
+                        SizedBox(height: 64)
                       ],
                     ),
-                    SizedBox(height: 64)
                   ],
                 ),
               ),
@@ -990,6 +1078,14 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
         ),
       ),
     );
+  }
+
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
   }
 }
 
@@ -1005,6 +1101,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_first_prize_pop', {});
   }
 
   @override
@@ -1027,7 +1124,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
               width: 211,
               height: 208,
               decoration: BoxDecoration(
-                  image: PSDImg('ps_b_pig_icon_2')
+                  image: PSDImg('ps_b_pig_icon_0')
               ),
               child: Column(
                 children: [
@@ -1043,7 +1140,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                       children: [
                         PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                         SizedBox(width: 5,),
-                        PSText(text: '\$0.00', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                       ],
                     ),
                   ),
@@ -1062,7 +1159,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                   SizedBox(height: 24),
                   PSText(text: '💰 Your First commission has arrived!', size: 16, color: '#620F0F'.color(), weight: FontWeight.w900),
                   PSImg(name: 'ps_guide7_1', width: 86, height: 78),
-                  PSStrokeText(text: 'Deposit amount：\$6', size: 24, color: '#FFE11C'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  PSStrokeText(text: 'Deposit amount：\$${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#FFE11C'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
                   SizedBox(height: 12),
                   RichText(
                     textAlign: TextAlign.center,
@@ -1077,7 +1174,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                         TextSpan(text: 'An advertiser just paid you.\n'),
                         TextSpan(text: 'Just'),
                         TextSpan(
-                          text: ' \$50 ',
+                          text: ' \$${0.to2Double(PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number)} ',
                           style: TextStyle(color: '#199E24'.color()),
                         ),
                         TextSpan(text: 'more to cash out!'),
@@ -1088,6 +1185,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                   ParticleButton(
                     onTap: () {
                       Navigator.pop(context, 0);
+                      ps_event_fire('new_first_prize_pop_c', {});
                       PSGuideManager.nextStep(context);
                     },
                     child: Container(
@@ -1136,6 +1234,8 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_quiz_guide', {});
+
   }
 
   @override
@@ -1241,13 +1341,14 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                     child: ParticleButton(
                       onTap: () {
                         if (is_quizing) return;
+                        ps_event_fire('new_quiz_guide_c', {});
                           setState(() {
                             is_quizing = true;
                             anwer_a = true;
                             anwer_b = false;
                           });
                         Future.delayed(Duration(milliseconds: 1000), () async {
-                         var code = await context.tipShow(PSPopAwardToolDialog(type: .dolas, isGuide: true));
+                         var code = await context.tipShow(PSPopAwardToolDialog(type: .quiz, isGuide: true, award: PSNumberHelpers().intModel!.firstAdPrize));
                          if (code >= 0) {
                            answerA.removeAt(row);
                            answerB.removeAt(row);
@@ -1295,16 +1396,17 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                     child: ParticleButton(
                       onTap: () {
                         if (is_quizing) return;
+                        ps_event_fire('new_quiz_guide_c', {});
+                        row += 1;
+                        if (row + 1 >= ques.length){
+                          row = 0;
+                        }
                         setState(() {
                           is_quizing = true;
                           anwer_b = false;
                           anwer_a = true;
                         });
                         Future.delayed(Duration(milliseconds: 1000), () {
-                          row += 1;
-                          if (row >= ques.length){
-                            row = 0;
-                          }
                           setState(() {
                             is_quizing = false;
                             anwer_b = false;
@@ -1390,6 +1492,7 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog> with TickerProvide
   @override
   void initState() {
     super.initState();
+    ps_event_fire('new_confirm_account_pop', {});
   }
 
   @override
@@ -1479,6 +1582,7 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog> with TickerProvide
                   ParticleButton(
                     onTap: () {
                       Navigator.pop(context, 0);
+                      ps_event_fire('new_confirm_account_pop_c', {});
                       PSGuideManager.nextStep(context);
                     },
                     child: Container(
@@ -1517,7 +1621,8 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog> with TickerProvide
 
 
 class PSGuideNew10Dialog extends StatefulWidget {
-  const PSGuideNew10Dialog({super.key});
+  final bool showToast;
+  const PSGuideNew10Dialog({super.key, required this.showToast});
 
   @override
   State<PSGuideNew10Dialog> createState() => PSGuideNew10DialogState();
@@ -1538,6 +1643,7 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
   @override
   void initState() {
     super.initState();
+    ps_event_fire('input_account_page', {});
   }
 
   @override
@@ -1581,7 +1687,7 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                     children: [
                       SizedBox(width: 28.w),
                       ParticleButton(child: Container(width: 153.w, height: 58.h, decoration: BoxDecoration(
-                        image: PSDImg(isBrazilianPortuguese(context) == true ? 'ps_act_0_pt' : 'ps_act_0'),
+                        image: PSDImg(isBrazilianPortuguese(context) == true ? 'ps_act_0pt' : 'ps_act_0'),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           width: 2,
@@ -1590,11 +1696,12 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                       )), onTap: (){
                           setState(() {
                             seletcd_row = 0;
+                            PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 0);
                           });
                       }),
                       Spacer(),
                       ParticleButton(child: Container(width: 153.w, height: 58.h, decoration: BoxDecoration(
-                          image: PSDImg(isBrazilianPortuguese(context) == true ? 'ps_act_1_pt' : 'ps_act_1'),
+                          image: PSDImg(isBrazilianPortuguese(context) == true ? 'ps_act_1pt' : 'ps_act_1'),
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                               width: 2,
@@ -1603,6 +1710,7 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                       )), onTap: (){
                         setState(() {
                           seletcd_row = 1;
+                          PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 1);
                         });
                       }),
                       SizedBox(width: 28.w),
@@ -1797,27 +1905,38 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                       child: PSText(text: 'Confrim', size: 20, color: '#FFFFFF'.color(), weight: FontWeight.w900),
                     ),
                   ), onTap: (){
+                    ps_event_fire('input_account_page_c', {});
                     if (isBrazilianPortuguese(context) == true) {
                       if (_controller.text.length <= 0){
                         PSDialogTool.toast(context, 'Please Input Your Name');
                       } else if (_controller2.text.length <= 0){
                         PSDialogTool.toast(context, 'Please Input Your Account ID');
                       } else {
-                          Navigator.pop(context, 1);
+                        Navigator.pop(context, 1);
+                        if (widget.showToast){
+                          context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+                        } else {
+                          PSLocalProvider.instance.updateString(PSLocalProvider.instance.ps_account_idName, _controller2.text);
                           Future.delayed(Duration(milliseconds: 100), () async {
                             PSGuideManager.nextStep(homeKey.currentContext!);
-                          });
+                          }); 
                         }
+                      }
                     } else {
                       if (_controller.text.length <= 0){
                         PSDialogTool.toast(context, isBrazilianPortuguese(context) == false ? 'Please Input Your Account ID' : 'Please Input Your Name');
                       } else {
+                        PSLocalProvider.instance.updateString(PSLocalProvider.instance.ps_account_idName, _controller.text);
                         Navigator.pop(context, 1);
-                        Future.delayed(Duration(milliseconds: 100), () async {
-                          PSGuideManager.nextStep(homeKey.currentContext!);
-                        });
+                        if (widget.showToast){
+                          context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+                        } else {
+                          Future.delayed(Duration(milliseconds: 100), () async {
+                            PSGuideManager.nextStep(homeKey.currentContext!);
+                          }); 
+                        }
                       }
-                      
+
                     }
                   }),
                 ]
@@ -1847,6 +1966,8 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog> with TickerProvi
   @override
   void initState() {
     super.initState();
+    ps_event_fire('account_suc_pop', {});
+
   }
 
   @override
@@ -1893,7 +2014,7 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog> with TickerProvi
                                     fontFamily: 'Black_mianfeiziti',
                                   ),
                                   children: <TextSpan>[
-                                    TextSpan(text: 'Dear User 1***2334：\n',
+                                    TextSpan(text: 'Dear User ${PSLocalProvider.instance.ps_account_id}：\n',
                                         style: TextStyle(color: '#134475'.color(), fontSize: 14.0)),
                                     TextSpan(text: 'Your payment information has\nbeen confirmed successfully,\nYou are a new user, it will be\nsuper easy to withdraw cash today！'),
                                   ],
@@ -1921,7 +2042,7 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog> with TickerProvi
                                       ),
                                       children: <TextSpan>[
                                         TextSpan(text: 'Only '),
-                                        TextSpan(text: '\$4 ',
+                                        TextSpan(text: '\$${PSLocalProvider.instance.ps_dolas_number} ',
                                             style: TextStyle(color: '#199D28'.color(), fontSize: 14.0)),
                                         TextSpan(text: 'Left To Withdraw'),
                                       ],
@@ -1936,6 +2057,7 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog> with TickerProvi
                             ParticleButton(
                               onTap: () {
                                 Navigator.pop(context, 0);
+                                ps_event_fire('account_suc_pop_c', {});
                                 PSGuideManager.nextStep(context);
                               },
                               child: Container(
@@ -1973,16 +2095,34 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog> with TickerProvi
 }
 
 class PSGuideNew12Dialog extends StatefulWidget {
-  const PSGuideNew12Dialog({super.key});
+  final bool is_old;
+  const PSGuideNew12Dialog({super.key, required this.is_old});
 
   @override
   State<PSGuideNew12Dialog> createState() => PSGuideNew12DialogState();
 }
 
 class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProviderStateMixin {
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  bool open_notice = true;
+
   @override
   void initState() {
     super.initState();
+    updatenoticeStatus();
+    ps_event_fire('grow_bonus_pop', {'pop_from' : widget.is_old ? 'old' : 'new'});
+  }
+
+  Future<void> updatenoticeStatus() async {
+    var nfPermission = await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
+    if(nfPermission??false){
+      open_notice = true;
+    }else{
+      open_notice = false;
+    }
+    setState(() {});
   }
 
   @override
@@ -2001,6 +2141,7 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
             children: [
               Spacer(),
               ParticleButton(child: PSImg(name: 'ps_close_icon', width: 48, height: 48), onTap: (){
+                ps_event_fire('grow_bonus_pop_c', {'pop_from' : widget.is_old ? 'old' : 'new'});
                 Navigator.pop(context, 0);
                 PSGuideManager.nextStep(context);
               }),
@@ -2019,16 +2160,30 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
                 SizedBox(height: 28),
                 PSStrokeText(text: 'Grow Bonus Activated!', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1051A4'.color()),
                 SizedBox(height: 42),
-                PSImg(name: 'ps_grow_big', width: 111, height: 109,),
+                PSImg(name: 'ps_pig_0', width: 111, height: 109,),
                 SizedBox(height: 14),
-                PSText(text: "You've saved \$30.0 today", size: 18, color: '#EA8100'.color(), weight: FontWeight.w900),
+                PSText(text: "You've saved \$${PSLocalProvider.instance.ps_dolas_number} Today", size: 18, color: '#EA8100'.color(), weight: FontWeight.w900),
                 SizedBox(height: 25),
-                PSText(text: '💡 Come back tomorrow to feed\nyour piggy again and\nget a +3% cash boost!', size: 16, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 3, align: .center),
+                PSText(text: '💡 Come back tomorrow to feed\nyour piggy again and\nget a +${PSLocalProvider.instance.add_olduser_point}% cash boost!', size: 16, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 3, align: .center),
                 SizedBox(height: 60),
-                ParticleButton(
-                  onTap: () {
-                    Navigator.pop(context, 0);
-                    PSGuideManager.nextStep(context);
+                if (open_notice == true)
+                 ParticleButton(
+                  onTap: () async {
+                    ps_event_fire('grow_bonus_pop_c', {'pop_from' : widget.is_old ? 'old' : 'new'});
+                    if (widget.is_old == true) {
+                      // 加钱
+                      double award = 0.to2Double(PSLocalProvider.instance.ps_dolas_number * PSLocalProvider.instance.add_olduser_point);
+                      PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + award);
+                      if (!context.mounted) return;
+                      int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                      if (code >= 0){
+                        Navigator.pop(context, 0);
+                        PSGuideManager.nextStep(context);
+                      }
+                    } else {
+                      Navigator.pop(context, 0);
+                      PSGuideManager.nextStep(context);
+                    }
                   },
                   child: Container(
                     width: 260.w,
@@ -2047,32 +2202,36 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
                       ),
                     ),
                   ),
-                ),
+                 ),
+                if (open_notice == false)
+                  ParticleButton(
+                    onTap: () async {
+                      ps_event_fire('grow_bonus_pop_c', {'pop_from' : widget.is_old ? 'old' : 'new'});
+                      Navigator.pop(context, 0);
+                      int code = await context.tipShow(PSPopTipsToolDialog(adStatus: .noticeOpen));
+                      if (code >= 0){
+                        PSGuideManager.nextStep(context);
+                      }
+                    },
+                    child: Container(
+                      width: 260.w,
+                      height: 70.h,
+                      decoration: BoxDecoration(
+                          image: PSDImg('ps_quzi_btn_n')
+                      ),
+                      child: Center(
+                        child: PSStrokeText(
+                          text: 'Reminder Me',
+                          size: 24,
+                          color: '#FFFFFF'.color(),
+                          weight: FontWeight.w900,
+                          skWidth: 2,
+                          skColor: '#025003'.color(),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
-            ),
-          ),
-          SizedBox(height: 32.h),
-          ParticleButton(
-            onTap: () {
-              Navigator.pop(context, 0);
-              PSGuideManager.nextStep(context);
-            },
-            child: Container(
-              width: 260.w,
-              height: 70.h,
-              decoration: BoxDecoration(
-                  image: PSDImg('ps_quzi_btn_n')
-              ),
-              child: Center(
-                child: PSStrokeText(
-                  text: 'Reminder Me',
-                  size: 24,
-                  color: '#FFFFFF'.color(),
-                  weight: FontWeight.w900,
-                  skWidth: 2,
-                  skColor: '#025003'.color(),
-                ),
-              ),
             ),
           ),
         ],

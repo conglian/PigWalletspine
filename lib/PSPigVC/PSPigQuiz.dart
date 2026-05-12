@@ -7,18 +7,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:piggywalletspinearn/PSDialog/PSDialog.dart';
 import 'package:piggywalletspinearn/PSHome/PSHome.dart';
+import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/main.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:spine_flutter/spine_widget.dart' as spine;
 
 import '../PSBase/PSTbaBar.dart';
 import '../PSGuide/PSGuideAThree.dart';
 import '../PSModel/PSQuestionModel.dart';
 import '../PSTool/AESHelper.dart';
+import '../PSTool/PSTBAEventTool.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import '../PSTool/ps_stroke_text.dart';
+import 'PSPigCash.dart';
 import 'PSPigHome.dart';
 
 class PSPigQuiz extends StatefulWidget {
@@ -32,6 +36,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
   bool is_quizing = false;
   bool anwer_a = false;
   bool anwer_b = false;
+  bool show_answer = false;
 
   late AnimationController _topContainerController;
   late Animation<Offset> _topContainerOffset;
@@ -45,10 +50,20 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
   List<QuestionModel> animal_questions = [];
   List<QuestionModel> current_questions = [];
 
+  Timer? _timer;
+
+  final int _timeoutSeconds = 25;
+
+  Timer? _timer2;
+
+  final int _timeoutSeconds2 = 7;
+
+  late spine.SpineWidgetController _controller;
+
   @override
   void initState() {
     super.initState();
-
+    ps_event_fire('quiz_page', {});
     // 顶部 Container 动画
     _topContainerController = AnimationController(
       vsync: this,
@@ -84,9 +99,53 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
       // 当前帧构建完成后
       WidgetsBinding.instance.addPostFrameCallback((_) {
         getCurrentModel();
-        PSPigQuizProgressNotificationService.sendToQuizProgressNotification(0);
       });
     });
+    // 当前帧构建完成后
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PSPigQuizProgressNotificationService.sendToQuizProgressNotification(PSLocalProvider.instance.ps_quiz_all_num);
+      _startTimer();
+      _startTimer2();
+    });
+
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
+  }
+
+  /// 启动或者重置定时器
+  void _startTimer() {
+    // 如果有正在运行的定时器，先取消
+    _timer?.cancel();
+    // 开启新的定时器
+    _timer = Timer(Duration(seconds: _timeoutSeconds), () {
+      _onTimeout();
+    });
+  }
+
+  /// 启动或者重置定时器
+  void _startTimer2() {
+    // 如果有正在运行的定时器，先取消
+    _timer2?.cancel();
+
+    // 开启新的定时器
+    _timer2 = Timer(Duration(seconds: _timeoutSeconds2), () {
+        setState(() {
+          show_answer = true;
+        });
+    });
+  }
+
+  /// 超时触发事件
+  void _onTimeout() {
+    if (_timer != null){
+      _timer?.cancel();
+      if (PigTabController.currentIndex.value != 1) return;
+      ps_event_fire('quiz_toast', {});
+      context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+    }
   }
 
   // 解析本地model
@@ -120,6 +179,8 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _timer?.cancel();
+    _timer2?.cancel();
     _topContainerController.dispose();
     _bottomContainerController.dispose();
     super.dispose();
@@ -141,36 +202,6 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  // 下一题
-  Future<void> next_quiz() async {
-    if (PSLocalProvider.instance.ps_quiz_num_index + 1 >=
-        current_questions.length) {
-      await PSLocalProvider.instance.updateint(
-        PSLocalProvider.instance.ps_quiz_num_indexName,
-        0,
-      );
-      // 最后一题切换 下一个主题
-      if (PSLocalProvider.instance.ps_quiz_model_index >= 4) {
-        await PSLocalProvider.instance.updateint(
-          PSLocalProvider.instance.ps_quiz_model_indexName,
-          0,
-        );
-      } else {
-        await PSLocalProvider.instance.updateint(
-          PSLocalProvider.instance.ps_quiz_model_indexName,
-          PSLocalProvider.instance.ps_quiz_model_index + 1,
-        );
-      }
-      getCurrentModel();
-    } else {
-      await PSLocalProvider.instance.updateint(
-        PSLocalProvider.instance.ps_quiz_num_indexName,
-        PSLocalProvider.instance.ps_quiz_num_index + 1,
-      );
-      setState(() {});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,7 +217,15 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                 // 顶部 Container 自动动画
                 SlideTransition(
                   position: _topContainerOffset,
-                  child: PigblancePage(),
+                  child: Consumer<PSLocalProvider>(
+                      builder: (context, provider, child) {
+                        if (provider.ps_pig_level == 0) {
+                          return PigblancePage();
+                        } else {
+                          return PigblancePage2();
+                        }
+                      }
+                  ),
                 ),
                 SizedBox(height: 20.h),
                 Padding(
@@ -248,19 +287,27 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                           left: (343.w - 260.w) * 0.5,
                           top: 240.h,
                           child: ParticleButton(
-                            onTap: () {
+                            onTap: () async {
+                              _timer?.cancel();
+                              setState(() {
+                                show_answer = false;
+                              });
+                              _startTimer2();
                               if (is_quizing) return;
+                              await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_quiz_tap_indexName, PSLocalProvider.instance.ps_quiz_tap_index + 1);
                               if (current_questions[PSLocalProvider
                                   .instance
                                   .ps_quiz_num_index]
                                   .answer ==
                                   'a') {
+                                ps_event_fire('answer_true_c', {});
                                 setState(() {
                                   is_quizing = true;
                                   anwer_a = true;
                                   anwer_b = false;
                                 });
                               } else {
+                                ps_event_fire('answer_wrong_c', {});
                                 setState(() {
                                   is_quizing = true;
                                   anwer_a = false;
@@ -274,6 +321,11 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                     .answer ==
                                     'a') {
                                   quizAnswer();
+                                  PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_quiz_all_numName, PSLocalProvider.instance.ps_quiz_all_num + 1);
+                                  if (PSLocalProvider.instance.ps_quiz_all_num == 2 || (PSLocalProvider.instance.ps_quiz_all_num - 2) % 3 == 0){
+                                    PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_wheel_numberName, PSLocalProvider.instance.ps_wheel_number + 1);
+                                  }
+                                  PSPigQuizProgressNotificationService.sendToQuizProgressNotification(PSLocalProvider.instance.ps_quiz_all_num);
                                 }
                                 setState(() {
                                   is_quizing = false;
@@ -281,7 +333,6 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                   anwer_a = false;
                                 });
                                 next_quiz();
-                                PSPigQuizProgressNotificationService.sendToQuizProgressNotification(32);
                               });
                             },
                             child: Container(
@@ -317,19 +368,27 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                           left: (343.w - 260.w) * 0.5,
                           top: 320.h,
                           child: ParticleButton(
-                            onTap: () {
+                            onTap: () async {
+                              _timer?.cancel();
+                              setState(() {
+                                show_answer = false;
+                              });
+                              _startTimer2();
                               if (is_quizing) return;
+                              await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_quiz_tap_indexName, PSLocalProvider.instance.ps_quiz_tap_index + 1);
                               if (current_questions[PSLocalProvider
                                   .instance
                                   .ps_quiz_num_index]
                                   .answer ==
                                   'b') {
+                                ps_event_fire('answer_true_c', {});
                                 setState(() {
                                   is_quizing = true;
                                   anwer_b = true;
                                   anwer_a = false;
                                 });
                               } else {
+                                ps_event_fire('answer_wrong_c', {});
                                 setState(() {
                                   is_quizing = true;
                                   anwer_b = false;
@@ -343,13 +402,17 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                     .answer ==
                                     'b') {
                                   quizAnswer();
+                                  PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_quiz_all_numName, PSLocalProvider.instance.ps_quiz_all_num + 1);
+                                  if (PSLocalProvider.instance.ps_quiz_all_num == 2 || (PSLocalProvider.instance.ps_quiz_all_num - 2) % 3 == 0){
+                                    PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_wheel_numberName, PSLocalProvider.instance.ps_wheel_number + 1);
+                                  }
+                                  PSPigQuizProgressNotificationService.sendToQuizProgressNotification(PSLocalProvider.instance.ps_quiz_all_num);
                                 }
                                 setState(() {
                                   is_quizing = false;
                                   anwer_b = false;
                                   anwer_a = false;
                                 });
-                                PSPigQuizProgressNotificationService.sendToQuizProgressNotification(64);
                                 next_quiz();
                               });
                             },
@@ -420,6 +483,27 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
+                        Positioned(
+                          right: 10.w,
+                          top: current_questions[PSLocalProvider.instance.ps_quiz_num_index].answer == 'b'
+                              ? 330.h
+                              : 250.h,
+                          child: Visibility(
+                            visible: show_answer, // or your condition
+                            maintainState: true,       // keep the state alive
+                            maintainAnimation: true,   // keep animation running
+                            maintainSize: true,        // keep size even when hidden
+                            child: SizedBox(
+                              width: 55,
+                              height: 88,
+                              child: spine.SpineWidget.fromAsset(
+                                'assets/spine/shouzhi/skeleton.atlas',
+                                'assets/spine/shouzhi/skeleton.skel',
+                                _controller,
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -434,32 +518,52 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
 
   // 答对展示后续逻辑
   Future<void> quizAnswer() async {
-    context.tipShowAdvanced(PSPopDomandAwardADialog());
+    if (PSLocalProvider.instance.ps_pig_level == 0) {
+      int code = await context.tipShow(PSPopAwardToolDialog(type: .quiz, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
+      if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index == 3 && PSLocalProvider.instance.ps_account_id.length <= 0) {
+        if (!context.mounted) return;
+        context.tipShow(PSAboutTXDialog(isConfim: false));
+      }
+      // 到达80%提现确认
+      if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
+        context.tipShow(PSAboutTXDialog(isConfim: true));
+        PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
+      }
+
+      if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % 5 == 0){
+        context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+      }
+    } else {
+      int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .quiz, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
+      if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index == 3 && PSLocalProvider.instance.ps_account_id.length <= 0) {
+        if (!context.mounted) return;
+        context.tipShow(PSAboutTXDialog(isConfim: false));
+      }
+      // 到达80%提现确认
+      if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
+        context.tipShow(PSAboutTXDialog(isConfim: true));
+        PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
+      }
+
+      if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % 5 == 0){
+        context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+      }
+    }
+
     await PSLocalProvider.instance.updateint(
       PSLocalProvider.instance.ps_quzi_rowName,
       PSLocalProvider.instance.ps_quzi_row + 1,
     );
-    await PSLocalProvider.instance.updateint(
-      PSLocalProvider.instance.ps_pig_level_indexName,
-      PSLocalProvider.instance.ps_pig_level_index + 1,
-    );
+
     if (PSLocalProvider.instance.ps_pig_level == 0 && PSLocalProvider.instance.ps_pig_level_index >= 20){
       await PSLocalProvider.instance.updateint(
         PSLocalProvider.instance.ps_pig_level_indexName,
         0,
       );
-      await PSLocalProvider.instance.updateint(
-        PSLocalProvider.instance.ps_pig_levelName,
-        1,
-      );
     } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
       await PSLocalProvider.instance.updateint(
         PSLocalProvider.instance.ps_pig_level_indexName,
         10,
-      );
-      await PSLocalProvider.instance.updateint(
-        PSLocalProvider.instance.ps_pig_levelName,
-        2,
       );
     }
     if (PSLocalProvider.instance.ps_quzi_row >= 3) {
@@ -467,10 +571,90 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
         PSLocalProvider.instance.ps_quzi_rowName,
         0,
       );
+    }
+    await setTxProgress();
+  }
+
+  Future<void> setTxProgress() async {
+    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, PSLocalProvider.instance.ps_tx_quiz_index + 1);
+    if (PSLocalProvider.instance.ps_tx_quiz_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
+      // 重置任务
+      if (PSLocalProvider.instance.ps_tx_task_index >= PSNumberHelpers().intModel!.tixianTask.length){
+        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+      }
+    }
+    PSPigCashNotificationService.sendToQuizProgressNotification(0);
+  }
+
+  static int index = 0;
+
+  String getNextMessage() {
+    // 消息列表
+    const messages = [
+      "Keep Answering! Today's \$100 Cash Out Feels Easy",
+      "Keep Going! \$150 Is Within Reach — One Question Away",
+      "Don't Stop Now! Today's \$1000 Awaits Your Next Answer",
+      "Stay in the Game — \$200 Is Heating Up with Every Question",
+      "Keep Answering — Today's \$120 Is Just a Few Questions Away",
+      "Almost There! \$200 Feels Closer with Every Right Answer",
+    ];
+
+    // 静态变量记录索引（函数内部保持状态）
+    // 每次调用都会轮询
+    // Dart 的函数内部静态变量只初始化一次
+    // ignore: prefer_function_declarations_over_variables
+
+    String message = messages[index];
+    index = (index + 1) % messages.length;
+    return message;
+  }
+
+  // 下一题
+  Future<void> next_quiz() async {
+    if (PSLocalProvider.instance.ps_quiz_num_index + 1 >=
+        current_questions.length) {
       await PSLocalProvider.instance.updateint(
-        PSLocalProvider.instance.ps_wheel_numberName,
-        PSLocalProvider.instance.ps_wheel_number + 1,
+        PSLocalProvider.instance.ps_quiz_num_indexName,
+        0,
       );
+      // 最后一题切换 下一个主题
+      if (PSLocalProvider.instance.ps_quiz_model_index >= 4) {
+        await PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.ps_quiz_model_indexName,
+          0,
+        );
+      } else {
+        await PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.ps_quiz_model_indexName,
+          PSLocalProvider.instance.ps_quiz_model_index + 1,
+        );
+      }
+      getCurrentModel();
+    } else {
+      await PSLocalProvider.instance.updateint(
+        PSLocalProvider.instance.ps_quiz_num_indexName,
+        PSLocalProvider.instance.ps_quiz_num_index + 1,
+      );
+      setState(() {});
+    }
+    if (PSLocalProvider.instance.ps_quiz_tap_index == 3 && PSLocalProvider.instance.ps_account_id.length <= 0) {
+      if (!context.mounted) return;
+      context.tipShow(PSAboutTXDialog(isConfim: false));
+    }
+
+    if (PSLocalProvider.instance.ps_quiz_tap_index % 5 == 0){
+      context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+    }
+
+    if (PSLocalProvider.instance.ps_quiz_tap_index == 8 || PSLocalProvider.instance.ps_quiz_tap_index == 15 || PSLocalProvider.instance.ps_quiz_tap_index == 20) {
+       context.tipShow(PSQuizRankTwoDialog(quiz_num: PSLocalProvider.instance.ps_quiz_tap_index));
     }
   }
 }
@@ -486,6 +670,8 @@ class _ProgressPageState extends State<ProgressPage> {
   late double currentW = (0.width(context) - 42) / 10;
 
   ScrollController _scrollController = ScrollController();
+
+  late spine.SpineWidgetController _controller;
 
   // This function will be used to calculate the number on the wheel
   int getNumberOnWheel(int index) {
@@ -514,8 +700,8 @@ class _ProgressPageState extends State<ProgressPage> {
       if (offset > 36.w){
         offset += (offset ~/ 36.w);
       }
-      ('offset=$offset').log();
-      ('currentW=$currentW').log();
+      'offset=$offset'.log();
+      'currentW=$currentW'.log();
       _scrollController.animateTo(
         (offset.toDouble() * currentW),
         duration: Duration(milliseconds: 500),
@@ -534,6 +720,13 @@ class _ProgressPageState extends State<ProgressPage> {
         updateScrollPosition();
       });
     });
+
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
+
   }
 
   @override
@@ -596,7 +789,8 @@ class _ProgressPageState extends State<ProgressPage> {
                       child: GestureDetector(
                         onTap: isClickable
                             ? () {
-                          // Logic for handling user taps
+                          ps_event_fire('quiz_wheel_c', {});
+                          PigTabController.switchTo(2);
                         }
                             : null,
                         child: Stack(
@@ -621,6 +815,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                 skColor: '#440F02'.color(),
                               ),
                             ),
+                            Visibility(visible: isClickable,child: Positioned(left: 4,child: _PulsingIcon(child: PSImg(name: 'ps_shouzhi_icon', width: 40, height: 40)))),
                           ],
                         ),
                       ),
@@ -647,5 +842,47 @@ class PSPigQuizProgressNotificationService {
 
   static void close() {
     _streamController.close();
+  }
+}
+
+class _PulsingIcon extends StatefulWidget {
+  final Widget child;
+  const _PulsingIcon({required this.child});
+
+  @override
+  State<_PulsingIcon> createState() => _PulsingIconState();
+}
+
+class _PulsingIconState extends State<_PulsingIcon>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..repeat(reverse: true); // repeat back and forth
+
+    _animation = Tween<double>(begin: 0.8, end: 1.1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: _animation,
+      child: widget.child,
+    );
   }
 }

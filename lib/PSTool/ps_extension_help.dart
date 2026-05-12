@@ -569,7 +569,7 @@ class PSThresholdTrigger {
   /// 检查是否触发
   Future<void> check(
     int value, {
-    int step = 100,
+    int step = 5,
     required Function(int level) onTrigger,
   }) async {
     int level = (value ~/ step) * step;

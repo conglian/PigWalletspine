@@ -1,0 +1,357 @@
+skeleton.png
+size:1777,1603
+filter:Linear,Linear
+pma:true
+Group 4111_00000
+bounds:2,1600,1,1
+Group 4111_00001
+bounds:2,1600,1,1
+Group 4111_00002
+bounds:2,1600,1,1
+Group 4111_00003
+bounds:2,1600,1,1
+Group 4111_00004
+bounds:2,1600,1,1
+Group 4111_00005
+bounds:2,1600,1,1
+Group 4111_00006
+bounds:2,1600,1,1
+Group 4111_00007
+bounds:2,1600,1,1
+Group 4111_00008
+bounds:2,1600,1,1
+Group 4111_00085
+bounds:2,1600,1,1
+Group 4111_00086
+bounds:2,1600,1,1
+Group 4111_00087
+bounds:2,1600,1,1
+Group 4111_00014
+bounds:5,1082,519,1144
+offsets:16,26,540,1170
+rotate:90
+Group 4111_00015
+bounds:2,551,529,1139
+offsets:0,31,540,1170
+rotate:90
+Group 4111_00017
+bounds:2,17,532,1128
+offsets:0,42,540,1170
+rotate:90
+Group 4111_00078
+bounds:1151,1070,531,624
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00079
+bounds:1143,536,532,619
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00084
+bounds:1132,2,532,593
+offsets:0,0,540,1170
+rotate:90
+
+skeleton_2.png
+size:1770,1613
+filter:Linear,Linear
+pma:true
+Group 4111_00013
+bounds:2,1088,523,1149
+offsets:17,21,540,1170
+rotate:90
+Group 4111_00016
+bounds:2,553,533,1132
+offsets:7,38,540,1170
+rotate:90
+Group 4111_00018
+bounds:2,15,536,1123
+offsets:0,47,540,1170
+rotate:90
+Group 4111_00080
+bounds:1153,1078,533,615
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00081
+bounds:1136,541,535,608
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00082
+bounds:1127,2,537,603
+offsets:0,0,540,1170
+rotate:90
+
+skeleton_3.png
+size:2031,1621
+filter:Linear,Linear
+pma:true
+Group 4111_00012
+bounds:2,1083,536,1165
+offsets:4,5,540,1170
+rotate:90
+Group 4111_00026
+bounds:2,545,536,1013
+offsets:0,62,540,1170
+rotate:90
+Group 4111_00030
+bounds:1017,542,537,990
+offsets:3,53,540,1170
+rotate:90
+Group 4111_00031
+bounds:2,4,539,982
+offsets:1,48,540,1170
+rotate:90
+Group 4111_00052
+bounds:986,2,538,1043
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00068
+bounds:1169,1081,538,671
+offsets:0,0,540,1170
+rotate:90
+
+skeleton_4.png
+size:1949,1627
+filter:Linear,Linear
+pma:true
+Group 4111_00009
+bounds:677,544,540,1170
+rotate:90
+Group 4111_00010
+bounds:672,2,540,1170
+rotate:90
+Group 4111_00038
+bounds:2,1086,539,927
+offsets:0,9,540,1170
+rotate:90
+Group 4111_00053
+bounds:931,1086,539,1016
+offsets:1,0,540,1170
+rotate:90
+Group 4111_00069
+bounds:2,545,539,673
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00070
+bounds:2,3,540,668
+offsets:0,0,540,1170
+rotate:90
+
+skeleton_5.png
+size:2047,1628
+filter:Linear,Linear
+pma:true
+Group 4111_00011
+bounds:2,1086,540,1170
+rotate:90
+Group 4111_00019
+bounds:2,544,540,1119
+offsets:0,51,540,1170
+rotate:90
+Group 4111_00020
+bounds:2,2,540,1116
+offsets:0,54,540,1170
+rotate:90
+Group 4111_00037
+bounds:1123,544,540,922
+offsets:0,28,540,1170
+rotate:90
+Group 4111_00039
+bounds:1120,2,540,924
+offsets:0,2,540,1170
+rotate:90
+Group 4111_00060
+bounds:1174,1086,540,854
+offsets:0,0,540,1170
+rotate:90
+
+skeleton_6.png
+size:1658,1991
+filter:Linear,Linear
+pma:true
+Group 4111_00021
+bounds:2,277,540,1112
+offsets:0,58,540,1170
+rotate:90
+Group 4111_00041
+bounds:2,819,540,1170
+Group 4111_00042
+bounds:544,819,540,1170
+Group 4111_00043
+bounds:1086,820,540,1169
+offsets:0,0,540,1170
+Group 4111_00061
+bounds:1116,2,540,816
+offsets:0,0,540,1170
+
+skeleton_7.png
+size:1628,2040
+filter:Linear,Linear
+pma:true
+Group 4111_00044
+bounds:2,881,540,1157
+offsets:0,0,540,1170
+Group 4111_00045
+bounds:544,887,540,1151
+offsets:0,0,540,1170
+Group 4111_00046
+bounds:1086,907,540,1131
+offsets:0,8,540,1170
+Group 4111_00058
+bounds:1086,5,540,900
+offsets:0,0,540,1170
+Group 4111_00059
+bounds:2,2,540,877
+offsets:0,0,540,1170
+Group 4111_00062
+bounds:544,95,540,790
+offsets:0,0,540,1170
+
+skeleton_8.png
+size:1628,2044
+filter:Linear,Linear
+pma:true
+Group 4111_00022
+bounds:544,933,540,1109
+offsets:0,61,540,1170
+Group 4111_00036
+bounds:544,2,540,929
+offsets:0,34,540,1170
+Group 4111_00047
+bounds:2,913,540,1129
+offsets:0,0,540,1170
+Group 4111_00048
+bounds:1086,937,540,1105
+offsets:0,5,540,1170
+Group 4111_00057
+bounds:1086,4,540,931
+offsets:0,0,540,1170
+Group 4111_00063
+bounds:2,161,540,750
+offsets:0,0,540,1170
+
+skeleton_9.png
+size:1628,2045
+filter:Linear,Linear
+pma:true
+Group 4111_00023
+bounds:544,955,540,1088
+offsets:0,65,540,1170
+Group 4111_00024
+bounds:1086,959,540,1084
+offsets:0,66,540,1170
+Group 4111_00035
+bounds:1086,2,540,955
+offsets:0,28,540,1170
+Group 4111_00040
+bounds:2,30,540,914
+offsets:0,0,540,1170
+Group 4111_00049
+bounds:2,946,540,1097
+offsets:0,0,540,1170
+Group 4111_00056
+bounds:544,2,540,951
+offsets:0,0,540,1170
+
+skeleton_10.png
+size:1784,1812
+filter:Linear,Linear
+pma:true
+Group 4111_00025
+bounds:544,240,540,1028
+offsets:0,65,540,1170
+Group 4111_00050
+bounds:2,727,540,1083
+offsets:0,0,540,1170
+Group 4111_00051
+bounds:544,1270,540,1060
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00064
+bounds:2,2,540,723
+offsets:0,0,540,1170
+Group 4111_00065
+bounds:1086,728,540,696
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00066
+bounds:1086,38,540,688
+offsets:0,0,540,1170
+
+skeleton_11.png
+size:1547,1553
+filter:Linear,Linear
+pma:true
+Group 4111_00027
+bounds:2,544,540,1007
+offsets:0,60,540,1170
+Group 4111_00028
+bounds:2,2,540,1001
+offsets:0,57,540,1170
+rotate:90
+Group 4111_00029
+bounds:1005,13,540,996
+offsets:0,55,540,1170
+Group 4111_00054
+bounds:544,1011,540,998
+offsets:0,0,540,1170
+rotate:90
+
+skeleton_12.png
+size:1521,1525
+filter:Linear,Linear
+pma:true
+Group 4111_00032
+bounds:2,2,540,975
+offsets:0,45,540,1170
+rotate:90
+Group 4111_00033
+bounds:544,983,540,966
+offsets:0,39,540,1170
+rotate:90
+Group 4111_00034
+bounds:979,19,540,962
+offsets:0,33,540,1170
+Group 4111_00055
+bounds:2,544,540,979
+offsets:0,0,540,1170
+
+skeleton_13.png
+size:1951,1628
+filter:Linear,Linear
+pma:true
+Group 4111_00067
+bounds:2,1086,540,683
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00071
+bounds:687,1086,540,660
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00072
+bounds:2,544,540,655
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00073
+bounds:659,544,540,648
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00074
+bounds:2,2,540,645
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00075
+bounds:1309,544,540,640
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00076
+bounds:649,2,540,634
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00077
+bounds:1285,2,540,630
+offsets:0,0,540,1170
+rotate:90
+Group 4111_00083
+bounds:1349,1086,540,596
+offsets:0,0,540,1170
+rotate:90

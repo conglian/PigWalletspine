@@ -5,12 +5,17 @@ import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'package:spine_flutter/spine_widget.dart' as spine;
 import '../PSDialog/PSGuideManager.dart';
 import '../PSGuide/PSGuideAOne.dart';
 import '../PSHome/PSHome.dart';
+import '../PSTool/PSNoticeHelp.dart';
+import '../PSTool/PSTBAEventTool.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import 'PSTbaBar.dart';
+
+
 class PSLaunch extends StatefulWidget {
   PSLaunch({super.key});
 
@@ -20,16 +25,47 @@ class PSLaunch extends StatefulWidget {
 
 class PSLaunchState extends State<PSLaunch>
     with SingleTickerProviderStateMixin {
+
   var _daydateString = '';
+
+  late spine.SpineWidgetController _controller;
 
   @override
   void initState() {
     super.initState();
     _setConfigDateInfoData();
-    // Future.delayed(Duration(milliseconds: 2),(){
-    //   ps_getSBUserCloakConfig();
-    // });
-    // ps_event_fire('launch_page', {});
+    PSNoticeHelp().setNoticeStatus();
+    Future.delayed(Duration(milliseconds: 1),(){
+      ps_getUserCloakConfig();
+    });
+    ps_event_fire('launch_page', {'source_from' : 'icon'});
+
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
+  }
+
+  void ps_getUserCloakConfig() async {
+    try {
+      var responseData = await PSRequestHelpers().getCloak();
+      print('pigwalletspine Config Result: $responseData');
+      ps_event_fire("cloak_req", {});
+      ps_event_fire("cloak_suc", {
+        "cloak_user": responseData.toString() == "freshen" ? 1 : 0,
+      });
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.getBool('sp_install_status') == null){
+        prefs.setBool('sp_install_status', true);
+      }
+      PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_cloak_statusName, responseData.toString() == "freshen" ? true : false);
+    } catch (e) {
+      print('pigwalletspine Request Error: $e');
+      Future.delayed(Duration(seconds: 1), () {
+        ps_getUserCloakConfig();
+      });
+    }
   }
 
   Future<void> _setConfigDateInfoData() async {
@@ -71,7 +107,10 @@ class PSLaunchState extends State<PSLaunch>
           Column(
             children: [
               SizedBox(height: 25.h),
-              PSImg(name: 'ps_luanch_icon', width: 352, height: 236),
+              SizedBox(
+                width: 352.w, height: 236.h,
+                child: spine.SpineWidget.fromAsset('assets/spine/logo/skeleton.atlas', 'assets/spine/logo/skeleton.skel', _controller),
+              ),
               Spacer(),
               PSStrokeText(text: "Grow your piggy, unlock real cash", size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#4C0E0E'.color()),
               SizedBox(height: 12.h),

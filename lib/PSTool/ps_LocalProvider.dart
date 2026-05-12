@@ -1,8 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:piggywalletspinearn/PSHome/PSHome.dart';
+import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
+import 'package:piggywalletspinearn/PSTool/PSTBAEventTool.dart';
+import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../PSDialog/PSDialog.dart';
+import '../PSPigVC/PSPigCash.dart';
 import '../main.dart';
+import 'PSNoticeHelp.dart';
 
 class PSLocalProvider extends ChangeNotifier {
   // 1. 私有构造函数（禁止外部直接创建实例）
@@ -68,12 +75,17 @@ class PSLocalProvider extends ChangeNotifier {
   bool ps_af_status = false;
   bool ps_newA_guide = false;
   bool ps_good_review_status = false;
+  bool ps_show_80_pop = false;
+  bool ps_show_rank = false;
+  bool ps_tx_ing_status = false;
+  bool ps_install_status = false;
 
   int ps_scrach_unlock_index_0 = 0; // 存储的本地值
   int ps_scrach_unlock_index_1 = 0; // 存储的本地值
   int ps_ad_all_number = 0;
-  double ps_dolas_number = 0.0;
+  double ps_dolas_number = 0.00;
   double ps_dolas_old_number = 0.0;
+  double add_olduser_point = 3.0;
   int ps_ad_reawrd_all_number = 0;
   int ps_ad_short_show_number = 0;
   int ps_ad_short_close_number = 0;
@@ -90,7 +102,7 @@ class PSLocalProvider extends ChangeNotifier {
   int ps_tx_card_index = 0;
   int ps_tx_wheel_index = 0;
   int ps_tx_bubble_index = 0;
-  int ps_tx_box_index = 0;
+  int ps_tx_quiz_index = 0;
   int ps_box_index = 0;
   int ps_card_number = 0;
   int ps_Level_number = 1; // 存储的本地值
@@ -109,6 +121,9 @@ class PSLocalProvider extends ChangeNotifier {
   int ps_tx_card_first = 0;
   int ps_tx_dice_index = 0;
   int ps_quiz_task_index = 0;
+  int new_ad_console = 1;
+  int ps_zhuan_number = 0;
+  int ps_quiz_tap_index = 0;
 
   // int ps_login_index = 0;
   // int ps_tx_probability_index = 0;
@@ -122,7 +137,8 @@ class PSLocalProvider extends ChangeNotifier {
   int ps_quzi_row = 0;
   int ps_wheel_number = 3;
   int ps_pig_level = 0;
-  int ps_pig_level_index = 2;
+  double ps_pig_level_index = 0.0;
+  int ps_quiz_all_num = 0;
 
   String get ps_currentNumberIndexName => 'ps_currentNumberIndex';
 
@@ -192,7 +208,7 @@ class PSLocalProvider extends ChangeNotifier {
 
   String get ps_tx_wheel_indexName => 'ps_tx_wheel_index';
 
-  String get ps_tx_box_indexName => 'ps_tx_box_index';
+  String get ps_tx_quiz_indexName => 'ps_tx_quiz_index';
 
   String get ps_tx_task_indexName => 'ps_tx_task_index';
 
@@ -276,6 +292,24 @@ class PSLocalProvider extends ChangeNotifier {
 
   String get ps_quiz_task_indexName => 'ps_quiz_task_index';
 
+  String get new_ad_consoleName => 'new_ad_console';
+
+  String get ps_zhuan_numberName => 'ps_zhuan_number';
+
+  String get ps_quiz_all_numName => 'ps_quiz_all_num';
+
+  String get ps_quiz_tap_indexName => 'ps_quiz_tap_index';
+
+  String get ps_show_80_popName => 'ps_show_80_pop';
+
+  String get ps_show_rankName => 'ps_show_rank';
+
+  String get ps_tx_ing_statusName => 'ps_tx_ing_status';
+
+  String get add_olduser_pointName => 'add_olduser_point';
+
+  String get ps_install_statusName => 'ps_install_status';
+
   // 3. 初始化：从本地存储加载数据（组件初始化时调用）
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
@@ -288,10 +322,11 @@ class PSLocalProvider extends ChangeNotifier {
     ps_dice_number = prefs.getInt('ps_dice_number') ?? 0;
     ps_card_number = prefs.getInt('ps_card_number') ?? 0;
     ps_box_index = prefs.getInt('ps_box_index') ?? 0;
-    ps_tx_box_index = prefs.getInt('ps_tx_box_index') ?? 0;
+    ps_tx_quiz_index = prefs.getInt('ps_tx_quiz_index') ?? 0;
     ps_wheel_number = prefs.getInt('ps_wheel_number') ?? 0;
     ps_pig_level = prefs.getInt('ps_pig_level') ?? 0;
-    ps_pig_level_index = prefs.getInt('ps_pig_level_index') ?? 2;
+    ps_pig_level_index = prefs.getDouble('ps_pig_level_index') ?? 0.0;
+    add_olduser_point = prefs.getDouble('add_olduser_point') ?? 3.0;
     ps_tx_card_index = prefs.getInt('ps_tx_card_index') ?? 0;
     ps_tx_wheel_index = prefs.getInt('ps_tx_wheel_index') ?? 0;
     ps_tx_bubble_index = prefs.getInt('ps_tx_bubble_index') ?? 0;
@@ -305,6 +340,9 @@ class PSLocalProvider extends ChangeNotifier {
     ps_card_a_number = prefs.getInt('ps_card_a_number') ?? 0;
     ps_quiz_model_index = prefs.getInt('ps_quiz_model_index') ?? 0;
     ps_quiz_num_index = prefs.getInt('ps_quiz_num_index') ?? 0;
+    ps_zhuan_number = prefs.getInt('ps_zhuan_number') ?? 0;
+    ps_quiz_all_num = prefs.getInt('ps_quiz_all_num') ?? 0;
+    ps_quiz_tap_index = prefs.getInt('ps_quiz_tap_index') ?? 0;
     ps_scratch_not_award_number =
         prefs.getInt('ps_scratch_not_award_number') ?? 0;
     ps_account_seled_index = prefs.getInt('ps_account_seled_index') ?? 0;
@@ -316,6 +354,7 @@ class PSLocalProvider extends ChangeNotifier {
     ps_key_number = prefs.getInt('ps_key_number') ?? 0;
     ps_quzi_row = prefs.getInt('ps_quzi_row') ?? 0;
     ps_wheel_number = prefs.getInt('ps_wheel_number') ?? 3;
+    new_ad_console = prefs.getInt('new_ad_console') ?? 1;
     ps_bg_music = prefs.getBool('ps_bg_music') ?? true;
     ps_sound_music = prefs.getBool('ps_sound_music') ?? true;
     ps_tx_task3_tips = prefs.getBool('ps_tx_task3_tips') ?? false;
@@ -324,9 +363,11 @@ class PSLocalProvider extends ChangeNotifier {
     ps_login_status = prefs.getBool('ps_login_status') ?? false;
     ps_good_review_status = prefs.getBool('ps_good_review_status') ?? false;
     ps_open_tx = prefs.getBool('ps_open_tx') ?? false;
+    ps_install_status = prefs.getBool('ps_install_status') ?? false;
     ps_show_box = prefs.getBool('ps_show_box') ?? false;
     ps_afSwitch = prefs.getBool('ps_afSwitch') ?? true;
     ps_set_root = prefs.getBool('ps_set_root') ?? false;
+    ps_show_rank = prefs.getBool('ps_show_rank') ?? false;
     ps_af_status = prefs.getBool('ps_af_status') ?? false;
     is_end_Scratch = prefs.getBool('is_end_Scratch') ?? true;
     ps_cloak_status = prefs.getBool('ps_cloak_status') ?? false;
@@ -355,9 +396,11 @@ class PSLocalProvider extends ChangeNotifier {
     ps_yunying_3 = prefs.getBool('ps_yunying_3') ?? false;
     ps_yunying_1 = prefs.getBool('ps_yunying_1') ?? false;
     ps_tx_end_status = prefs.getBool('ps_tx_end_status') ?? false;
+    ps_show_80_pop = prefs.getBool('ps_show_80_pop') ?? false;
+    ps_tx_ing_status = prefs.getBool('ps_tx_ing_status') ?? false;
     ps_ad_reawrd_all_number = prefs.getInt('ps_ad_reawrd_all_number') ?? 0;
     ps_ad_all_number = prefs.getInt('ps_ad_all_number') ?? 0;
-    ps_dolas_number = prefs.getDouble('ps_dolas_number') ?? 0.0;
+    ps_dolas_number = prefs.getDouble('ps_dolas_number') ?? 0.00;
     ps_dolas_old_number = prefs.getDouble('ps_dolas_old_number') ?? 0.0;
     ps_ad_show_index = prefs.getInt('ps_ad_show_index') ?? 0;
     ps_Level_number = prefs.getInt('ps_Level_number') ?? 1;
@@ -425,16 +468,51 @@ class PSLocalProvider extends ChangeNotifier {
     if (key == PSLocalProvider.instance.ps_dolas_numberName) {
       value += ps_dolas_number;
     }
-    await prefs.setDouble(key, value);
-    // if (key == PSLocalProvider.instance.ps_dolas_numberName && value > 0){
-    //   trigger.check(PSLocalProvider.instance.ps_dolas_number.toInt(), onTrigger: (level) {
-    //     print("触发 → 达到 $level");
-    //     ps_event_fire('cash_dall', {'money' : level});
-    //   });
-    //   await updateBool(ps_show_dolas_aniName, true);
-    // }
+    // 升级逻辑 + 1
+    if (key == PSLocalProvider.instance.ps_dolas_numberName && value >= PSNumberHelpers().intModel!.eqRange.first && ps_pig_level == 0){
+      await updateBool(ps_tx_ing_statusName, true);
+      await updateint(ps_pig_levelName, ps_pig_level + 1);
+      await updateint(ps_Level_inedxName, 0);
+      PSPigCashNotificationService.sendToQuizProgressNotification(0);
+      if (homeKey.currentState!.mounted){
+        // 到达100升级钻石猪
+        homeKey.currentState!.context.tipShow(PSdolls100Dialog());
+      }
+    }
+    // +2
+    if (key == PSLocalProvider.instance.ps_Level_inedxName && value >= 20 && ps_pig_level == 1){
+      await updateint(ps_pig_levelName, ps_pig_level + 1);
+      await updateint(ps_Level_inedxName, 0);
+      PSPigCashNotificationService.sendToQuizProgressNotification(0);
+      if (homeKey.currentState!.mounted){
+        // 到达100升级钻石猪
+        homeKey.currentState!.context.tipShow(PSGuide4Dialog());
+      }
+    }
+    // 开始提现
+    if (key == PSLocalProvider.instance.ps_Level_inedxName && value >= 10 && ps_pig_level == 2 && ps_show_rank == false){
+      if (homeKey.currentState!.mounted){
+        // 到达100升级钻石猪
+        homeKey.currentState!.context.tipShow(PSTXRankDialog());
+      }
+      await updateBool(ps_show_rankName, true);
+      PSPigCashNotificationService.sendToQuizProgressNotification(0);
+    }
+
+    if (key == PSLocalProvider.instance.ps_Level_inedxName) {
+      PSPigCashNotificationService.sendToQuizProgressNotification(0);
+    }
+
+      await prefs.setDouble(key, value);
+    if (key == PSLocalProvider.instance.ps_dolas_numberName && value > 0){
+      trigger.check(PSLocalProvider.instance.ps_dolas_number.toInt(), onTrigger: (level) {
+        print("触发 → 达到 $level");
+        ps_event_fire('cash_money_detail', {'money_from' : level});
+      });
+      await updateBool(ps_show_dolas_aniName, true);
+    }
     if (key == PSLocalProvider.instance.ps_dolas_numberName) {
-      // SJNoticeHelp().startSJForegroundService();
+        PSNoticeHelp().startSJForegroundService();
     }
     init();
     notifyListeners();

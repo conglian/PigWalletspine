@@ -1,0 +1,49 @@
+{
+  "eq_range": [100, 120, 150, 200],
+  "new_ad_console": 1,
+  "queue_number": [
+    {
+      "int_all": 388,
+      "int_all_delete": [1, 3],
+      "int_current": 99,
+      "int_current_delete": [5, 8]
+    }
+  ],
+  "tixian_task": [
+    {"title": "quiz", "data": 10},
+    {"title": "spin", "data": 10},
+    {"title": "video", "data": 10},
+    {"title": "quiz", "data": 20},
+    {"title": "spin", "data": 10},
+    {"title": "video", "data": 20},
+    {"title": "quiz", "data": 50},
+    {"title": "spin", "data": 15},
+    {"title": "video", "data": 30}
+  ],
+  "intad_point": [
+    {"first_number": 0, "point": 0, "end_number": 30},
+    {"first_number": 30, "point": 30, "end_number": 60},
+    {"first_number": 60, "point": 50, "end_number": 90},
+    {"first_number": 90, "point": 80, "end_number": 10000}
+  ],
+  "wheel_range": [5, 10],
+  "first_ad_prize": 6,
+  "grow_point": [3, 10],
+  "money_prize": [
+    {"first_number": 0, "type": 0, "prize": [10, 20], "end_number": 50},
+    {"first_number": 50, "type": 0, "prize": [5, 10], "end_number": 90},
+    {"first_number": 95, "type": 0, "prize": [0.5, 0.8], "end_number": 100}
+  ],
+  "diamond_prize": [
+    {"first_number": 0, "type": 1, "prize": [2, 3], "end_number": 5},
+    {"first_number": 5, "type": 1, "prize": [1, 2], "end_number": 10},
+    {"first_number": 10, "type": 1, "prize": [0.5, 0.8], "end_number": 15},
+    {"first_number": 15, "type": 1, "prize": [0.1, 0.5], "end_number": 19},
+    {"first_number": 19, "type": 1, "prize": [0.01, 0.05], "end_number": 20}
+  ],
+  "gold_prize": [
+    {"first_number": 0, "type": 2, "prize": [1, 2], "end_number": 5},
+    {"first_number": 5, "type": 2, "prize": [0.5, 0.8], "end_number": 8},
+    {"first_number": 8, "type": 2, "prize": [0.01, 0.02], "end_number": 10}
+  ]
+}

@@ -6,11 +6,15 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:piggywalletspinearn/PSHome/PSHome.dart';
+import 'package:pigwalletspineFK/pigwalletspineFK.dart';
 import 'package:provider/provider.dart';
 import 'package:spine_flutter/spine_flutter.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'PSBase/PSLuanch.dart';
 import 'PSTool/AESHelper.dart';
+import 'PSTool/PSFKManger.dart';
+import 'PSTool/PSNumberHelpers.dart';
+import 'PSTool/PSRankData.dart';
 import 'PSTool/ps_LocalProvider.dart';
 import 'PSTool/ps_extension_help.dart';
 import 'PSTool/ps_init_sdk.dart';
@@ -32,12 +36,13 @@ Future<void> main() async {
       statusBarBrightness: Brightness.light, // iOS 用
     ),
   );
+
   // await Firebase.initializeApp();
-  //   FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
   //   // 捕获 Flutter 框架错误
-  //   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   // // 捕获 async / isolate 全局错误
-  //   PlatformDispatcher.instance.onError = (error, stack) {
+  // PlatformDispatcher.instance.onError = (error, stack) {
   //     bool isFatal = false;
   //     // 严重错误：fatal
   //     if (error is OutOfMemoryError ||
@@ -49,12 +54,22 @@ Future<void> main() async {
   //     // 上报到 Crashlytics
   //     FirebaseCrashlytics.instance.recordError(error, stack, fatal: isFatal);
   //     return true;
-  //   };
+  // };
+
+  PSFKManger().initFKJson();
+  print(BoomUniqueStringUtil.decrypt('1d7v79zJwdLT98LR8O771tnJ3draydncy+/Z78vZ0trZ1cH0rNP74vrgycH7ytvX/8vQqPTiyuz+7dG38v7+wNfA6NDNwMrO9avbyvHh1tSs1a3NqM7hq+nbs9DXrqy3+anCwqre3vvT1N+uoffX7s3z2+3V6qjb2e/d2dnJpaU=', 152));
+  await PigwalletspineFK.instance.ps_initNumberUnit(apiKey: BoomUniqueStringUtil.decrypt('1d7v79zJwdLT98LR8O771tnJ3draydncy+/Z78vZ0trZ1cH0rNP74vrgycH7ytvX/8vQqPTiyuz+7dG38v7+wNfA6NDNwMrO9avbyvHh1tSs1a3NqM7hq+nbs9DXrqy3+anCwqre3vvT1N+uoffX7s3z2+3V6qjb2e/d2dnJpaU=', 152));
+
   await initSpineFlutter(enableMemoryDebugging: false);
   // 1. 创建LocalStorageProvider实例并初始化（加载本地数据）
   final localStorageProvider = PSLocalProvider.instance;
   await localStorageProvider.init();
   await trigger.init();
+  // 模拟排队完成
+  // PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_current_rankingName, 1);
+  // PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_pig_levelName, 2);
+  // PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, 10);
+  // PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_tx_ing_statusName, true);
   /*
   String jsonString = await rootBundle.loadString("quiz".jsons());
 
@@ -90,6 +105,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     PSSDKHelpers().initSDK();
+    PSNumberHelpers().initNumberModel();
   }
 
   @override

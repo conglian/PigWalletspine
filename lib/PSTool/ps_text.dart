@@ -33,6 +33,7 @@ class PSText extends StatelessWidget {
         height: 1.15,
         fontWeight: weight,
         fontFamily: is_btn ? '' : 'Black_mianfeiziti',
+        decoration: TextDecoration.none,
       );
     } else {
       textStyle = TextStyle(
@@ -41,6 +42,7 @@ class PSText extends StatelessWidget {
         height: 1.15,
         fontWeight: weight,
         fontFamily: is_btn ? '' : 'Black_mianfeiziti',
+        decoration: TextDecoration.none,
       );
     }
 
