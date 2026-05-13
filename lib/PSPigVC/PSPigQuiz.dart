@@ -56,7 +56,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
 
   Timer? _timer2;
 
-  final int _timeoutSeconds2 = 7;
+  final int _timeoutSeconds2 = 5;
 
   late spine.SpineWidgetController _controller;
 
@@ -104,7 +104,6 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
     // 当前帧构建完成后
     WidgetsBinding.instance.addPostFrameCallback((_) {
       PSPigQuizProgressNotificationService.sendToQuizProgressNotification(PSLocalProvider.instance.ps_quiz_all_num);
-      _startTimer();
       _startTimer2();
     });
 
@@ -112,16 +111,6 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         controller.animationState.setAnimationByName(0, "animation", true);
       });
-    });
-  }
-
-  /// 启动或者重置定时器
-  void _startTimer() {
-    // 如果有正在运行的定时器，先取消
-    _timer?.cancel();
-    // 开启新的定时器
-    _timer = Timer(Duration(seconds: _timeoutSeconds), () {
-      _onTimeout();
     });
   }
 
@@ -136,16 +125,6 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
           show_answer = true;
         });
     });
-  }
-
-  /// 超时触发事件
-  void _onTimeout() {
-    if (_timer != null){
-      _timer?.cancel();
-      if (PigTabController.currentIndex.value != 1) return;
-      ps_event_fire('quiz_toast', {});
-      context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-    }
   }
 
   // 解析本地model
@@ -779,7 +758,7 @@ class _ProgressPageState extends State<ProgressPage> {
                 child: ListView.builder(
                   controller: _scrollController, // Attach the scroll controller
                   scrollDirection: Axis.horizontal,
-                  physics: NeverScrollableScrollPhysics(),
+                  // physics: NeverScrollableScrollPhysics(),
                   itemCount: 100,
                   itemBuilder: (context, index) {
                     int wheelNumber = getNumberOnWheel(index);

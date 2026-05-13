@@ -7,6 +7,7 @@ import 'package:piggywalletspinearn/PSDialog/PSDialog.dart';
 import 'package:piggywalletspinearn/PSTool/PigWheelPage.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:provider/provider.dart';
+import 'package:spine_flutter/spine_widget.dart' as spine;
 import '../PSBase/PSTbaBar.dart';
 import '../PSGuide/PSGuideAThree.dart';
 import '../PSTool/PSNumberHelpers.dart';
@@ -25,11 +26,20 @@ class PSPigWheel extends StatefulWidget {
 }
 
 class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateMixin {
+  
   bool is_tap_wheel = false;
+
+  late spine.SpineWidgetController _controller;
 
   @override
   void initState() {
     super.initState();
+
+    _controller = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
   }
 
   @override
@@ -115,7 +125,7 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
                                           child: PSStrokeText(text: '${provider.ps_wheel_number}', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#085F1D'.color()),
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -123,6 +133,20 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
                           );
                         },
                       ),
+                      Positioned(right: 96.w,bottom: 88.h,child: ParticleButton(
+                        onTap: (){
+                          tapWheel();
+                        },
+                        child: SizedBox(
+                          width: 55,
+                          height: 88,
+                          child: spine.SpineWidget.fromAsset(
+                            'assets/spine/shouzhi/skeleton.atlas',
+                            'assets/spine/shouzhi/skeleton.skel',
+                            _controller,
+                          ),
+                        ),
+                      ))
                     ],
                   ),
                 ),
@@ -136,7 +160,7 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
                enableAnimation: true,
             ), onTap: (){
             PigTabController.switchTo(1);
-          }))
+          })),
         ],
       ),
     );
@@ -156,7 +180,7 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
     }
     is_tap_wheel = true;
     if (PSLocalProvider.instance.ps_wheel_number <= 0) {
-      context.tipShowAdvanced(PSPopWheelOldDog());
+      context.tipShowAdvanced(PSPopTipsToolDialog(adStatus: .notWheel));
       is_tap_wheel = false;
       return;
     }
@@ -173,11 +197,11 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
       WheelStartNotificationService.sendToStartIndexNotification(4);
     }
     // if (row != 6) {
-      Future.delayed(Duration(milliseconds: 1000), () async {
+      Future.delayed(Duration(milliseconds: 2000), () async {
         is_tap_wheel = false;
         if (!mounted) return;
         if (PSLocalProvider.instance.ps_pig_level == 0) {
-          int code = await context.tipShow(PSPopAwardToolDialog(type: .wheel, isGuide: false, award: PSNumberHelpers().getPrizeWithWheelNum()));
+          int code = await context.tipShow(PSPopAwardToolDialog(type: .wheel, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
           // 到达80%提现确认
           if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
             context.tipShow(PSAboutTXDialog(isConfim: true));

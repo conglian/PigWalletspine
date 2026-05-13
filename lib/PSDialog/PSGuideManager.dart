@@ -74,12 +74,7 @@ class PSGuideManager {
           ),
         );
         Future.delayed(Duration(seconds: 1),(){
-          Navigator.pushReplacement(
-            homeKey.currentContext!,
-            MaterialPageRoute(
-              builder: (_) => PSGuideNew4Dialog(),
-            ),
-          );
+          homeKey.currentContext!.tipShow2(PSGuideNew4Dialog());
         });
         break;
       case 4:

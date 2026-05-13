@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
+import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import 'dart:math';
 
 import 'package:piggywalletspinearn/PSTool/ps_img.dart';
 import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
+import 'package:provider/provider.dart';
 
 class PigWheelPage extends StatefulWidget {
   final imagePath;
@@ -130,26 +132,29 @@ class _PigWheelPageState extends State<PigWheelPage>
                     decoration: BoxDecoration(
                       image: PSDImg(widget.imagePath)
                     ),
-                    child:
-                    Column(
-                      children: [
-                        SizedBox(height: 50.h),
-                        PSStrokeText(text: '\$${PSNumberHelpers().intModel!.wheelRange.first}-${PSNumberHelpers().intModel!.wheelRange.last}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
-                        Spacer(),
-                        Transform(
-                          alignment: Alignment.center, // 旋转的中心点
-                          transform: Matrix4.rotationZ(3.14159265), // 180度 = π 弧度
-                          child: PSStrokeText(
-                            text: '\$${PSNumberHelpers().intModel!.wheelRange.first}-${PSNumberHelpers().intModel!.wheelRange.last}',
-                            size: 14,
-                            color: '#FFFFFF'.color(),
-                            weight: FontWeight.w900,
-                            skWidth: 2,
-                            skColor: '#038719'.color(),
-                          ),
-                        ),
-                        SizedBox(height: 48.h),
-                      ],
+                    child: Consumer<PSLocalProvider>(
+                      builder: (context, provider, child) {
+                        return Column(
+                          children: [
+                            SizedBox(height: 50.h),
+                            PSStrokeText(text: '\$${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
+                            Spacer(),
+                            Transform(
+                              alignment: Alignment.center, // 旋转的中心点
+                              transform: Matrix4.rotationZ(3.14159265), // 180度 = π 弧度
+                              child: PSStrokeText(
+                                text: '\$${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}',
+                                size: 14,
+                                color: '#FFFFFF'.color(),
+                                weight: FontWeight.w900,
+                                skWidth: 2,
+                                skColor: '#038719'.color(),
+                              ),
+                            ),
+                            SizedBox(height: 48.h),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),

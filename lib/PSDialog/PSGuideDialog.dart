@@ -39,7 +39,7 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
     // 初始化 AnimationController
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: Duration(seconds: 3),
     );
 
     // 使用 Tween 来控制从 0 到 1 的进度
@@ -124,7 +124,7 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                       top: 27,
                     child: PSGradientNumberRoller(
                     value: PSNumberHelpers().intModel!.eqRange.first,
-                    duration: 800,
+                    duration: 1500,
                     fontSize: 16.0,
                     gradientColors: ['#0BA408'.color(), '#0BA408'.color()],
                     borderColor: Colors.transparent,
@@ -193,8 +193,8 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
               child: Stack(
                 children: [
                   Positioned(
-                      left: (0.width(context) - 156) * 0.45,
-                      child: SizedBox(width: 156, height: 154, child: spine.SpineWidget.fromAsset('assets/spine/pink/skeleton.atlas', 'assets/spine/pink/skeleton.skel', _controller1),)),
+                      left: (0.width(context) - 156) * 0.48,
+                      child: SizedBox(width: 156, height: 160, child: spine.SpineWidget.fromAsset('assets/spine/yindao-pig/skeleton.atlas', 'assets/spine/yindao-pig/skeleton.skel', _controller1),)),
                   Positioned(
                       left: (0.width(context) - 327) * 0.45,
                       top: 120,
@@ -267,15 +267,26 @@ class PSGuideNew2Dialog extends StatefulWidget {
 
 class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
     with TickerProviderStateMixin {
-  /// 1：顶部图淡入
+  /// ps_guide2_0淡入
+  late AnimationController _fade0Ctrl;
+
+  /// ps_guide2_1淡入+缩放
   late AnimationController _fade1Ctrl;
+  late Animation<double> _fade1Anim;
+  late Animation<double> _scale1Anim;
 
-  /// 3：底部图淡入
-  late AnimationController _fade3Ctrl;
-
-  /// 2：中间图滑动
+  /// ps_guide2_2滑动
   late AnimationController _slideCtrl;
   late Animation<double> _slideAnim;
+
+  /// ps_guide2_2呼吸动画
+  late AnimationController _breathCtrl;
+  late Animation<double> _breathAnim;
+
+  /// ps_guide2_3淡入+缩放 & 按钮显示
+  late AnimationController _fade3Ctrl;
+  late Animation<double> _fade3Anim;
+  late Animation<double> _scale3Anim;
 
   @override
   void initState() {
@@ -283,12 +294,12 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
     ps_event_fire('new_guide_two', {});
 
     // 初始化控制器
-    _fade1Ctrl = AnimationController(
+    _fade0Ctrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
 
-    _fade3Ctrl = AnimationController(
+    _fade1Ctrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
@@ -297,46 +308,84 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
+
+    _breathCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _fade3Ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    // 获取屏幕宽度
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // 定义滑动动画
+    // ps_guide2_1淡入 + 缩放
+    _fade1Anim = CurvedAnimation(
+      parent: _fade1Ctrl,
+      curve: Curves.easeIn,
+    );
+    _scale1Anim = Tween<double>(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _fade1Ctrl, curve: Curves.elasticOut),
+    );
+
+    // 滑动动画：从屏幕右边到中心
     _slideAnim = Tween<double>(
-      begin: screenWidth, // 初始位置在屏幕外（右侧）
-      end: (screenWidth - 320) * 0.5, // 结束位置是屏幕中央
+      begin: screenWidth,
+      end: (screenWidth - 320) * 0.5,
     ).animate(CurvedAnimation(
       parent: _slideCtrl,
       curve: Curves.easeOut,
     ));
 
-    // 启动动画
+    // 呼吸动画：缩放
+    _breathAnim = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _breathCtrl, curve: Curves.easeInOut),
+    );
+
+    // ps_guide2_3淡入 + 缩放
+    _fade3Anim = CurvedAnimation(parent: _fade3Ctrl, curve: Curves.easeIn);
+    _scale3Anim = Tween<double>(begin: 0.5, end: 1.02).animate(
+      CurvedAnimation(parent: _fade3Ctrl, curve: Curves.elasticOut),
+    );
+
+    // 启动动画序列
     _startAnim();
   }
 
   void _startAnim() async {
-    // 1 显示
+    // 0：ps_guide2_0淡入
+    _fade0Ctrl.forward();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    // 1：ps_guide2_1淡入 + 缩放
     _fade1Ctrl.forward();
 
-    // 延迟1秒 → 3 显示
-    await Future.delayed(const Duration(seconds: 1));
-    _fade3Ctrl.forward();
-
-    // 再等0.5秒 → 2 滑入
     await Future.delayed(const Duration(milliseconds: 500));
+
+    // 2：ps_guide2_2滑动
     _slideCtrl.forward();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    // 3：ps_guide2_3淡入 + 缩放 & 按钮显示，同时ps_guide2_2开始呼吸动画
+    _fade3Ctrl.forward();
+    _breathCtrl.repeat(reverse: true);
   }
 
   @override
   void dispose() {
+    _fade0Ctrl.dispose();
     _fade1Ctrl.dispose();
-    _fade3Ctrl.dispose();
     _slideCtrl.dispose();
+    _breathCtrl.dispose();
+    _fade3Ctrl.dispose();
     super.dispose();
   }
 
@@ -352,35 +401,50 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PSImg(name: 'ps_guide2_0', width: 319, height: 97),
+            /// --- ps_guide2_0淡入 ---
+            FadeTransition(
+              opacity: _fade0Ctrl,
+              child: PSImg(name: 'ps_guide2_0', width: 319, height: 97),
+            ),
 
             SizedBox(
               width: 0.width(context),
               height: 476.h,
               child: Stack(
                 children: [
-
-                  /// --- 1：顶部 淡入 ---
-                  Positioned(
-                    left: (0.width(context) - 330) * 0.5,
-                    child: FadeTransition(
-                      opacity: _fade1Ctrl,
-                      child: PSImg(
-                        name: 'ps_guide2_1',
-                        width: 330,
-                        height: 140,
-                      ),
+                  /// --- ps_guide2_1淡入 + 缩放 ---
+                  AnimatedBuilder(
+                    animation: _fade1Ctrl,
+                    builder: (context, child) {
+                      return Positioned(
+                        left: (0.width(context) - 330) * 0.5,
+                        child: Opacity(
+                          opacity: _fade1Anim.value,
+                          child: Transform.scale(
+                            scale: _scale1Anim.value,
+                            child: child,
+                          ),
+                        ),
+                      );
+                    },
+                    child: PSImg(
+                      name: 'ps_guide2_1',
+                      width: 330,
+                      height: 140,
                     ),
                   ),
 
-                  /// --- 2：中间 右 → 中 滑动 ---
+                  /// --- ps_guide2_2滑动 + 呼吸 ---
                   AnimatedBuilder(
-                    animation: _slideCtrl,
+                    animation: Listenable.merge([_slideCtrl, _breathCtrl]),
                     builder: (context, child) {
                       return Positioned(
                         left: _slideAnim.value,
                         top: 140,
-                        child: child!,
+                        child: Transform.scale(
+                          scale: _breathAnim.value,
+                          child: child!,
+                        ),
                       );
                     },
                     child: PSImg(
@@ -390,17 +454,26 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
                     ),
                   ),
 
-                  /// --- 3：底部 淡入 ---
-                  Positioned(
-                    left: (0.width(context) - 336) * 0.5,
-                    top: 240,
-                    child: FadeTransition(
-                      opacity: _fade3Ctrl,
-                      child: PSImg(
-                        name: 'ps_guide2_3',
-                        width: 336,
-                        height: 206,
-                      ),
+                  /// --- ps_guide2_3淡入 + 缩放 ---
+                  AnimatedBuilder(
+                    animation: _fade3Ctrl,
+                    builder: (context, child) {
+                      return Positioned(
+                        left: (0.width(context) - 336) * 0.5,
+                        top: 240,
+                        child: Opacity(
+                          opacity: _fade3Anim.value,
+                          child: Transform.scale(
+                            scale: _scale3Anim.value,
+                            child: child,
+                          ),
+                        ),
+                      );
+                    },
+                    child: PSImg(
+                      name: 'ps_guide2_3',
+                      width: 336,
+                      height: 206,
                     ),
                   ),
                 ],
@@ -409,25 +482,29 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
 
             SizedBox(height: 10.h),
 
-            InkWell(
-              onTap: () {
-                ps_event_fire('new_guide_two_c', {});
-                PSGuideManager.nextStep(context);
-              },
-              child: Container(
-                width: 272,
-                height: 71,
-                decoration: BoxDecoration(
-                  image: PSDImg('ps_green_btn'),
-                ),
-                child: Center(
-                  child: PSStrokeText(
-                    text: 'Continue',
-                    size: 24,
-                    color: '#FFFFFF'.color(),
-                    weight: FontWeight.w900,
-                    skWidth: 2,
-                    skColor: '#025003'.color(),
+            /// --- 底部按钮淡入 ---
+            FadeTransition(
+              opacity: _fade3Ctrl,
+              child: InkWell(
+                onTap: () {
+                  ps_event_fire('new_guide_two_c', {});
+                  PSGuideManager.nextStep(context);
+                },
+                child: Container(
+                  width: 272,
+                  height: 71,
+                  decoration: BoxDecoration(
+                    image: PSDImg('ps_green_btn'),
+                  ),
+                  child: Center(
+                    child: PSStrokeText(
+                      text: 'Continue',
+                      size: 24,
+                      color: '#FFFFFF'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 2,
+                      skColor: '#025003'.color(),
+                    ),
                   ),
                 ),
               ),
@@ -438,7 +515,6 @@ class PSGuideNew2DialogState extends State<PSGuideNew2Dialog>
     );
   }
 }
-
 class PSGuideNew3Dialog extends StatefulWidget {
   const PSGuideNew3Dialog({super.key});
 
@@ -593,7 +669,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
 
     // 初始化动画控制器
     _controller = AnimationController(
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 1),
       vsync: this,
     );
 
@@ -611,8 +687,10 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
     _controller.forward();
 
     // 延迟5秒后切换到第二段文字的动画
-    _textSwitchTimer = Timer(Duration(seconds: 5), () {
+    _textSwitchTimer = Timer(Duration(seconds: 1), () {
       setState(() {
+        showButton = true;     // 显示底部按钮
+        showPsGuide4_3 = true; // 显示 ps_guide4_3
         showFirstText = false; // 显示第二段文本
         _controller.reset();   // 重置动画
         _controller.forward(); // 启动第二段文本的动画
@@ -620,10 +698,8 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
     });
 
     // 延迟9秒后显示按钮和图片
-    Timer(Duration(seconds: 9), () {
+    Timer(Duration(seconds: 2), () {
       setState(() {
-        showButton = true;     // 显示底部按钮
-        showPsGuide4_3 = true; // 显示 ps_guide4_3
       });
     });
   }
@@ -649,12 +725,10 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      backgroundColor: Colors.transparent,
+      body: SizedBox(
         width: double.infinity,  // 容器宽度填充整个屏幕
         height: double.infinity, // 容器高度填充整个屏幕
-        decoration: BoxDecoration(
-          image: PSDImg('ps_guide_bgs'),
-        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -685,7 +759,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
                               children: [
                                 PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                                 SizedBox(width: 5,),
-                                PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}0', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                                PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                               ],
                             ),
                           )
@@ -759,6 +833,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
               child: InkWell(
                 onTap: () {
                   ps_event_fire('new_home_guide_c', {});
+                  Navigator.pop(context, 0);
                   PSGuideManager.nextStep(context);
                 },
                 child: Container(
@@ -798,7 +873,7 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
 
   late AnimationController _controller;
   late Animation<int> _textAnimation;
-  bool showAppleBubble = false; // 控制显示ps_apple_bubble
+  bool showAppleBubble = true; // 控制显示ps_apple_bubble
 
   final firstText = 'Fed it more apples, and boom — it evolved into a Gold Pig.That’s when the payout unlocked.';
 
@@ -812,7 +887,7 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
 
     // 初始化动画控制器
     _controller = AnimationController(
-      duration: Duration(seconds: 4), // 动画时长
+      duration: Duration(seconds: 1), // 动画时长
       vsync: this,
     );
 
@@ -827,9 +902,6 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
     // 在动画结束后，显示ps_apple_bubble
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        setState(() {
-          showAppleBubble = true; // 文字显示完成后，显示ps_apple_bubble
-        });
       }
     });
 
@@ -963,8 +1035,8 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                     ),
                   if (showAppleBubble)
                     Positioned(
-                      top: 0,
-                      right: 42.w,
+                      top: 30,
+                      right: 30.w,
                       child: ParticleButton(
                         onTap: () async {
                           ps_event_fire('new_apple_guide_c', {});
@@ -1003,8 +1075,8 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                           'assets/spine/shouzhi/skeleton.atlas',
                           'assets/spine/shouzhi/skeleton.skel',
                           _controller1,
+                         )
                         ),
-                                            ),
                       ),)
                 ],
               ),
@@ -1025,10 +1097,22 @@ class PSGuideNew6Dialog extends StatefulWidget {
 
 class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProviderStateMixin {
 
+  late spine.SpineWidgetController _controller1;
 
   @override
   void initState() {
     super.initState();
+
+    _controller1 = spine.SpineWidgetController(onInitialized: (controller) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.animationState.setAnimationByName(0, "animation", true);
+      });
+    });
+
+    Future.delayed(Duration(milliseconds: 1800),(){
+      Navigator.pop(context, 0);
+      PSGuideManager.nextStep(context);
+    });
   }
 
   @override
@@ -1044,68 +1128,88 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
         width: double.infinity,  // 容器宽度填充整个屏幕
         height: double.infinity, // 容器高度填充整个屏幕
         color: Colors.transparent,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: [
-            Container(
-              width: 211,
-              height: 208,
-              decoration: BoxDecoration(
-                  image: PSDImg('ps_b_pig_icon_0')
-              ),
-              child: Column(
-                children: [
-                  Spacer(),
-                  Container(
-                    width: 141,
-                    height: 34,
-                    decoration: BoxDecoration(
-                        image: PSDImg('ps_act_bg')
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        PSImg(name: 'ps_dolas_2', width: 26, height: 21),
-                        SizedBox(width: 5,),
-                        PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: 25.h),
-            InkWell(
-              onTap: (){
-                Navigator.pop(context, 0);
-                PSGuideManager.nextStep(context);
-              },
+            Positioned(
+              left: (0.width(context) - 211) * 0.5,
+              top: 140.h,
               child: Container(
-                width: 357,
-                height: 235,
+                width: 211,
+                height: 208,
                 decoration: BoxDecoration(
-                  image: PSDImg('ps_guide6_0')
+                    image: PSDImg('ps_b_pig_icon_0')
                 ),
-                child: Stack(
+                child: Column(
                   children: [
-                    Column(
-                      children: [
-                        Spacer(),
-                        Row(
-                          mainAxisAlignment: .center,
-                          children: [
-                            PSImg(name: 'ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 120, height: 32),
-                            SizedBox(width: 10.w),
-                            PSText(text: '+\$${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
-                          ],
-                        ),
-                        SizedBox(height: 64)
-                      ],
+                    Spacer(),
+                    Padding(padding: EdgeInsetsGeometry.only(left: 50),child: PSImg(name: 'ps_0_${PSLocalProvider.instance.ps_dolas_number > 25 ? 50 : 25}', width: 78.02, height: 67.21)),
+                    SizedBox(height: 16),
+                    Container(
+                      width: 141,
+                      height: 34,
+                      decoration: BoxDecoration(
+                          image: PSDImg('ps_act_bg')
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          PSImg(name: 'ps_dolas_2', width: 26, height: 21),
+                          SizedBox(width: 5,),
+                          PSGradientNumberRoller(
+                            value: PSLocalProvider.instance.ps_dolas_number,
+                            duration: 1800,
+                            fontSize: 20.0,
+                            gradientColors: ['#8B0002'.color(), '#8B0002'.color()],
+                            borderColor: Colors.transparent,
+                            borderWidth: 0.0,
+                            decimalPlaces: 2,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 180.h),
+                InkWell(
+                  onTap: (){
+                  },
+                  child: SizedBox(
+                    child: SizedBox(
+                        width: 0.width(context),
+                        height: 500,
+                        child: Stack(
+                          children: [
+                            spine.SpineWidget.fromAsset(
+                              'assets/spine/yindao3/skeleton.atlas',
+                              'assets/spine/yindao3/skeleton.skel',
+                              _controller1,
+                            ),
+                            Column(
+                              children: [
+                                Spacer(),
+                                Row(
+                                  mainAxisAlignment: .center,
+                                  children: [
+                                    PSImg(name: 'ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 120, height: 32),
+                                    SizedBox(width: 10.w),
+                                    PSText(text: '+\$${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
+                                  ],
+                                ),
+                                SizedBox(height: 196)
+                              ],
+                            ),
+                          ],
+                        )
+                    ),
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -1161,6 +1265,8 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
               child: Column(
                 children: [
                   Spacer(),
+                  Padding(padding: EdgeInsetsGeometry.only(left: 50),child: PSImg(name: 'ps_0_25', width: 78.02, height: 67.21)),
+                  SizedBox(height: 16),
                   Container(
                     width: 141,
                     height: 34,
@@ -1228,7 +1334,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                       ),
                       child: Center(
                         child: PSStrokeText(
-                          text: 'Get By Quiz',
+                          text: 'Keep Earning',
                           size: 24,
                           color: '#FFFFFF'.color(),
                           weight: FontWeight.w900,
@@ -1259,6 +1365,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
   bool is_quizing = false;
   bool anwer_a = false;
   bool anwer_b = false;
+  bool show_c = false;
   int row = 0;
   List<String> ques = ['Who gives you money here?', 'When can you withdraw your cash?', 'What’s the fastest way to fill your PiggyBoost?'];
   List<String> answerA = ['Advertisers', 'When you get a Golden Pig', 'Watch more ads'];
@@ -1384,7 +1491,6 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                           setState(() {
                             is_quizing = true;
                             anwer_a = true;
-                            anwer_b = false;
                           });
                         Future.delayed(Duration(milliseconds: 1000), () async {
                          var code = await context.tipShow(PSPopAwardToolDialog(type: .quiz, isGuide: true, award: PSNumberHelpers().intModel!.firstAdPrize));
@@ -1444,12 +1550,14 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                           is_quizing = true;
                           anwer_b = false;
                           anwer_a = true;
+                          show_c = true;
                         });
                         Future.delayed(Duration(milliseconds: 1000), () {
                           setState(() {
                             is_quizing = false;
                             anwer_b = false;
                             anwer_a = false;
+                            show_c = false;
                           });
                         });
                       },
@@ -1498,7 +1606,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                     right: 34.w,
                     bottom: 92.h,
                     child: Visibility(
-                      visible: is_quizing,
+                      visible: show_c,
                       child: PSImg(
                         name:
                         anwer_b ==
@@ -1599,34 +1707,29 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog> with TickerProvide
                   SizedBox(height: 13.h),
                   PSImg(name: 'ps_guide9_0', width: 109, height: 109),
                   PSText(text: 'You’re Ready To Cash Out!', size: 16, color: '#F54E00'.color(), weight: FontWeight.w900),
-                  SizedBox(height: 20.h),
-                  Row(
-                    children: [
-                      SizedBox(width: 38.w),
-                      PSImg(name: "ps_dui_icon", width: 27.w, height: 28.h),
-                      SizedBox(width: 12.w),
-                      PSText(text: 'Safe Arrival', size: 18, color: '#24313F'.color(), weight: FontWeight.w900)
-                    ],
+                  SizedBox(height: 8.h),
+                  SizedBox(
+                    width: 0.width(context),
+                    height: 122,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 38),
+                        PSImg(name: 'ps_dui_iconsss', width: 27, height: 108),
+                        SizedBox(width: 12),
+                        Column(
+                          children: [
+                            SizedBox(height: 10),
+                            SizedBox(width: 241, height: 19,child: PSText(text: 'Quiz passed', size: 15, color: '#24313F'.color(), weight: FontWeight.w900)),
+                            SizedBox(height: 22),
+                            SizedBox(width: 250, height: 19,child: PSText(text: 'Now confirm your payout info.', size: 15, color: '#A5A5A5'.color(), weight: FontWeight.w900)),
+                            SizedBox(height: 14),
+                            SizedBox(width: 250, height: 38,child: PSText(text: 'Fill Your Piggy Bank, Cash Out Instantly', size: 15, color: '#A5A5A5'.color(), weight: FontWeight.w900, maxLines: 2)),
+                          ],
+                        ) 
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 7.h),
-                  Row(
-                    children: [
-                      SizedBox(width: 38.w),
-                      PSImg(name: "ps_dui_icon", width: 27.w, height: 28.h),
-                      SizedBox(width: 12.w),
-                      PSText(text: 'Fast Processing', size: 18, color: '#24313F'.color(), weight: FontWeight.w900)
-                    ],
-                  ),
-                  SizedBox(height: 7.h),
-                  Row(
-                    children: [
-                      SizedBox(width: 38.w),
-                      PSImg(name: "ps_dui_icon", width: 27.w, height: 28.h),
-                      SizedBox(width: 12.w),
-                      PSText(text: 'Request For True Information', size: 16, color: '#24313F'.color(), weight: FontWeight.w900)
-                    ],
-                  ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 12.h),
                   ParticleButton(
                     onTap: () {
                       Navigator.pop(context, 0);

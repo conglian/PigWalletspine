@@ -194,6 +194,28 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
     return Column(
       mainAxisAlignment: .center,
       children: [
+        SizedBox(width: 292, height: 52,
+          child: RichText(
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.w900,
+                color: '#FFFFFF'.color(),
+                fontFamily: 'Black_mianfeiziti',
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'Congratulations! ',
+                  style: TextStyle(color: '#F3B307'.color()),
+                ),
+                TextSpan(text: "You're About To Withdraw \$${PSNumberHelpers().intModel!.eqRange.first}! "),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 19),
         Container(
           width: 309.w,
           height: 296.h,
@@ -809,7 +831,7 @@ class PSQuizRankTwoDialogState extends State<PSQuizRankTwoDialog>
               children: <TextSpan>[
                 const TextSpan(text: 'Answer '),
                 TextSpan(
-                    text: '${widget.quiz_num + (displayIndex)} ',
+                    text: '${widget.quiz_num - (displayIndex)} ',
                     style: TextStyle(color: '#0A8A33'.color())),
                 const TextSpan(text: 'right'),
               ],
@@ -2101,7 +2123,7 @@ class PSdolls100DialogState extends State<PSdolls100Dialog>
                       children: [
                         PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                         SizedBox(width: 5,),
-                        PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}0', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        PSText(text: '\$${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                       ],
                     ),
                   ),
@@ -2272,7 +2294,8 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
                   );
                   ps_event_fire('noti_confirm_pop_suc', {});
                 } else if (widget.adStatus == .notWheel) {
-
+                  Navigator.pop(context, 1);
+                  PigTabController.switchTo(1);
                 }
               }),
               SizedBox(height: 11)
@@ -2482,19 +2505,26 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                     ),
                     SizedBox(height: 19.h),
                     ParticleButton(
-                      onTap: (){
+                      onTap: () async {
                         ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
                         if (widget.isGuide){
                           ps_event_fire('new_quiz_correct_pop_c', {});
                         }
-                        PSPigAds().ps_showAd(context, adRewardPod_idName(), onCacheResponse: (onCacheResponse) async {
-                          Navigator.pop(context, 1);
-                        }, adDidClosed: (adDidClosed) async {
+                        if (!widget.isGuide){
+                          PSPigAds().ps_showAd(context, adRewardPod_idName(), onCacheResponse: (onCacheResponse) async {
+                            Navigator.pop(context, 1);
+                          }, adDidClosed: (adDidClosed) async {
+                            Navigator.pop(context, 1);
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, widget.award);
+                            if (!context.mounted) return;
+                            context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                          });
+                        } else {
                           Navigator.pop(context, 1);
                           await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, widget.award);
                           if (!context.mounted) return;
                           context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
-                        });
+                        }
                       },
                       child: Container(
                         width: 301.w,
@@ -2516,7 +2546,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
         ),
         SizedBox(height: 16.h),
         ParticleButton(child: SizedBox(width: 40,height: 40,child: Center(child: PSImg(name: 'ps_whine_close', width: 18, height: 18 , fit: BoxFit.fill,))), onTap: (){
-          if (PSNumberHelpers().checkProbability()){
+          if (PSNumberHelpers().checkProbability() && !widget.isGuide){
             PSPigAds().ps_showAd(context, adIntPod_idName(), onCacheResponse: (onCacheResponse){
               Navigator.pop(context, 0);
             }, adDidClosed: (adDidClosed){

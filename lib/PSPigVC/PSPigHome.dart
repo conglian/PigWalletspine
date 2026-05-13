@@ -101,6 +101,16 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
     });
     updateRankdata();
     startTimer();
+
+    PSPigDolasUpdateNotificationService.stream.listen((value) async {
+
+      setState(() {
+        bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+        bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+        bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+      });
+
+    });
   }
   // 老用户流程
   void showOldguideDialog(){
@@ -136,6 +146,42 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
       ctrl.dispose();
     }
     super.dispose();
+  }
+  
+  // 根据不同类型获取当前的翻位置 
+  int getIntervalValue(int type, double value) {
+    // 固定区间
+    final List<int> intervals = [25, 50, 75, 100];
+
+    // 最大值根据 type
+    double maxValue;
+    switch (type) {
+      case 0:
+        maxValue = 100;
+        break;
+      case 1:
+        maxValue = 20;
+        break;
+      case 2:
+        maxValue = 10;
+        break;
+      default:
+        maxValue = 10;
+        type = 2;
+    }
+
+    // 限制 value 在 0~maxValue 之间
+    value = value.clamp(0, maxValue);
+
+    // 每个区间长度
+    double segment = maxValue / 4;
+
+    // 计算落在哪个区间
+    int index = (value / segment).ceil() - 1;
+    if (index < 0) index = 0;
+    if (index > 3) index = 3;
+
+    return intervals[index];
   }
 
   @override
@@ -493,9 +539,9 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (builder) {
-                  ps_event_fire('h5_page', {});
+                  ps_event_fire('link_page', {});
                   return PSWebkitview(
-                    url: "https://s.gamifyspace.com/tml?pid=19405&appk=NGIXzvxOTdVvcJK0eSvfzHh8NdgSuFUx&did=${gaids}",
+                    url: "https://s.gamifyspace.com/tml?pid=21501&appk=FmjwhY8YKjAAQXsvW0FxfEctUF30Qdtg&did=${gaids}",
                     title: 'GamePlay',
                   );
                 },
@@ -507,9 +553,25 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
             builder: (context, provider, child) {
               return Positioned(
                 left: (0.width(context) - 211) * 0.5,
-                top: 148.h,
-                child: PSImg(name: 'ps_b_pig_icon_${provider.ps_pig_level}', width: 211, height: 208),
-              );
+                top: 148.h, width: 211, height: 208,
+                child: Container(
+                  width: 211, height: 208,
+                   decoration: BoxDecoration(
+                     image: PSDImg('ps_b_pig_icon_${provider.ps_pig_level}')
+                   ),
+                  child: Column(
+                    children: [
+                      Spacer(),
+                      Padding(padding: EdgeInsetsGeometry.only(left: provider.ps_pig_level == 1 ? 38 : 52),child: PSImg(name: 'ps_${provider.ps_pig_level}_${getIntervalValue(provider.ps_pig_level, provider.ps_pig_level == 0 ? provider.ps_dolas_number : provider.ps_pig_level_index)}', width: 78.02, height: 67.21)),
+                      if (provider.ps_pig_level == 1)
+                       SizedBox(height: 50),
+                      if (provider.ps_pig_level == 2)
+                        SizedBox(height: 52),
+                      if (provider.ps_pig_level == 0)
+                        SizedBox(height: 50),
+                    ],
+                  ),
+                ));
             },
           ),
           Positioned(top: 330.h, left: (0.width(context) - 141) * 0.53,child: Container(
@@ -552,9 +614,8 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                 child: ParticleButton(
                   onTap: () async {
                     ps_event_fire('home_float_apple', {});
-                    if (PSNumberHelpers().checkProbability()){
 
-                      PSPigAds().ps_showAd(context, 'nskdh_applebub_int', onCacheResponse: (onCacheResponse) async {
+                      PSPigAds().ps_showAd(context, 'asd_rv', onCacheResponse: (onCacheResponse) async {
                       }, adDidClosed: (adDidClosed) async {
                         if (PSLocalProvider.instance.ps_pig_level == 0) {
                           int code = await context.tipShow(PSPopAwardToolDialog(type: .apple, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
@@ -568,20 +629,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                           }
                         }
                       });
-                    } else {
-                      if (PSLocalProvider.instance.ps_pig_level == 0) {
-                        int code = await context.tipShow(PSPopAwardToolDialog(type: .apple, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
-                        if (code >= 0){
 
-                        }
-                      } else {
-                        int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .apple, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
-                        if (code >= 0){
-
-                        }
-                      }
-
-                    }
                   },
                   child: Stack(
                     children: [
@@ -624,6 +672,8 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                           if (code >= 0){
                             setState(() {
                               bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                              bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                              bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
                             });
                           }
                         } else {
@@ -631,6 +681,8 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                           if (code >= 0){
                             setState(() {
                               bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                              bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                              bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
                             });
                           }
                         }
@@ -675,21 +727,38 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                     child: ParticleButton(
                       onTap: () async {
                         ps_event_fire('home_float_c', {});
-                        if (PSLocalProvider.instance.ps_pig_level == 0) {
-                          int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: bubble_award_two));
-                          if (code >= 0){
+                        PSPigAds().ps_showAd(context, 'nskdh_moneybub_rv', onCacheResponse: (onCacheResponse) async {
+                        }, adDidClosed: (adDidClosed) async {
+                          await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, bubble_award_two);
+                          if (!context.mounted) return;
+                          int code = await context.tipShow2(PSPoGetAwardDog(award: bubble_award_two),bc: Colors.transparent);
+                          if (code >= 0) {
                             setState(() {
-                              bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                              bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
                             });
+                            if (PSLocalProvider.instance.ps_pig_level == 0) {
+                              int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
+                              if (code >= 0){
+                                setState(() {
+                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                });
+
+                              }
+                            } else {
+                              int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
+                              if (code >= 0){
+                                setState(() {
+                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                });
+
+                              }
+                            }
                           }
-                        } else {
-                          int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: bubble_award_two, is_wheel: false));
-                          if (code >= 0){
-                            setState(() {
-                              bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                            });
-                          }
-                        }
+                        });
                       },
                       child: Stack(
                         children: [
@@ -700,10 +769,20 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             enableAnimation: true,
                           ),
                           Positioned(
+                            top: -8,
+                            right: -4,
+                            child: PSBouncyImage(
+                              imagePath: 'ps_ad_icon',
+                              width: 37,
+                              height: 40,
+                              enableAnimation: true,
+                            ),
+                          ),
+                          Positioned(
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? '\$???' : 'X???',
+                              text: provider.ps_pig_level == 0 ? ' \$???' : ' X???',
                               size: 20,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
@@ -731,21 +810,37 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                     child: ParticleButton(
                       onTap: () async {
                         ps_event_fire('home_float_c', {});
-                        if (PSLocalProvider.instance.ps_pig_level == 0) {
-                          int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: bubble_award_three));
-                          if (code >= 0){
+                        PSPigAds().ps_showAd(context, 'nskdh_moneybub_rv', onCacheResponse: (onCacheResponse) async {
+                        }, adDidClosed: (adDidClosed) async {
+                          await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, bubble_award_three);
+                          if (!context.mounted) return;
+                          int code = await context.tipShow2(PSPoGetAwardDog(award: bubble_award_three),bc: Colors.transparent);
+                          if (code >= 0) {
                             setState(() {
-                              bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                              bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
                             });
+                            if (PSLocalProvider.instance.ps_pig_level == 0) {
+                              int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
+                              if (code >= 0){
+                                setState(() {
+                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                });
+                              }
+                            } else {
+                              int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
+                              if (code >= 0){
+                                setState(() {
+                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+                                });
+
+                              }
+                            }
                           }
-                        } else {
-                          int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: bubble_award_three, is_wheel: false));
-                          if (code >= 0){
-                            setState(() {
-                              bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                            });
-                          }
-                        }
+                        });
                       },
                       child: Stack(
                         children: [
@@ -756,10 +851,20 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             enableAnimation: true,
                           ),
                           Positioned(
+                            top: -8,
+                            right: -4,
+                            child: PSBouncyImage(
+                              imagePath: 'ps_ad_icon',
+                              width: 37,
+                              height: 40,
+                              enableAnimation: true,
+                            ),
+                          ),
+                          Positioned(
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? '\$???' : 'X???',
+                              text: provider.ps_pig_level == 0 ? ' \$???' : ' X???',
                               size: 20,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
@@ -956,9 +1061,9 @@ class PigblancePage extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(text: 'Only '),
-                            TextSpan(text: '\$${provider.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number}'), // Static or dynamic based on provider
+                            TextSpan(text: '\$${(0.to2Double(provider.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number))}'), // Static or dynamic based on provider
                             TextSpan(text: ' Left To Withdraw '),
-                            TextSpan(text: '\$100'), // Static or dynamic based on provider
+                            TextSpan(text: '\$${PSNumberHelpers().intModel!.eqRange.first}'), // Static or dynamic based on provider
                           ],
                         ),
                       ),
@@ -975,12 +1080,12 @@ class PigblancePage extends StatelessWidget {
                           children: [
                             TextSpan(text: 'Only '),
                             TextSpan(
-                              text: '\$${provider.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number}', // Static or dynamic based on provider
+                              text: '\$${(0.to2Double(provider.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number))}', // Static or dynamic based on provider
                               style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
                             ),
                             TextSpan(text: ' Left To Withdraw '),
                             TextSpan(
-                              text: '\$100', // Static or dynamic based on provider
+                              text: '\$${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic based on provider
                               style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
                             ),
                           ],
@@ -1029,7 +1134,7 @@ class PigblancePage extends StatelessWidget {
                       children: [
                         Spacer(),
                         PSStrokeText(
-                          text: '\$100', // Static or dynamic value based on provider data
+                          text: '\$${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic value based on provider data
                           size: 12,
                           color: '#FFE711'.color(),
                           weight: FontWeight.w900,
@@ -1143,7 +1248,7 @@ class PigblancePage2 extends StatelessWidget {
                       left: 180.w,
                       top: 37,
                       child: PSStrokeText(text: '${0.to2Double(provider.ps_pig_level_index)}/${PSLocalProvider.instance
-                          .ps_pig_level == 1 ? 10 : 20}',
+                          .ps_pig_level == 1 ? 20 : 10}',
                           size: 10,
                           color: '#FFFFFF'.color(),
                           weight: FontWeight.w900,
@@ -1172,7 +1277,7 @@ class PigblancePage2 extends StatelessWidget {
                   Positioned(
                     left: 29,
                     top: 42,
-                    child: PSStrokeText(text: '\$100',
+                    child: PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
                         size: 12,
                         color: '#FFE711'.color(),
                         weight: FontWeight.w900,
@@ -1208,7 +1313,7 @@ class PigblancePage2 extends StatelessWidget {
                     left: 130,
                     bottom: 33,
                     child: PSStrokeText(
-                        text: provider.ps_pig_level == 0 ? '\$100' : provider
+                        text: provider.ps_pig_level == 0 ? '\$${PSNumberHelpers().intModel!.eqRange.first}' : provider
                             .ps_pig_level == 1 ? '20' : '10',
                         size: 12,
                         color: '#FFE711'.color(),
@@ -1238,7 +1343,7 @@ class PigblancePage2 extends StatelessWidget {
                     right: 48,
                     bottom: 33,
                     child: PSStrokeText(
-                        text: provider.ps_pig_level == 0 ? '\$100' : provider
+                        text: provider.ps_pig_level == 0 ? '\$${PSNumberHelpers().intModel!.eqRange.first}' : provider
                             .ps_pig_level == 1 ? '20' : '10',
                         size: 12,
                         color: '#FFE711'.color(),
@@ -1262,4 +1367,19 @@ class PigblancePage2 extends StatelessWidget {
     return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
   }
 
+}
+
+class PSPigDolasUpdateNotificationService {
+  static final StreamController<int> _streamController =
+  StreamController<int>.broadcast();
+
+  static Stream<int> get stream => _streamController.stream;
+
+  static void sendToQuizProgressNotification(int value) {
+    _streamController.sink.add(value);
+  }
+
+  static void close() {
+    _streamController.close();
+  }
 }

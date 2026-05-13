@@ -107,6 +107,8 @@ flutter:
     - assets/spine/yindao-money/
     - assets/spine/yindao-pig/
     - assets/spine/caidai/
+    - assets/spine/yindao3/
+
   fonts:
     - family: Black_mianfeiziti
       fonts:

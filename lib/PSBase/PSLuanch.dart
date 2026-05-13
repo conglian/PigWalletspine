@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
@@ -180,7 +181,7 @@ class _SJGradientProgressBarState extends State<SJGradientProgressBar>
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: kDebugMode ? 3 : 12),
       vsync: this,
     );
 

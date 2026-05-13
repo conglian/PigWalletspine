@@ -110,6 +110,22 @@ class PSNumberHelpers {
     ));
   }
 
+  /// 获取金额范围奖励值
+  List<double> getPrizeWithDolasNSize(double ps_dolas) {
+    for (var item in intModel!.moneyPrize) {
+      int start = item.firstNumber;
+      int end = item.endNumber;
+
+      if (ps_dolas >= start && ps_dolas < end) {
+        return item.prize;
+      }
+    }
+
+    /// 如果超出所有区间，返回最后一段
+    var last = intModel!.moneyPrize.last;
+    return last.prize;
+  }
+
   /// 获取钻石或者金砖奖励值
   double getPrizeWithDomandGoldNum() {
     List<MoneyPrize> model = PSLocalProvider.instance.ps_pig_level == 1 ? intModel!.diamondPrize : intModel!.goldPrize;
@@ -130,11 +146,6 @@ class PSNumberHelpers {
       last.prize.first,
       last.prize.last,
     ));
-  }
-
-  /// 获取转盘金额
-  double getPrizeWithWheelNum() {
-    return 0.to2Double(_randomBetween(intModel!.wheelRange.first.toDouble(), intModel!.wheelRange.last.toDouble()));
   }
 
 
