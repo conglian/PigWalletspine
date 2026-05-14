@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 
 class PSMarqueeText extends StatefulWidget {
   const PSMarqueeText({
@@ -183,7 +184,7 @@ class _PSMarqueeTextState extends State<PSMarqueeText>
             ),
             children: [
               TextSpan(text: 'Congrats! User $user just cashed out '),
-              TextSpan(text: '\$$money!'),
+              TextSpan(text: '${0.dolasType()}$money!'),
             ],
           ),
         ),
@@ -200,7 +201,7 @@ class _PSMarqueeTextState extends State<PSMarqueeText>
             children: [
               TextSpan(text: 'Congrats! User $user just cashed out '),
               TextSpan(
-                text: '\$$money!',
+                text: '${0.dolasType()}$money!',
                 style: const TextStyle(
                   color: Color(0xFFFFFF00),
                 ),

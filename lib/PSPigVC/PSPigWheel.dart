@@ -11,7 +11,9 @@ import 'package:spine_flutter/spine_widget.dart' as spine;
 import '../PSBase/PSTbaBar.dart';
 import '../PSGuide/PSGuideAThree.dart';
 import '../PSTool/PSNumberHelpers.dart';
+import '../PSTool/PSTBAEventTool.dart';
 import '../PSTool/ps_GradientNumber.dart';
+import '../PSTool/ps_WebKitView.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import '../PSTool/ps_stroke_text.dart';
@@ -161,6 +163,21 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
             ), onTap: (){
             PigTabController.switchTo(1);
           })),
+          Positioned(left: 18.w,top: 168.h,child: ParticleButton(onTap: () async {
+            ps_event_fire(' h5_show', {});
+            ps_event_fire(' h5_page', {});
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (builder) {
+                  ps_event_fire('h5_page', {});
+                  return PSWebkitview(
+                    url: "https://tinyurl.com/5n6u64vn",
+                    title: 'Game',
+                  );
+                },
+              ),
+            );
+          },child: PSImg(name: 'ps_box_btns', width: 50, height: 50))),
         ],
       ),
     );
@@ -229,20 +246,34 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
   }
 
   Future<void> setTxProgress() async {
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, PSLocalProvider.instance.ps_tx_wheel_index + 1);
-    if (PSLocalProvider.instance.ps_tx_wheel_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
+    if (PSLocalProvider.instance.ps_tx_task_index == 1 || PSLocalProvider.instance.ps_tx_task_index == 4 || PSLocalProvider.instance.ps_tx_task_index == 7){
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, PSLocalProvider.instance.ps_tx_wheel_index + 1);
+      Future.delayed(Duration(milliseconds: 50), () async {
+        PSPigCashNotificationService.sendToQuizProgressNotification(0);
+        'PSLocalProvider.instance.ps_tx_wheel_index=${PSLocalProvider.instance.ps_tx_wheel_index}'.log();
+        'PSLocalProvider.instance.ps_tx_task_index=${PSLocalProvider.instance.ps_tx_task_index}'.log();
+        if (PSLocalProvider.instance.ps_tx_wheel_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
+          Future.delayed(Duration(milliseconds: 50), () async {
+              PSPigCashNotificationService.sendToQuizProgressNotification(0);
+          });
+        }
+      });
       // 重置任务
-      if (PSLocalProvider.instance.ps_tx_task_index >= PSNumberHelpers().intModel!.tixianTask.length){
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
-      }
-    }
-    PSPigCashNotificationService.sendToQuizProgressNotification(0);
+      Future.delayed(Duration(milliseconds: 100), () async {
+        if (PSLocalProvider.instance.ps_tx_task_index + 1 >= PSNumberHelpers().intModel!.tixianTask.length){
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+          Future.delayed(Duration(milliseconds: 50), () async {
+            PSPigCashNotificationService.sendToQuizProgressNotification(0);
+          });
+        }
+      });
+    };
   }
 }

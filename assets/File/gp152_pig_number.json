@@ -24,7 +24,7 @@
     {"first_number": 0, "point": 0, "end_number": 30},
     {"first_number": 30, "point": 30, "end_number": 60},
     {"first_number": 60, "point": 50, "end_number": 90},
-    {"first_number": 90, "point": 80, "end_number": 10000}
+    {"first_number": 90, "point": 80, "end_number": 100}
   ],
   "wheel_range": [5, 10],
   "first_ad_prize": 6,

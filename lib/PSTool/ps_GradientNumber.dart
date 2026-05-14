@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
+import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 
 class PSGradientNumberRoller extends StatefulWidget {
   // 支持num类型（int和double的父类）
@@ -91,10 +92,10 @@ class _PSGradientNumberRollerState extends State<PSGradientNumberRoller>
   String _formatNumber(num number) {
     // 如果是整数类型且不需要小数位，直接返回整数格式
     if (number is int && widget.decimalPlaces == 0) {
-      return '${widget.showDolas ? '\$' : ''}${number.toString()}';
+      return '${widget.showDolas ? '${0.dolasType()}' : ''}${number.toString()}';
     }
     // 否则按小数处理，保留指定小数位数
-    return '${widget.showDolas ? '\$' : ''}${number.toStringAsFixed(widget.decimalPlaces)}';
+    return '${widget.showDolas ? '${0.dolasType()}' : ''}${number.toStringAsFixed(widget.decimalPlaces)}';
   }
 
   @override

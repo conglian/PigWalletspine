@@ -217,7 +217,7 @@ class PSNoticeHelp {
         ongoing: true,
         importance: Importance.min,
         priority: Priority.min,
-        styleInformation: ForegroundStyleInformation(value: '\$${PSLocalProvider.instance.ps_dolas_number.toStringAsFixed(2)}', image:'ps_freground')
+        styleInformation: ForegroundStyleInformation(value: '${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number.toStringAsFixed(2)}', image:'ps_freground')
     );
     await AndroidFlutterLocalNotificationsPlugin().startForegroundService(id, '', '',
         notificationDetails: androidNotificationDetails, payload: 'foreground');
@@ -665,7 +665,7 @@ class StepMotivationManager {
   static final List<StepMotivation> _motivations = [
     StepMotivation(
       title: "Piggy Almost Full!",
-      body: 'You’ve saved \$4.80—cash out before it spills!',
+      body: 'You’ve saved ${0.dolasType()}4.80—cash out before it spills!',
     ),
     StepMotivation(
       title: "Cash-Out Time 🎉",

@@ -3,6 +3,9 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+    id ("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics") version "3.0.6" apply false
+//    id("applovin-quality-service")
 }
 
 android {
@@ -74,7 +77,7 @@ dependencies {
 
     api("io.github.alex-only:max_adapter_tu:1.2.5")
 
-    implementation ("com.google.android.gms:play-services-ads-identifier:18.1.0")
+//    implementation ("com.google.android.gms:play-services-ads-identifier:18.1.0")
 
     implementation ("com.google.gms:google-services:4.3.15")
 //    implementation("com.applovin.mediation:bidmachine-adapter:+")

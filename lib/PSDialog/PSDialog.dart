@@ -117,7 +117,7 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
                 onTap: (){
                    Navigator.pop(context);
                    ps_event_fire('confirm_account_toast', {});
-                   context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+                   context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your ${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
                 },
                 child: Container(
                   width: 239.w,
@@ -141,7 +141,7 @@ class PSConfirmInformationDialogState extends State<PSConfirmInformationDialog>
           child: ParticleButton(
             onTap: (){
               Navigator.pop(context, 0);
-              context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+              context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your ${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
             },
             child: Center(
               child: Container(
@@ -210,7 +210,7 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
                   text: 'Congratulations! ',
                   style: TextStyle(color: '#F3B307'.color()),
                 ),
-                TextSpan(text: "You're About To Withdraw \$${PSNumberHelpers().intModel!.eqRange.first}! "),
+                TextSpan(text: "You're About To Withdraw ${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}! "),
               ],
             ),
           ),
@@ -236,7 +236,7 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
@@ -245,7 +245,7 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
                 onTap: (){
                   Navigator.pop(context, 0);
                   ps_event_fire('process_confirm_account_pop_c', {'type' : PSLocalProvider.instance.ps_account_id.length <= 0 ? 'no' : 'yes'});
-                  if (widget.isConfim){
+                  if (PSLocalProvider.instance.ps_account_id.length != 0){
                     Navigator.push(context,
                         MaterialPageRoute(
                           builder: (_) => PSConfirmInformationDialog(),
@@ -281,7 +281,7 @@ class PSAboutTXDialogState extends State<PSAboutTXDialog>
           child: ParticleButton(
             onTap: (){
               Navigator.pop(context, 0);
-              if (widget.isConfim){
+              if (PSLocalProvider.instance.ps_account_id.length != 0){
                 Navigator.push(context,
                     MaterialPageRoute(
                       builder: (_) => PSConfirmInformationDialog(),
@@ -329,7 +329,6 @@ class PSInfoSubmitDialogState extends State<PSInfoSubmitDialog>
     super.initState();
     setState(() {
       seletecd = PSLocalProvider.instance.ps_tx_ing_account;
-      _controller.text = PSLocalProvider.instance.ps_account_id;
     });
   }
 
@@ -340,154 +339,170 @@ class PSInfoSubmitDialogState extends State<PSInfoSubmitDialog>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: .center,
-      children: [
-        Container(
-          width: 317.w,
-          height: 422.h,
-          decoration: BoxDecoration(
-              image: PSDImg('ps_tx_info_bg')
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 22.h),
-              PSText(text: 'Confirm payment Information', size: 18, color: '#264077'.color(), weight: FontWeight.w900),
-              SizedBox(height: 35.h),
-              Row(
-                children: [
-                  SizedBox(width: 24.w),
-                  PSText(text: 'Payment Method:', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
-                ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Padding(
+        padding: EdgeInsetsGeometry.only(left: (0.width(context) - 317.w) * 0.5),
+        child: Column(
+          mainAxisAlignment: .center,
+          children: [
+            Container(
+              width: 317.w,
+              height: 422.h,
+              decoration: BoxDecoration(
+                  image: PSDImg('ps_tx_info_bg')
               ),
-              SizedBox(height: 10.h),
-              Row(
+              child: Column(
                 children: [
-                  SizedBox(width: 28.w),
-                  ParticleButton(
-                    onTap: (){
-                      setState(() {
-                        seletecd = 0;
-                        PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 0);
-                      });
-                    },
-                    child: Container(
-                      width: 116.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                          image: PSDImg('ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}')
+                  SizedBox(height: 22.h),
+                  PSText(text: 'Confirm payment Information', size: 18, color: '#264077'.color(), weight: FontWeight.w900),
+                  SizedBox(height: 35.h),
+                  Row(
+                    children: [
+                      SizedBox(width: 24.w),
+                      PSText(text: 'Payment Method:', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
+                    ],
+                  ),
+                  SizedBox(height: 10.h),
+                  Row(
+                    children: [
+                      SizedBox(width: 28.w),
+                      ParticleButton(
+                        onTap: (){
+                          setState(() {
+                            seletecd = 0;
+                            PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 0);
+                          });
+                        },
+                        child: Container(
+                          width: 116.w,
+                          height: 44.h,
+                          decoration: BoxDecoration(
+                              image: PSDImg('ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}'),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                width: 1,
+                                color: seletecd == 0 ? Colors.cyan : Colors.transparent
+                              )
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 22.w),
+                      ParticleButton(
+                        onTap: (){
+                          setState(() {
+                            seletecd = 1;
+                            PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 1);
+                          });
+                        },
+                        child: Container(
+                          width: 116.w,
+                          height: 44.h,
+                          decoration: BoxDecoration(
+                              image: PSDImg('ps_act_1${isBrazilianPortuguese(context) == true ? 'pt' : ''}'),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                 width: 1,
+                                 color: seletecd == 1 ? Colors.cyan : Colors.transparent
+                              )
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 22.h),
+                  Row(
+                    children: [
+                      SizedBox(width: 24.w),
+                      PSText(text: 'Email/Phone number:', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
+                    ],
+                  ),
+                  SizedBox(height: 16.h),
+                  Container(
+                    width: 259.w,
+                    height: 50.h,
+                    decoration: BoxDecoration(
+                      color: '#F0F8FA'.color(),
+                      borderRadius: BorderRadius.circular(8.h),
+                      border: Border.all(
+                        color: '#ACC4C8'.color(),  // 边框颜色
+                        width: 1,            // 边框宽度
                       ),
                     ),
+                    child: TextField(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                        hintText: 'Please Input Your Account ID', // 占位符文案
+                        hintStyle: TextStyle(
+                          color: Color(0xFF949DA2), // 占位符文案颜色
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                        border: InputBorder.none, // 移除默认边框
+                      ),
+                      style: TextStyle(
+                        color: Color(0xFF000000), // 输入文字颜色
+                        fontSize: 14.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  SizedBox(width: 22.w),
+                  SizedBox(height: 33.h),
+                  Row(
+                    children: [
+                      SizedBox(width: 10.w),
+                      PSImg(name: 'ps_Sectiy_icon', width: 29, height: 29),
+                      SizedBox(width: 5.w),
+                      PSText(text: 'We’ll only use this for sending your withdrawal', size: 10, color: '#566D7E'.color(), weight: FontWeight.w900)
+                    ],
+                  ),
+                  SizedBox(height: 19.h),
                   ParticleButton(
                     onTap: (){
-                      setState(() {
-                        seletecd = 0;
-                        PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_ing_accountName, 0);
-                      });
+                      if (_controller.text.length <= 0){
+                        PSDialogTool.toast(context, 'Please input your account ID');
+                      } else {
+                        Navigator.pop(context);
+                        context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your ${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+                      }
                     },
                     child: Container(
-                      width: 116.w,
-                      height: 44.h,
+                      width: 239.w,
+                      height: 50.h,
                       decoration: BoxDecoration(
-                          image: PSDImg('ps_act_1${isBrazilianPortuguese(context) == true ? 'pt' : ''}')
+                          color: '#0E79C6'.color(),
+                          borderRadius: BorderRadius.circular(25.h)
+                      ),
+                      child: Center(
+                        child: PSText(text: 'Apply For Payout', size: 20, color: '#FFFFFF'.color(), weight: FontWeight.w900),
                       ),
                     ),
-                  ),
+                  )
                 ],
-              ),
-              SizedBox(height: 22.h),
-              Row(
-                children: [
-                  SizedBox(width: 24.w),
-                  PSText(text: 'Email/Phone number:', size: 14, color: '#264077'.color(), weight: FontWeight.w900),
-                ],
-              ),
-              SizedBox(height: 16.h),
-              Container(
-                width: 259.w,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  color: '#F0F8FA'.color(),
-                  borderRadius: BorderRadius.circular(8.h),
-                  border: Border.all(
-                    color: '#ACC4C8'.color(),  // 边框颜色
-                    width: 1,            // 边框宽度
-                  ),
-                ),
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: 'Please Input Your Account ID', // 占位符文案
-                    hintStyle: TextStyle(
-                      color: Color(0xFF949DA2), // 占位符文案颜色
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold
-                    ),
-                    border: InputBorder.none, // 移除默认边框
-                  ),
-                  style: TextStyle(
-                    color: Color(0xFF000000), // 输入文字颜色
-                    fontSize: 14.0,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: 33.h),
-              Row(
-                children: [
-                  SizedBox(width: 10.w),
-                  PSImg(name: 'ps_Sectiy_icon', width: 29, height: 29),
-                  SizedBox(width: 5.w),
-                  PSText(text: 'We’ll only use this for sending your withdrawal', size: 10, color: '#566D7E'.color(), weight: FontWeight.w900)
-                ],
-              ),
-              SizedBox(height: 19.h),
-              ParticleButton(
-                onTap: (){
-                  Navigator.pop(context);
-                  if (_controller.text.length <= 0){
-                    PSDialogTool.toast(context, 'Please input your account ID');
-                  } else {
-                    context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
-                  }
-                },
-                child: Container(
-                  width: 239.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                      color: '#0E79C6'.color(),
-                      borderRadius: BorderRadius.circular(25.h)
-                  ),
-                  child: Center(
-                    child: PSText(text: 'Apply For Payout', size: 20, color: '#FFFFFF'.color(), weight: FontWeight.w900),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        SizedBox(height: 30.h),
-        SizedBox(
-          width: 40,
-          height: 40,
-          child: ParticleButton(
-            onTap: (){
-              Navigator.pop(context, 0);
-            },
-            child: Center(
-              child: Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                    image: PSDImg('ps_whine_close')
-                ),
               ),
             ),
-          ),
-        )
-      ],
+            SizedBox(height: 30.h),
+            SizedBox(
+              width: 40,
+              height: 40,
+              child: ParticleButton(
+                onTap: (){
+                  Navigator.pop(context, 0);
+                },
+                child: Center(
+                  child: Container(
+                    width: 18,
+                    height: 18,
+                    decoration: BoxDecoration(
+                        image: PSDImg('ps_whine_close')
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -867,52 +882,53 @@ class PSQuizRankTwoDialogState extends State<PSQuizRankTwoDialog>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Column(
-          children: [
-            SizedBox(height: 142.h),
-            Center(
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Black_mianfeiziti',
-                      color: '#FFFFFF'.color()),
-                  children: const <TextSpan>[
-                    TextSpan(text: 'Top Answerer\n'),
-                    TextSpan(
-                        text: 'Withdrawal Made Easy!! ',
-                        style: TextStyle(color: Color(0xFFFFB300))),
-                  ],
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              SizedBox(height: 142.h),
+              Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Black_mianfeiziti',
+                        color: '#FFFFFF'.color()),
+                    children: const <TextSpan>[
+                      TextSpan(text: 'Top Answerer\n'),
+                      TextSpan(
+                          text: 'Withdrawal Made Easy!! ',
+                          style: TextStyle(color: Color(0xFFFFB300))),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
-            SizedBox(height: 4 * (cellHeight + spacing)), // 占位
-          ],
-        ),
-
-        // 四个 cell
-        for (int i = 0; i < 4; i++) buildCell(i),
-
-        // 底部按钮
-        Visibility(
-          visible: showExtras,
-          child: Positioned(
-            bottom: 155.h,
-            left: 0,
-            right: 0,
-            child: ParticleButton(
-              onTap: (){
-                ps_event_fire('process_rank_pop_c', {});
-                Navigator.pop(context, 0);
-              },
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {},
+              SizedBox(height: 30),
+              SizedBox(height: 4 * (cellHeight + spacing)), // 占位
+            ],
+          ),
+      
+          // 四个 cell
+          for (int i = 0; i < 4; i++) buildCell(i),
+      
+          // 底部按钮
+          Visibility(
+            visible: showExtras,
+            child: Positioned(
+              bottom: 155.h,
+              left: 0,
+              right: 0,
+              child: InkWell(
+                onTap: (){
+                  'process_rank_pop_c'.log();
+                  ps_event_fire('process_rank_pop_c', {});
+                  Navigator.pop(context, 0);
+                },
+                child: Center(
                   child: Container(
                     width: 271,
                     height: 70.5,
@@ -922,44 +938,44 @@ class PSQuizRankTwoDialogState extends State<PSQuizRankTwoDialog>
               ),
             ),
           ),
-        ),
-
-        // 右下角关闭按钮
-        Visibility(
-          visible: showExtras,
-          child: Positioned(
-            bottom: 100.h,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: SizedBox(
-                width: 40,
-                height: 40,
-                child: ParticleButton(
-                  onTap: () {
-                    ps_event_fire('process_rank_pop_close', {});
-                    Navigator.pop(context, 0);
-                  },
-                  child: Center(
-                    child: Container(
-                      width: 18,
-                      height: 18,
-                      decoration: BoxDecoration(image: PSDImg('ps_whine_close')),
+      
+          // 右下角关闭按钮
+          Visibility(
+            visible: showExtras,
+            child: Positioned(
+              bottom: 100.h,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: InkWell(
+                    onTap: () {
+                      ps_event_fire('process_rank_pop_close', {});
+                      Navigator.pop(context, 0);
+                    },
+                    child: Center(
+                      child: Container(
+                        width: 18,
+                        height: 18,
+                        decoration: BoxDecoration(image: PSDImg('ps_whine_close')),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-
-        // 顶部光圈
-        Visibility(
-          visible: showExtras,
-          child: Positioned(
-              right: 4, top: 208.h, child: PSImg(name: 'ps_guang_icon', width: 31, height: 26)),
-        ),
-      ],
+      
+          // 顶部光圈
+          Visibility(
+            visible: showExtras,
+            child: Positioned(
+                right: 4, top: 208.h, child: PSImg(name: 'ps_guang_icon', width: 31, height: 26)),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -1076,7 +1092,7 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
               image: PSDImg('ps_tip_tx_bg'),
             ),
             child: Center(
-              child: SizedBox(width: 301, height: 70.5, child: PSStrokeText(text: widget.contentStr, size: 18, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#711A00'.color(), maxLines: 2, align: TextAlign.center,))
+              child: SizedBox(width: 301, height: 70.5, child: PSStrokeText(text: widget.contentStr, size: 16, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#711A00'.color(), maxLines: 2, align: TextAlign.center,))
             ),
           ),
         ),
@@ -1253,7 +1269,7 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange[widget.seletcd_row]}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange[widget.seletcd_row]}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
@@ -1272,7 +1288,7 @@ class PSTXOutDialogState extends State<PSTXOutDialog>
                       text: 'Only ',
                     ),
                     TextSpan(
-                      text: '\$${PSNumberHelpers().intModel!.eqRange[widget.seletcd_row] - PSLocalProvider.instance.ps_dolas_number}0 ',
+                      text: '${0.dolasType()}${0.to2Double(PSNumberHelpers().intModel!.eqRange[widget.seletcd_row] - PSLocalProvider.instance.ps_dolas_number)} ',
                       style: TextStyle(color: '#0A8A33'.color()),
                     ),
                     TextSpan(
@@ -1397,12 +1413,12 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
               SizedBox(height: 14.h),
-              SizedBox(width: 205, height: 38,child: PSText(text: 'Only One Step Away From Successful Withdrawal', size: 16, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 2,align: .center)),
+              SizedBox(width: 205, height: 38,child: PSText(text: 'Only One Step Away From Successful Withdrawal', size: 15, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 2,align: .center)),
               SizedBox(height: 12.h),
               Container(
                 width: 283.w,
@@ -1426,14 +1442,14 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
                       child: Stack(
                         children: [
                           Container(
-                            width: 249.w * (PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data),
+                            width: 249.w * getTaskProgress(),
                             height: 20.h,
                             decoration: BoxDecoration(
                               color: '#1757B1'.color(),
                               borderRadius: BorderRadius.circular(10.h),
                             ),
                           ),
-                          Positioned(top: 5.h,left: 110.w,child: PSStrokeText(text: '${((PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) * 100).toInt()}%', size: 10, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#113996'.color()))
+                          Positioned(top: 5.h,left: 110.w,child: PSStrokeText(text: '${(getTaskProgress() * 100).toInt()}%', size: 10, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#113996'.color()))
                         ],
                       ),
                     )
@@ -1443,25 +1459,26 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
               SizedBox(height: 16.h),
               ParticleButton(
                 onTap: (){
+                  ps_event_fire('one_last_step_pop_c', {'type' : gettypeString()});
                   Navigator.pop(context, 0);
                   if (PSLocalProvider.instance.ps_tx_task_index == 0){
                     PigTabController.switchTo(1);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
                     PigTabController.switchTo(2);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
-                    PigTabController.switchTo(0);
+                    PigTabController.switchTo(1);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
                     PigTabController.switchTo(1);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
                     PigTabController.switchTo(2);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
-                    PigTabController.switchTo(0);
+                    PigTabController.switchTo(1);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
                     PigTabController.switchTo(1);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
                     PigTabController.switchTo(2);
                   } else if (PSLocalProvider.instance.ps_tx_task_index == 9){
-                    PigTabController.switchTo(0);
+                    PigTabController.switchTo(1);
                   }
                 },
                 child: Container(
@@ -1485,25 +1502,26 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
           height: 40,
           child: ParticleButton(
             onTap: (){
+              ps_event_fire('one_last_step_pop_c', {'type' : gettypeString()});
               Navigator.pop(context, 0);
               if (PSLocalProvider.instance.ps_tx_task_index == 0){
                 PigTabController.switchTo(1);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
                 PigTabController.switchTo(2);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
-                PigTabController.switchTo(0);
+                PigTabController.switchTo(1);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
                 PigTabController.switchTo(1);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
                 PigTabController.switchTo(2);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
-                PigTabController.switchTo(0);
+                PigTabController.switchTo(1);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
                 PigTabController.switchTo(1);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
                 PigTabController.switchTo(2);
               } else if (PSLocalProvider.instance.ps_tx_task_index == 9){
-                PigTabController.switchTo(0);
+                PigTabController.switchTo(1);
               }
             },
             child: Center(
@@ -1541,6 +1559,28 @@ class PSTXLastDialogState extends State<PSTXLastDialog>
     } else {
       return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
     }
+  }
+
+  double getTaskProgress(){
+      if (PSLocalProvider.instance.ps_tx_task_index == 0){
+        return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
+        return PSLocalProvider.instance.ps_tx_wheel_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 2){
+        return PSLocalProvider.instance.ps_tx_bubble_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
+        return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
+        return PSLocalProvider.instance.ps_tx_wheel_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
+        return PSLocalProvider.instance.ps_tx_bubble_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
+        return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
+        return PSLocalProvider.instance.ps_tx_wheel_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      } else {
+        return PSLocalProvider.instance.ps_tx_bubble_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      }
   }
 
   bool isBrazilianPortuguese(BuildContext context) {
@@ -1590,10 +1630,10 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
 
     for (int i = 0; i < list.length; i++) {
       if (i == PSLocalProvider.instance.ps_current_ranking - 1) { // 第90个位置（索引为89）
-        list[i] = "\$${possibleValues[PSLocalProvider.instance.ps_tx_ing_number]}";
+        list[i] = "${0.dolasType()}${possibleValues[PSLocalProvider.instance.ps_tx_ing_number]}";
       } else {
         // 随机选择一个可能的金额值
-        list[i] = '\$${possibleValues[random.nextInt(possibleValues.length)]}';
+        list[i] = '${0.dolasType()}${possibleValues[random.nextInt(possibleValues.length)]}';
       }
     }
     return list;
@@ -1639,7 +1679,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
                 child: Column(
                   children: [
                     SizedBox(height: 56.h),
-                    PSStrokeText(text: '\$${possibleValues.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
+                    PSStrokeText(text: '${0.dolasType()}${possibleValues.first}', size: 24, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#000000'.color()),
                   ],
                 ),
               ),
@@ -1853,7 +1893,7 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
                       text: 'watch ads and cash out ',
                     ),
                     TextSpan(
-                      text: '\$${PSNumberHelpers().intModel!.eqRange.first} ',
+                      text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} ',
                       style: TextStyle(color: '#0F7E29'.color()),
                     ),
                     TextSpan(
@@ -1877,7 +1917,9 @@ class PSTXRankDialogState extends State<PSTXRankDialog>
       await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
       await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
       await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+      Navigator.pop(context, 1);
       if (!mounted) return;
+      PSDialogTool.toastRanking(context, 1);
       context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
     } else {
@@ -1977,7 +2019,7 @@ class PSGuide4DialogState extends State<PSGuide4Dialog>
                       children: [
                         PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                         SizedBox(width: 5,),
-                        PSText(text: '\$${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        PSText(text: '${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                       ],
                     ),
                   ),
@@ -2023,7 +2065,7 @@ class PSGuide4DialogState extends State<PSGuide4Dialog>
                             text: 'To Speed Up Your ',
                           ),
                           TextSpan(
-                            text: '\$${PSNumberHelpers().intModel!.eqRange.first} ',
+                            text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} ',
                             style: TextStyle(color: '#17931B'.color()),
                           ),
                           TextSpan(
@@ -2123,7 +2165,7 @@ class PSdolls100DialogState extends State<PSdolls100Dialog>
                       children: [
                         PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                         SizedBox(width: 5,),
-                        PSText(text: '\$${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        PSText(text: '${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                       ],
                     ),
                   ),
@@ -2148,7 +2190,7 @@ class PSdolls100DialogState extends State<PSdolls100Dialog>
             SizedBox(height: 44),
             InkWell(
               onTap: (){
-                ps_event_fire('diamond_pig_getpop_next_step', {});
+                ps_event_fire('diamond_pig_getpop_c', {});
                 Navigator.pop(context, 1);
                 context.tipShow(PSReviewingDialog());
               },
@@ -2225,6 +2267,8 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
       ps_event_fire('ad_fail_pop', {});
     } else if (widget.adStatus == .adLimit){
       ps_event_fire('ad_limit_pop', {});
+    } else if (widget.adStatus == .notWheel){
+      ps_event_fire('no_chance_pop', {});
     }
   }
 
@@ -2294,6 +2338,7 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
                   );
                   ps_event_fire('noti_confirm_pop_suc', {});
                 } else if (widget.adStatus == .notWheel) {
+                  ps_event_fire('no_chance_pop_c', {});
                   Navigator.pop(context, 1);
                   PigTabController.switchTo(1);
                 }
@@ -2446,7 +2491,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                             text: 'Only ',
                           ),
                           TextSpan(
-                            text: '\$${PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : double.parse((PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number).toStringAsFixed(2))}',
+                            text: '${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : double.parse((PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number).toStringAsFixed(2))}',
                             style: TextStyle(color: '#0E731E'.color()),
                           ),
                           TextSpan(
@@ -2457,7 +2502,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                     ),
                     SizedBox(height: 34.h),
                     PSImg(name: "ps_dolas_b", width: 90.w, height: 79.h),
-                    PSText(text: '+\$${widget.award}', size: 24, color:'#199E24'.color() , weight: FontWeight.w900),
+                    PSText(text: '+${0.dolasType()}${widget.award}', size: 24, color:'#199E24'.color() , weight: FontWeight.w900),
                     SizedBox(height:13.h),
                     Row(
                       children: [
@@ -2499,7 +2544,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                           SizedBox(width: 8.w,),
                           PSImg(name: 'ps_payment_icon', width: 67.w, height: 21.h),
                           SizedBox(width: 8.w,),
-                          PSText(text: 'My Cash :\$${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 14, color: '#0C7A29'.color(), weight: FontWeight.w900)
+                          PSText(text: 'My Cash :${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 14, color: '#0C7A29'.color(), weight: FontWeight.w900)
                         ],
                       ),
                     ),
@@ -2663,7 +2708,7 @@ class PSReviewingDialogState extends State<PSReviewingDialog>
                   children: [
                     SizedBox(height: 56.h),
                     PSStrokeText(
-                      text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
+                      text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}',
                       size: 24,
                       color: '#FFFFFF'.color(),
                       weight: FontWeight.w900,
@@ -3239,7 +3284,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
                   top: 36,
                   child: PSStrokeText(
                     text: PSLocalProvider.instance.ps_pig_level == 0 ? '${PSLocalProvider.instance.ps_dolas_number}0' :
-                    '${PSLocalProvider.instance.ps_pig_level_index}/${PSLocalProvider.instance.ps_pig_level == 1 ? '20' : '10'}',
+                    '${0.to2Double(PSLocalProvider.instance.ps_pig_level_index)}/${PSLocalProvider.instance.ps_pig_level == 1 ? '20' : '10'}',
                     size: 10,
                     color: '#FFFFFF'.color(),
                     weight: FontWeight.w900,
@@ -3276,7 +3321,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
                   left: 29,
                   top: 42,
                   child: PSStrokeText(
-                      text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
+                      text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}',
                       size: 12,
                       color: '#FFE711'.color(),
                       weight: FontWeight.w900,
@@ -3393,9 +3438,15 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
                 Navigator.pop(context, 1);
               }, adDidClosed: (adDidClosed) async {
                 Navigator.pop(context, 1);
-                await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, (widget.award * 2.0) + PSLocalProvider.instance.ps_pig_level_index);
-                if (!context.mounted) return;
-                context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                if (PSLocalProvider.instance.ps_pig_level == 1){
+                  await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, (widget.award * 1.0) + PSLocalProvider.instance.ps_pig_level_index);
+                  if (!context.mounted) return;
+                  context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                } else {
+                  await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, (widget.award * 2.0) + PSLocalProvider.instance.ps_pig_level_index);
+                  if (!context.mounted) return;
+                  context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                }
               });
             },
             child: Container(
@@ -3406,7 +3457,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
                 children: [
                   Center(
                     child: PSStrokeText(
-                      text: 'Collect Double',
+                      text: PSLocalProvider.instance.ps_pig_level == 1 ? 'Collect' : 'Collect Double',
                       size: 24,
                       color: '#FFFFFF'.color(),
                       weight: FontWeight.w900,
@@ -3587,17 +3638,17 @@ class PSPopCunCashDogState extends State<PSPopCunCashDog>
       widget.is_gold ? _messages : _messages2);
 
   final List<String> _messages = [
-    "Just withdrew \$12.75—this app really pays!",
-    "Just got \$10 on PayPal — it’s real!",
-    "Cashed out \$15 today, straight to my account.",
-    "\$20 received instantly, no fees at all.",
+    "Just withdrew ${0.dolasType()}12.75—this app really pays!",
+    "Just got ${0.dolasType()}10 on PayPal — it’s real!",
+    "Cashed out ${0.dolasType()}15 today, straight to my account.",
+    "${0.dolasType()}20 received instantly, no fees at all.",
     "Got my payout! Earning while watching ads works.",
-    "Withdrawn \$25 successfully, money in my PayPal now.",
+    "Withdrawn ${0.dolasType()}25 successfully, money in my PayPal now.",
   ];
 
   final List<String> _messages2 = [
-    "Just started, already made \$0.85 by watching ads!",
-    "Watched a couple of ads and boom — \$0.85 in my balance!",
+    "Just started, already made ${0.dolasType()}0.85 by watching ads!",
+    "Watched a couple of ads and boom — ${0.dolasType()}0.85 in my balance!",
     "Didn’t think it’d work, but after a few minutes I got my first cents. Feels real!",
   ];
 
@@ -3706,7 +3757,7 @@ class PSPopCunCashDogState extends State<PSPopCunCashDog>
                                 TextSpan(text: 'Sent '),
                                 TextSpan(
                                   text:
-                                  '\$${PSNumberHelpers().intModel!
+                                  '${0.dolasType()}${PSNumberHelpers().intModel!
                                       .eqRange[row]} ',
                                   style: TextStyle(color: '#19912B'.color()),
                                 ),
@@ -3889,7 +3940,7 @@ class PSPopCunCashDogState extends State<PSPopCunCashDog>
                         weight: FontWeight.w900,
                         skWidth: 1,
                         skColor: '#000000'.color()),
-                    PSStrokeText(text: ' \$${widget.userData.totalEarning}',
+                    PSStrokeText(text: ' ${0.dolasType()}${widget.userData.totalEarning}',
                         size: 14,
                         color: '#F3D515'.color(),
                         weight: FontWeight.w900,
@@ -3929,11 +3980,24 @@ class PSPopCunCashDogState extends State<PSPopCunCashDog>
         Positioned(
           left: (0.width(context) - 211) * 0.5,
           top: 148.h,
-          child: PSImg(
-            name:
-            'ps_b_pig_icon_${widget.is_gold == true ? 2 : 0}',
+          width: 211,
+          height: 208,
+          child: Container(
             width: 211,
             height: 208,
+            decoration: BoxDecoration(
+              image: PSDImg('ps_b_pig_icon_${widget.is_gold == true ? 2 : 0}')
+            ),
+            child: Column(
+              children: [
+                Spacer(),
+                Padding(padding: EdgeInsetsGeometry.only(left: !widget.is_gold == 1 ? 38 : 52),child: PSImg(name: 'ps_${!widget.is_gold ? 0 : 2}_${getIntervalValue(widget.is_gold == true ? 2 : 0, widget.is_gold == true ? 20 : widget.userData.totalEarning)}', width: 78.02, height: 67.21)),
+                if (!widget.is_gold)
+                  SizedBox(height: 50),
+                if (widget.is_gold)
+                  SizedBox(height: 52),
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -3957,7 +4021,7 @@ class PSPopCunCashDogState extends State<PSPopCunCashDog>
                     SizedBox(width: 5),
                     PSText(
                       text:
-                      '\$${widget.userData.totalEarning}',
+                      '${0.dolasType()}${widget.userData.totalEarning}',
                       size: 20,
                       color: '#8B0002'.color(),
                       weight: FontWeight.w900,
@@ -3980,6 +4044,42 @@ class PSPopCunCashDogState extends State<PSPopCunCashDog>
         ),
       ],
     );
+  }
+
+  // 根据不同类型获取当前的翻位置
+  int getIntervalValue(int type, double value) {
+    // 固定区间
+    final List<int> intervals = [25, 50, 75, 100];
+
+    // 最大值根据 type
+    double maxValue;
+    switch (type) {
+      case 0:
+        maxValue = 100;
+        break;
+      case 1:
+        maxValue = 20;
+        break;
+      case 2:
+        maxValue = 10;
+        break;
+      default:
+        maxValue = 10;
+        type = 2;
+    }
+
+    // 限制 value 在 0~maxValue 之间
+    value = value.clamp(0, maxValue);
+
+    // 每个区间长度
+    double segment = maxValue / 4;
+
+    // 计算落在哪个区间
+    int index = (value / segment).ceil() - 1;
+    if (index < 0) index = 0;
+    if (index > 3) index = 3;
+
+    return intervals[index];
   }
 }
 
@@ -4090,7 +4190,7 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
               children: [
                 SizedBox(height: 18),
                 if (PSLocalProvider.instance.ps_pig_level == 0)
-                  PSStrokeText(text: 'Earned \$${widget.award}', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  PSStrokeText(text: 'Earned ${0.dolasType()}${widget.award}', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
                 if (PSLocalProvider.instance.ps_pig_level == 0)
                   SizedBox(
                     width: 111,
@@ -4117,7 +4217,7 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
                 if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
                  PSText(text: 'X${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
                 if (PSLocalProvider.instance.ps_pig_level == 0)
-                  PSText(text: '+\$${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
+                  PSText(text: '+${0.dolasType()}${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
               ],
             ),
           ),

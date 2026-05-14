@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:piggywalletspinearn/PSBase/PSTbaBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 extension PigWalletSpinearnExtension on String {
@@ -55,6 +56,23 @@ void printLongString(String text) {
 }
 
 extension ScreenExtension on int {
+
+  String dolasType(){
+    // if (isBrazilianPortuguese(homeKey.currentContext!)){
+    //   return 'R\$';
+    // } else {
+      return '\$';
+    // }
+  }
+
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
+  }
+
   double width(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }

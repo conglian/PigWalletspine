@@ -4,6 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:piggywalletspinearn/PSHome/PSHome.dart';
 import 'package:piggywalletspinearn/PSHome/PSQuiz.dart';
 import 'package:piggywalletspinearn/PSHome/PSWheel.dart';
+import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
 import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
 import '../PSPigVC/PSPigCash.dart';
 import '../PSPigVC/PSPigHome.dart';
@@ -38,6 +39,12 @@ class _PigBottomExampleState extends State<PigBottomExample> {
   final List<Widget> _screens = const [PSHome(), PSQuiz(), PSWheel()];
 
   final List<Widget> _screenbs = const [PSPigHome(), PSPigQuiz(), PSPigWheel(), PSPigCash()];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

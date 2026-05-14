@@ -11,6 +11,7 @@ import '../PSDialog/PSGuideManager.dart';
 import '../PSGuide/PSGuideAOne.dart';
 import '../PSHome/PSHome.dart';
 import '../PSTool/PSNoticeHelp.dart';
+import '../PSTool/PSNumberHelpers.dart';
 import '../PSTool/PSTBAEventTool.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
@@ -46,6 +47,10 @@ class PSLaunchState extends State<PSLaunch>
         controller.animationState.setAnimationByName(0, "animation", true);
       });
     });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      PSNumberHelpers().updateBrazilianPortuguese(context);
+    });
+
   }
 
   void ps_getUserCloakConfig() async {

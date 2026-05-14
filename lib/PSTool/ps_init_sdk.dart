@@ -13,11 +13,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tba_info/flutter_tba_info.dart';
+import 'package:piggywalletspinearn/PSTool/PSFKManger.dart';
+import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_ad_manger.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import 'package:thinkup_sdk/at_init.dart';
 
+import '../PSModel/PSAdModel.dart';
+import '../PSModel/PSFkModel.dart';
+import '../PSModel/PSNumberModel.dart';
 import 'PSAdAManger.dart';
 import 'PSTBAEventTool.dart';
 
@@ -41,7 +46,7 @@ class PSSDKHelpers {
   Future<void> initSDK() async {
     _initAdjustSDk();
     _initTopon();
-    // _psinitloadFireBase();
+    _psinitloadFireBase();
   }
 
 
@@ -55,13 +60,13 @@ class PSSDKHelpers {
           appidStr: 'h69fbf5b324d2e',
           appidkeyStr: 'a6a5fd430dcfc69adb4220359cd1ad784').then((value){
         ps_event_fire('nskdh_ad_initsuc', {
-          'ad_platform' : 'topon',
+          'ad_source_client' : 'topon',
           'ad_init_time' : DateTime.now().difference(sj_topon_start).inMilliseconds
         });
         'topon init Success'.log();
         PSPigAds().init();
         ps_session_fire();
-        if (PSLocalProvider.instance.ps_install_status = false){
+        if (PSLocalProvider.instance.ps_install_status == false){
           ps_install_fire();
           PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_install_statusName, true);
         }
@@ -71,7 +76,7 @@ class PSSDKHelpers {
       // 打开SDK的Debug log，强烈建议在测试阶段打开，方便排查问题。
       ATInitManger
           .setLogEnabled(
-        logEnabled: true,
+        logEnabled: false,
       );
     });
   }
@@ -136,92 +141,55 @@ class PSSDKHelpers {
     try {
       await remoteConfig.fetchAndActivate();
 
-      final c152pig_android_fb =
-      remoteConfig.getValue("c152pig_android_fb").asString();
-      'c152pig_android_fb=$c152pig_android_fb'.log();
-      // facebook_init
-      if (c152pig_android_fb != ''){
-        Map<String, dynamic> jsonMap = json.decode(c152pig_android_fb);
-        PSFacebookAppEvents().init(userId: jsonMap['app_id'], userToken: jsonMap['client_token'], userName: jsonMap['app_name']);
-      } else {
-        PSFacebookAppEvents().init(userId: '3083467831849635', userToken: '7d8a9303f209a20ddf9213b726a897af', userName: 'C152GP');
+      // final c152pig_android_fb =
+      // remoteConfig.getValue("c152pig_android_fb").asString();
+      // // facebook_init
+      // if (c152pig_android_fb != ''){
+      //   'c152pig_android_fb=$c152pig_android_fb'.log();
+      //   Map<String, dynamic> jsonMap = json.decode(c152pig_android_fb);
+      //   PSFacebookAppEvents().init(userId: jsonMap['app_id'], userToken: jsonMap['client_token'], userName: jsonMap['app_name']);
+      // } else {
+      //   PSFacebookAppEvents().init(userId: '3083467831849635', userToken: '7d8a9303f209a20ddf9213b726a897af', userName: 'C152GP');
+      // }
+
+      final gp152_pig_number = remoteConfig.getValue('gp152_pig_number').asString();
+      if (gp152_pig_number != ''){
+        try {
+          Map<String, dynamic> jsonMap = json.decode(gp152_pig_number);
+          var intModel = AppConfig.fromJson(jsonMap);
+          PSNumberHelpers().intModel = intModel;
+          "app firebase remoteconfig gp152_pig_number data $jsonMap".log();
+        } catch (error) {
+          print("app firebase remoteconfig gp152_pig_number error ${error}");
+        }
       }
+
       // 新用户流程中的ad开关
-      final new_ad_console = remoteConfig.getValue('new_ad_console').asInt();
-      if (new_ad_console != null){
-        PSLocalProvider.instance.updateint(PSLocalProvider.instance.new_ad_consoleName, new_ad_console);
-      }
-
-      // final c130_ad_int = remoteConfig.getValue('c130_ad_int').asString();
-      // if (c130_ad_int != ''){
+      // final new_ad_console = remoteConfig.getValue('new_ad_console').asInt();
+      // if (new_ad_console != null){
+      //   PSLocalProvider.instance.updateint(PSLocalProvider.instance.new_ad_consoleName, new_ad_console);
+      // }
+      //
+      // final nskdh_ad_config = remoteConfig.getValue('nskdh_ad_config').asString();
+      // if (nskdh_ad_config != ''){
       //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(c130_ad_int);
-      //     var fkEntity = RootModel.fromJson(jsonMap);
-      //     SJNumberHelpers().intModel = fkEntity;
-      //     "app firebase remoteconfig c130_ad_int data $jsonMap".log();
+      //     Map<String, dynamic> jsonMap = json.decode(nskdh_ad_config);
+      //     PSPigAds().init(inputAd: PSAdModel.fromJson(jsonMap));
+      //     "app firebase remoteconfig nskdh_ad_config data $jsonMap".log();
       //   } catch (error) {
-      //     print("app firebase remoteconfig c130_ad_int error ${error}");
+      //     print("app firebase remoteconfig nskdh_ad_config error ${error}");
       //   }
       // }
-
-      // final probability_reset = remoteConfig.getValue('probability_reset').asString();
-      // if (probability_reset != ''){
+      //
+      // final gp152_control = remoteConfig.getValue('gp152_control').asString();
+      // if (gp152_control != ''){
       //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(probability_reset);
-      //     var fkEntity = ProbabilityConfig.fromJson(jsonMap);
-      //     SJNumberHelpers().probabilityConfigModel = fkEntity;
-      //     "app firebase remoteconfig probability_reset data $jsonMap".log();
+      //     Map<String, dynamic> jsonMap = json.decode(gp152_control);
+      //     var fkModel = PSFkModel.fromJson(jsonMap);
+      //     PSFKManger().fkModel = fkModel;
+      //     "app firebase remoteconfig gp152_control data $jsonMap".log();
       //   } catch (error) {
-      //     print("app firebase remoteconfig probability_reset error ${error}");
-      //   }
-      // }
-
-      // final winup_number = remoteConfig.getValue('winup_number').asString();
-      // if (winup_number != ''){
-      //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(winup_number);
-      //     var fkEntity = BonusConfig.fromJson(jsonMap);
-      //     SJNumberHelpers().bonusConfigModel = fkEntity;
-      //     "app firebase remoteconfig winup_number data $jsonMap".log();
-      //   } catch (error) {
-      //     print("app firebase remoteconfig winup_number error ${error}");
-      //   }
-      // }
-
-      // final c130_withdraw_task = remoteConfig.getValue('c130_withdraw_task').asString();
-      // if (c130_withdraw_task != ''){
-      //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(c130_withdraw_task);
-      //     var fkEntity = TaskRootModel.fromJson(jsonMap);
-      //     SJNumberHelpers().taskModel = fkEntity;
-      //     "app firebase remoteconfig c130_withdraw_task data $jsonMap".log();
-      //   } catch (error) {
-      //     print("app firebase remoteconfig c130_withdraw_task error ${error}");
-      //   }
-      // }
-
-      // final c130_withdraw_last_task = remoteConfig.getValue('c130_withdraw_last_task').asString();
-      // if (c130_withdraw_last_task != ''){
-      //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(c130_withdraw_last_task);
-      //     var fkEntity = TaskRootModel.fromJson(jsonMap);
-      //     SJNumberHelpers().last_taskModel = fkEntity;
-      //     "app firebase remoteconfig c130_withdraw_last_task data $jsonMap".log();
-      //   } catch (error) {
-      //     print("app firebase remoteconfig c130_withdraw_last_task error ${error}");
-      //   }
-      // }
-
-      // final scxji_ad_config = remoteConfig.getValue('scxji_ad_config').asString();
-      // if (scxji_ad_config != ''){
-      //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(scxji_ad_config);
-      //     var fkEntity = SJAdModel.fromJson(jsonMap);
-      //     SJJoyAds().init(inputAd: fkEntity);
-      //     "app firebase remoteconfig scxji_ad_config data $jsonMap".log();
-      //   } catch (error) {
-      //     SJJoyAds().init();
-      //     print("app firebase remoteconfig scxji_ad_config error ${error}");
+      //     print("app firebase remoteconfig gp152_control error ${error}");
       //   }
       // }
 
@@ -233,7 +201,7 @@ class PSSDKHelpers {
           _psinitloadFireBase();
         });
       } else {
-        // SJJoyAds().init();
+        // PSPigAds().init();
       }
     }
   }

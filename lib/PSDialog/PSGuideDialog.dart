@@ -176,7 +176,7 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                     right: 26,
                     bottom: 30,
                     child: PSStrokeText(
-                      text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
+                      text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}',
                       size: 12,
                       color: '#FFE711'.color(),
                       weight: FontWeight.w900,
@@ -659,7 +659,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
   bool showFirstText = true;
   bool showPsGuide4_3 = false;
 
-  final firstText = 'Hey, I’m Jason. Just last week, I cashed out \$100\nFrom this App.';
+  final firstText = 'Hey, I’m Jason. Just last week, I cashed out ${0.dolasType()}100\nFrom this App.';
   final secondText = 'You wanna know how I did it? 👉 Let me show you. It’s easy — we earn money by watching ads.';
 
   @override
@@ -759,7 +759,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
                               children: [
                                 PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                                 SizedBox(width: 5,),
-                                PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                                PSText(text: '${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                               ],
                             ),
                           )
@@ -1197,7 +1197,7 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
                                   children: [
                                     PSImg(name: 'ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 120, height: 32),
                                     SizedBox(width: 10.w),
-                                    PSText(text: '+\$${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
+                                    PSText(text: '+${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
                                   ],
                                 ),
                                 SizedBox(height: 196)
@@ -1278,7 +1278,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                       children: [
                         PSImg(name: 'ps_dolas_2', width: 26, height: 21),
                         SizedBox(width: 5,),
-                        PSText(text: '\$${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                        PSText(text: '${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                       ],
                     ),
                   ),
@@ -1297,7 +1297,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                   SizedBox(height: 24),
                   PSText(text: '💰 Your First commission has arrived!', size: 16, color: '#620F0F'.color(), weight: FontWeight.w900),
                   PSImg(name: 'ps_guide7_1', width: 86, height: 78),
-                  PSStrokeText(text: 'Deposit amount：\$${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#FFE11C'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  PSStrokeText(text: 'Deposit amount：${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#FFE11C'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
                   SizedBox(height: 12),
                   RichText(
                     textAlign: TextAlign.center,
@@ -1312,7 +1312,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog> with TickerProvide
                         TextSpan(text: 'An advertiser just paid you.\n'),
                         TextSpan(text: 'Just'),
                         TextSpan(
-                          text: ' \$${0.to2Double(PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number)} ',
+                          text: ' ${0.dolasType()}${0.to2Double(PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number)} ',
                           style: TextStyle(color: '#199E24'.color()),
                         ),
                         TextSpan(text: 'more to cash out!'),
@@ -1820,7 +1820,8 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                     children: [
                       SizedBox(width: 12,),
                       ParticleButton(child: SizedBox(width: 40, height:40, child: Center(child: PSImg(name: 'ps_back_white_icon', width: 12, height: 19))), onTap: (){
-                        Navigator.pop(context, 0);
+                        // Navigator.pop(context, 0);
+                        PSDialogTool.toast(context, 'Please Input Your Account ID');
                       }),
                       SizedBox(width: 12),
                       PSText(text: 'Confirm Payment Information', size: 16, color: '#FFFFFF'.color(), weight: FontWeight.w900)
@@ -2065,7 +2066,7 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                       } else {
                         Navigator.pop(context, 1);
                         if (widget.showToast){
-                          context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+                          context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your ${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
                         } else {
                           PSLocalProvider.instance.updateString(PSLocalProvider.instance.ps_account_idName, _controller2.text);
                           Future.delayed(Duration(milliseconds: 100), () async {
@@ -2080,7 +2081,7 @@ class PSGuideNew10DialogState extends State<PSGuideNew10Dialog> with TickerProvi
                         PSLocalProvider.instance.updateString(PSLocalProvider.instance.ps_account_idName, _controller.text);
                         Navigator.pop(context, 1);
                         if (widget.showToast){
-                          context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your \$${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
+                          context.tipShow(PSConfimOneDialog(isConfim: true, contentStr: 'Payout details confirmed.\nQuiz to release your ${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first} cash out.',));
                         } else {
                           Future.delayed(Duration(milliseconds: 100), () async {
                             PSGuideManager.nextStep(homeKey.currentContext!);
@@ -2193,7 +2194,7 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog> with TickerProvi
                                       ),
                                       children: <TextSpan>[
                                         TextSpan(text: 'Only '),
-                                        TextSpan(text: '\$${PSLocalProvider.instance.ps_dolas_number} ',
+                                        TextSpan(text: '${0.dolasType()}${0.to2Double(PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number)} ',
                                             style: TextStyle(color: '#199D28'.color(), fontSize: 14.0)),
                                         TextSpan(text: 'Left To Withdraw'),
                                       ],
@@ -2313,7 +2314,7 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
                 SizedBox(height: 42),
                 PSImg(name: 'ps_pig_0', width: 111, height: 109,),
                 SizedBox(height: 14),
-                PSText(text: "You've saved \$${PSLocalProvider.instance.ps_dolas_number} Today", size: 18, color: '#EA8100'.color(), weight: FontWeight.w900),
+                PSText(text: "You've saved ${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number)} Today", size: 18, color: '#EA8100'.color(), weight: FontWeight.w900),
                 SizedBox(height: 25),
                 PSText(text: '💡 Come back tomorrow to feed\nyour piggy again and\nget a +${PSLocalProvider.instance.add_olduser_point}% cash boost!', size: 16, color: '#134475'.color(), weight: FontWeight.w900, maxLines: 3, align: .center),
                 SizedBox(height: 60),
@@ -2446,7 +2447,7 @@ class PSGuideNew13DialogState extends State<PSGuideNew13Dialog> with TickerProvi
                           ),
                           children: <TextSpan>[
                             TextSpan(text: 'Want Higher Earnings?Spin the wheel to unlock up to '),
-                            TextSpan(text: '\$50 ',
+                            TextSpan(text: '${0.dolasType()}50 ',
                                 style: TextStyle(color: '#0A8A33'.color(), fontSize: 16.0)),
                             TextSpan(text: 'interest bonus in your savings.More bonus, faster withdrawals!'),
                           ],

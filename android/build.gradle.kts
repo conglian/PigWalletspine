@@ -9,6 +9,10 @@ allprojects {
         maven {
             url  = uri("https://jfrog.anythinktech.com/artifactory/debugger")
         }
+        maven { url  = uri("https://artifactory.bidmachine.io/bidmachine") }
+        maven { url  = uri("https://cboost.jfrog.io/artifactory/chartboost-ads/") }
+        maven { url  = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea") }
+        maven { url  = uri("https://artifact.bytedance.com/repository/pangle") }
 
         // TU (Core)
         maven {

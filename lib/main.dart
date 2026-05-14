@@ -37,24 +37,25 @@ Future<void> main() async {
     ),
   );
 
-  // await Firebase.initializeApp();
-  // FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-  //   // 捕获 Flutter 框架错误
-  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  // // 捕获 async / isolate 全局错误
-  // PlatformDispatcher.instance.onError = (error, stack) {
-  //     bool isFatal = false;
-  //     // 严重错误：fatal
-  //     if (error is OutOfMemoryError ||
-  //         error is StackOverflowError ||
-  //         error is FlutterError ||
-  //         error is AssertionError) {
-  //       isFatal = true;
-  //     }
-  //     // 上报到 Crashlytics
-  //     FirebaseCrashlytics.instance.recordError(error, stack, fatal: isFatal);
-  //     return true;
-  // };
+  await Firebase.initializeApp();
+
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    // 捕获 Flutter 框架错误
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // 捕获 async / isolate 全局错误
+  PlatformDispatcher.instance.onError = (error, stack) {
+      bool isFatal = false;
+      // 严重错误：fatal
+      if (error is OutOfMemoryError ||
+          error is StackOverflowError ||
+          error is FlutterError ||
+          error is AssertionError) {
+        isFatal = true;
+      }
+      // 上报到 Crashlytics
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: isFatal);
+      return true;
+  };
 
   PSFKManger().initFKJson();
   print(BoomUniqueStringUtil.decrypt('1d7v79zJwdLT98LR8O771tnJ3draydncy+/Z78vZ0trZ1cH0rNP74vrgycH7ytvX/8vQqPTiyuz+7dG38v7+wNfA6NDNwMrO9avbyvHh1tSs1a3NqM7hq+nbs9DXrqy3+anCwqre3vvT1N+uoffX7s3z2+3V6qjb2e/d2dnJpaU=', 152));
@@ -66,10 +67,8 @@ Future<void> main() async {
   await localStorageProvider.init();
   await trigger.init();
   // 模拟排队完成
-  // PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_current_rankingName, 1);
-  // PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_pig_levelName, 2);
-  // PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, 10);
-  // PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_tx_ing_statusName, true);
+  // PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_quiz_all_numName, 0);
+  // PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, 0);
   /*
   String jsonString = await rootBundle.loadString("quiz".jsons());
 

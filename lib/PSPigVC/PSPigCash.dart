@@ -31,7 +31,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
 
   List<int> tx_list = PSNumberHelpers().intModel!.eqRange;
   // 每个 cell 高度数组
-  List<double> cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 && PSLocalProvider.instance.ps_tx_ing_status == true ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 && PSLocalProvider.instance.ps_tx_ing_status == true  ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 && PSLocalProvider.instance.ps_tx_ing_status == true  ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 && PSLocalProvider.instance.ps_tx_ing_status == true  ? 159 : 78];
+  List<double> cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 && PSLocalProvider.instance.ps_pig_level >= 1 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 && PSLocalProvider.instance.ps_pig_level >= 1  ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 && PSLocalProvider.instance.ps_pig_level >= 1  ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 && PSLocalProvider.instance.ps_pig_level >= 1  ? 159 : 78];
 
   late StreamSubscription _subscription;
 
@@ -45,19 +45,19 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
       setState(() {
         cellHeights = [
           PSLocalProvider.instance.ps_tx_ing_number == 0 &&
-              PSLocalProvider.instance.ps_tx_ing_status == true
+              PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78,
           PSLocalProvider.instance.ps_tx_ing_number == 1 &&
-              PSLocalProvider.instance.ps_tx_ing_status == true
+              PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78,
           PSLocalProvider.instance.ps_tx_ing_number == 2 &&
-              PSLocalProvider.instance.ps_tx_ing_status == true
+              PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78,
           PSLocalProvider.instance.ps_tx_ing_number == 3 &&
-              PSLocalProvider.instance.ps_tx_ing_status == true
+              PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78
         ];
@@ -171,7 +171,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                                    children: [
                                      Spacer(),
                                      PSStrokeText(
-                                       text: '\$100', // Static or dynamic value based on provider data
+                                       text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic value based on provider data
                                        size: 12,
                                        color: '#FFE711'.color(),
                                        weight: FontWeight.w900,
@@ -202,9 +202,9 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                                        ),
                                        children: [
                                          TextSpan(text: 'Only '),
-                                         TextSpan(text: '\$${PSLocalProvider.instance.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number}0'), // Static or dynamic based on provider
+                                         TextSpan(text: '${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number)}'), // Static or dynamic based on provider
                                          TextSpan(text: ' Left To Withdraw '),
-                                         TextSpan(text: '\$100'), // Static or dynamic based on provider
+                                         TextSpan(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}'), // Static or dynamic based on provider
                                        ],
                                      ),
                                    ),
@@ -221,12 +221,12 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                                        children: [
                                          TextSpan(text: 'Only '),
                                          TextSpan(
-                                           text: '\$${PSLocalProvider.instance.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number}0', // Static or dynamic based on provider
+                                           text: '${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number)}', // Static or dynamic based on provider
                                            style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
                                          ),
                                          TextSpan(text: ' Left To Withdraw '),
                                          TextSpan(
-                                           text: '\$100', // Static or dynamic based on provider
+                                           text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic based on provider
                                            style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
                                          ),
                                        ],
@@ -235,24 +235,15 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                                  ],
                                ),
                              ),
-                             Positioned(left: (0.width(context) - 172) * 0.5,bottom: 24,child: InkWell(onTap: (){
-                               if (PSLocalProvider.instance.ps_tx_ing_status == true) {
-
-                               } else {
-                                 if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange[0]){
-                                   context.tipShow(PSTXOutDialog(seletcd_row: 0));
-                                 }
-                               }
-                             },
-                             child: ParticleButton(
+                             Positioned(left: (0.width(context) - 172) * 0.5,bottom: 24,child: ParticleButton(
                                onTap: (){
                                  if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange.first){
                                    context.tipShow(PSTXOutDialog(seletcd_row: atc_selecd_index));
-                                 } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_tx_ing_status == false){
+                                 } else if (PSLocalProvider.instance.ps_pig_level == 1){
                                    context.tipShow(PSReviewingDialog());
                                  } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
                                    context.tipShow(PSGuide4Dialog());
-                                 } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking > 1) {
+                                 } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
                                    context.tipShow(PSTXRankDialog());
                                  } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
                                    context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
@@ -263,14 +254,13 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                                  width: 172,
                                  height: 34,
                                  decoration: BoxDecoration(
-                                   image: PSDImg('ps_wtd_btn')
+                                     image: PSDImg('ps_wtd_btn')
                                  ),
                                  child: Center(
                                    child: PSStrokeText(text: 'Cash Out', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#025003'.color()),
                                  ),
-                                 ),
+                               ),
                              ),
-                              )
                              )
                            ],
                          ),
@@ -295,7 +285,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                     ), onTap: (){
                        setState(() {
                          atc_selecd_index  = 0;
-                         if (PSLocalProvider.instance.ps_tx_ing_account == 0 && PSLocalProvider.instance.ps_tx_ing_status == true) {
+                         if (PSLocalProvider.instance.ps_tx_ing_account == 0 && PSLocalProvider.instance.ps_pig_level >= 1) {
                            cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 ? 159 : 78];
                          } else {
                            cellHeights = [78, 78, 78, 78];
@@ -317,7 +307,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                     ), onTap: (){
                       setState(() {
                         atc_selecd_index  = 1;
-                        if (PSLocalProvider.instance.ps_tx_ing_account == 1 && PSLocalProvider.instance.ps_tx_ing_status == true) {
+                        if (PSLocalProvider.instance.ps_tx_ing_account == 1 && PSLocalProvider.instance.ps_pig_level >= 1) {
                           cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 ? 159 : 78];
                         } else {
                           cellHeights = [78, 78, 78, 78];
@@ -362,7 +352,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
 
 
   Widget getCashListtype(int row) {
-    if (row == PSLocalProvider.instance.ps_tx_ing_number && PSLocalProvider.instance.ps_tx_ing_account == atc_selecd_index && PSLocalProvider.instance.ps_tx_ing_status == true){
+    if (row == PSLocalProvider.instance.ps_tx_ing_number && PSLocalProvider.instance.ps_tx_ing_account == atc_selecd_index && PSLocalProvider.instance.ps_pig_level >= 1){
       return getCashTypeTwo(row);
     } else {
       return getCashTypeOne(row);
@@ -384,7 +374,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
               Row(
                 children: [
                   SizedBox(width: 14),
-                  PSText(text: '\$${tx_list[row]}', size: 32, color: '#0BA408'.color(), weight: FontWeight.w900),
+                  PSText(text: '${0.dolasType()}${tx_list[row]}', size: 32, color: '#0BA408'.color(), weight: FontWeight.w900),
                   Spacer(),
                   Visibility(
                     visible: PSLocalProvider.instance.ps_current_ranking != 1,
@@ -397,12 +387,16 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                         ),
                       ),
                       onTap: (){
-                        if (PSLocalProvider.instance.ps_pig_level == 1){
+                        if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange.first){
+                          context.tipShow(PSTXOutDialog(seletcd_row: atc_selecd_index));
+                        } else if (PSLocalProvider.instance.ps_pig_level == 1){
                           context.tipShow(PSReviewingDialog());
-                        } else if (PSLocalProvider.instance.ps_pig_level == 2) {
+                        } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
                           context.tipShow(PSGuide4Dialog());
-                        } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2) {
+                        } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
                           context.tipShow(PSTXRankDialog());
+                        } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
+                          context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
                         }
                       },
                     ),
@@ -481,11 +475,11 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                       child: PSStrokeText(text: 'Go', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#025003'.color()),
                     ),
                   ), onTap: (){
-                    if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_tx_ing_status == false){
+                    if (PSLocalProvider.instance.ps_pig_level == 1){
                       PigTabController.switchTo(Random().nextInt(2) + 1);
                     } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
                       PigTabController.switchTo(Random().nextInt(2) + 1);
-                    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking > 1) {
+                    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
                       context.tipShow(PSTXRankDialog());
                     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
                       context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
@@ -505,20 +499,20 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
   String getCashbtnName(int row){
     if (PSLocalProvider.instance.ps_pig_level == 1){
       return 'ps_unlock_payout';
-    } else if (PSLocalProvider.instance.ps_pig_level == 2) {
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
       return 'ps_pro_btn';
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2) {
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_show_rank && PSLocalProvider.instance.ps_current_ranking != 1) {
       return 'ps_inqueue_btn';
     }
     return 'ps_unlock_payout';
   }
 
   String getTaskSize(){
-    if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_tx_ing_status == false){
-      return '${PSLocalProvider.instance.ps_pig_level_index}/20';
+    if (PSLocalProvider.instance.ps_pig_level == 1){
+      return '${0.to2Double(PSLocalProvider.instance.ps_pig_level_index)}/20';
     } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
-      return '${PSLocalProvider.instance.ps_pig_level_index}/10';
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking > 1) {
+      return '${0.to2Double(PSLocalProvider.instance.ps_pig_level_index)}/10';
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
       return '${PSLocalProvider.instance.ps_current_ranking}/${PSLocalProvider.instance.ps_all_ranking}';
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
       if (PSLocalProvider.instance.ps_tx_task_index == 0){
@@ -545,11 +539,11 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
   }
 
   double getTaskProgress(){
-    if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_tx_ing_status == false){
+    if (PSLocalProvider.instance.ps_pig_level == 1){
       return PSLocalProvider.instance.ps_pig_level_index / 20;
     } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
       return PSLocalProvider.instance.ps_pig_level_index / 10;
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking > 1) {
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
       return PSLocalProvider.instance.ps_current_ranking / PSLocalProvider.instance.ps_current_ranking;
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
       if (PSLocalProvider.instance.ps_tx_task_index == 0){
@@ -576,11 +570,11 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
   }
 
   String getTaskString(){
-    if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_tx_ing_status == false){
+    if (PSLocalProvider.instance.ps_pig_level == 1){
       return 'Collect 20 diamonds.';
     } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
       return 'Collect 10 Gold Bricks.';
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking > 1) {
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
       return 'Queued all the way to the front';
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
       if (PSLocalProvider.instance.ps_tx_task_index == 0){
@@ -616,7 +610,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
       child: Row(
         children: [
           SizedBox(width: 14),
-          PSText(text: '\$${tx_list[row]}', size: 32, color: '#0BA408'.color(), weight: FontWeight.w900),          Spacer(),
+          PSText(text: '${0.dolasType()}${tx_list[row]}', size: 32, color: '#0BA408'.color(), weight: FontWeight.w900),          Spacer(),
           ParticleButton(
             child: Container(
               width: 115,
@@ -632,6 +626,12 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
               } else {
                 if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange[row]){
                   context.tipShow(PSTXOutDialog(seletcd_row: row));
+                } else {
+                  if (PSLocalProvider.instance.ps_pig_level == 1){
+                    PSDialogTool.toast(context, 'Collect 20 Diamonds to complete the withdrawal.');
+                  } else {
+                    PSDialogTool.toast(context, 'Collect 10 Gold Bricks to complete the withdrawal.');
+                  }
                 }
               }
             },

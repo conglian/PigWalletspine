@@ -26,12 +26,12 @@ class PSInAppNotification {
 
   // 文案模板列表，使用 {amount} 占位符
   final List<Map<String, String>> _messages = [
-    {'title': '🎉 PayPal Payout Success', 'content': 'Mary received \$ {amount} via PayPal successfully 💰'},
-    {'title': '💸 Cash Out Completed', 'content': 'James just cashed out \$ {amount} to PayPal ✅'},
-    {'title': '🎯 Another Winner Paid', 'content': 'Linda received \$ {amount} in her PayPal account'},
-    {'title': '💰 Big Payout Alert', 'content': 'Robert successfully withdrew \$ {amount} via PayPal'},
-    {'title': '🎉 Withdrawal Sent', 'content': 'Sarah just received \$ {amount} through PayPal'},
-    {'title': '💸 PayPal Transfer Done', 'content': 'Michael cashed out \$ {amount} successfully'},
+    {'title': '🎉 PayPal Payout Success', 'content': 'Mary received ${0.dolasType()} {amount} via PayPal successfully 💰'},
+    {'title': '💸 Cash Out Completed', 'content': 'James just cashed out ${0.dolasType()} {amount} to PayPal ✅'},
+    {'title': '🎯 Another Winner Paid', 'content': 'Linda received ${0.dolasType()} {amount} in her PayPal account'},
+    {'title': '💰 Big Payout Alert', 'content': 'Robert successfully withdrew ${0.dolasType()} {amount} via PayPal'},
+    {'title': '🎉 Withdrawal Sent', 'content': 'Sarah just received ${0.dolasType()} {amount} through PayPal'},
+    {'title': '💸 PayPal Transfer Done', 'content': 'Michael cashed out ${0.dolasType()} {amount} successfully'},
   ];
 
   int _currentIndex = 0;

@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../PSBase/PSTbaBar.dart';
 import '../PSModel/PSNumberModel.dart';
 
 class PSNumberHelpers {
@@ -31,6 +34,25 @@ class PSNumberHelpers {
     intModel = AppConfig.fromJson(jsonMap);
     "PigWallets int jsonMap = ${jsonMap}".log();
     "PigWallets int model = ${intModel?.eqRange}".log();
+  }
+
+  Future<void> updateBrazilianPortuguese(BuildContext context) async {
+    if (isBrazilianPortuguese(context)){
+      String jsonString = await rootBundle.loadString("gp152_pig_number".jsons());
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      jsonMap['eq_range'] = [(intModel!.eqRange.first * 5).toInt(), (intModel!.eqRange[1] * 5).toInt(),(intModel!.eqRange[2] * 5).toInt(),(intModel!.eqRange.last * 5).toInt()];
+      intModel = AppConfig.fromJson(jsonMap);
+      "PigWallets int jsonMap = ${jsonMap}".log();
+      "PigWallets int model = ${intModel?.eqRange}".log();
+    }
+  }
+
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
   }
 
   Future<void> _psloadtaskDataFromLocate() async {
@@ -66,12 +88,11 @@ class PSNumberHelpers {
     // 找到 value 所在的区间
     int range = 0;
     for (var item in intModel!.intadPoint) {
-      if (PSLocalProvider.instance.ps_dolas_old_number >= item.firstNumber && PSLocalProvider.instance.ps_dolas_old_number <= item.endNumber) {
+      if (PSLocalProvider.instance.ps_dolas_old_number >= item.firstNumber * dolasbeishu() && PSLocalProvider.instance.ps_dolas_old_number <= item.endNumber * dolasbeishu()) {
         range = item.point;
         break;
       }
     }
-    'range=$range'.log();
     if (PSLocalProvider.instance.ps_dolas_old_number >= intModel!.eqRange.first){
       return true;
     }
@@ -83,19 +104,19 @@ class PSNumberHelpers {
     double point = range.toDouble() ?? 0.0;
 
     // 随机概率判断
-    double rand = Random().nextDouble(); // 0.0 ~ 1.0
+    double rand = Random().nextDouble() * 100; // 0.0 ~ 1.0
     return rand <= point;
   }
 
   /// 获取气泡奖励值
   double getPrizeWithDolasNum() {
     for (var item in intModel!.moneyPrize) {
-      int start = item.firstNumber;
-      int end = item.endNumber;
+      int start = item.firstNumber * dolasbeishu();
+      int end = item.endNumber * dolasbeishu();
 
       if (PSLocalProvider.instance.ps_dolas_number >= start && PSLocalProvider.instance.ps_dolas_number < end) {
-        double min = item.prize.first;
-        double max = item.prize.last;
+        double min = item.prize.first * dolasbeishu();
+        double max = item.prize.last * dolasbeishu();
         'XXXXXXX${0.to2Double(_randomBetween(min, max))}'.log();
         return 0.to2Double(_randomBetween(min, max));
       }
@@ -103,10 +124,10 @@ class PSNumberHelpers {
 
     /// 如果超出所有区间，返回最后一段
     var last = intModel!.moneyPrize.last;
-    'YYYYYYY${0.to2Double(_randomBetween(last.prize.first, last.prize.last))}'.log();
+    'YYYYYYY${0.to2Double(_randomBetween(last.prize.first * dolasbeishu(), last.prize.last * dolasbeishu()))}'.log();
     return 0.to2Double(_randomBetween(
-      last.prize.first,
-      last.prize.last,
+      last.prize.first * dolasbeishu(),
+      last.prize.last * dolasbeishu(),
     ));
   }
 
@@ -160,6 +181,15 @@ class PSNumberHelpers {
     double value = min + r.nextDouble() * (max - min);
     // Round to 2 decimal places
     return double.parse(value.toStringAsFixed(2));
+  }
+
+
+  int dolasbeishu(){
+    // if (isBrazilianPortuguese(homeKey.currentContext!)){
+    //   return 5;
+    // } else {
+      return 1;
+    // }
   }
 
 

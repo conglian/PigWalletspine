@@ -137,13 +137,13 @@ class _PigWheelPageState extends State<PigWheelPage>
                         return Column(
                           children: [
                             SizedBox(height: 50.h),
-                            PSStrokeText(text: '\$${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
+                            PSStrokeText(text: '${0.dolasType()}${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
                             Spacer(),
                             Transform(
                               alignment: Alignment.center, // 旋转的中心点
                               transform: Matrix4.rotationZ(3.14159265), // 180度 = π 弧度
                               child: PSStrokeText(
-                                text: '\$${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}',
+                                text: '${0.dolasType()}${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}',
                                 size: 14,
                                 color: '#FFFFFF'.color(),
                                 weight: FontWeight.w900,

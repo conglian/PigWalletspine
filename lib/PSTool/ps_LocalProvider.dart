@@ -471,8 +471,15 @@ class PSLocalProvider extends ChangeNotifier {
     if (key == PSLocalProvider.instance.ps_dolas_numberName) {
       value += ps_dolas_number;
     }
+    await prefs.setDouble(key, value);
     // 开始提现
+    'value=${value},ps_pig_level=$ps_pig_level, ps_show_rank=$ps_show_rank'.log();
     if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 10 && ps_pig_level == 2 && ps_show_rank == false){
+      await updateBool(ps_tx_ing_statusName, true);
+      await updateint(ps_tx_task_indexName, 0);
+      await updateint(ps_tx_quiz_indexName, 0);
+      await updateint(ps_tx_quiz_indexName, 0);
+      await updateint(ps_tx_bubble_indexName, 0);
       if (homeKey.currentState!.mounted){
         // 到达100升级钻石猪
         homeKey.currentState!.context.tipShow(PSTXRankDialog());
@@ -482,7 +489,6 @@ class PSLocalProvider extends ChangeNotifier {
     }
     // 升级逻辑 + 1
     if (key == PSLocalProvider.instance.ps_dolas_numberName && value >= PSNumberHelpers().intModel!.eqRange.first && ps_pig_level == 0){
-      await updateBool(ps_tx_ing_statusName, true);
       await updateint(ps_pig_levelName, ps_pig_level + 1);
       await updatedouble(ps_pig_level_indexName, 0);
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
@@ -497,7 +503,7 @@ class PSLocalProvider extends ChangeNotifier {
       await updatedouble(ps_pig_level_indexName, 0);
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
       if (homeKey.currentState!.mounted){
-        // 到达100升级钻石猪
+        // 到达2升级金猪
         homeKey.currentState!.context.tipShow(PSGuide4Dialog());
       }
     }
@@ -507,7 +513,6 @@ class PSLocalProvider extends ChangeNotifier {
       PSPigDolasUpdateNotificationService.sendToQuizProgressNotification(0);
     }
 
-      await prefs.setDouble(key, value);
     if (key == PSLocalProvider.instance.ps_dolas_numberName && value > 0){
       trigger.check(PSLocalProvider.instance.ps_dolas_number.toInt(), onTrigger: (level) {
         print("触发 → 达到 $level");

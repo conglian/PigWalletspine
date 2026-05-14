@@ -155,13 +155,14 @@ class PSPigAds {
     bool showDialog = true,
   }) async {
     if (skipAd) {
+      await setTxProgress();
       adDidClosed.call(true);
       resetHandler();
       return;
     }
     // 展示上限
     if (PSLocalProvider.instance.ps_ad_show_index > PSFKManger().fkModel.behavior.ad_daily_show){
-      PSDialogTool.toast(context, 'see you tommorow');
+      context.tipShow(PSPopTipsToolDialog(adStatus: .adLimit));
       onCacheResponse.call(false);
       resetHandler();
       return;
@@ -490,9 +491,9 @@ extension AdServiceExtension on PSPigAds {
       ps_event_fire(
         "ad_request",
         {
-          "placementID": adID,
-          "type": type,
-          "source": source,
+          "ad_code_id": adID,
+          "ad_format": type,
+          "ad_source_client": source,
         },
       );
     }
@@ -765,13 +766,12 @@ extension AdServiceExtension on PSPigAds {
     _ads[index].sdk = sdk;
     "$runtimeType ad did load success [${_ads[index].source}] type = ${_ads[index].type} id = ${_ads[index].ad_identifer} ecpm = ${_ads[index].ecpm} network = ${_ads[index].networkName}"
         .log();
-
     ps_event_fire(
       "nskdh_ad_return",
        {
         "ad_code_id": _ads[index].ad_identifer,
         "ad_format": _ads[index].type == "reward" ? "rv" : "int",
-        "ad_platform": _ads[index].networkName,
+        "ad_source_client": _ads[index].networkName,
         "nskdh_ad_request_time": Random().nextInt(4),
       },
     );
@@ -789,7 +789,7 @@ extension AdServiceExtension on PSPigAds {
       {
         "ad_code_id": quizAdPlaceID ?? "",
         "ad_format": _ads[index].getTypeToServer(),
-        "ad_platform": type,
+        "ad_source_client": type,
         "reason": reason,
       },
     );
@@ -841,21 +841,35 @@ extension AdServiceExtension on PSPigAds {
   }
 
   Future<void> setTxProgress() async {
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, PSLocalProvider.instance.ps_tx_bubble_index + 1);
-    if (PSLocalProvider.instance.ps_tx_bubble_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
+    if (PSLocalProvider.instance.ps_tx_task_index == 2 || PSLocalProvider.instance.ps_tx_task_index == 5 || PSLocalProvider.instance.ps_tx_task_index == 8){
+      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, PSLocalProvider.instance.ps_tx_bubble_index + 1);
+      Future.delayed(Duration(milliseconds: 50), () async {
+        PSPigCashNotificationService.sendToQuizProgressNotification(0);
+        'PSLocalProvider.instance.ps_tx_bubble_index=${PSLocalProvider.instance.ps_tx_bubble_index}'.log();
+        'PSLocalProvider.instance.ps_tx_task_index=${PSLocalProvider.instance.ps_tx_task_index}'.log();
+        if (PSLocalProvider.instance.ps_tx_bubble_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
+          Future.delayed(Duration(milliseconds: 50), () async {
+            PSPigCashNotificationService.sendToQuizProgressNotification(0);
+          });
+        }
+      });
       // 重置任务
-      if (PSLocalProvider.instance.ps_tx_task_index >= PSNumberHelpers().intModel!.tixianTask.length){
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
-      }
-    }
-    PSPigCashNotificationService.sendToQuizProgressNotification(0);
+      Future.delayed(Duration(milliseconds: 100), () async {
+        if (PSLocalProvider.instance.ps_tx_task_index + 1 >= PSNumberHelpers().intModel!.tixianTask.length){
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
+          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+          Future.delayed(Duration(milliseconds: 50), () async {
+            PSPigCashNotificationService.sendToQuizProgressNotification(0);
+          });
+        }
+      });
+    };
   }
 
   Future<void> _adDidHidden({required String adId}) async {

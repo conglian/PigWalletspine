@@ -254,7 +254,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                       children: [
                                         TextSpan(text: 'Total earning:'),
                                         TextSpan(
-                                          text: '\$${rank_data[1].totalEarning}',
+                                          text: '${0.dolasType()}${rank_data[1].totalEarning}',
                                           style: TextStyle(color: '#FFFFFF'.color(), fontSize: 9),
                                         ),
                                       ],
@@ -273,7 +273,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                       children: [
                                         TextSpan(text: 'Total earning:'),
                                         TextSpan(
-                                          text: '\$${rank_data[2].totalEarning}',
+                                          text: '${0.dolasType()}${rank_data[2].totalEarning}',
                                           style: TextStyle(color: '#FFFFFF'.color(), fontSize: 9),
                                         ),
                                       ],
@@ -292,7 +292,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                       children: [
                                         TextSpan(text: 'Total earning:'),
                                         TextSpan(
-                                          text: '\$${rank_data[0].totalEarning}',
+                                          text: '${0.dolasType()}${rank_data[0].totalEarning}',
                                           style: TextStyle(color: '#FFFFFF'.color(), fontSize: 9),
                                         ),
                                       ],
@@ -428,7 +428,6 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        context.tipShow(PSQuizRankTwoDialog(quiz_num: 15));
                                       },
                                       child: Stack(
                                         children: [
@@ -458,7 +457,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                                         children: [
                                                           TextSpan(text: 'Total earning:'),
                                                           TextSpan(
-                                                            text: '\$${rank_data[index + 3].totalEarning}',
+                                                            text: '${0.dolasType()}${rank_data[index + 3].totalEarning}',
                                                             style: TextStyle(color: '#0B7C1C'.color(), fontSize: 10),
                                                           ),
                                                         ],
@@ -523,6 +522,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
           ),
           Positioned(left: 8.w,top: 161.h,child: ParticleButton(onTap: () async {
             ps_event_fire(' h5_c', {});
+            ps_event_fire(' h5_page', {});
             // Navigator.of(context).push(
             //   MaterialPageRoute(
             //     builder: (builder) {
@@ -587,7 +587,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                   children: [
                     PSImg(name: provider.ps_pig_level == 0 ? 'ps_dolas_2' : provider.ps_pig_level == 1 ? 'ps_domand_icon' : 'ps_zhuan_smail', width: 26, height: 21),
                     SizedBox(width: 5,),
-                    PSText(text: '${provider.ps_pig_level == 0 ? '\$' : ''}${provider.ps_pig_level == 0 ? 0.to2Double(provider.ps_dolas_number) : provider.ps_pig_level == 1 ? provider.ps_pig_level_index : provider.ps_pig_level_index}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
+                    PSText(text: '${provider.ps_pig_level == 0 ? '${0.dolasType()}' : ''}${provider.ps_pig_level == 0 ? 0.to2Double(provider.ps_dolas_number) : provider.ps_pig_level == 1 ? 0.to2Double(provider.ps_pig_level_index) : 0.to2Double(provider.ps_pig_level_index)}', size: 20, color: '#8B0002'.color(), weight: FontWeight.w900)
                   ],
                 );
               },
@@ -699,8 +699,8 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? '\$${bubble_award_one}' : provider.ps_pig_level == 1 ? 'X${PSNumberHelpers().getPrizeWithDomandGoldNum()}' : 'X${PSNumberHelpers().getPrizeWithDomandGoldNum()}',
-                              size: 20,
+                              text: provider.ps_pig_level == 0 ? '${0.dolasType()}${bubble_award_one}' : provider.ps_pig_level == 1 ? 'X${PSNumberHelpers().getPrizeWithDomandGoldNum()}' : 'X${PSNumberHelpers().getPrizeWithDomandGoldNum()}',
+                              size: 18,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
                               skWidth: 2,
@@ -729,7 +729,11 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                         ps_event_fire('home_float_c', {});
                         PSPigAds().ps_showAd(context, 'nskdh_moneybub_rv', onCacheResponse: (onCacheResponse) async {
                         }, adDidClosed: (adDidClosed) async {
-                          await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, bubble_award_two);
+                          if (PSLocalProvider.instance.ps_pig_level == 0) {
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + bubble_award_two);
+                          } else {
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName,PSLocalProvider.instance.ps_pig_level_index + bubble_award_two);
+                          }
                           if (!context.mounted) return;
                           int code = await context.tipShow2(PSPoGetAwardDog(award: bubble_award_two),bc: Colors.transparent);
                           if (code >= 0) {
@@ -782,7 +786,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? ' \$???' : ' X???',
+                              text: provider.ps_pig_level == 0 ? ' ${0.dolasType()}???' : ' X???',
                               size: 20,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
@@ -812,7 +816,11 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                         ps_event_fire('home_float_c', {});
                         PSPigAds().ps_showAd(context, 'nskdh_moneybub_rv', onCacheResponse: (onCacheResponse) async {
                         }, adDidClosed: (adDidClosed) async {
-                          await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, bubble_award_three);
+                          if (PSLocalProvider.instance.ps_pig_level == 0) {
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + bubble_award_three);
+                          } else {
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName,PSLocalProvider.instance.ps_pig_level_index + bubble_award_three);
+                          }
                           if (!context.mounted) return;
                           int code = await context.tipShow2(PSPoGetAwardDog(award: bubble_award_three),bc: Colors.transparent);
                           if (code >= 0) {
@@ -864,7 +872,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? ' \$???' : ' X???',
+                              text: provider.ps_pig_level == 0 ? ' ${0.dolasType()}???' : ' X???',
                               size: 20,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
@@ -1061,9 +1069,9 @@ class PigblancePage extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(text: 'Only '),
-                            TextSpan(text: '\$${(0.to2Double(provider.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number))}'), // Static or dynamic based on provider
+                            TextSpan(text: '${0.dolasType()}${(0.to2Double(provider.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number))}'), // Static or dynamic based on provider
                             TextSpan(text: ' Left To Withdraw '),
-                            TextSpan(text: '\$${PSNumberHelpers().intModel!.eqRange.first}'), // Static or dynamic based on provider
+                            TextSpan(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}'), // Static or dynamic based on provider
                           ],
                         ),
                       ),
@@ -1080,12 +1088,12 @@ class PigblancePage extends StatelessWidget {
                           children: [
                             TextSpan(text: 'Only '),
                             TextSpan(
-                              text: '\$${(0.to2Double(provider.ps_dolas_number >= 100 ? 0 : 100 - provider.ps_dolas_number))}', // Static or dynamic based on provider
+                              text: '${0.dolasType()}${(0.to2Double(provider.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number))}', // Static or dynamic based on provider
                               style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
                             ),
                             TextSpan(text: ' Left To Withdraw '),
                             TextSpan(
-                              text: '\$${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic based on provider
+                              text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic based on provider
                               style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
                             ),
                           ],
@@ -1134,7 +1142,7 @@ class PigblancePage extends StatelessWidget {
                       children: [
                         Spacer(),
                         PSStrokeText(
-                          text: '\$${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic value based on provider data
+                          text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic value based on provider data
                           size: 12,
                           color: '#FFE711'.color(),
                           weight: FontWeight.w900,
@@ -1277,7 +1285,7 @@ class PigblancePage2 extends StatelessWidget {
                   Positioned(
                     left: 29,
                     top: 42,
-                    child: PSStrokeText(text: '\$${PSNumberHelpers().intModel!.eqRange.first}',
+                    child: PSStrokeText(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}',
                         size: 12,
                         color: '#FFE711'.color(),
                         weight: FontWeight.w900,
@@ -1313,8 +1321,7 @@ class PigblancePage2 extends StatelessWidget {
                     left: 130,
                     bottom: 33,
                     child: PSStrokeText(
-                        text: provider.ps_pig_level == 0 ? '\$${PSNumberHelpers().intModel!.eqRange.first}' : provider
-                            .ps_pig_level == 1 ? '20' : '10',
+                        text: '${0.to2Double(provider.ps_pig_level_index)}',
                         size: 12,
                         color: '#FFE711'.color(),
                         weight: FontWeight.w900,
@@ -1330,9 +1337,9 @@ class PigblancePage2 extends StatelessWidget {
                         : 'ps_zhuan_b_icon', width: 19, height: 17),
                   ),
                   Positioned(
-                    right: 78,
+                    right: 108,
                     bottom: 33,
-                    child: PSStrokeText(text: 'Collected: ',
+                    child: PSStrokeText(text: 'Left: ',
                         size: 12,
                         color: '#FFFFFF'.color(),
                         weight: FontWeight.w900,
@@ -1340,11 +1347,11 @@ class PigblancePage2 extends StatelessWidget {
                         skColor: '#670B04'.color()),
                   ),
                   Positioned(
-                    right: 48,
+                    right: 80,
                     bottom: 33,
                     child: PSStrokeText(
-                        text: provider.ps_pig_level == 0 ? '\$${PSNumberHelpers().intModel!.eqRange.first}' : provider
-                            .ps_pig_level == 1 ? '20' : '10',
+                        text: provider
+                            .ps_pig_level == 1 ? '${20 - provider.ps_pig_level_index <= 0 ? 0 : 0.to2Double(20 - provider.ps_pig_level_index)}' : '${10 - provider.ps_pig_level_index <= 0 ? 0 : 0.to2Double(10 - provider.ps_pig_level_index)}',
                         size: 12,
                         color: '#FFE711'.color(),
                         weight: FontWeight.w900,
