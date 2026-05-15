@@ -43,6 +43,8 @@ class PSSDKHelpers {
 
   int sj_remoteConfigTryCount = 0;
 
+  bool is_ad_suc = false;
+
   Future<void> initSDK() async {
     _initAdjustSDk();
     _initTopon();
@@ -139,18 +141,7 @@ class PSSDKHelpers {
     "app firebase init".log();
     "app firebase loading".log();
     try {
-      await remoteConfig.fetchAndActivate();
-
-      // final c152pig_android_fb =
-      // remoteConfig.getValue("c152pig_android_fb").asString();
-      // // facebook_init
-      // if (c152pig_android_fb != ''){
-      //   'c152pig_android_fb=$c152pig_android_fb'.log();
-      //   Map<String, dynamic> jsonMap = json.decode(c152pig_android_fb);
-      //   PSFacebookAppEvents().init(userId: jsonMap['app_id'], userToken: jsonMap['client_token'], userName: jsonMap['app_name']);
-      // } else {
-      //   PSFacebookAppEvents().init(userId: '3083467831849635', userToken: '7d8a9303f209a20ddf9213b726a897af', userName: 'C152GP');
-      // }
+       await remoteConfig.fetchAndActivate();
 
       final gp152_pig_number = remoteConfig.getValue('gp152_pig_number').asString();
       if (gp152_pig_number != ''){
@@ -164,34 +155,72 @@ class PSSDKHelpers {
         }
       }
 
+      final nskdh_ad_config = remoteConfig.getValue('nskdh_ad_config').asString();
+      if (nskdh_ad_config != ''){
+        try {
+          Map<String, dynamic> jsonMap = json.decode(nskdh_ad_config);
+          if (is_ad_suc == false){
+            is_ad_suc = true;
+            PSPigAds().init(inputAd: PSAdModel.fromJson(jsonMap));
+            "app firebase remoteconfig nskdh_ad_config data $jsonMap".log();
+          }
+        } catch (error) {
+          print("app firebase remoteconfig nskdh_ad_config error ${error}");
+        }
+      }
+       'c152pig_android_fb=默认'.log();
+       PSFacebookAnalytics.init(appId: '3083467831849635', clientToken: '7d8a9303f209a20ddf9213b726a897af', appName: 'C152GP');
+
+      await remoteConfig.setDefaults(<String, dynamic>{
+        'c152pig_android_fb': {}, // 默认值
+      });
+      final c152pig_android_fb =
+      remoteConfig.getValue("c152pig_android_fb").asString();
+      // facebook_init
+      if (c152pig_android_fb != ''){
+        'c152pig_android_fb=$c152pig_android_fb'.log();
+        Map<String, dynamic> jsonMap = json.decode(c152pig_android_fb);
+        PSFacebookAnalytics.init(appId: jsonMap['app_id'], clientToken: jsonMap['client_token'], appName: jsonMap['app_name']);
+      } else {
+        'c152pig_android_fb=默认'.log();
+        PSFacebookAnalytics.init(appId: '3083467831849635', clientToken: '7d8a9303f209a20ddf9213b726a897af', appName: 'C152GP');
+      }
+
       // 新用户流程中的ad开关
-      // final new_ad_console = remoteConfig.getValue('new_ad_console').asInt();
-      // if (new_ad_console != null){
-      //   PSLocalProvider.instance.updateint(PSLocalProvider.instance.new_ad_consoleName, new_ad_console);
-      // }
-      //
-      // final nskdh_ad_config = remoteConfig.getValue('nskdh_ad_config').asString();
-      // if (nskdh_ad_config != ''){
-      //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(nskdh_ad_config);
-      //     PSPigAds().init(inputAd: PSAdModel.fromJson(jsonMap));
-      //     "app firebase remoteconfig nskdh_ad_config data $jsonMap".log();
-      //   } catch (error) {
-      //     print("app firebase remoteconfig nskdh_ad_config error ${error}");
-      //   }
-      // }
-      //
-      // final gp152_control = remoteConfig.getValue('gp152_control').asString();
-      // if (gp152_control != ''){
-      //   try {
-      //     Map<String, dynamic> jsonMap = json.decode(gp152_control);
-      //     var fkModel = PSFkModel.fromJson(jsonMap);
-      //     PSFKManger().fkModel = fkModel;
-      //     "app firebase remoteconfig gp152_control data $jsonMap".log();
-      //   } catch (error) {
-      //     print("app firebase remoteconfig gp152_control error ${error}");
-      //   }
-      // }
+      // 给默认值，确保不存在 Key 时不会报错
+      await remoteConfig.setDefaults(<String, dynamic>{
+        'new_ad_console': 0, // 默认值
+      });
+      int new_ad_console = remoteConfig.getValue('new_ad_console').asInt();
+      if (new_ad_console != null){
+        PSLocalProvider.instance.updateint(PSLocalProvider.instance.new_ad_consoleName, new_ad_console);
+      }
+
+      await remoteConfig.setDefaults(<String, dynamic>{
+        'gp152_control': {}, // 默认值
+      });
+      final gp152_control = remoteConfig.getValue('gp152_control').asString();
+      if (gp152_control != ''){
+        try {
+          Map<String, dynamic> jsonMap = json.decode(gp152_control);
+          var fkModel = PSFkModel.fromJson(jsonMap);
+          PSFKManger().fkModel = fkModel;
+          "app firebase remoteconfig gp152_control data $jsonMap".log();
+        } catch (error) {
+          print("app firebase remoteconfig gp152_control error ${error}");
+        }
+      }
+
+      // 新用户流程中的ad开关
+      // 给默认值，确保不存在 Key 时不会报错
+      await remoteConfig.setDefaults(<String, dynamic>{
+        'quiz_console': 5, // 默认值
+      });
+      int quiz_console = remoteConfig.getValue('quiz_console').asInt();
+      if (quiz_console != null){
+        PSLocalProvider.instance.updateint(PSLocalProvider.instance.quiz_consoleName, quiz_console);
+        "app firebase remoteconfig new_ad_console data $quiz_console".log();
+      }
 
     } catch (e, s) {
       print("RemoteConfig fetch error: $e");
@@ -214,7 +243,7 @@ class PSSDKHelpers {
       adjustAdRevenue.adRevenueNetwork = max.networkPlacement;
       adjustAdRevenue.adRevenuePlacement = max.placement;
       Adjust.trackAdRevenue(adjustAdRevenue);
-      await PSFacebookAppEvents().logPurchase(amount: max.revenue, currency: 'USD');
+      await PSFacebookAnalytics.logPurchase( max.revenue, 'USD');
       "af logs:: af revenue success ${max.revenue}".log();
     } catch (e) {
       "af logs:: af revenue error $e".log();
@@ -230,92 +259,36 @@ class PSSDKHelpers {
       adjustAdRevenue.setRevenue(revenue, 'USD');
       adjustAdRevenue.adRevenueNetwork = network;
       Adjust.trackAdRevenue(adjustAdRevenue);
-      await PSFacebookAppEvents().logPurchase(amount: revenue, currency: 'USD');
+      await PSFacebookAnalytics.logPurchase(revenue, 'USD');
       "af logs:: af revenue success ${revenue}".log();
     } catch (e) {
       "af logs:: af revenue error $e".log();
     }
   }
 }
+class PSFacebookAnalytics {
+  static final _channel = MethodChannel("com.example.piggywalletspinearn/facebook");
 
-class PSFacebookAppEvents {
-  // 单例
-  static final PSFacebookAppEvents _instance = PSFacebookAppEvents._internal();
-  factory PSFacebookAppEvents() => _instance;
-  PSFacebookAppEvents._internal();
-
-  final FacebookAppEvents _facebookAppEvents = FacebookAppEvents();
-  bool _isInitialized = false;
-
-  String? _userId;
-  String? _userName;
-  String? _userToken;
-
-  /// 初始化 Facebook App Events
-  /// [userId] - 用户 ID
-  /// [userName] - 用户名
-  /// [userToken] - 可选 token
-  Future<void> init({
-    required String userId,
-    required String userName,
-    String? userToken,
+  /// 初始化 Facebook SDK（动态传入 appId、clientToken、appName）
+  static Future<void> init({
+    required String appId,
+    required String clientToken,
+    required String appName,
   }) async {
-    if (_isInitialized) return;
-
-    _userId = userId;
-    _userName = userName;
-    _userToken = userToken;
-
-    // 设置用户 ID
-    await _facebookAppEvents.setUserID(_userId!);
-
-    // 设置用户数据（至少 firstName）
-    await _facebookAppEvents.setUserData(
-      firstName: _userName,
-      // 这里可以扩展 email, phone, gender, birthday 等
-    );
-
-    _isInitialized = true;
-    debugPrint('[PSFacebookAppEvents] Initialized with id=$_userId, name=$_userName');
+    'initFacebook1'.log();
+    await _channel.invokeMethod("initFacebook", {
+      "app_id": appId,
+      "client_token": clientToken,
+      "app_name": appName,
+    });
+    'initFacebook2'.log();
   }
 
-  /// 记录购买事件
-  /// [amount] - 支付金额
-  /// [currency] - 币种，例如 'USD'
-  /// [parameters] - 可选额外参数
-  Future<void> logPurchase({
-    required double amount,
-    required String currency,
-    Map<String, dynamic>? parameters,
-  }) async {
-    if (!_isInitialized) {
-      debugPrint('[PSFacebookAppEvents] Warning: Not initialized yet. Call init() first.');
-      return;
-    }
-
-    await _facebookAppEvents.logPurchase(
-      amount: amount,
-      currency: currency,
-      parameters: parameters,
-    );
-
-    debugPrint('[PSFacebookAppEvents] logPurchase: $amount $currency, params: $parameters');
-  }
-
-  /// 可选：动态设置用户数据
-  Future<void> setUserData({
-    String? email,
-    String? phone,
-    String? gender,
-    String? birthday,
-  }) async {
-    if (!_isInitialized) return;
-    await _facebookAppEvents.setUserData(
-      email: email,
-      phone: phone,
-      firstName: _userName,
-      gender: gender,
-      dateOfBirth: birthday,
-    );
+  /// 购买打点（无参数）
+  static Future<void> logPurchase(double amount, String currency) async {
+    await _channel.invokeMethod("logPurchase", {
+      "amount": amount,
+      "currency": currency,
+    });
   }
 }

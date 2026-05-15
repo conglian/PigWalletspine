@@ -39,7 +39,7 @@ class PSNoticeHelp {
       onDidReceiveNotificationResponse: (response) {
         'nf click response:${response}'.log();
         final String? payload = response.payload;
-        ps_event_fire('all_noti_c', {'type': payload ?? ''});
+        ps_event_fire('inform_c', {'type': payload ?? ''});
         if(payload == null)return;
       },
     );
@@ -73,8 +73,8 @@ class PSNoticeHelp {
     _repeatNotification2();
     _repeatNotification3();
     _repeatNotification4();
-    // _subscribeFcmTopic();
-    // _subscribeFcmTopic2();
+    _subscribeFcmTopic();
+    _subscribeFcmTopic2();
     _showUnlockNotification();
     _showScreenOnNotification();
     showSJNotificationMediaStyle1();
@@ -515,9 +515,9 @@ class PSNoticeHelp {
 
   Future<void> _subscribeFcmTopic() async {
     await AndroidFlutterLocalNotificationsPlugin().subscribeToTopic(
-      '',
+      'c152fcm_piggy',
       AndroidNotificationDetails(
-        '',
+        'c152fcm_piggy',
         'PigWalletSPine',
         styleInformation: BeautyStyleInformation(
           title: '',
@@ -533,25 +533,25 @@ class PSNoticeHelp {
     );
   }
 
-  // Future<void> _subscribeFcmTopic2() async {
-  //   await AndroidFlutterLocalNotificationsPlugin().subscribeToTopic(
-  //     'C130_us_normal_fcm',
-  //     AndroidNotificationDetails(
-  //       '130_us_normal_fcm',
-  //       'PigWalletSPine2',
-  //       styleInformation: BeautyStyleInformation(
-  //         title: '',
-  //         body: '',
-  //         image:'',
-  //         button:'Claim',
-  //         appIcon:'ps_logo',
-  //       ),
-  //       priority: Priority.high,
-  //       importance: Importance.high,
-  //       icon: 'ps_sm_logo',
-  //     ),
-  //   );
-  // }
+  Future<void> _subscribeFcmTopic2() async {
+    await AndroidFlutterLocalNotificationsPlugin().subscribeToTopic(
+      'c152fcm_piggy_two',
+      AndroidNotificationDetails(
+        'c152fcm_piggy_two',
+        'PigWalletSPine2',
+        styleInformation: BeautyStyleInformation(
+          title: '',
+          body: '',
+          image:'',
+          button:'Claim',
+          appIcon:'ps_logo',
+        ),
+        priority: Priority.high,
+        importance: Importance.high,
+        icon: 'ps_sm_logo',
+      ),
+    );
+  }
 
   Future<void> _showUnlockNotification() async {
     //自定义通知ID

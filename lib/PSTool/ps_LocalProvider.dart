@@ -141,6 +141,7 @@ class PSLocalProvider extends ChangeNotifier {
   int ps_pig_level = 0;
   double ps_pig_level_index = 0.0;
   int ps_quiz_all_num = 0;
+  int quiz_console = 5;
 
   String get ps_currentNumberIndexName => 'ps_currentNumberIndex';
 
@@ -312,6 +313,9 @@ class PSLocalProvider extends ChangeNotifier {
 
   String get ps_install_statusName => 'ps_install_status';
 
+  String get quiz_consoleName => 'quiz_console';
+
+
   // 3. 初始化：从本地存储加载数据（组件初始化时调用）
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
@@ -356,6 +360,7 @@ class PSLocalProvider extends ChangeNotifier {
     ps_key_number = prefs.getInt('ps_key_number') ?? 0;
     ps_quzi_row = prefs.getInt('ps_quzi_row') ?? 0;
     ps_wheel_number = prefs.getInt('ps_wheel_number') ?? 3;
+    quiz_console = prefs.getInt('quiz_console') ?? 5;
     new_ad_console = prefs.getInt('new_ad_console') ?? 1;
     ps_bg_music = prefs.getBool('ps_bg_music') ?? true;
     ps_sound_music = prefs.getBool('ps_sound_music') ?? true;

@@ -1049,9 +1049,7 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
 
     _controller.forward().then((_) {
       Future.delayed(const Duration(seconds: 1), () {
-        if (context.mounted) {
-          Navigator.pop(context); // 动画结束后关闭弹框
-        }
+        Navigator.pop(context, 0); // 动画结束后关闭弹框
       });
     });
   }
@@ -2539,8 +2537,8 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                       ),
                       child: Row(
                         children: [
-                          SizedBox(width: 12.w,),
-                          PSImg(name: 'ps_act_samil_${PSLocalProvider.instance.ps_account_seled_index}', width: 54.w, height: 27.h),
+                          SizedBox(width:(isBrazilianPortuguese(context) == true && PSLocalProvider.instance.ps_account_seled_index == 0) ? 12.w : 8.w),
+                          PSImg(name: 'ps_act_samil_${PSLocalProvider.instance.ps_account_seled_index}${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: (isBrazilianPortuguese(context) == true && PSLocalProvider.instance.ps_account_seled_index == 0) ? 54.w : 61.w, height:(isBrazilianPortuguese(context) == true && PSLocalProvider.instance.ps_account_seled_index == 0) ? 27.h : 16.h),
                           SizedBox(width: 8.w,),
                           PSImg(name: 'ps_payment_icon', width: 67.w, height: 21.h),
                           SizedBox(width: 8.w,),
@@ -2603,6 +2601,14 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
         })
       ],
     );
+  }
+
+  bool isBrazilianPortuguese(BuildContext context) {
+    // 获取当前语言环境
+    Locale currentLocale = Localizations.localeOf(context);
+
+    // 判断是否是巴西葡萄牙语
+    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
   }
 
   String adIntPod_idName(){
@@ -4149,26 +4155,15 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
                   borderWidth: 0.0,
                   decimalPlaces: 2,
                 ),
-                if (PSLocalProvider.instance.ps_pig_level == 1)
-                  PSGradientStrokeText(text: 'My Diamond:  ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
-                if (PSLocalProvider.instance.ps_pig_level == 1)
+                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                  PSGradientStrokeText(text: 'Pending Amount:', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 18),
+                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                  SizedBox(width: 8),
+                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
                   PSGradientNumberRoller(
-                    value: PSLocalProvider.instance.ps_pig_level_index,
+                    value: PSLocalProvider.instance.ps_dolas_number,
                     duration: 800,
-                    fontSize: 22.0,
-                    gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
-                    borderColor: Colors.transparent,
-                    borderWidth: 0.0,
-                    decimalPlaces: 2,
-                    showDolas: false,
-                  ),
-                if (PSLocalProvider.instance.ps_pig_level == 2)
-                  PSGradientStrokeText(text: 'My Gold:  ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
-                if (PSLocalProvider.instance.ps_pig_level == 2)
-                  PSGradientNumberRoller(
-                    value: PSLocalProvider.instance.ps_pig_level_index,
-                    duration: 800,
-                    fontSize: 22.0,
+                    fontSize: 18.0,
                     gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
                     borderColor: Colors.transparent,
                     borderWidth: 0.0,

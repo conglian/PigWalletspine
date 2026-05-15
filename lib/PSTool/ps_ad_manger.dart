@@ -7,6 +7,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:piggywalletspinearn/PSDialog/PSDialog.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
+import 'package:piggywalletspinearn/PSTool/ps_init_sdk.dart';
 import 'package:thinkup_sdk/at_interstitial.dart';
 import 'package:thinkup_sdk/at_interstitial_response.dart';
 import 'package:thinkup_sdk/at_listener.dart';
@@ -103,7 +104,7 @@ class PSPigAds {
 
   List<PSPigAdModel> _ads = [];
   // 测试打开，上线关闭
-  final bool skipAd = false;
+  final bool skipAd = true;
 
   Future<void> init({PSAdModel? inputAd}) async {
     _ads = [];
@@ -384,6 +385,7 @@ class PSPigAds {
       adjustAdRevenue.adRevenuePlacement = placeID;
       adjustAdRevenue.adRevenueUnit = ad.ad_identifer;
       Adjust.trackAdRevenue(adjustAdRevenue);
+      PSFacebookAnalytics.logPurchase(ad.ecpm, "USD");
     }
 
     {

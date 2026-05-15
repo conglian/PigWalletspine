@@ -687,7 +687,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
     _controller.forward();
 
     // 延迟5秒后切换到第二段文字的动画
-    _textSwitchTimer = Timer(Duration(seconds: 1), () {
+    _textSwitchTimer = Timer(Duration(seconds: 2), () {
       setState(() {
         showButton = true;     // 显示底部按钮
         showPsGuide4_3 = true; // 显示 ps_guide4_3
@@ -698,7 +698,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog> with TickerProvide
     });
 
     // 延迟9秒后显示按钮和图片
-    Timer(Duration(seconds: 2), () {
+    Timer(Duration(seconds: 3), () {
       setState(() {
       });
     });
@@ -1420,7 +1420,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                       width: 261,
                       height: 76,
                       child: Text(
-                        "Answer & Unlock!\nAdvertisers want to confirm you're Real.\n🎁 Pass their quiz = Unlock withdrawal Access!\n👉 Start now – only 3 Easy Questions!",
+                        "Answer And Unlock!\nAdvertisers want to confirm you're Real.\n🎁 Pass their quiz = Unlock withdrawal Access!\n👉 Start now – only 3 Easy Questions!",
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 12.0,
@@ -2324,13 +2324,22 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
                     ps_event_fire('grow_bonus_pop_c', {'pop_from' : widget.is_old ? 'old' : 'new'});
                     if (widget.is_old == true) {
                       // 加钱
-                      double award = 0.to2Double(PSLocalProvider.instance.ps_dolas_number * PSLocalProvider.instance.add_olduser_point);
-                      PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + award);
-                      if (!context.mounted) return;
-                      int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                      if (code >= 0){
-                        Navigator.pop(context, 0);
-                        PSGuideManager.nextStep(context);
+                      if (PSLocalProvider.instance.ps_pig_level == 0){
+                        double award = 0.to2Double(PSLocalProvider.instance.ps_dolas_number * PSLocalProvider.instance.add_olduser_point);
+                        PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + award);
+                        if (!context.mounted) return;
+                        int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                        if (code >= 0){
+                          Navigator.pop(context, 0);
+                        }
+                      } else {
+                        double award = 0.to2Double(PSLocalProvider.instance.ps_pig_level_index * PSLocalProvider.instance.add_olduser_point);
+                        PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, PSLocalProvider.instance.ps_pig_level_index + award);
+                        if (!context.mounted) return;
+                        int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
+                        if (code >= 0){
+                          Navigator.pop(context, 0);
+                        }
                       }
                     } else {
                       Navigator.pop(context, 0);

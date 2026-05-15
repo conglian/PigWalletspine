@@ -405,7 +405,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                 ],
               ),
               SizedBox(height: 9),
-              PSText(text: 'Security Check In Progress To Protect Your Payout', size: 12, color: '#AF7C1E'.color(), weight: FontWeight.w900),
+              PSText(text: getCenterTips(), size: 11, color: '#AF7C1E'.color(), weight: FontWeight.w900),
               SizedBox(height: 20),
               Row(
                 children: [
@@ -421,7 +421,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Verification task：',
+                          text: getTaskTips(),
                         ),
                         TextSpan(
                           text: getTaskString(),
@@ -496,6 +496,30 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
     );
   }
 
+  String getCenterTips(){
+    if ((PSLocalProvider.instance.ps_pig_level == 1) && PSLocalProvider.instance.ps_tx_ing_status == false){
+      return 'Almost done! Collect 20 more diamonds to finish review';
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return "Security check in progress to protect your payout";
+    } else if (PSLocalProvider.instance.ps_current_ranking != 1 && PSLocalProvider.instance.ps_tx_ing_status == true) {
+      return "You're in line. Payouts are released in order";
+    } else  {
+      return 'Final Step！Complete the final task to release your cash';
+    }
+  }
+
+  String getTaskTips(){
+    if ((PSLocalProvider.instance.ps_pig_level == 1) && PSLocalProvider.instance.ps_tx_ing_status == false){
+      return 'Review task: ';
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return "Verification task: ";
+    } else if (PSLocalProvider.instance.ps_current_ranking != 1 && PSLocalProvider.instance.ps_tx_ing_status == true) {
+      return "Queue Progress: ";
+    } else  {
+      return 'Final Task: ';
+    }
+  }
+
   String getCashbtnName(int row){
     if (PSLocalProvider.instance.ps_pig_level == 1){
       return 'ps_unlock_payout';
@@ -513,7 +537,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
     } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
       return '${0.to2Double(PSLocalProvider.instance.ps_pig_level_index)}/10';
     } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
-      return '${PSLocalProvider.instance.ps_current_ranking}/${PSLocalProvider.instance.ps_all_ranking}';
+      return '${(((99 - PSLocalProvider.instance.ps_current_ranking) / 99) * 100).toInt()}%';
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
       if (PSLocalProvider.instance.ps_tx_task_index == 0){
         return '${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
@@ -544,7 +568,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
     } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
       return PSLocalProvider.instance.ps_pig_level_index / 10;
     } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
-      return PSLocalProvider.instance.ps_current_ranking / PSLocalProvider.instance.ps_current_ranking;
+      return (99 - PSLocalProvider.instance.ps_current_ranking) / 99;
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
       if (PSLocalProvider.instance.ps_tx_task_index == 0){
         return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;

@@ -730,7 +730,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                         PSPigAds().ps_showAd(context, 'nskdh_moneybub_rv', onCacheResponse: (onCacheResponse) async {
                         }, adDidClosed: (adDidClosed) async {
                           if (PSLocalProvider.instance.ps_pig_level == 0) {
-                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + bubble_award_two);
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, bubble_award_two);
                           } else {
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName,PSLocalProvider.instance.ps_pig_level_index + bubble_award_two);
                           }
@@ -786,7 +786,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? ' ${0.dolasType()}???' : ' X???',
+                              text: provider.ps_pig_level == 0 ? ' ${0.dolasType()}$bubble_award_two' : ' X$bubble_award_two',
                               size: 20,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
@@ -817,7 +817,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                         PSPigAds().ps_showAd(context, 'nskdh_moneybub_rv', onCacheResponse: (onCacheResponse) async {
                         }, adDidClosed: (adDidClosed) async {
                           if (PSLocalProvider.instance.ps_pig_level == 0) {
-                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + bubble_award_three);
+                            await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, bubble_award_three);
                           } else {
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName,PSLocalProvider.instance.ps_pig_level_index + bubble_award_three);
                           }

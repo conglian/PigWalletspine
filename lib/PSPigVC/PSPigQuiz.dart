@@ -307,13 +307,14 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                     }
                                     PSPigQuizProgressNotificationService.sendToQuizProgressNotification(PSLocalProvider.instance.ps_quiz_all_num);
                                   });
+                                } else {
+                                  next_quiz();
                                 }
                                 setState(() {
                                   is_quizing = false;
                                   anwer_b = false;
                                   anwer_a = false;
                                 });
-                                next_quiz();
                               });
                             },
                             child: Container(
@@ -390,13 +391,14 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                     }
                                     PSPigQuizProgressNotificationService.sendToQuizProgressNotification(PSLocalProvider.instance.ps_quiz_all_num);
                                   });
+                                } else {
+                                  next_quiz();
                                 }
                                 setState(() {
                                   is_quizing = false;
                                   anwer_b = false;
                                   anwer_a = false;
                                 });
-                                next_quiz();
                               });
                             },
                             child: Container(
@@ -506,31 +508,66 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
       if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index == 3 && PSLocalProvider.instance.ps_account_id.length <= 0) {
         if (!context.mounted) return;
         context.tipShow(PSAboutTXDialog(isConfim: false));
+        next_quiz();
+      } else {
+        // 到达80%提现确认
+        if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
+          int code =  await context.tipShow(PSAboutTXDialog(isConfim: true));
+          PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
+          if (code >= 0){
+            if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
+             int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+             if (code1 >= 0){
+               next_quiz();
+             }
+            } else {
+              next_quiz();
+            }
+          }
+        } else {
+          if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
+            int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+            if (code1 >= 0){
+              next_quiz();
+            }
+          } else {
+            next_quiz();
+          }
+        }
       }
-      // 到达80%提现确认
-      if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
-        context.tipShow(PSAboutTXDialog(isConfim: true));
-        PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
-      }
-
-      // if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % 5 == 0){
-      //   context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-      // }
     } else {
       int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .quiz, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
       if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index == 3 && PSLocalProvider.instance.ps_account_id.length <= 0) {
         if (!context.mounted) return;
         context.tipShow(PSAboutTXDialog(isConfim: false));
-      }
-      // 到达80%提现确认
-      if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
-        context.tipShow(PSAboutTXDialog(isConfim: true));
-        PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
-      }
+        next_quiz();
+      } else {
+        // 到达80%提现确认
+        if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
+          int code =  await context.tipShow(PSAboutTXDialog(isConfim: true));
+          PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
+          if (code >= 0){
+            if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
+              int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+              if (code1 >= 0){
+                next_quiz();
+              }
+            } else {
+              next_quiz();
+            }
+          }
+        } else {
+          if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
+            int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+            if (code1 >= 0){
+              next_quiz();
+            }
+          } else {
+            next_quiz();
+          }
+        }
 
-      // if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % 5 == 0){
-      //   context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-      // }
+      }
     }
 
     await PSLocalProvider.instance.updateint(
@@ -644,14 +681,17 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
     if (PSLocalProvider.instance.ps_quiz_tap_index == 3 && PSLocalProvider.instance.ps_account_id.length <= 0) {
       if (!context.mounted) return;
       context.tipShow(PSAboutTXDialog(isConfim: false));
-    }
-
-    // if (PSLocalProvider.instance.ps_quiz_tap_index % 5 == 0){
-    //   context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-    // }
-
-    if (PSLocalProvider.instance.ps_quiz_tap_index == 8 || PSLocalProvider.instance.ps_quiz_tap_index == 15 || PSLocalProvider.instance.ps_quiz_tap_index == 20) {
-       context.tipShow(PSQuizRankTwoDialog(quiz_num: PSLocalProvider.instance.ps_quiz_tap_index));
+    } else {
+      if (PSLocalProvider.instance.ps_quiz_tap_index == 8 || PSLocalProvider.instance.ps_quiz_tap_index == 15 || PSLocalProvider.instance.ps_quiz_tap_index == 20) {
+        int code = await context.tipShow(PSQuizRankTwoDialog(quiz_num: PSLocalProvider.instance.ps_quiz_tap_index));
+        if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
+          context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+        }
+      } else {
+        if (PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
+          context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+        }
+      }
     }
     if (show_answer){
       setState(() {
