@@ -1367,6 +1367,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
   bool anwer_b = false;
   bool show_c = false;
   int row = 0;
+  int dui_row = 0;
   List<String> ques = ['Who gives you money here?', 'When can you withdraw your cash?', 'What’s the fastest way to fill your PiggyBoost?'];
   List<String> answerA = ['Advertisers', 'When you get a Golden Pig', 'Watch more ads'];
   List<String> answerB = ['Other players', 'Any time', 'Wait without playing'];
@@ -1495,10 +1496,11 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                         Future.delayed(Duration(milliseconds: 1000), () async {
                          var code = await context.tipShow(PSPopAwardToolDialog(type: .quiz, isGuide: true, award: PSNumberHelpers().intModel!.firstAdPrize));
                          if (code >= 0) {
-                           answerA.removeAt(row);
-                           answerB.removeAt(row);
-                           ques.removeAt(row);
-                           if (ques.length == 0) {
+                           dui_row += 1;
+                           // answerA.removeAt(row);
+                           // answerB.removeAt(row);
+                           // ques.removeAt(row);
+                           if (dui_row ==3) {
                              Navigator.pop(context, 0);
                              PSGuideManager.nextStep(context);
                            }

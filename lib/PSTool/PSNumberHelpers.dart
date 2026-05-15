@@ -93,18 +93,16 @@ class PSNumberHelpers {
         break;
       }
     }
-    if (PSLocalProvider.instance.ps_dolas_old_number >= intModel!.eqRange.first){
-      return true;
-    }
 
     if (range <= 0.0) {
       return false;
     }
 
     double point = range.toDouble() ?? 0.0;
-
+     'range=$range'.log();
     // 随机概率判断
     double rand = Random().nextDouble() * 100; // 0.0 ~ 1.0
+    'rand=$rand'.log();
     return rand <= point;
   }
 

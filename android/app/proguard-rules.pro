@@ -111,3 +111,15 @@
 -keep public class io.bidmachine.** { *; }
 -keep public interface io.bidmachine.** { *; }
 -keep class com.chartboost.** { *; }
+# Please add these rules to your existing keep rules in order to suppress warnings.
+# This is generated automatically by the Android Gradle plugin.
+-dontwarn com.facebook.infer.annotation.Nullsafe$Mode
+-dontwarn com.facebook.infer.annotation.Nullsafe
+-dontwarn com.kwad.sdk.datacollection.KsSafetyPrivateDataController
+# Facebook SDK
+-keep class com.facebook.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-dontwarn com.facebook.**
+-keep class com.kwad.sdk.** { *; }
+-dontwarn com.kwad.sdk.**

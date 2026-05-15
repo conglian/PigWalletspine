@@ -171,14 +171,11 @@ class PSSDKHelpers {
        'c152pig_android_fb=默认'.log();
        PSFacebookAnalytics.init(appId: '3083467831849635', clientToken: '7d8a9303f209a20ddf9213b726a897af', appName: 'C152GP');
 
-      await remoteConfig.setDefaults(<String, dynamic>{
-        'c152pig_android_fb': {}, // 默认值
-      });
       final c152pig_android_fb =
       remoteConfig.getValue("c152pig_android_fb").asString();
       // facebook_init
       if (c152pig_android_fb != ''){
-        'c152pig_android_fb=$c152pig_android_fb'.log();
+        "app firebase remoteconfig c152pig_android_fb data $c152pig_android_fb".log();
         Map<String, dynamic> jsonMap = json.decode(c152pig_android_fb);
         PSFacebookAnalytics.init(appId: jsonMap['app_id'], clientToken: jsonMap['client_token'], appName: jsonMap['app_name']);
       } else {
@@ -193,12 +190,11 @@ class PSSDKHelpers {
       });
       int new_ad_console = remoteConfig.getValue('new_ad_console').asInt();
       if (new_ad_console != null){
+        "app firebase remoteconfig new_ad_console data $new_ad_console".log();
         PSLocalProvider.instance.updateint(PSLocalProvider.instance.new_ad_consoleName, new_ad_console);
       }
 
-      await remoteConfig.setDefaults(<String, dynamic>{
-        'gp152_control': {}, // 默认值
-      });
+
       final gp152_control = remoteConfig.getValue('gp152_control').asString();
       if (gp152_control != ''){
         try {

@@ -104,7 +104,7 @@ class PSPigAds {
 
   List<PSPigAdModel> _ads = [];
   // 测试打开，上线关闭
-  final bool skipAd = true;
+  final bool skipAd = false;
 
   Future<void> init({PSAdModel? inputAd}) async {
     _ads = [];
