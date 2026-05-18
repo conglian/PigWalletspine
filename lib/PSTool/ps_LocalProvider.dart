@@ -447,23 +447,23 @@ class PSLocalProvider extends ChangeNotifier {
   }
 
   // 通用bool
-  Future<void> updateBool(String key, bool value) async {
+  Future<bool> updateBool(String key, bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(key, value);
-    init();
-    notifyListeners();
+    final result = await prefs.setBool(key, value);
+    await init();
+    return result;
   }
 
   // 通用int
-  Future<void> updateint(String key, int value) async {
+  Future<bool> updateint(String key, int value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(key, value);
-    init();
-    notifyListeners();
+    final result = await prefs.setInt(key, value);
+    await init();
+    return result;
   }
 
   // 通用double
-  Future<void> updatedouble(String key, double value) async {
+  Future<bool> updatedouble(String key, double value) async {
     final prefs = await SharedPreferences.getInstance();
     if (key == PSLocalProvider.instance.ps_dolas_numberName &&
         ps_dolas_number <= 0) {
@@ -476,7 +476,7 @@ class PSLocalProvider extends ChangeNotifier {
     if (key == PSLocalProvider.instance.ps_dolas_numberName) {
       value += ps_dolas_number;
     }
-    await prefs.setDouble(key, value);
+    final result = await prefs.setDouble(key, value);
     // 开始提现
     'value=${value},ps_pig_level=$ps_pig_level, ps_show_rank=$ps_show_rank'.log();
     if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 10 && ps_pig_level == 2 && ps_show_rank == false){
@@ -528,24 +528,24 @@ class PSLocalProvider extends ChangeNotifier {
     if (key == PSLocalProvider.instance.ps_dolas_numberName) {
         PSNoticeHelp().startSJForegroundService();
     }
-    init();
-    notifyListeners();
+    await init();
+    return result;
   }
 
   // 通用String
-  Future<void> updateString(String key, String value) async {
+  Future<bool> updateString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(key, value);
-    init();
-    notifyListeners();
+    final result = await prefs.setString(key, value);
+    await init();
+    return result;
   }
 
-  Future<void> updateTXInStatus(int status) async {
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // txEntity.tx_info[ps_tx_ing_account].tx_list[ps_tx_ing_number].status = status;
-    // sharedPreferences.setString('ps_tx_list', jsonEncode(txEntity.toJson()));
-    // String jsonTXString = sharedPreferences.getString('ps_tx_list') ?? "";
-    // Map<String, dynamic> json_tx = jsonDecode(jsonTXString);
-    // txEntity = SJTXModel.fromJson(json_tx);
-  }
+  // Future<void> updateTXInStatus(int status) async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   txEntity.tx_info[ps_tx_ing_account].tx_list[ps_tx_ing_number].status = status;
+  //   sharedPreferences.setString('ps_tx_list', jsonEncode(txEntity.toJson()));
+  //   String jsonTXString = sharedPreferences.getString('ps_tx_list') ?? "";
+  //   Map<String, dynamic> json_tx = jsonDecode(jsonTXString);
+  //   txEntity = SJTXModel.fromJson(json_tx);
+  // }
 }
