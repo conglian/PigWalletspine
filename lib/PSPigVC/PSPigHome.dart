@@ -219,30 +219,30 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                           // Sliver for the header (TableViewHeaderView)
                           SliverToBoxAdapter(
                             child: Container(
-                              width: 364,
-                              height: 184,
+                              width: 364.w,
+                              height: 184.h,
                               decoration: BoxDecoration(
                                 image: PSDImg('ps_pig_user_top_bg')
                               ),
                               child: Stack(
                                 children: [
-                                  Positioned(right: 14,top: 24,child: PSImg(name: 'ps_pig_2', width: 33, height: 33)),
-                                  Positioned(left: 14,top: 24,child: PSImg(name: 'ps_pig_2', width: 33, height: 33)),
-                                  Positioned(right: 124,top: 12,child: PSImg(name: 'ps_pig_2', width: 33, height: 33)),
+                                  Positioned(right: 14.w,top: 24.h,child: PSImg(name: 'ps_pig_2', width: 33, height: 33)),
+                                  Positioned(left: 14.w,top: 24.h,child: PSImg(name: 'ps_pig_2', width: 33, height: 33)),
+                                  Positioned(right: 124.w,top: 12.h,child: PSImg(name: 'ps_pig_2', width: 33, height: 33)),
                                   if (rank_data.length > 0)
-                                   Positioned(left: 48,top: 64,child: PSImg(name: 'ps_user_s_${rank_data[1].id}', width: 31, height: 31)),
+                                   Positioned(left: 48.w,top: 64.h,child: PSImg(name: 'ps_user_s_${rank_data[1].id}', width: 31, height: 31)),
                                   if (rank_data.length > 0)
-                                    Positioned(right: 48,top: 64,child: PSImg(name: 'ps_user_s_${rank_data[2].id}', width: 31, height: 31)),
+                                    Positioned(right: 52.w,top: 64.h,child: PSImg(name: 'ps_user_s_${rank_data[2].id}', width: 31, height: 31)),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 154,top: 48,child: PSImg(name: 'ps_user_s_${rank_data[0].id}', width: 49, height: 49)),
+                                    Positioned(left: 160.w,top: 48.h,child: PSImg(name: 'ps_user_s_${rank_data[0].id}', width: 49, height: 49)),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 24,top: 98,child: PSStrokeText(text: rank_data[1].username, size: 8, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#2C4862'.color())),
+                                    Positioned(left: 24.w,top: 98.h,child: PSStrokeText(text: rank_data[1].username, size: 8, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#2C4862'.color())),
                                   if (rank_data.length > 0)
-                                    Positioned(right: 24,top: 98,child: PSStrokeText(text: rank_data[2].username, size: 8, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#2C4862'.color())),
+                                    Positioned(right: 24.w,top: 98.h,child: PSStrokeText(text: rank_data[2].username, size: 8, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#2C4862'.color())),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 138,top: 98,child: PSStrokeText(text: rank_data[0].username, size: 8, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#2C4862'.color())),
+                                    Positioned(left: 145.w,top: 98.h,child: PSStrokeText(text: rank_data[0].username, size: 8, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#2C4862'.color())),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 24,top: 108,child: RichText(
+                                    Positioned(left: 24.w,top: 108.h,child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                       style: TextStyle(
@@ -261,7 +261,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(right: 24,top: 108,child: RichText(
+                                    Positioned(right: 24.w,top: 108.h,child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                       style: TextStyle(
@@ -280,7 +280,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 138,top: 108,child: RichText(
+                                    Positioned(left: 145.w,top: 108.h,child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                       style: TextStyle(
@@ -299,7 +299,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 24,top: 120,child: RichText(
+                                    Positioned(left: 24.w,top: 120.h,child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                       style: TextStyle(
@@ -318,7 +318,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(right: 24,top: 120,child: RichText(
+                                    Positioned(right: 24.w,top: 120.h,child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                       style: TextStyle(
@@ -337,7 +337,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 140,top: 120,child: RichText(
+                                    Positioned(left: 145.w,top: 120.h,child: RichText(
                                     textAlign: TextAlign.center,
                                     text: TextSpan(
                                       style: TextStyle(
@@ -356,7 +356,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 28,top: 136,child: ParticleButton(
+                                    Positioned(left: 28.w,top: 136.h,child: ParticleButton(
                                     onTap: (){
                                       ps_event_fire('home_list_showpig', {});
                                       context.tipShow2(PSPopCunCashDog(is_gold: true, userData: rank_data[1]));
@@ -370,7 +370,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(right: 28,top: 136,child: ParticleButton(
+                                    Positioned(right: 28.w,top: 136.h,child: ParticleButton(
                                     onTap: (){
                                       ps_event_fire('home_list_showpig', {});
                                       context.tipShow2(PSPopCunCashDog(is_gold: true, userData: rank_data[2]));
@@ -384,7 +384,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                                     ),
                                   ),),
                                   if (rank_data.length > 0)
-                                    Positioned(left: 144,top: 136,child: ParticleButton(
+                                    Positioned(left: 153.w,top: 136.h,child: ParticleButton(
                                     onTap: (){
                                       ps_event_fire('home_list_showpig', {});
                                       context.tipShow2(PSPopCunCashDog(is_gold: true, userData: rank_data[0]));
@@ -614,22 +614,18 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                 child: ParticleButton(
                   onTap: () async {
                     ps_event_fire('home_float_apple', {});
-
                       PSPigAds().ps_showAd(context, 'asd_rv', onCacheResponse: (onCacheResponse) async {
                       }, adDidClosed: (adDidClosed) async {
                         if (PSLocalProvider.instance.ps_pig_level == 0) {
                           int code = await context.tipShow(PSPopAwardToolDialog(type: .apple, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
                           if (code >= 0){
-
                           }
                         } else {
                           int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .apple, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
                           if (code >= 0){
-
                           }
                         }
                       });
-
                   },
                   child: Stack(
                     children: [
@@ -668,7 +664,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                       onTap: () async {
                         ps_event_fire('home_float_c', {});
                         if (PSLocalProvider.instance.ps_pig_level == 0) {
-                          int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: bubble_award_one));
+                          int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: 2));
                           if (code >= 0){
                             setState(() {
                               bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
@@ -901,9 +897,9 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                     ps_event_fire('home_float_quiz', {});
                   },
                   child: PSBouncyImage(
-                    imagePath: 'ps_quiz_bubble',
-                    width: 60.44,
-                    height: 60.2,
+                    imagePath: 'ps_quzi_btn_pop',
+                    width: 70.44,
+                    height: 70.2,
                     enableAnimation: true,
                   ),
                 ),
@@ -922,11 +918,23 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                     PigTabController.switchTo(2);
                     ps_event_fire('home_float_wheel', {});
                   },
-                  child: PSBouncyImage(
-                    imagePath: 'ps_wheel_bubble',
-                    width: 60.44,
-                    height: 60.2,
-                    enableAnimation: true,
+                  child: Stack(
+                    children: [
+                      PSBouncyImage(
+                        imagePath: 'ps_wheel_bubble',
+                        width: 70.44,
+                        height: 70.2,
+                        enableAnimation: true,
+                      ),
+                      Positioned(bottom: 8,left: 2,child: PSStrokeText(
+                        text: 'Wheel Cash',
+                        size: 11,
+                        color: '#FFFDE1'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 2,
+                        skColor: '#5F2605'.color(),
+                      ))
+                    ],
                   ),
                 ),
               ),

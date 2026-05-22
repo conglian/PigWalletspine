@@ -46,6 +46,16 @@ allprojects {
         maven {
             url = uri("https://cboost.jfrog.io/artifactory/chartboost-mediation")
         }
+
+        //Pubnative
+        maven {
+            url = uri("https://verve.jfrog.io/artifactory/verve-gradle-release")
+        }
+        maven {
+            url = uri("https://cboost.jfrog.io/artifactory/chartboost-core")
+        }
+
+
     }
 }
 buildscript {

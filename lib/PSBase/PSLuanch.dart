@@ -13,6 +13,7 @@ import '../PSHome/PSHome.dart';
 import '../PSTool/PSNoticeHelp.dart';
 import '../PSTool/PSNumberHelpers.dart';
 import '../PSTool/PSTBAEventTool.dart';
+import '../PSTool/ps_ad_manger.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import 'PSTbaBar.dart';
@@ -141,12 +142,21 @@ class PSLaunchState extends State<PSLaunch>
 
     if (step >= 12) {
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => PigBottomExample(key: homeKey),
-        ),
-      );
+      PSPigAds().ps_showAd(context, 'nskdh_launch',showDialog: false, onCacheResponse: (onCacheResponse){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PigBottomExample(key: homeKey),
+          ),
+        );
+      }, adDidClosed: (adDidClosed){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => PigBottomExample(key: homeKey),
+          ),
+        );
+      });
 
       // Navigator.pushReplacement(
       //   context,

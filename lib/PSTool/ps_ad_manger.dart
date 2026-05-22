@@ -83,7 +83,11 @@ class PSPigAds {
 
   PSAdModel? _PSPigAdModel;
 
+  PSAdModel? psPigAdModel = PSAdModel.fromJson(ps_defaultAdConfig);
+
   bool _pigAdDelegateCreated = false;
+
+  bool init_suc = false;
 
   String? quizAdPlaceID;
 
@@ -111,7 +115,7 @@ class PSPigAds {
     "$runtimeType init ad json,remote value is $inputAd".log();
     try {
       await setAdConfigData(
-        inputAdModel: inputAd ?? PSAdModel.fromJson(ps_defaultAdConfig),
+        inputAdModel: inputAd ?? psPigAdModel,
       );
       _getCacheData();
 
@@ -356,22 +360,11 @@ class PSPigAds {
     "$runtimeType onCacheResponse is not ready!!! error $quizAdPlaceID".log();
   }
 
-  void adImpression({required PSPigAdModel ad, required String placeID}) async {
+  void adImpression({required PSPigAdModel ad, required String placeID, required String ad_network}) async {
     adRevenues(ad.ecpm);
     {
-      ps_event_fire(
-        "ad_impression",
-        {
-          "ad_pre_ecpm": ad.ecpm * 1000000,
-          "ad_network": ad.networkName,
-          "ad_source_client": ad.sdk,
-          "ad_code_id": ad.ad_identifer,
-          "ad_pos_id": placeID,
-          "ad_format": ad.getTypeToServer(),
-        },
-      );
       ps_ad_fire({'strange' : ad.ecpm * 1000000,
-                   'shiv': ad.networkName,
+                   'shiv': ad_network,
                    'pothole' : ad.sdk,
                    'pharmacy' : ad.ad_identifer,
                    'lenin' : placeID,
@@ -380,7 +373,7 @@ class PSPigAds {
     {
       // to sdk
       AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue(ad.sdk);
-      adjustAdRevenue.adRevenueNetwork = ad.networkName;
+      adjustAdRevenue.adRevenueNetwork = ad_network;
       adjustAdRevenue.setRevenue(ad.ecpm, "USD");
       adjustAdRevenue.adRevenuePlacement = placeID;
       adjustAdRevenue.adRevenueUnit = ad.ad_identifer;
@@ -536,7 +529,7 @@ extension AdServiceExtension on PSPigAds {
           _adDidLoadFailed(adUnitId, error.message, 'max');
         },
         onAdDisplayedCallback: (ad) {
-          _adDidDisplayed(adID: ad.adUnitId);
+          _adDidDisplayed(adID: ad.adUnitId, ad_network: ad.networkName);
         },
         onAdHiddenCallback: (ad) {
           _adDidHidden(adId: ad.adUnitId);
@@ -570,7 +563,7 @@ extension AdServiceExtension on PSPigAds {
           break;
         // interstitial show succeed
         case InterstitialStatus.interstitialDidShowSucceed:
-          _adDidDisplayed(adID: value.placementID);
+          _adDidDisplayed(adID: value.placementID, ad_network: value.extraMap['network_name']);
           break;
         // interstitial show fail
         case InterstitialStatus.interstitialFailedToShow:
@@ -616,7 +609,7 @@ extension AdServiceExtension on PSPigAds {
           _adDidLoadFailed(adUnitId, error.message, 'max');
         },
         onAdDisplayedCallback: (ad) {
-          _adDidDisplayed(adID: ad.adUnitId);
+          _adDidDisplayed(adID: ad.adUnitId, ad_network: ad.networkName);
           setTxProgress();
         },
         onAdHiddenCallback: (ad) {
@@ -643,7 +636,7 @@ extension AdServiceExtension on PSPigAds {
           break;
         // ad video start play
         case RewardedStatus.rewardedVideoDidStartPlaying:
-          _adDidDisplayed(adID: value.placementID);
+          _adDidDisplayed(adID: value.placementID, ad_network: value.extraMap['network_name']);
           setTxProgress();
           break;
         // ad video start end
@@ -796,12 +789,12 @@ extension AdServiceExtension on PSPigAds {
       },
     );
     // 延迟1s请求下一条避免出现请求频繁报错
-    Future.delayed(Duration(seconds: 1),(){
+    Future.delayed(Duration(seconds: 2),(){
       _requestAd(defaultIndex: [index]);
     });
   }
 
-  Future<void> _adDidDisplayed({required String adID}) async {
+  Future<void> _adDidDisplayed({required String adID,required String ad_network}) async {
     // if (PSLocalProvider.instance.ps_bg_music){
     //   PSAudioUtils().pauseBGM();
     // }
@@ -839,7 +832,7 @@ extension AdServiceExtension on PSPigAds {
         .log();
 
     adShowed();
-    adImpression(ad: _ads[index], placeID: quizAdPlaceID ?? "");
+    adImpression(ad: _ads[index], placeID: quizAdPlaceID ?? "", ad_network:ad_network);
   }
 
   Future<void> setTxProgress() async {

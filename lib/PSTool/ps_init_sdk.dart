@@ -58,7 +58,7 @@ class PSSDKHelpers {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // 这里保证在主线程
       sj_topon_start = DateTime.now();
-      ATInitManger.initAnyThinkSDK(
+      ATInitManger.initThinkUpSDK(
           appidStr: 'h69fbf5b324d2e',
           appidkeyStr: 'a6a5fd430dcfc69adb4220359cd1ad784').then((value){
         ps_event_fire('nskdh_ad_initsuc', {
@@ -66,7 +66,8 @@ class PSSDKHelpers {
           'ad_init_time' : DateTime.now().difference(sj_topon_start).inMilliseconds
         });
         'topon init Success'.log();
-        PSPigAds().init();
+        PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
+        PSPigAds().init_suc = true;
         ps_session_fire();
         if (PSLocalProvider.instance.ps_install_status == false){
           ps_install_fire();
@@ -74,11 +75,14 @@ class PSSDKHelpers {
         }
       }).catchError((error){
         'topon init error=$error'.log();
+        Future.delayed(Duration(seconds: 1),(){
+          _initTopon();
+        });
       });
       // 打开SDK的Debug log，强烈建议在测试阶段打开，方便排查问题。
       ATInitManger
           .setLogEnabled(
-        logEnabled: false,
+        logEnabled: kDebugMode ? true : false,
       );
     });
   }
@@ -159,17 +163,15 @@ class PSSDKHelpers {
       if (nskdh_ad_config != ''){
         try {
           Map<String, dynamic> jsonMap = json.decode(nskdh_ad_config);
-          if (is_ad_suc == false){
-            is_ad_suc = true;
-            PSPigAds().init(inputAd: PSAdModel.fromJson(jsonMap));
-            "app firebase remoteconfig nskdh_ad_config data $jsonMap".log();
+          PSPigAds().psPigAdModel = PSAdModel.fromJson(jsonMap);
+          if (PSPigAds().init_suc == true){
+            PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
           }
+          "app firebase remoteconfig nskdh_ad_config data $jsonMap".log();
         } catch (error) {
           print("app firebase remoteconfig nskdh_ad_config error ${error}");
         }
       }
-       'c152pig_android_fb=默认'.log();
-       PSFacebookAnalytics.init(appId: '3083467831849635', clientToken: '7d8a9303f209a20ddf9213b726a897af', appName: 'C152GP');
 
       final c152pig_android_fb =
       remoteConfig.getValue("c152pig_android_fb").asString();

@@ -583,26 +583,22 @@ class PSGuideNew3DialogState extends State<PSGuideNew3Dialog> with TickerProvide
                 children: [
                   // 使用 AnimatedBuilder 实现无限滚动
                   Positioned(
-                    top:12,
+                    top: 24,
                     child: AnimatedBuilder(
                       animation: _controller,
                       builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(_animation.value.dx * screenWidth, 0), // 根据动画控制偏移量
-                          child: PSImg(name: 'ps_guide3_1', width: 361, height: 126),
-                        );
-                      },
-                    ),
-                  ),
-                  // 使用一个额外的 PSImg 作为拼接部分
-                  Positioned(
-                    top:12,
-                    child: AnimatedBuilder(
-                      animation: _controller,
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(_animation.value.dx * screenWidth + screenWidth, 0), // 第二张图平移的偏移量
-                          child: PSImg(name: 'ps_guide3_1', width: 361, height: 126),
+                        final dx = (_controller.value * 570) % 570; // 570 为图片宽度
+                        return Stack(
+                          children: [
+                            Transform.translate(
+                              offset: Offset(-dx, 0),
+                              child: PSImg(name: 'ps_guide3_1', width: 570, height: 106),
+                            ),
+                            Transform.translate(
+                              offset: Offset(-dx + 570, 0),
+                              child: PSImg(name: 'ps_guide3_1', width: 570, height: 106),
+                            ),
+                          ],
                         );
                       },
                     ),
@@ -1395,8 +1391,8 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
-        width: double.infinity,  // 容器宽度填充整个屏幕
-        height: double.infinity, // 容器高度填充整个屏幕
+        width: 0.width(context),  // 容器宽度填充整个屏幕
+        height: 0.height(context), // 容器高度填充整个屏幕
         color: Colors.transparent,
         child: Column(
           children: [
@@ -1441,15 +1437,15 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
             ),
             SizedBox(height: 22.h),
             Container(
-              width: 323,
-              height: 427,
+              width: 323.w,
+              height: 427.h,
               decoration: BoxDecoration(
                 image: PSDImg('ps_quiz_bg')
               ),
               child: Stack(
                 children: [
                   Positioned(
-                    left: -18.w,
+                    left: -22.w,
                     top: 12.h,
                     width: 0.width(context),
                     child: PSStrokeText(
@@ -1462,7 +1458,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                     ),
                   ),
                   Positioned(
-                    left: (343.w - 288.w) * 0.5,
+                    left: (343.w - 300.w) * 0.5,
                     top: 94.h,
                     child: SizedBox(
                       width: 288.w,
@@ -1483,7 +1479,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                     ),
                   ),
                   Positioned(
-                    left: (343.w - 260.w) * 0.5,
+                    left: (343.w - 280.w) * 0.5,
                     top: 240.h,
                     child: ParticleButton(
                       onTap: () {
@@ -1538,7 +1534,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog> with TickerProvide
                     ),
                   ),
                   Positioned(
-                    left: (343.w - 260.w) * 0.5,
+                    left: (343.w - 280.w) * 0.5,
                     top: 320.h,
                     child: ParticleButton(
                       onTap: () {

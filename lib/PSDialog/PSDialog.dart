@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi' hide Size;
 import 'dart:math';
 import 'package:app_settings/app_settings.dart';
 import 'package:fl_toast/fl_toast.dart';
@@ -2323,7 +2322,7 @@ class PSPopTipsToolDialogState extends State<PSPopTipsToolDialog>
               ), onTap: (){
                 if (widget.adStatus == .adLoadfaild) {
                   Navigator.pop(context, 1);
-                  PSPigAds().init();
+                  PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
                 } else if (widget.adStatus == .notWifi) {
                   Navigator.pop(context, 1);
                 } else if (widget.adStatus == .adLimit) {
