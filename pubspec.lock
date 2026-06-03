@@ -1069,10 +1069,10 @@ packages:
   thinkup_sdk:
     dependency: "direct main"
     description:
-      path: "PSThird/thinkup_sdk-1.0.12"
+      path: "PSThird/thinkup_sdk-1.0.10"
       relative: true
     source: path
-    version: "1.0.12"
+    version: "1.0.10"
   timezone:
     dependency: transitive
     description:

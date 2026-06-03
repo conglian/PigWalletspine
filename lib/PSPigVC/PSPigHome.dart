@@ -104,12 +104,13 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
 
     PSPigDolasUpdateNotificationService.stream.listen((value) async {
 
-      setState(() {
-        bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-        bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-        bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+      bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+      bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+      bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
+      Future.delayed(Duration(milliseconds: 300), () async {
+        setState(() {
+        });
       });
-
     });
   }
   // 老用户流程
@@ -664,22 +665,12 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                       onTap: () async {
                         ps_event_fire('home_float_c', {});
                         if (PSLocalProvider.instance.ps_pig_level == 0) {
-                          int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: 2));
+                          int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: bubble_award_one));
                           if (code >= 0){
-                            setState(() {
-                              bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                              bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                              bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                            });
                           }
                         } else {
                           int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: bubble_award_one, is_wheel: false));
                           if (code >= 0){
-                            setState(() {
-                              bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                              bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                              bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                            });
                           }
                         }
                       },
@@ -695,7 +686,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             left: 0,
                             bottom: 0,
                             child: PSStrokeText(
-                              text: provider.ps_pig_level == 0 ? '${0.dolasType()}${bubble_award_one}' : provider.ps_pig_level == 1 ? 'X${PSNumberHelpers().getPrizeWithDomandGoldNum()}' : 'X${PSNumberHelpers().getPrizeWithDomandGoldNum()}',
+                              text: provider.ps_pig_level == 0 ? '${0.dolasType()}${bubble_award_one}' : provider.ps_pig_level == 1 ? 'X${bubble_award_one}' : 'X${bubble_award_one}',
                               size: 18,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
@@ -731,33 +722,17 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName,PSLocalProvider.instance.ps_pig_level_index + bubble_award_two);
                           }
                           if (!context.mounted) return;
-                          int code = await context.tipShow2(PSPoGetAwardDog(award: bubble_award_two),bc: Colors.transparent);
-                          if (code >= 0) {
+                          context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: bubble_award_two));
+                          Future.delayed(Duration(seconds: 2),(){
                             setState(() {
                               bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
                             });
                             if (PSLocalProvider.instance.ps_pig_level == 0) {
-                              int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
-                              if (code >= 0){
-                                setState(() {
-                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                });
-
-                              }
+                              context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: bubble_award_two));
                             } else {
-                              int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
-                              if (code >= 0){
-                                setState(() {
-                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                });
-
-                              }
+                             context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: bubble_award_two, is_wheel: false));
                             }
-                          }
+                          });
                         });
                       },
                       child: Stack(
@@ -783,7 +758,7 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             bottom: 0,
                             child: PSStrokeText(
                               text: provider.ps_pig_level == 0 ? ' ${0.dolasType()}$bubble_award_two' : ' X$bubble_award_two',
-                              size: 20,
+                              size: 18,
                               color: '#FFFDE1'.color(),
                               weight: FontWeight.w900,
                               skWidth: 2,
@@ -818,32 +793,17 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName,PSLocalProvider.instance.ps_pig_level_index + bubble_award_three);
                           }
                           if (!context.mounted) return;
-                          int code = await context.tipShow2(PSPoGetAwardDog(award: bubble_award_three),bc: Colors.transparent);
-                          if (code >= 0) {
+                          context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: bubble_award_three));
+                          Future.delayed(Duration(seconds: 2),(){
                             setState(() {
                               bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
                             });
                             if (PSLocalProvider.instance.ps_pig_level == 0) {
-                              int code = await context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
-                              if (code >= 0){
-                                setState(() {
-                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                });
-                              }
+                              context.tipShow(PSPopAwardToolDialog(type: .buble, isGuide: false, award: bubble_award_three));
                             } else {
-                              int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
-                              if (code >= 0){
-                                setState(() {
-                                  bubble_award_one = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_two = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                  bubble_award_three = PSLocalProvider.instance.ps_pig_level == 0 ? PSNumberHelpers().getPrizeWithDolasNum() : PSNumberHelpers().getPrizeWithDomandGoldNum();
-                                });
-
-                              }
+                              context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .buble, is_rv: false, award: bubble_award_three, is_wheel: false));
                             }
-                          }
+                          });
                         });
                       },
                       child: Stack(

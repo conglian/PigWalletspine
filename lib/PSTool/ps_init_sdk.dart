@@ -241,7 +241,7 @@ class PSSDKHelpers {
       adjustAdRevenue.adRevenueNetwork = max.networkPlacement;
       adjustAdRevenue.adRevenuePlacement = max.placement;
       Adjust.trackAdRevenue(adjustAdRevenue);
-      await PSFacebookAnalytics.logPurchase( max.revenue, 'USD');
+      // await PSFacebookAnalytics.logPurchase( max.revenue, 'USD');
       "af logs:: af revenue success ${max.revenue}".log();
     } catch (e) {
       "af logs:: af revenue error $e".log();
@@ -257,7 +257,7 @@ class PSSDKHelpers {
       adjustAdRevenue.setRevenue(revenue, 'USD');
       adjustAdRevenue.adRevenueNetwork = network;
       Adjust.trackAdRevenue(adjustAdRevenue);
-      await PSFacebookAnalytics.logPurchase(revenue, 'USD');
+      // await PSFacebookAnalytics.logPurchase(revenue, 'USD');
       "af logs:: af revenue success ${revenue}".log();
     } catch (e) {
       "af logs:: af revenue error $e".log();
@@ -273,17 +273,16 @@ class PSFacebookAnalytics {
     required String clientToken,
     required String appName,
   }) async {
-    'initFacebook1'.log();
     await _channel.invokeMethod("initFacebook", {
       "app_id": appId,
       "client_token": clientToken,
       "app_name": appName,
     });
-    'initFacebook2'.log();
   }
 
   /// 购买打点（无参数）
   static Future<void> logPurchase(double amount, String currency) async {
+    'logPurchase'.log();
     await _channel.invokeMethod("logPurchase", {
       "amount": amount,
       "currency": currency,

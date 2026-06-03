@@ -152,7 +152,7 @@ class PSNumberHelpers {
       int start = item.firstNumber;
       int end = item.endNumber;
 
-      if (PSLocalProvider.instance.ps_Level_inedx >= start && PSLocalProvider.instance.ps_Level_inedx < end) {
+      if (PSLocalProvider.instance.ps_pig_level_index >= start && PSLocalProvider.instance.ps_pig_level_index < end) {
         double min = item.prize.first;
         double max = item.prize.last;
         return 0.to2Double(_randomBetween(min, max));

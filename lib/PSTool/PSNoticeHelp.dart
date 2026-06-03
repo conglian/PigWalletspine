@@ -640,9 +640,11 @@ class PSNoticeHelp {
         ps_event_fire('session_front_get', {'"pak_version' : PSLocalProvider.instance.ps_login_status ? 1 : 0});
         // 执行前台逻辑
         ps_session_fire();
-        PSPigAds().ps_showAd(homeKey.currentState!.context, 'nskdh_launch',showDialog: false, onCacheResponse: (onCacheResponse){
-        }, adDidClosed: (adDidClosed){
-        });
+        if (!PSPigAds().is_showAd){
+          PSPigAds().ps_showAd(homeKey.currentState!.context, 'nskdh_launch',showDialog: false, onCacheResponse: (onCacheResponse){
+          }, adDidClosed: (adDidClosed){
+          });
+        }
       }
     });
   }

@@ -372,6 +372,74 @@ extension TipShow2 on BuildContext {
   }
 }
 
+extension showAutoDismissDialogs on BuildContext {
+
+  /// 显示一个自动关闭的 Dialog
+  /// [context] 上下文
+  /// [child] dialog 内容
+  /// [duration] 自动关闭时间，默认 2 秒
+  Future<void> showAutoDismissDialog({
+    required BuildContext context,
+    required Widget child,
+    Duration duration = const Duration(seconds: 2),
+    bool barrierDismissible = false,
+    Color? barrierColor = Colors.black54,
+    double blurSigma = 0.0,
+  }) async {
+    late Route dialogRoute;
+
+    dialogRoute = RawDialogRoute(
+      barrierDismissible: barrierDismissible,
+      barrierColor: barrierColor,
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (ctx, animation, secondaryAnimation) {
+        return Stack(
+          children: [
+            // 模糊背景
+            if (blurSigma > 0)
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
+                child: Container(color: Colors.transparent),
+              ),
+            Center(child: child),
+          ],
+        );
+      },
+      transitionBuilder: (ctx, animation, secondaryAnimation, child) {
+        final curvedAnimation =
+        CurvedAnimation(parent: animation, curve: Curves.easeOut);
+        final reverseCurvedAnimation =
+        CurvedAnimation(parent: secondaryAnimation, curve: Curves.easeIn);
+
+        return ScaleTransition(
+          scale: Tween<double>(begin: 0.8, end: 1).animate(curvedAnimation),
+          child: FadeTransition(
+            opacity: Tween<double>(begin: 0.0, end: 1.0).animate(curvedAnimation),
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 1, end: 0.8).animate(reverseCurvedAnimation),
+              child: FadeTransition(
+                opacity:
+                Tween<double>(begin: 1.0, end: 0.0).animate(reverseCurvedAnimation),
+                child: child,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+    // 推入 Navigator
+    Navigator.of(context).push(dialogRoute);
+
+    // 自动关闭
+    Future.delayed(duration, () {
+      // 只关闭自己，不影响其他 Dialog
+      dialogRoute.navigator?.removeRoute(dialogRoute);
+    });
+  }
+}
+
+
 extension TipShowAdvanced on BuildContext {
   Future tipShowAdvanced(Widget v, {Color? bc, double blurSigma = 10}) {
     return showGeneralDialog(

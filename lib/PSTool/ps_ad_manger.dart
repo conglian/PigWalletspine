@@ -107,6 +107,8 @@ class PSPigAds {
   double _adRevenues = 0.0;
 
   List<PSPigAdModel> _ads = [];
+  // 是否显示广告中
+  late bool is_showAd = false;
   // 测试打开，上线关闭
   final bool skipAd = false;
 
@@ -195,14 +197,15 @@ class PSPigAds {
     ps_event_fire('nskdh_ad_chance', {"ad_pos_id": placeID});
 
     if (defaultMode == false) {
-      _showA(adType, onCacheResponse, context: context, showDialog: showDialog);
+      _showA(adType, placeID,onCacheResponse, context: context, showDialog: showDialog);
     } else {
-      _showB(adType, onCacheResponse, context: context, showDialog: showDialog);
+      _showB(adType, placeID,onCacheResponse, context: context, showDialog: showDialog);
     }
   }
 
   void _showA(
     String adType,
+    String placeID,
     Function(bool) onCacheResponse, {
     BuildContext? context, bool showDialog = true,
   }) async {
@@ -217,7 +220,7 @@ class PSPigAds {
       "$runtimeType prepare to show ad [A],type=$adType, id=${ad.ad_identifer}"
           .log();
 
-      final showed = await _tryShowAd(ad, showIndex, context);
+      final showed = await _tryShowAd(ad, showIndex, context, placeID);
       if (showed) return;
 
       // show 失败兜底
@@ -233,6 +236,10 @@ class PSPigAds {
     }
 
     "$runtimeType prepare to show ad [A],type=$adType but no caches find!!".log();
+    ps_event_fire(
+      "nskdh_ad_impression_fail",
+      {"ad_pos_id": placeID, "reason": 'notPrepared'},
+    );
 
     onCacheResponse(false);
     resetHandler();
@@ -285,15 +292,17 @@ class PSPigAds {
     PSPigAdModel ad,
     int index,
     BuildContext? context,
+      String placeID
   ) async {
     if (ad.source == "max") {
       if (ad.type == "reward") {
         final ready =
             await AppLovinMAX.isRewardedAdReady(ad.ad_identifer) ?? false;
         if (!ready) return false;
-
+        is_showAd = true;
         AppLovinMAX.showRewardedAd(ad.ad_identifer);
       } else {
+        is_showAd = true;
         AppLovinMAX.showInterstitial(ad.ad_identifer);
       }
     } else {
@@ -301,10 +310,27 @@ class PSPigAds {
         final ready = await ATRewardedManager.rewardedVideoReady(
           placementID: ad.ad_identifer,
         );
-        if (!ready) return false;
-
+        if (!ready) {
+          ps_event_fire(
+            "nskdh_ad_impression_fail",
+            {"ad_pos_id": placeID, "reason": 'notPrepared'},
+          );
+          return false;
+        }
+        is_showAd = true;
         ATRewardedManager.showRewardedVideo(placementID: ad.ad_identifer);
       } else {
+        final ready = await ATInterstitialManager.hasInterstitialAdReady(
+          placementID: ad.ad_identifer,
+        );
+        if (!ready){
+          ps_event_fire(
+            "nskdh_ad_impression_fail",
+            {"ad_pos_id": placeID, "reason": 'notPrepared'},
+          );
+          return false;
+        }
+        is_showAd = true;
         ATInterstitialManager.showInterstitialAd(placementID: ad.ad_identifer);
       }
     }
@@ -315,7 +341,7 @@ class PSPigAds {
   }
 
   void _showB(
-    String adType,
+    String adType, String placeID,
     Function(bool) onCacheResponse, {
     BuildContext? context,
         bool showDialog = false,
@@ -331,7 +357,7 @@ class PSPigAds {
       "$runtimeType prepare to show ad [B],type=$adType, id=${ad.ad_identifer}"
           .log();
 
-      final showed = await _tryShowAd(ad, showIndex, context);
+      final showed = await _tryShowAd(ad, showIndex, context, placeID);
       if (showed) return;
 
       // show 失败兜底
@@ -347,6 +373,10 @@ class PSPigAds {
     }
 
     "$runtimeType prepare to show ad [B],type=$adType but no caches find!!".log();
+    ps_event_fire(
+      "nskdh_ad_impression_fail",
+      {"ad_pos_id": placeID, "reason": 'notPrepared'},
+    );
 
     onCacheResponse(false);
     resetHandler();
@@ -379,11 +409,6 @@ class PSPigAds {
       adjustAdRevenue.adRevenueUnit = ad.ad_identifer;
       Adjust.trackAdRevenue(adjustAdRevenue);
       PSFacebookAnalytics.logPurchase(ad.ecpm, "USD");
-    }
-
-    {
-      // to fb
-      // SJFacebookAnalytics.logPurchase(ad.ecpm, "USD");
     }
   }
 
@@ -871,6 +896,7 @@ extension AdServiceExtension on PSPigAds {
     // if (PSLocalProvider.instance.ps_bg_music){
     //   PSAudioUtils().playBGM();
     // }
+    is_showAd = false;
     // 保存上次关闭广告时间仅限激励
     _savedTime = DateTime.now();
     int index = _ads.indexWhere((test) => test.ad_identifer == adId);

@@ -994,7 +994,7 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
   late Animation<Offset> _rightImageAnimation;
   late Animation<Offset> _leftImageAnimation;
   late Animation<double> _iconFadeAnimation;
-
+  late Route _route;
   @override
   void initState() {
     super.initState();
@@ -1047,10 +1047,25 @@ class PSConfimOneDialogState extends State<PSConfimOneDialog> with SingleTickerP
     _controller.duration = Duration(seconds: 1); // 前两个动画的时间
 
     _controller.forward().then((_) {
+      // 页面 2 秒后自动关闭
+
       Future.delayed(const Duration(seconds: 1), () {
-        Navigator.pop(context, 0); // 动画结束后关闭弹框
+        if (!mounted) return;
+
+        final navigator = Navigator.of(context);
+
+        // 当前 route 仍然在栈里才关闭
+        if (_route.isCurrent) {
+          navigator.pop(0);
+        }
       });
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _route = ModalRoute.of(context)!;
   }
 
   @override
@@ -2444,10 +2459,12 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
   @override
   void initState() {
     super.initState();
-    if (widget.isGuide){
-      ps_event_fire('new_quiz_correct_pop', {});
-    }
-    ps_event_fire('double_pop', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.isGuide){
+        ps_event_fire('new_quiz_correct_pop', {});
+      }
+      ps_event_fire('double_pop', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
+    });
 
   }
 
@@ -2548,7 +2565,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                     SizedBox(height: 19.h),
                     ParticleButton(
                       onTap: () async {
-                        ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+                        ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
                         if (widget.isGuide){
                           ps_event_fire('new_quiz_correct_pop_c', {});
                         }
@@ -2559,13 +2576,13 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
                             Navigator.pop(context, 1);
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, widget.award);
                             if (!context.mounted) return;
-                            context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                            context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: widget.award));
                           });
                         } else {
                           Navigator.pop(context, 1);
                           await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, widget.award);
                           if (!context.mounted) return;
-                          context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                          context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: widget.award));
                         }
                       },
                       child: Container(
@@ -2597,6 +2614,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
           } else {
             Navigator.pop(context, 0);
           }
+          ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
         })
       ],
     );
@@ -3226,11 +3244,13 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
   @override
   void initState() {
     super.initState();
-    ps_event_fire('double_pop', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 3), // 旋转周期，可调节速度
     )..repeat(); // 无限循环
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ps_event_fire('double_pop', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
+    });
   }
 
   @override
@@ -3438,7 +3458,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
           SizedBox(height: 20.h),
           ParticleButton(
             onTap: () {
-              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
               PSPigAds().ps_showAd(context, adRewardPod_idName(), onCacheResponse: (onCacheResponse) async {
                 Navigator.pop(context, 1);
               }, adDidClosed: (adDidClosed) async {
@@ -3446,11 +3466,11 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
                 if (PSLocalProvider.instance.ps_pig_level == 1){
                   await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, (widget.award * 1.0) + PSLocalProvider.instance.ps_pig_level_index);
                   if (!context.mounted) return;
-                  context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                  context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: widget.award));
                 } else {
                   await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, (widget.award * 2.0) + PSLocalProvider.instance.ps_pig_level_index);
                   if (!context.mounted) return;
-                  context.tipShow2(PSPoGetAwardDog(award: widget.award),bc: Colors.transparent);
+                  context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: widget.award));
                 }
               });
             },
@@ -3486,7 +3506,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
             textColor: '#F1EFB2'.color(),
             fontSize: 20,
             onPressed: (){
-              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : 'wheel'});
+              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
               if (PSNumberHelpers().checkProbability()){
                 PSPigAds().ps_showAd(context, adIntPod_idName(), onCacheResponse: (onCacheResponse){
                   Navigator.pop(context, 0);
@@ -4101,7 +4121,6 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
     with SingleTickerProviderStateMixin {
 
   late spine.SpineWidgetController _controller;
-
   @override
   void initState() {
     super.initState();
@@ -4111,13 +4130,8 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
         controller.animationState.setAnimationByName(0, "animation", true);
       });
     });
-    // 页面 2 秒后自动关闭
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
-        Navigator.pop(context, 0);
-      }
-    });
   }
+
 
   @override
   void dispose() {
@@ -4126,97 +4140,100 @@ class PSPoGetAwardDogState extends State<PSPoGetAwardDog>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 0.width(context),
-      height: 0.height(context),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 256,
-            height: 57,
-            decoration: BoxDecoration(
-                color: '#000000'.color(opacity: 0.7),
-                borderRadius: BorderRadius.circular(12)
-            ),
-            child: Row(
-              mainAxisAlignment: .center,
-              children: [
-                if (PSLocalProvider.instance.ps_pig_level == 0)
-                 PSGradientStrokeText(text: 'My Account: ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
-                if (PSLocalProvider.instance.ps_pig_level == 0)
-                  PSGradientNumberRoller(
-                  value: PSLocalProvider.instance.ps_dolas_number,
-                  duration: 800,
-                  fontSize: 22.0,
-                  gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
-                  borderColor: Colors.transparent,
-                  borderWidth: 0.0,
-                  decimalPlaces: 2,
-                ),
-                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
-                  PSGradientStrokeText(text: 'Pending Amount:', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 18),
-                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
-                  SizedBox(width: 8),
-                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
-                  PSGradientNumberRoller(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SizedBox(
+        width: 0.width(context),
+        height: 0.height(context),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 256,
+              height: 57,
+              decoration: BoxDecoration(
+                  color: '#000000'.color(opacity: 0.7),
+                  borderRadius: BorderRadius.circular(12)
+              ),
+              child: Row(
+                mainAxisAlignment: .center,
+                children: [
+                  if (PSLocalProvider.instance.ps_pig_level == 0)
+                   PSGradientStrokeText(text: 'My Account: ', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 22),
+                  if (PSLocalProvider.instance.ps_pig_level == 0)
+                    PSGradientNumberRoller(
                     value: PSLocalProvider.instance.ps_dolas_number,
                     duration: 800,
-                    fontSize: 18.0,
+                    fontSize: 22.0,
                     gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
                     borderColor: Colors.transparent,
                     borderWidth: 0.0,
                     decimalPlaces: 2,
-                    showDolas: false,
                   ),
-              ],
+                  if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                    PSGradientStrokeText(text: 'Pending Amount:', gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()], width: 138, height: 57, fontSize: 18),
+                  if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                    SizedBox(width: 8),
+                  if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                    PSGradientNumberRoller(
+                      value: PSLocalProvider.instance.ps_dolas_number,
+                      duration: 800,
+                      fontSize: 18.0,
+                      gradientColors: ['#FFFFFF'.color(), '#FFF47F'.color()],
+                      borderColor: Colors.transparent,
+                      borderWidth: 0.0,
+                      decimalPlaces: 2,
+                      showDolas: false,
+                    ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 28.h),
-          Container(
-            width: 256,
-            height: 219,
-            decoration: BoxDecoration(
-                color: '#000000'.color(opacity: 0.7),
-                borderRadius: BorderRadius.circular(16)
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: 18),
-                if (PSLocalProvider.instance.ps_pig_level == 0)
-                  PSStrokeText(text: 'Earned ${0.dolasType()}${widget.award}', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
-                if (PSLocalProvider.instance.ps_pig_level == 0)
-                  SizedBox(
+            SizedBox(height: 28.h),
+            Container(
+              width: 256,
+              height: 219,
+              decoration: BoxDecoration(
+                  color: '#000000'.color(opacity: 0.7),
+                  borderRadius: BorderRadius.circular(16)
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 18),
+                  if (PSLocalProvider.instance.ps_pig_level == 0)
+                    PSStrokeText(text: 'Earned ${0.dolasType()}${widget.award}', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  if (PSLocalProvider.instance.ps_pig_level == 0)
+                    SizedBox(
+                      width: 111,
+                      height: 109,
+                      child: spine.SpineWidget.fromAsset('assets/spine/pink/skeleton.atlas', 'assets/spine/pink/skeleton.skel', _controller),
+                    ),
+                  if (PSLocalProvider.instance.ps_pig_level == 1)
+                    PSStrokeText(text: 'Earned X${widget.award} Daimond', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  if (PSLocalProvider.instance.ps_pig_level == 1)
+                   SizedBox(
                     width: 111,
                     height: 109,
-                    child: spine.SpineWidget.fromAsset('assets/spine/pink/skeleton.atlas', 'assets/spine/pink/skeleton.skel', _controller),
-                  ),
-                if (PSLocalProvider.instance.ps_pig_level == 1)
-                  PSStrokeText(text: 'Earned X${widget.award} Daimond', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
-                if (PSLocalProvider.instance.ps_pig_level == 1)
-                 SizedBox(
-                  width: 111,
-                  height: 109,
-                  child: spine.SpineWidget.fromAsset('assets/spine/blue/skeleton.atlas', 'assets/spine/blue/skeleton.skel', _controller),
-                 ),
-                if (PSLocalProvider.instance.ps_pig_level == 2)
-                  PSStrokeText(text: 'Earned X${widget.award} Gold', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
-                if (PSLocalProvider.instance.ps_pig_level == 2)
-                  SizedBox(
-                    width: 111,
-                    height: 109,
-                    child: spine.SpineWidget.fromAsset('assets/spine/golden/skeleton.atlas', 'assets/spine/golden/skeleton.skel', _controller),
-                  ),
-                SizedBox(height: 11),
-                if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
-                 PSText(text: 'X${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
-                if (PSLocalProvider.instance.ps_pig_level == 0)
-                  PSText(text: '+${0.dolasType()}${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
-              ],
+                    child: spine.SpineWidget.fromAsset('assets/spine/blue/skeleton.atlas', 'assets/spine/blue/skeleton.skel', _controller),
+                   ),
+                  if (PSLocalProvider.instance.ps_pig_level == 2)
+                    PSStrokeText(text: 'Earned X${widget.award} Gold', size: 20, color: '#FFDD00'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#1D0808'.color()),
+                  if (PSLocalProvider.instance.ps_pig_level == 2)
+                    SizedBox(
+                      width: 111,
+                      height: 109,
+                      child: spine.SpineWidget.fromAsset('assets/spine/golden/skeleton.atlas', 'assets/spine/golden/skeleton.skel', _controller),
+                    ),
+                  SizedBox(height: 11),
+                  if (PSLocalProvider.instance.ps_pig_level == 1 || PSLocalProvider.instance.ps_pig_level == 2)
+                   PSText(text: 'X${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
+                  if (PSLocalProvider.instance.ps_pig_level == 0)
+                    PSText(text: '+${0.dolasType()}${widget.award}', size: 24, color: '#16E927'.color(), weight: FontWeight.w900),
+                ],
+              ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -516,20 +516,16 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
           PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
           if (code >= 0){
             if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
-             int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-             if (code1 >= 0){
-               next_quiz();
-             }
+              context.showAutoDismissDialog(context: context, child: PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()), duration: Duration(milliseconds: 1200));
+             next_quiz();
             } else {
               next_quiz();
             }
           }
         } else {
           if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
-            int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-            if (code1 >= 0){
-              next_quiz();
-            }
+            context.showAutoDismissDialog(context: context, child: PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()), duration: Duration(milliseconds: 1200));
+            next_quiz();
           } else {
             next_quiz();
           }
@@ -548,20 +544,16 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
           PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
           if (code >= 0){
             if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
-              int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-              if (code1 >= 0){
-                next_quiz();
-              }
+              context.showAutoDismissDialog(context: context, child: PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()), duration: Duration(milliseconds: 1200));
+              next_quiz();
             } else {
               next_quiz();
             }
           }
         } else {
           if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
-            int code1 = await context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
-            if (code1 >= 0){
-              next_quiz();
-            }
+            context.showAutoDismissDialog(context: context, child: PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()), duration: Duration(milliseconds: 1200));
+            next_quiz();
           } else {
             next_quiz();
           }
@@ -575,17 +567,6 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
       PSLocalProvider.instance.ps_quzi_row + 1,
     );
 
-    if (PSLocalProvider.instance.ps_pig_level == 0 && PSLocalProvider.instance.ps_pig_level_index >= 20){
-      await PSLocalProvider.instance.updatedouble(
-        PSLocalProvider.instance.ps_pig_level_indexName,
-        0,
-      );
-    } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
-      await PSLocalProvider.instance.updatedouble(
-        PSLocalProvider.instance.ps_pig_level_indexName,
-        10,
-      );
-    }
     if (PSLocalProvider.instance.ps_quzi_row >= 3) {
       await PSLocalProvider.instance.updateint(
         PSLocalProvider.instance.ps_quzi_rowName,
@@ -685,11 +666,11 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
       if (PSLocalProvider.instance.ps_quiz_tap_index == 8 || PSLocalProvider.instance.ps_quiz_tap_index == 15 || PSLocalProvider.instance.ps_quiz_tap_index == 20) {
         int code = await context.tipShow(PSQuizRankTwoDialog(quiz_num: PSLocalProvider.instance.ps_quiz_tap_index));
         if (code >= 0 && PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
-          context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+          context.showAutoDismissDialog(context: context, child: PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()), duration: Duration(milliseconds: 1200));
         }
       } else {
         if (PSLocalProvider.instance.ps_quiz_tap_index % PSLocalProvider.instance.quiz_console == 0){
-          context.tipShow(PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()));
+          context.showAutoDismissDialog(context: context, child: PSConfimOneDialog(isConfim: false, contentStr: getNextMessage()), duration: Duration(milliseconds: 1200));
         }
       }
     }

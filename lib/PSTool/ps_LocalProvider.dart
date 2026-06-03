@@ -87,7 +87,7 @@ class PSLocalProvider extends ChangeNotifier {
   int ps_ad_all_number = 0;
   double ps_dolas_number = 0.00;
   double ps_dolas_old_number = 0.0;
-  double add_olduser_point = 3.0;
+  double add_olduser_point = 0.03;
   int ps_ad_reawrd_all_number = 0;
   int ps_ad_short_show_number = 0;
   int ps_ad_short_close_number = 0;
@@ -332,7 +332,7 @@ class PSLocalProvider extends ChangeNotifier {
     ps_wheel_number = prefs.getInt('ps_wheel_number') ?? 0;
     ps_pig_level = prefs.getInt('ps_pig_level') ?? 0;
     ps_pig_level_index = prefs.getDouble('ps_pig_level_index') ?? 0.0;
-    add_olduser_point = prefs.getDouble('add_olduser_point') ?? 3.0;
+    add_olduser_point = prefs.getDouble('add_olduser_point') ?? 0.03;
     ps_tx_card_index = prefs.getInt('ps_tx_card_index') ?? 0;
     ps_tx_wheel_index = prefs.getInt('ps_tx_wheel_index') ?? 0;
     ps_tx_bubble_index = prefs.getInt('ps_tx_bubble_index') ?? 0;
@@ -477,6 +477,11 @@ class PSLocalProvider extends ChangeNotifier {
       value += ps_dolas_number;
     }
     final result = await prefs.setDouble(key, value);
+
+    if (key == PSLocalProvider.instance.ps_pig_level_indexName) {
+      PSPigCashNotificationService.sendToQuizProgressNotification(0);
+      PSPigDolasUpdateNotificationService.sendToQuizProgressNotification(0);
+    }
     // 开始提现
     'value=${value},ps_pig_level=$ps_pig_level, ps_show_rank=$ps_show_rank'.log();
     if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 10 && ps_pig_level == 2 && ps_show_rank == false){
@@ -492,31 +497,28 @@ class PSLocalProvider extends ChangeNotifier {
       await updateBool(ps_show_rankName, true);
       PSPigCashNotificationService.sendToQuizProgressNotification(0);
     }
-    // 升级逻辑 + 1
-    if (key == PSLocalProvider.instance.ps_dolas_numberName && value >= PSNumberHelpers().intModel!.eqRange.first && ps_pig_level == 0){
-      await updateint(ps_pig_levelName, ps_pig_level + 1);
-      await updatedouble(ps_pig_level_indexName, 0);
-      PSPigCashNotificationService.sendToQuizProgressNotification(0);
-      if (homeKey.currentState!.mounted){
-        // 到达100升级钻石猪
-        homeKey.currentState!.context.tipShow(PSdolls100Dialog());
+    Future.delayed(Duration(seconds: 1),() async {
+      // 升级逻辑 + 1
+      if (key == PSLocalProvider.instance.ps_dolas_numberName && value >= PSNumberHelpers().intModel!.eqRange.first && ps_pig_level == 0){
+        await updateint(ps_pig_levelName, ps_pig_level + 1);
+        await updatedouble(ps_pig_level_indexName, 0);
+        PSPigCashNotificationService.sendToQuizProgressNotification(0);
+        if (homeKey.currentState!.mounted){
+          // 到达100升级钻石猪
+          homeKey.currentState!.context.tipShow(PSdolls100Dialog());
+        }
       }
-    }
-    // +2
-    if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 20 && ps_pig_level == 1){
-      await updateint(ps_pig_levelName, ps_pig_level + 1);
-      await updatedouble(ps_pig_level_indexName, 0);
-      PSPigCashNotificationService.sendToQuizProgressNotification(0);
-      if (homeKey.currentState!.mounted){
-        // 到达2升级金猪
-        homeKey.currentState!.context.tipShow(PSGuide4Dialog());
+      // +2
+      if (key == PSLocalProvider.instance.ps_pig_level_indexName && value >= 20 && ps_pig_level == 1){
+        await updateint(ps_pig_levelName, ps_pig_level + 1);
+        await updatedouble(ps_pig_level_indexName, 0);
+        PSPigCashNotificationService.sendToQuizProgressNotification(0);
+        if (homeKey.currentState!.mounted){
+          // 到达2升级金猪
+          homeKey.currentState!.context.tipShow(PSGuide4Dialog());
+        }
       }
-    }
-
-    if (key == PSLocalProvider.instance.ps_pig_level_indexName) {
-      PSPigCashNotificationService.sendToQuizProgressNotification(0);
-      PSPigDolasUpdateNotificationService.sendToQuizProgressNotification(0);
-    }
+    });
 
     if (key == PSLocalProvider.instance.ps_dolas_numberName && value > 0){
       trigger.check(PSLocalProvider.instance.ps_dolas_number.toInt(), onTrigger: (level) {

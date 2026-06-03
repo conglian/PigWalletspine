@@ -5,21 +5,20 @@ allprojects {
         flatDir {
             dirs("libs") // 指定libs目录
         }
+        maven { url  = uri("https://artifactory.bidmachine.io/bidmachine") }
         maven { url  = uri("https://android-sdk.is.com") }
+        maven { url  = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea") }
+        maven { url  = uri("https://artifact.bytedance.com/repository/pangle") }
         maven {
             url  = uri("https://jfrog.anythinktech.com/artifactory/debugger")
         }
-        maven { url  = uri("https://artifactory.bidmachine.io/bidmachine") }
-        maven { url  = uri("https://cboost.jfrog.io/artifactory/chartboost-ads/") }
-        maven { url  = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea") }
-        maven { url  = uri("https://artifact.bytedance.com/repository/pangle") }
 
-        // TU (Core)
+        // TU(Core)
         maven {
             url = uri("https://jfrog.anythinktech.com/artifactory/overseas_sdk")
         }
 
-        // IronSource
+        // Ironsource
         maven {
             url = uri("https://android-sdk.is.com/")
         }
@@ -34,11 +33,6 @@ allprojects {
             url = uri("https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea")
         }
 
-        // Bidmachine
-        maven {
-            url = uri("https://artifactory.bidmachine.io/bidmachine")
-        }
-
         // Chartboost
         maven {
             url = uri("https://cboost.jfrog.io/artifactory/chartboost-ads")
@@ -46,15 +40,14 @@ allprojects {
         maven {
             url = uri("https://cboost.jfrog.io/artifactory/chartboost-mediation")
         }
+        maven {
+            url = uri("https://cboost.jfrog.io/artifactory/chartboost-core")
+        }
 
         //Pubnative
         maven {
             url = uri("https://verve.jfrog.io/artifactory/verve-gradle-release")
         }
-        maven {
-            url = uri("https://cboost.jfrog.io/artifactory/chartboost-core")
-        }
-
 
     }
 }

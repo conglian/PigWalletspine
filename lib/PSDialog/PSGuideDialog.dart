@@ -995,24 +995,18 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                                Navigator.pop(context,0);
                                PSGuideManager.nextStep(context);
                              }, adDidClosed: (adDidClosed) async {
+                               Navigator.pop(context,0);
+                               PSGuideManager.nextStep(context);
                                double award = PSNumberHelpers().getPrizeWithDolasNum();
                                await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
-                               if (!context.mounted) return;
-                               int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                               if (code >= 0){
-                                 Navigator.pop(context,0);
-                                 PSGuideManager.nextStep(context);
-                               }
+                               context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: award));
                              });
                           } else {
                             Navigator.pop(context,0);
+                            PSGuideManager.nextStep(context);
                             double award = PSNumberHelpers().getPrizeWithDolasNum();
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
-                            if (!context.mounted) return;
-                            int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                            if (code >= 0){
-                              PSGuideManager.nextStep(context);
-                            }
+                            context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: award));
                           }
                         },
                         child: Container(
@@ -1043,24 +1037,20 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog> with TickerProvide
                               Navigator.pop(context,0);
                               PSGuideManager.nextStep(context);
                             }, adDidClosed: (adDidClosed) async {
+                              Navigator.pop(context,0);
+                              PSGuideManager.nextStep(context);
                               double award = PSNumberHelpers().getPrizeWithDolasNum();
                               await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
                               if (!context.mounted) return;
-                              int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                              if (code >= 0){
-                                Navigator.pop(context,0);
-                                PSGuideManager.nextStep(context);
-                              }
+                              context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: award));
                             });
                           } else {
                             Navigator.pop(context,0);
+                            PSGuideManager.nextStep(context);
                             double award = PSNumberHelpers().getPrizeWithDolasNum();
                             await PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
                             if (!context.mounted) return;
-                            int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                            if (code >= 0){
-                              PSGuideManager.nextStep(context);
-                            }
+                            context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: award));
                           }
 
                         },
@@ -2323,21 +2313,17 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
                     if (widget.is_old == true) {
                       // 加钱
                       if (PSLocalProvider.instance.ps_pig_level == 0){
+                        Navigator.pop(context, 0);
                         double award = 0.to2Double(PSLocalProvider.instance.ps_dolas_number * PSLocalProvider.instance.add_olduser_point);
-                        PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, PSLocalProvider.instance.ps_dolas_number + award);
+                        PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_dolas_numberName, award);
                         if (!context.mounted) return;
-                        int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                        if (code >= 0){
-                          Navigator.pop(context, 0);
-                        }
+                        context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: award));
                       } else {
+                        Navigator.pop(context, 0);
                         double award = 0.to2Double(PSLocalProvider.instance.ps_pig_level_index * PSLocalProvider.instance.add_olduser_point);
                         PSLocalProvider.instance.updatedouble(PSLocalProvider.instance.ps_pig_level_indexName, PSLocalProvider.instance.ps_pig_level_index + award);
                         if (!context.mounted) return;
-                        int code = await context.tipShow2(PSPoGetAwardDog(award: award),bc: Colors.transparent);
-                        if (code >= 0){
-                          Navigator.pop(context, 0);
-                        }
+                        context.showAutoDismissDialog(context: context, child: PSPoGetAwardDog(award: award));
                       }
                     } else {
                       Navigator.pop(context, 0);
@@ -2367,7 +2353,7 @@ class PSGuideNew12DialogState extends State<PSGuideNew12Dialog> with TickerProvi
                     onTap: () async {
                       ps_event_fire('grow_bonus_pop_c', {'pop_from' : widget.is_old ? 'old' : 'new'});
                       Navigator.pop(context, 0);
-                      int code = await context.tipShow(PSPopTipsToolDialog(adStatus: .noticeOpen));
+                      int code = await context.tipShow2(PSPopTipsToolDialog(adStatus: .noticeOpen));
                       if (code >= 0){
                         PSGuideManager.nextStep(context);
                       }

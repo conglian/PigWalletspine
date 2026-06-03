@@ -141,22 +141,30 @@ class PSLaunchState extends State<PSLaunch>
     int step = state.currentStep;
 
     if (step >= 12) {
-
-      PSPigAds().ps_showAd(context, 'nskdh_launch',showDialog: false, onCacheResponse: (onCacheResponse){
+      if (!PSPigAds().is_showAd){
+        PSPigAds().ps_showAd(context, 'nskdh_launch',showDialog: false, onCacheResponse: (onCacheResponse){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PigBottomExample(key: homeKey),
+            ),
+          );
+        }, adDidClosed: (adDidClosed){
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PigBottomExample(key: homeKey),
+            ),
+          );
+        });
+      } else {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (_) => PigBottomExample(key: homeKey),
           ),
         );
-      }, adDidClosed: (adDidClosed){
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PigBottomExample(key: homeKey),
-          ),
-        );
-      });
+      }
 
       // Navigator.pushReplacement(
       //   context,

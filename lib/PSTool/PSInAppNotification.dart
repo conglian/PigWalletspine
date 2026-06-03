@@ -78,12 +78,13 @@ class PSInAppNotification {
 
     if (_isShowing) return;
     _isShowing = true;
-
+    Random random = Random();
     _overlayEntry = OverlayEntry(
       builder: (context) {
         return _NotificationWidget(
           title: title,
           content: content,
+          row: random.nextInt(56),
           onComplete: () {
             _overlayEntry?.remove();
             _overlayEntry = null;
@@ -109,8 +110,9 @@ class PSInAppNotification {
 class _NotificationWidget extends StatefulWidget {
   final String title;
   final String content;
+  final int row;
   final VoidCallback onComplete;
-  const _NotificationWidget({required this.title, required this.content, required this.onComplete});
+  const _NotificationWidget({required this.title, required this.content, required this.onComplete, required this.row});
 
   @override
   State<_NotificationWidget> createState() => _NotificationWidgetState();
@@ -186,7 +188,7 @@ class _NotificationWidgetState extends State<_NotificationWidget>
                     left: 25.w,
                     top: 46,
                     child: PSImg(
-                      name: 'ps_user_s_0',
+                      name: 'ps_user_s_${widget.row}',
                       width: 49,
                       height: 49,
                     ),
