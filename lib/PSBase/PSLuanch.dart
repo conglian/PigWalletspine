@@ -20,7 +20,7 @@ import 'PSTbaBar.dart';
 
 
 class PSLaunch extends StatefulWidget {
-  PSLaunch({super.key});
+   PSLaunch({super.key});
 
   @override
   State<PSLaunch> createState() => PSLaunchState();
@@ -88,6 +88,7 @@ class PSLaunchState extends State<PSLaunch>
       prefs.setBool('ps_first_instll', true);
     } else {
       if (_daydateString != formattedDate) {
+        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_indexName, 0);
         // 隔天
         prefs.setString('ps_day_date', formattedDate);
         prefs.setBool('ps_old_guide', false);

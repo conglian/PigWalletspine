@@ -168,7 +168,7 @@ class PSPigAds {
       return;
     }
     // 展示上限
-    if (PSLocalProvider.instance.ps_ad_show_index > PSFKManger().fkModel.behavior.ad_daily_show){
+    if (PSLocalProvider.instance.ps_ad_show_index > PSFKManger().fkModel.behavior.ad_daily_show && PSFKManger().fkModel.ui.behavior == 1){
       context.tipShow(PSPopTipsToolDialog(adStatus: .adLimit));
       onCacheResponse.call(false);
       resetHandler();
@@ -390,26 +390,28 @@ class PSPigAds {
     "$runtimeType onCacheResponse is not ready!!! error $quizAdPlaceID".log();
   }
 
-  void adImpression({required PSPigAdModel ad, required String placeID, required String ad_network}) async {
-    adRevenues(ad.ecpm);
-    {
-      ps_ad_fire({'strange' : ad.ecpm * 1000000,
-                   'shiv': ad_network,
-                   'pothole' : ad.sdk,
-                   'pharmacy' : ad.ad_identifer,
-                   'lenin' : placeID,
-                    'buckskin' : ad.getTypeToServer()});
-    }
-    {
+  void adImpression(Map extMap) async {
+    'extMap1=$extMap'.log();
+    double ecpms = extMap['publisher_revenue'] ?? 0.0;
+    String adunit_format = extMap['adunit_format'] ?? '';
+    ps_ad_fire({
+        "strange": ecpms * 1000000,
+        "shiv": extMap["network_name"],
+        "pothole": 'topon_sdk',
+        "pharmacy": extMap['adunit_id'],
+        "lenin": quizAdPlaceID,
+        "buckskin": adunit_format.contains('Rewarded') ? 'rv' : 'int',
+    });
+    adRevenues(ecpms);
       // to sdk
-      AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue(ad.sdk);
-      adjustAdRevenue.adRevenueNetwork = ad_network;
-      adjustAdRevenue.setRevenue(ad.ecpm, "USD");
-      adjustAdRevenue.adRevenuePlacement = placeID;
-      adjustAdRevenue.adRevenueUnit = ad.ad_identifer;
+      AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue('topon_sdk');
+      adjustAdRevenue.adRevenueNetwork = extMap["network_name"];
+      adjustAdRevenue.setRevenue(ecpms, "USD");
+      adjustAdRevenue.adRevenuePlacement = quizAdPlaceID;
+      adjustAdRevenue.adRevenueUnit = extMap['adunit_id'];
       Adjust.trackAdRevenue(adjustAdRevenue);
-      PSFacebookAnalytics.logPurchase(ad.ecpm, "USD");
-    }
+      PSFacebookAnalytics.logPurchase(ecpms, "USD");
+
   }
 
   // 显示失败弹框
@@ -588,6 +590,7 @@ extension AdServiceExtension on PSPigAds {
           break;
         // interstitial show succeed
         case InterstitialStatus.interstitialDidShowSucceed:
+          adImpression(value.extraMap);
           _adDidDisplayed(adID: value.placementID, ad_network: value.extraMap['network_name']);
           break;
         // interstitial show fail
@@ -661,6 +664,7 @@ extension AdServiceExtension on PSPigAds {
           break;
         // ad video start play
         case RewardedStatus.rewardedVideoDidStartPlaying:
+          adImpression(value.extraMap);
           _adDidDisplayed(adID: value.placementID, ad_network: value.extraMap['network_name']);
           setTxProgress();
           break;
@@ -819,22 +823,25 @@ extension AdServiceExtension on PSPigAds {
     });
   }
 
-  Future<void> _adDidDisplayed({required String adID,required String ad_network}) async {
+  Future<void>
+  _adDidDisplayed({required String adID,required String ad_network}) async {
     // if (PSLocalProvider.instance.ps_bg_music){
     //   PSAudioUtils().pauseBGM();
     // }
+    int index = _ads.indexWhere((test) => test.ad_identifer == adID);
+    if (index == -1) {
+      "$runtimeType ad did display but cant find in ads data from id = $adID"
+          .log();
+      ps_event_fire('nskdh_ad_show_suc_not_impression', {});
+      return;
+    }
+    _ads[index].status = 2;
+
     _savedPlayAndCloseTime = DateTime.now();
     await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_indexName, PSLocalProvider.instance.ps_ad_show_index + 1);
     await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_all_numberName, PSLocalProvider.instance.ps_ad_all_number + 1);
     // 广告显示
     await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_numberName, PSLocalProvider.instance.ps_ad_show_number + 1);
-    int index = _ads.indexWhere((test) => test.ad_identifer == adID);
-    if (index == -1) {
-      "$runtimeType ad did display but cant find in ads data from id = $adID"
-          .log();
-      return;
-    }
-    _ads[index].status = 2;
 
     if (_ads[index].getTypeToServer() == "rv") {
       await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_reawrd_all_numberName, PSLocalProvider.instance.ps_ad_reawrd_all_number + 1);
@@ -857,7 +864,6 @@ extension AdServiceExtension on PSPigAds {
         .log();
 
     adShowed();
-    adImpression(ad: _ads[index], placeID: quizAdPlaceID ?? "", ad_network:ad_network);
   }
 
   Future<void> setTxProgress() async {

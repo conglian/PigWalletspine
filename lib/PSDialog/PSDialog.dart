@@ -2605,6 +2605,7 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
         ),
         SizedBox(height: 16.h),
         ParticleButton(child: SizedBox(width: 40,height: 40,child: Center(child: PSImg(name: 'ps_whine_close', width: 18, height: 18 , fit: BoxFit.fill,))), onTap: (){
+          ps_event_fire('double_pop_close', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
           if (PSNumberHelpers().checkProbability() && !widget.isGuide){
             PSPigAds().ps_showAd(context, adIntPod_idName(), onCacheResponse: (onCacheResponse){
               Navigator.pop(context, 0);
@@ -2614,7 +2615,6 @@ class PSPopAwardToolDialogState extends State<PSPopAwardToolDialog>
           } else {
             Navigator.pop(context, 0);
           }
-          ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
         })
       ],
     );
@@ -3241,6 +3241,8 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
 
   late final AnimationController _controller;
 
+  int row = 0;
+
   @override
   void initState() {
     super.initState();
@@ -3506,7 +3508,7 @@ class PSPopWheelAwaradDialogState extends State<PSPopWheelAwaradDialog>
             textColor: '#F1EFB2'.color(),
             fontSize: 20,
             onPressed: (){
-              ps_event_fire('double_pop_c', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
+              ps_event_fire('double_pop_close', {'pop_from' : widget.type == .quiz ? 'quiz' : widget.type == .wheel ? 'wheel' : 'bubble'});
               if (PSNumberHelpers().checkProbability()){
                 PSPigAds().ps_showAd(context, adIntPod_idName(), onCacheResponse: (onCacheResponse){
                   Navigator.pop(context, 0);
