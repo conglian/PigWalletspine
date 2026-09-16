@@ -5,7 +5,6 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
     id ("com.google.gms.google-services")
     id("com.google.firebase.crashlytics") version "3.0.6" apply false
-//    id("applovin-quality-service")
 }
 
 android {
@@ -39,7 +38,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/scracthjoy/Desktop/pigwalletssigns.jks")
+            storeFile = file("/Users/aurastack/Desktop/pigwalletssigns.jks")
             storePassword = "123456"
             keyAlias = "pigwalletssigns"
             keyPassword = "123456"
@@ -75,13 +74,25 @@ dependencies {
 
     implementation ("com.adjust.sdk:adjust-android:4.38.0")
 
-    api("io.github.alex-only:max_adapter_tu:1.2.5")
-
 //    implementation ("com.google.android.gms:play-services-ads-identifier:18.1.0")
 
     implementation ("com.google.gms:google-services:4.3.15")
 
-
+    // CloudX 广告网络适配器（按需添加）
+    implementation("io.cloudx:adapter-bigo:6.0.1.0")             // BIGO Ads SDK 6.0.1
+    implementation("io.cloudx:adapter-digitalturbine:8.4.7.1")   // Digital Turbine Marketplace SDK 8.4.7
+    implementation("io.cloudx:adapter-googlewaterfall:25.4.0.0") // Google Mobile Ads SDK 25.4.0
+    implementation("io.cloudx:adapter-inmobi:11.4.0.1")          // InMobi SDK 11.4.0
+    implementation("io.cloudx:adapter-magnite:1.0.0.1")          // Magnite Ads SDK 1.0.0
+    implementation("io.cloudx:adapter-meta:6.22.0.0")            // Meta Audience Network 6.22.0
+    implementation("io.cloudx:adapter-mintegral:17.1.71.1")      // Mintegral SDK 17.1.71
+    implementation("io.cloudx:adapter-mobilefuse:1.12.0.0")      // MobileFuse SDK 1.12.0
+    implementation("io.cloudx:adapter-moloco:4.11.0.0")          // Moloco SDK 4.11.0
+    implementation("io.cloudx:adapter-pangle:8.2.0.4.0")         // Pangle SDK 8.2.0.4
+    implementation("io.cloudx:adapter-taurusx:1.18.3.0")         // TaurusX SDK 1.18.3
+    implementation("io.cloudx:adapter-unityads:4.19.0.1")        // Unity Ads SDK 4.19.0
+    implementation("io.cloudx:adapter-verve:3.9.0.1")            // Verve HyBid SDK 3.9.0
+    implementation("io.cloudx:adapter-vungle:7.7.7.0")           // Vungle SDK 7.7.7
 
     // TU (Necessary)
     api("com.thinkup.sdk:core-tpn:6.5.73.2")
@@ -147,10 +158,6 @@ dependencies {
     // TU Adx SDK (Necessary)
     api("com.thinkup.sdk:adapter-tpn-sdm:6.5.68.1.0")
     api("com.smartdigimkttech.sdk:smartdigimkttech-sdk:6.5.68")
-
-    // AppLovin
-    api("com.thinkup.sdk:adapter-tpn-applovin:13.6.0.1.1")
-    api("com.applovin:applovin-sdk:13.6.0")
 
     // Mintegral
     api("com.thinkup.sdk:adapter-tpn-mintegral:17.0.91.1.0")

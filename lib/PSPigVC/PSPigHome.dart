@@ -198,8 +198,26 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
             child: Stack(
               children: [
                 Positioned(bottom: 0,child: PSImg(name: 'ps_pig_home_bottom', width: 0.width(context), height: 338.h)),
-                Column(
-                  children: [
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final topHeight = 44.h;
+                    const balanceHeight = 119.0;
+                    final requestedGap = 288.h;
+                    final minimumListHeight = 184.h;
+                    final availableForGapAndList =
+                        constraints.maxHeight - topHeight - balanceHeight;
+                    final gapLimit = availableForGapAndList - minimumListHeight;
+                    final gap = gapLimit <= 0
+                        ? 0.0
+                        : gapLimit < requestedGap
+                            ? gapLimit
+                            : requestedGap;
+                    final listHeight = (availableForGapAndList - gap)
+                        .clamp(0.0, 277.h)
+                        .toDouble();
+
+                    return Column(
+                      children: [
                     SizedBox(height: 44.h),
                     Consumer<PSLocalProvider>(
                         builder: (context, provider, child) {
@@ -210,11 +228,11 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                           }
                         }
                     ),
-                    SizedBox(height:288.h),
+                    SizedBox(height: gap),
                     // ListView 列表
                     SizedBox(
                       width: 0.width(context),
-                      height: 277.h,
+                      height: listHeight,
                       child: CustomScrollView(
                         slivers: [
                           // Sliver for the header (TableViewHeaderView)
@@ -516,7 +534,9 @@ class _PSPigHomeState extends State<PSPigHome> with TickerProviderStateMixin {
                         ],
                       )
                     ),
-                  ],
+                      ],
+                    );
+                  },
                 ),
               ],
             ),

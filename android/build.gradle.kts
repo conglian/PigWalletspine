@@ -49,14 +49,9 @@ allprojects {
             url = uri("https://verve.jfrog.io/artifactory/verve-gradle-release")
         }
 
-    }
-}
-buildscript {
-    repositories {
-        maven { url = uri("https://artifacts.applovin.com/android") }
-    }
-    dependencies {
-        classpath ("com.applovin.quality:AppLovinQualityServiceGradlePlugin:+")
+        // io.cloudx:adapter-taurusx
+        maven { url = uri("https://artifact.taurusx.com/artifactory/taurusx-sdk/") }
+
     }
 }
 val newBuildDir: Directory =

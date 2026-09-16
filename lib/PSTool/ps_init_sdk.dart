@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 // import 'package:anythink_sdk/at_init.dart';
@@ -5,7 +6,7 @@ import 'package:adjust_sdk/adjust.dart';
 import 'package:adjust_sdk/adjust_ad_revenue.dart';
 import 'package:adjust_sdk/adjust_attribution.dart';
 import 'package:adjust_sdk/adjust_config.dart';
-import 'package:applovin_max/applovin_max.dart';
+import 'package:cloudx_flutter/cloudx.dart';
 import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +24,6 @@ import 'package:thinkup_sdk/at_init.dart';
 import '../PSModel/PSAdModel.dart';
 import '../PSModel/PSFkModel.dart';
 import '../PSModel/PSNumberModel.dart';
-import 'PSAdAManger.dart';
 import 'PSTBAEventTool.dart';
 
 String decsgerew(String st) => utf8.decode(base64Decode(st));
@@ -37,9 +37,9 @@ class PSSDKHelpers {
 
   PSSDKHelpers._internal();
 
-  DateTime sj_max_start = DateTime.now();
-
   DateTime sj_topon_start = DateTime.now();
+
+  DateTime sj_cloudx_start = DateTime.now();
 
   int sj_remoteConfigTryCount = 0;
 
@@ -47,43 +47,67 @@ class PSSDKHelpers {
 
   Future<void> initSDK() async {
     _initAdjustSDk();
+    _initCloudx();
     _initTopon();
     _psinitloadFireBase();
   }
 
+  void _initCloudx() async {
+    // 可选：启用详细日志（仅用于开发）
+    CloudX.setMinLogLevel(CloudXLogLevel.verbose);
 
+// 使用您的应用密钥初始化
+    sj_cloudx_start = DateTime.now();
+    final result = await CloudX.initialize(appKey: 'INul2RROLF7VbCiviezz5');
+    if (result.success) {
+      ps_event_fire('nskdh_ad_initsuc', {
+        'ad_source_client': 'cloudx',
+        'ad_init_time': DateTime.now()
+            .difference(sj_cloudx_start)
+            .inMilliseconds,
+      });
+      print('CloudX initialized');
+    } else {
+      print('CloudX init failed: ${result.errorCodeName} ${result.message}');
+    }
+
+  }
 
   void _initTopon() async {
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // 这里保证在主线程
       sj_topon_start = DateTime.now();
       ATInitManger.initThinkUpSDK(
-          appidStr: 'h69fbf5b324d2e',
-          appidkeyStr: 'a6a5fd430dcfc69adb4220359cd1ad784').then((value){
+        appidStr: 'h69fbf5b324d2e',
+        appidkeyStr: 'a6a5fd430dcfc69adb4220359cd1ad784',
+      )
+          .then((value) {
         ps_event_fire('nskdh_ad_initsuc', {
-          'ad_source_client' : 'topon',
-          'ad_init_time' : DateTime.now().difference(sj_topon_start).inMilliseconds
+          'ad_source_client': 'topon',
+          'ad_init_time': DateTime.now()
+              .difference(sj_topon_start)
+              .inMilliseconds,
         });
         'topon init Success'.log();
         PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
         PSPigAds().init_suc = true;
         ps_session_fire();
-        if (PSLocalProvider.instance.ps_install_status == false){
+        if (PSLocalProvider.instance.ps_install_status == false) {
           ps_install_fire();
-          PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_install_statusName, true);
+          PSLocalProvider.instance.updateBool(
+            PSLocalProvider.instance.ps_install_statusName,
+            true,
+          );
         }
-      }).catchError((error){
+      })
+          .catchError((error) {
         'topon init error=$error'.log();
-        Future.delayed(Duration(seconds: 1),(){
+        Future.delayed(Duration(seconds: 1), () {
           _initTopon();
         });
       });
       // 打开SDK的Debug log，强烈建议在测试阶段打开，方便排查问题。
-      ATInitManger
-          .setLogEnabled(
-        logEnabled: kDebugMode ? true : false,
-      );
+      ATInitManger.setLogEnabled(logEnabled: kDebugMode ? true : false);
     });
   }
 
@@ -98,12 +122,18 @@ class PSSDKHelpers {
     config.attributionCallback = (AdjustAttribution attributionChangedData) {
       print('[Adjust]: Attribution changed!');
       if (attributionChangedData.trackerToken != null) {
-        print('[Adjust]: Tracker token: ${attributionChangedData.trackerToken}');
+        print(
+          '[Adjust]: Tracker token: ${attributionChangedData.trackerToken}',
+        );
       }
       if (attributionChangedData.trackerName != null) {
-        ps_event_fire('adjust_suc', {'adjust_user' : attributionChangedData.trackerName == 'Organic' ? 0 : 1});
+        ps_event_fire('adjust_suc', {
+          'adjust_user': attributionChangedData.trackerName == 'Organic'
+              ? 0
+              : 1,
+        });
         print('[Adjust]: Tracker name: ${attributionChangedData.trackerName}');
-        if (attributionChangedData.trackerName != 'Organic'){
+        if (attributionChangedData.trackerName != 'Organic') {
           ps_event_fire('organic_to_buy', {});
           // _toHome();
         }
@@ -124,10 +154,14 @@ class PSSDKHelpers {
         print('[Adjust]: Click label: ${attributionChangedData.clickLabel}');
       }
       if (attributionChangedData.fbInstallReferrer != null) {
-        print('[Adjust]: facebook install referrer: ${attributionChangedData.fbInstallReferrer}');
+        print(
+          '[Adjust]: facebook install referrer: ${attributionChangedData.fbInstallReferrer}',
+        );
       }
       if (attributionChangedData.jsonResponse != null) {
-        print('[Adjust]: JSON Response: ${attributionChangedData.jsonResponse}');
+        print(
+          '[Adjust]: JSON Response: ${attributionChangedData.jsonResponse}',
+        );
       }
     };
     Adjust.initSdk(config);
@@ -145,10 +179,12 @@ class PSSDKHelpers {
     "app firebase init".log();
     "app firebase loading".log();
     try {
-       await remoteConfig.fetchAndActivate();
+      await remoteConfig.fetchAndActivate();
 
-      final gp152_pig_number = remoteConfig.getValue('gp152_pig_number').asString();
-      if (gp152_pig_number != ''){
+      final gp152_pig_number = remoteConfig
+          .getValue('gp152_pig_number')
+          .asString();
+      if (gp152_pig_number != '') {
         try {
           Map<String, dynamic> jsonMap = json.decode(gp152_pig_number);
           var intModel = AppConfig.fromJson(jsonMap);
@@ -159,12 +195,14 @@ class PSSDKHelpers {
         }
       }
 
-      final nskdh_ad_config = remoteConfig.getValue('nskdh_ad_config').asString();
-      if (nskdh_ad_config != ''){
+      final nskdh_ad_config = remoteConfig
+          .getValue('nskdh_ad_config')
+          .asString();
+      if (nskdh_ad_config != '') {
         try {
           Map<String, dynamic> jsonMap = json.decode(nskdh_ad_config);
           PSPigAds().psPigAdModel = PSAdModel.fromJson(jsonMap);
-          if (PSPigAds().init_suc == true){
+          if (PSPigAds().init_suc == true) {
             PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
           }
           "app firebase remoteconfig nskdh_ad_config data $jsonMap".log();
@@ -173,16 +211,26 @@ class PSSDKHelpers {
         }
       }
 
-      final c152pig_android_fb =
-      remoteConfig.getValue("c152pig_android_fb").asString();
+      final c152pig_android_fb = remoteConfig
+          .getValue("c152pig_android_fb")
+          .asString();
       // facebook_init
-      if (c152pig_android_fb != ''){
-        "app firebase remoteconfig c152pig_android_fb data $c152pig_android_fb".log();
+      if (c152pig_android_fb != '') {
+        "app firebase remoteconfig c152pig_android_fb data $c152pig_android_fb"
+            .log();
         Map<String, dynamic> jsonMap = json.decode(c152pig_android_fb);
-        PSFacebookAnalytics.init(appId: jsonMap['app_id'], clientToken: jsonMap['client_token'], appName: jsonMap['app_name']);
+        PSFacebookAnalytics.init(
+          appId: jsonMap['app_id'],
+          clientToken: jsonMap['client_token'],
+          appName: jsonMap['app_name'],
+        );
       } else {
         'c152pig_android_fb=默认'.log();
-        PSFacebookAnalytics.init(appId: '3083467831849635', clientToken: '7d8a9303f209a20ddf9213b726a897af', appName: 'C152GP');
+        PSFacebookAnalytics.init(
+          appId: '3083467831849635',
+          clientToken: '7d8a9303f209a20ddf9213b726a897af',
+          appName: 'C152GP',
+        );
       }
 
       // 新用户流程中的ad开关
@@ -191,14 +239,16 @@ class PSSDKHelpers {
         'new_ad_console': 0, // 默认值
       });
       int new_ad_console = remoteConfig.getValue('new_ad_console').asInt();
-      if (new_ad_console != null){
+      if (new_ad_console != null) {
         "app firebase remoteconfig new_ad_console data $new_ad_console".log();
-        PSLocalProvider.instance.updateint(PSLocalProvider.instance.new_ad_consoleName, new_ad_console);
+        PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.new_ad_consoleName,
+          new_ad_console,
+        );
       }
 
-
       final gp152_control = remoteConfig.getValue('gp152_control').asString();
-      if (gp152_control != ''){
+      if (gp152_control != '') {
         try {
           Map<String, dynamic> jsonMap = json.decode(gp152_control);
           var fkModel = PSFkModel.fromJson(jsonMap);
@@ -215,11 +265,13 @@ class PSSDKHelpers {
         'quiz_console': 5, // 默认值
       });
       int quiz_console = remoteConfig.getValue('quiz_console').asInt();
-      if (quiz_console != null){
-        PSLocalProvider.instance.updateint(PSLocalProvider.instance.quiz_consoleName, quiz_console);
+      if (quiz_console != null) {
+        PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.quiz_consoleName,
+          quiz_console,
+        );
         "app firebase remoteconfig new_ad_console data $quiz_console".log();
       }
-
     } catch (e, s) {
       print("RemoteConfig fetch error: $e");
       sj_remoteConfigTryCount += 1;
@@ -233,20 +285,6 @@ class PSSDKHelpers {
     }
   }
 
-  // 上报收入
-  ps_sendAdToSdk(MaxAd max) async {
-    try {
-      AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue('applovin_max_sdk');
-      adjustAdRevenue.setRevenue(max.revenue, 'USD');
-      adjustAdRevenue.adRevenueNetwork = max.networkPlacement;
-      adjustAdRevenue.adRevenuePlacement = max.placement;
-      Adjust.trackAdRevenue(adjustAdRevenue);
-      // await PSFacebookAnalytics.logPurchase( max.revenue, 'USD');
-      "af logs:: af revenue success ${max.revenue}".log();
-    } catch (e) {
-      "af logs:: af revenue error $e".log();
-    }
-  }
   // 上报收入
   sj_sendintTopOnAdToSdk(Map extraMap) async {
     final revenue = extraMap["publisher_revenue"] ?? 0;
@@ -264,8 +302,11 @@ class PSSDKHelpers {
     }
   }
 }
+
 class PSFacebookAnalytics {
-  static final _channel = MethodChannel("com.example.piggywalletspinearn/facebook");
+  static final _channel = MethodChannel(
+    "com.example.piggywalletspinearn/facebook",
+  );
 
   /// 初始化 Facebook SDK（动态传入 appId、clientToken、appName）
   static Future<void> init({

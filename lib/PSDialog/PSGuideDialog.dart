@@ -1084,6 +1084,8 @@ class PSGuideNew6Dialog extends StatefulWidget {
 class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProviderStateMixin {
 
   late spine.SpineWidgetController _controller1;
+  Timer? _dismissTimer;
+  bool _hasDismissed = false;
 
   @override
   void initState() {
@@ -1095,14 +1097,35 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
       });
     });
 
-    Future.delayed(Duration(milliseconds: 1800),(){
-      Navigator.pop(context, 0);
-      PSGuideManager.nextStep(context);
-    });
+    _dismissTimer = Timer(const Duration(milliseconds: 1800), _dismiss);
+  }
+
+  void _dismiss() {
+    // The route can be removed by another navigation event before the timer
+    // fires. In that case there is nothing left for this dialog to close.
+    if (!mounted || _hasDismissed) return;
+
+    final route = ModalRoute.of(context);
+    final navigator = route?.navigator;
+    if (route == null || !route.isActive || navigator == null) return;
+    _hasDismissed = true;
+
+    final nextContext = homeKey.currentContext ?? navigator.context;
+
+    // Remove this dialog's route explicitly. Navigator.pop() only removes the
+    // current top route, which can be a different route during guide changes.
+    navigator.removeRoute(route);
+
+    // The dialog context is deactivated as soon as it is removed. Use the
+    // persistent home route to continue the guide instead.
+    if (nextContext.mounted) {
+      PSGuideManager.nextStep(nextContext);
+    }
   }
 
   @override
   void dispose() {
+    _dismissTimer?.cancel();
     super.dispose();
   }
 
@@ -1183,10 +1206,10 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog> with TickerProvide
                                   children: [
                                     PSImg(name: 'ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 120, height: 32),
                                     SizedBox(width: 10.w),
-                                    PSText(text: '+${0.dolasType()}${PSLocalProvider.instance.ps_dolas_number}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
+                                    PSText(text: '+${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number)}', size: 24, color: '#8B0002'.color(), weight: FontWeight.w900)
                                   ],
                                 ),
-                                SizedBox(height: 196)
+                                SizedBox(height: 190)
                               ],
                             ),
                           ],

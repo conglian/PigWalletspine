@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:adjust_sdk/adjust.dart';
 import 'package:adjust_sdk/adjust_ad_revenue.dart';
-import 'package:applovin_max/applovin_max.dart';
+import 'package:cloudx_flutter/cloudx.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:piggywalletspinearn/PSDialog/PSDialog.dart';
@@ -26,16 +26,16 @@ Map<String, dynamic> ps_defaultAdConfig = {
   "nskdh_switch": false,
   "nskdh_int": [
     {
-      "twbvgilf": "n1hb96qs9lv47j",
-      "gjqlbdeg": "topon",
+      "twbvgilf": "RkSzTiOwTNdhj1D0j6DEt",
+      "gjqlbdeg": "cloudx",
       "ntuoinuo": "interstitial",
       "mtnbnrsg": 3000
     }
   ],
   "nskdh_rv": [
     {
-      "twbvgilf": "n1hb96qs9lusc4",
-      "gjqlbdeg": "topon",
+      "twbvgilf": "A3Gn8KPt7kvgFcdhFujFE",
+      "gjqlbdeg": "cloudx",
       "ntuoinuo": "reward",
       "mtnbnrsg": 3000
     }
@@ -72,7 +72,6 @@ class PSPigAdModel {
 }
 
 class PSPigAds {
-
   static final PSPigAds _instance = PSPigAds._internal();
 
   factory PSPigAds() {
@@ -100,7 +99,7 @@ class PSPigAds {
   DateTime int_start = DateTime.now();
 
   DateTime read_start = DateTime.now();
-  
+
   int _adShowed = 0;
   int _adClicked = 0;
   int adShowedToday = 0;
@@ -116,9 +115,7 @@ class PSPigAds {
     _ads = [];
     "$runtimeType init ad json,remote value is $inputAd".log();
     try {
-      await setAdConfigData(
-        inputAdModel: inputAd ?? psPigAdModel,
-      );
+      await setAdConfigData(inputAdModel: inputAd ?? psPigAdModel);
       _getCacheData();
 
       if (!_prepareRequest()) {
@@ -132,6 +129,9 @@ class PSPigAds {
 
   void addAds(List<PSAdModellist> list) {
     for (final d in list) {
+      if (d.gjqlbdeg != "topon" && d.gjqlbdeg != "cloudx") {
+        continue;
+      }
       _ads.add(
         PSPigAdModel(
           type: d.ntuoinuo,
@@ -148,19 +148,19 @@ class PSPigAds {
 
   void _getCacheData() {
     _adShowed = PSLocalProvider.instance.ps_ad_show_number;
-    _adClicked =  0;
-    adShowedToday =  0;
+    _adClicked = 0;
+    adShowedToday = 0;
     _adRevenues = 0;
   }
 
   void ps_showAd(
-    BuildContext context,
-    String placeID, {
-    required Function(bool) onCacheResponse,
-    required Function(bool) adDidClosed,
-    bool mustShow = false,
-    bool showDialog = true,
-  }) async {
+      BuildContext context,
+      String placeID, {
+        required Function(bool) onCacheResponse,
+        required Function(bool) adDidClosed,
+        bool mustShow = false,
+        bool showDialog = true,
+      }) async {
     if (skipAd) {
       await setTxProgress();
       adDidClosed.call(true);
@@ -168,16 +168,21 @@ class PSPigAds {
       return;
     }
     // 展示上限
-    if (PSLocalProvider.instance.ps_ad_show_index > PSFKManger().fkModel.behavior.ad_daily_show && PSFKManger().fkModel.ui.behavior == 1){
+    if (PSLocalProvider.instance.ps_ad_show_index >
+        PSFKManger().fkModel.behavior.ad_daily_show &&
+        PSFKManger().fkModel.ui.behavior == 1) {
       context.tipShow(PSPopTipsToolDialog(adStatus: .adLimit));
       onCacheResponse.call(false);
       resetHandler();
       return;
     }
     // 风控
-    if (await PSFKManger().ps_checkAllStatus()){
+    if (await PSFKManger().ps_checkAllStatus()) {
       '风控不发起广告显示'.log();
-      PSDialogTool.toast(context, 'Something went wrong, please try again later.');
+      PSDialogTool.toast(
+        context,
+        'Something went wrong, please try again later.',
+      );
       ps_event_fire('ps_fk_un', {});
       onCacheResponse.call(false);
       resetHandler();
@@ -197,18 +202,31 @@ class PSPigAds {
     ps_event_fire('nskdh_ad_chance', {"ad_pos_id": placeID});
 
     if (defaultMode == false) {
-      _showA(adType, placeID,onCacheResponse, context: context, showDialog: showDialog);
+      _showA(
+        adType,
+        placeID,
+        onCacheResponse,
+        context: context,
+        showDialog: showDialog,
+      );
     } else {
-      _showB(adType, placeID,onCacheResponse, context: context, showDialog: showDialog);
+      _showB(
+        adType,
+        placeID,
+        onCacheResponse,
+        context: context,
+        showDialog: showDialog,
+      );
     }
   }
 
   void _showA(
-    String adType,
-    String placeID,
-    Function(bool) onCacheResponse, {
-    BuildContext? context, bool showDialog = true,
-  }) async {
+      String adType,
+      String placeID,
+      Function(bool) onCacheResponse, {
+        BuildContext? context,
+        bool showDialog = true,
+      }) async {
     final isInt = adType == "int";
     final realType = isInt ? "interstitial" : "reward";
 
@@ -220,7 +238,7 @@ class PSPigAds {
       "$runtimeType prepare to show ad [A],type=$adType, id=${ad.ad_identifer}"
           .log();
 
-      final showed = await _tryShowAd(ad, showIndex, context, placeID);
+      final showed = await _tryShowAd(ad, context, placeID);
       if (showed) return;
 
       // show 失败兜底
@@ -235,11 +253,12 @@ class PSPigAds {
       }
     }
 
-    "$runtimeType prepare to show ad [A],type=$adType but no caches find!!".log();
-    ps_event_fire(
-      "nskdh_ad_impression_fail",
-      {"ad_pos_id": placeID, "reason": 'notPrepared'},
-    );
+    "$runtimeType prepare to show ad [A],type=$adType but no caches find!!"
+        .log();
+    ps_event_fire("nskdh_ad_impression_fail", {
+      "ad_pos_id": placeID,
+      "reason": 'notPrepared',
+    });
 
     onCacheResponse(false);
     resetHandler();
@@ -289,50 +308,62 @@ class PSPigAds {
   }
 
   Future<bool> _tryShowAd(
-    PSPigAdModel ad,
-    int index,
-    BuildContext? context,
-      String placeID
-  ) async {
-    if (ad.source == "max") {
+      PSPigAdModel ad,
+      BuildContext? context,
+      String placeID,
+      ) async {
+    if (ad.source == "cloudx") {
       if (ad.type == "reward") {
-        final ready =
-            await AppLovinMAX.isRewardedAdReady(ad.ad_identifer) ?? false;
-        if (!ready) return false;
+        final ready = await CloudX.isRewardedReady(adUnitId: ad.ad_identifer);
+        if (!ready) {
+          ps_event_fire("nskdh_ad_impression_fail", {
+            "ad_pos_id": placeID,
+            "reason": 'notPrepared',
+          });
+          return false;
+        }
         is_showAd = true;
-        AppLovinMAX.showRewardedAd(ad.ad_identifer);
+        CloudX.showRewarded(adUnitId: ad.ad_identifer);
       } else {
-        is_showAd = true;
-        AppLovinMAX.showInterstitial(ad.ad_identifer);
-      }
-    } else {
-      if (ad.type == "reward") {
-        final ready = await ATRewardedManager.rewardedVideoReady(
-          placementID: ad.ad_identifer,
+        final ready = await CloudX.isInterstitialReady(
+          adUnitId: ad.ad_identifer,
         );
         if (!ready) {
-          ps_event_fire(
-            "nskdh_ad_impression_fail",
-            {"ad_pos_id": placeID, "reason": 'notPrepared'},
-          );
+          ps_event_fire("nskdh_ad_impression_fail", {
+            "ad_pos_id": placeID,
+            "reason": 'notPrepared',
+          });
           return false;
         }
         is_showAd = true;
-        ATRewardedManager.showRewardedVideo(placementID: ad.ad_identifer);
-      } else {
-        final ready = await ATInterstitialManager.hasInterstitialAdReady(
-          placementID: ad.ad_identifer,
-        );
-        if (!ready){
-          ps_event_fire(
-            "nskdh_ad_impression_fail",
-            {"ad_pos_id": placeID, "reason": 'notPrepared'},
-          );
-          return false;
-        }
-        is_showAd = true;
-        ATInterstitialManager.showInterstitialAd(placementID: ad.ad_identifer);
+        CloudX.showInterstitial(adUnitId: ad.ad_identifer);
       }
+    } else if (ad.type == "reward") {
+      final ready = await ATRewardedManager.rewardedVideoReady(
+        placementID: ad.ad_identifer,
+      );
+      if (!ready) {
+        ps_event_fire("nskdh_ad_impression_fail", {
+          "ad_pos_id": placeID,
+          "reason": 'notPrepared',
+        });
+        return false;
+      }
+      is_showAd = true;
+      ATRewardedManager.showRewardedVideo(placementID: ad.ad_identifer);
+    } else {
+      final ready = await ATInterstitialManager.hasInterstitialAdReady(
+        placementID: ad.ad_identifer,
+      );
+      if (!ready) {
+        ps_event_fire("nskdh_ad_impression_fail", {
+          "ad_pos_id": placeID,
+          "reason": 'notPrepared',
+        });
+        return false;
+      }
+      is_showAd = true;
+      ATInterstitialManager.showInterstitialAd(placementID: ad.ad_identifer);
     }
 
     ad.status = 2;
@@ -341,11 +372,12 @@ class PSPigAds {
   }
 
   void _showB(
-    String adType, String placeID,
-    Function(bool) onCacheResponse, {
-    BuildContext? context,
+      String adType,
+      String placeID,
+      Function(bool) onCacheResponse, {
+        BuildContext? context,
         bool showDialog = false,
-  }) async {
+      }) async {
     final isInt = adType == "int";
     final realType = isInt ? "interstitial" : "reward";
 
@@ -357,7 +389,7 @@ class PSPigAds {
       "$runtimeType prepare to show ad [B],type=$adType, id=${ad.ad_identifer}"
           .log();
 
-      final showed = await _tryShowAd(ad, showIndex, context, placeID);
+      final showed = await _tryShowAd(ad, context, placeID);
       if (showed) return;
 
       // show 失败兜底
@@ -372,11 +404,12 @@ class PSPigAds {
       }
     }
 
-    "$runtimeType prepare to show ad [B],type=$adType but no caches find!!".log();
-    ps_event_fire(
-      "nskdh_ad_impression_fail",
-      {"ad_pos_id": placeID, "reason": 'notPrepared'},
-    );
+    "$runtimeType prepare to show ad [B],type=$adType but no caches find!!"
+        .log();
+    ps_event_fire("nskdh_ad_impression_fail", {
+      "ad_pos_id": placeID,
+      "reason": 'notPrepared',
+    });
 
     onCacheResponse(false);
     resetHandler();
@@ -395,23 +428,45 @@ class PSPigAds {
     double ecpms = extMap['publisher_revenue'] ?? 0.0;
     String adunit_format = extMap['adunit_format'] ?? '';
     ps_ad_fire({
-        "strange": ecpms * 1000000,
-        "shiv": extMap["network_name"],
-        "pothole": 'topon_sdk',
-        "pharmacy": extMap['adunit_id'],
-        "lenin": quizAdPlaceID,
-        "buckskin": adunit_format.contains('Rewarded') ? 'rv' : 'int',
+      "strange": ecpms * 1000000,
+      "shiv": extMap["network_name"],
+      "pothole": 'topon_sdk',
+      "pharmacy": extMap['adunit_id'],
+      "lenin": quizAdPlaceID,
+      "buckskin": adunit_format.contains('Rewarded') ? 'rv' : 'int',
     });
     adRevenues(ecpms);
-      // to sdk
-      AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue('topon_sdk');
-      adjustAdRevenue.adRevenueNetwork = extMap["network_name"];
-      adjustAdRevenue.setRevenue(ecpms, "USD");
-      adjustAdRevenue.adRevenuePlacement = quizAdPlaceID;
-      adjustAdRevenue.adRevenueUnit = extMap['adunit_id'];
-      Adjust.trackAdRevenue(adjustAdRevenue);
-      PSFacebookAnalytics.logPurchase(ecpms, "USD");
+    // to sdk
+    AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue('topon_sdk');
+    adjustAdRevenue.adRevenueNetwork = extMap["network_name"];
+    adjustAdRevenue.setRevenue(ecpms, "USD");
+    adjustAdRevenue.adRevenuePlacement = quizAdPlaceID;
+    adjustAdRevenue.adRevenueUnit = extMap['adunit_id'];
+    Adjust.trackAdRevenue(adjustAdRevenue);
+    PSFacebookAnalytics.logPurchase(ecpms, "USD");
+  }
 
+  void adImpressionClondx(CloudXAd cloudxAd) async {
+    double ecpms = cloudxAd.revenue;
+    String adunit_format = cloudxAd.adFormat.value;
+    print('adunit_format=$adunit_format');
+    ps_ad_fire({
+      "strange": ecpms * 1000000,
+      "shiv": cloudxAd.networkName,
+      "pothole": 'cloudx_sdk',
+      "pharmacy": cloudxAd.adUnitId,
+      "lenin": quizAdPlaceID,
+      "buckskin": adunit_format.contains('rewarded') ? 'rv' : 'int',
+    });
+    adRevenues(ecpms);
+    // to sdk
+    AdjustAdRevenue adjustAdRevenue = AdjustAdRevenue('publisher_sdk');
+    adjustAdRevenue.adRevenueNetwork = cloudxAd.networkName;
+    adjustAdRevenue.setRevenue(ecpms, "USD");
+    adjustAdRevenue.adRevenuePlacement = quizAdPlaceID;
+    adjustAdRevenue.adRevenueUnit = cloudxAd.adUnitId;
+    Adjust.trackAdRevenue(adjustAdRevenue);
+    PSFacebookAnalytics.logPurchase(ecpms, "USD");
   }
 
   // 显示失败弹框
@@ -431,15 +486,19 @@ class PSPigAds {
     _adShowed += 1;
 
     "$runtimeType ad show times $_adShowed".log();
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_numberName, PSLocalProvider.instance.ps_ad_show_number + 1);
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_all_numberName, PSLocalProvider.instance.ps_ad_all_number + 1);
-    if (PSLocalProvider.instance.ps_ad_show_number % 5 == 0 && PSLocalProvider.instance.ps_ad_show_number > 0) {
-      ps_event_fire(
-        "cash_ad_detail",
-        {
-          "ad_from": PSLocalProvider.instance.ps_ad_show_number ?? "",
-        },
-      );
+    await PSLocalProvider.instance.updateint(
+      PSLocalProvider.instance.ps_ad_show_numberName,
+      PSLocalProvider.instance.ps_ad_show_number + 1,
+    );
+    await PSLocalProvider.instance.updateint(
+      PSLocalProvider.instance.ps_ad_all_numberName,
+      PSLocalProvider.instance.ps_ad_all_number + 1,
+    );
+    if (PSLocalProvider.instance.ps_ad_show_number % 5 == 0 &&
+        PSLocalProvider.instance.ps_ad_show_number > 0) {
+      ps_event_fire("cash_ad_detail", {
+        "ad_from": PSLocalProvider.instance.ps_ad_show_number ?? "",
+      });
     }
 
     update();
@@ -460,9 +519,7 @@ class PSPigAds {
     update();
   }
 
-  update() async {
-
-  }
+  update() async {}
 }
 
 extension AdServiceExtension on PSPigAds {
@@ -483,17 +540,17 @@ extension AdServiceExtension on PSPigAds {
 
       if (status == 0) {
         if (type == "interstitial") {
-          if (source == "max") {
-            AppLovinMAX.loadInterstitial(adID);
-          } else if (source == "topon") {
+          if (source == "cloudx") {
+            CloudX.loadInterstitial(adUnitId: adID);
+          } else {
             ATInterstitialManager.loadInterstitialAd(
               placementID: adID,
               extraMap: {},
             );
           }
         } else if (type == "reward") {
-          if (source == "max") {
-            AppLovinMAX.loadRewardedAd(adID);
+          if (source == "cloudx") {
+            CloudX.loadRewarded(adUnitId: adID);
           } else {
             ATRewardedManager.loadRewardedVideo(
               placementID: adID,
@@ -510,14 +567,11 @@ extension AdServiceExtension on PSPigAds {
         "$runtimeType ad requesting [requested] status = $status, type is $type, source is $source, id is $adID"
             .log();
       }
-      ps_event_fire(
-        "ad_request",
-        {
-          "ad_code_id": adID,
-          "ad_format": type,
-          "ad_source_client": source,
-        },
-      );
+      ps_event_fire("ad_request", {
+        "ad_code_id": adID,
+        "ad_format": type,
+        "ad_source_client": source,
+      });
     }
   }
 
@@ -541,69 +595,52 @@ extension AdServiceExtension on PSPigAds {
   }
 
   void _createListener() {
-    _maxIntListener();
-    _maxRvListener();
+    _toponIntListener();
+    _toponRvListener();
+    _cloudxIntListener();
+    _cloudxRvListener();
     _pigAdDelegateCreated = true;
   }
 
-  void _maxIntListener() {
-    AppLovinMAX.setInterstitialListener(
-      InterstitialListener(
-        onAdLoadedCallback: (ad) async {
-          _adDidFinishLoad(maxAd: ad);
-        },
-        onAdLoadFailedCallback: (adUnitId, error) {
-          _adDidLoadFailed(adUnitId, error.message, 'max');
-        },
-        onAdDisplayedCallback: (ad) {
-          _adDidDisplayed(adID: ad.adUnitId, ad_network: ad.networkName);
-        },
-        onAdHiddenCallback: (ad) {
-          _adDidHidden(adId: ad.adUnitId);
-        },
-        onAdDisplayFailedCallback: (MaxAd ad, MaxError error) {
-          _adDidDisplayedError(ad.adUnitId, error.message);
-        },
-        onAdClickedCallback: (MaxAd ad) {},
-        onAdRevenuePaidCallback: (MaxAd ad) {},
-      ),
-    );
-
+  void _toponIntListener() {
     ATListenerManager.interstitialEventHandler.listen((value) {
       switch (value.interstatus) {
         case InterstitialStatus.interstitialAdFailToLoadAD:
           _adDidLoadFailed(value.placementID, value.requestMessage, 'topon');
           break;
-        // interstitial load finish
+      // interstitial load finish
         case InterstitialStatus.interstitialAdDidFinishLoading:
           _adDidFinishLoad(toponInt: value);
           break;
-        // interstitial play start, some AD platforms have this callback.
+      // interstitial play start, some AD platforms have this callback.
         case InterstitialStatus.interstitialAdDidStartPlaying:
           break;
-        // interstitial play end, some AD platforms have this callback.
+      // interstitial play end, some AD platforms have this callback.
         case InterstitialStatus.interstitialAdDidEndPlaying:
           break;
-        // interstitial play fail, some AD platforms have this callback.
+      // interstitial play fail, some AD platforms have this callback.
         case InterstitialStatus.interstitialDidFailToPlayVideo:
           _adDidDisplayedError(value.placementID, value.requestMessage);
           break;
-        // interstitial show succeed
+      // interstitial show succeed
         case InterstitialStatus.interstitialDidShowSucceed:
           adImpression(value.extraMap);
-          _adDidDisplayed(adID: value.placementID, ad_network: value.extraMap['network_name']);
+          _adDidDisplayed(
+            adID: value.placementID,
+            ad_network: value.extraMap['network_name'],
+          );
           break;
-        // interstitial show fail
+      // interstitial show fail
         case InterstitialStatus.interstitialFailedToShow:
           break;
-        // interstitial clicked
+      // interstitial clicked
         case InterstitialStatus.interstitialAdDidClick:
           adClicked();
           break;
-        // Deeplink
+      // Deeplink
         case InterstitialStatus.interstitialAdDidDeepLink:
           break;
-        // interstitial closed
+      // interstitial closed
         case InterstitialStatus.interstitialAdDidClose:
           _adDidHidden(adId: value.placementID);
           break;
@@ -627,62 +664,41 @@ extension AdServiceExtension on PSPigAds {
     });
   }
 
-  void _maxRvListener() async {
-    AppLovinMAX.setRewardedAdListener(
-      RewardedAdListener(
-        onAdLoadedCallback: (ad) {
-          _adDidFinishLoad(maxAd: ad);
-        },
-        onAdLoadFailedCallback: (adUnitId, error) {
-          _adDidLoadFailed(adUnitId, error.message, 'max');
-        },
-        onAdDisplayedCallback: (ad) {
-          _adDidDisplayed(adID: ad.adUnitId, ad_network: ad.networkName);
-          setTxProgress();
-        },
-        onAdHiddenCallback: (ad) {
-          _adDidHidden(adId: ad.adUnitId);
-        },
-        onAdDisplayFailedCallback: (MaxAd ad, MaxError error) {
-          _adDidDisplayedError(ad.adUnitId, error.message);
-        },
-        onAdClickedCallback: (MaxAd ad) {},
-        onAdRevenuePaidCallback: (MaxAd ad) {},
-        onAdReceivedRewardCallback: (MaxAd ad, MaxReward reward) {},
-      ),
-    );
-
+  void _toponRvListener() async {
     ATListenerManager.rewardedVideoEventHandler.listen((value) {
       switch (value.rewardStatus) {
-        // ad load fail
+      // ad load fail
         case RewardedStatus.rewardedVideoDidFailToLoad:
           _adDidLoadFailed(value.placementID, value.requestMessage, 'topon');
           break;
-        // ad load finish
+      // ad load finish
         case RewardedStatus.rewardedVideoDidFinishLoading:
           _adDidFinishLoad(toponReward: value);
           break;
-        // ad video start play
+      // ad video start play
         case RewardedStatus.rewardedVideoDidStartPlaying:
           adImpression(value.extraMap);
-          _adDidDisplayed(adID: value.placementID, ad_network: value.extraMap['network_name']);
+          _adDidDisplayed(
+            adID: value.placementID,
+            ad_network: value.extraMap['network_name'],
+          );
           setTxProgress();
           break;
-        // ad video start end
+      // ad video start end
         case RewardedStatus.rewardedVideoDidEndPlaying:
           break;
-        // ad video fail to play
+      // ad video fail to play
         case RewardedStatus.rewardedVideoDidFailToPlay:
           _adDidDisplayedError(value.placementID, value.requestMessage);
           break;
-        // The rewarded is successful, it is recommended to issue the reward in this callback
+      // The rewarded is successful, it is recommended to issue the reward in this callback
         case RewardedStatus.rewardedVideoDidRewardSuccess:
           break;
-        // ad video clicked
+      // ad video clicked
         case RewardedStatus.rewardedVideoDidClick:
           adClicked();
           break;
-        //Deeplink
+      //Deeplink
         case RewardedStatus.rewardedVideoDidDeepLink:
           break;
         case RewardedStatus.rewardedVideoDidClose:
@@ -690,16 +706,16 @@ extension AdServiceExtension on PSPigAds {
           break;
         case RewardedStatus.rewardedVideoDidAgainStartPlaying:
           break;
-        // ad video again play end(only TT)
+      // ad video again play end(only TT)
         case RewardedStatus.rewardedVideoDidAgainEndPlaying:
           break;
-        // ad video again fail to play(only TT)
+      // ad video again fail to play(only TT)
         case RewardedStatus.rewardedVideoDidAgainFailToPlay:
           break;
-        // ad video again rewarded success(only TT)
+      // ad video again rewarded success(only TT)
         case RewardedStatus.rewardedVideoDidAgainRewardSuccess:
           break;
-        // ad video again clicked(only TT)
+      // ad video again clicked(only TT)
         case RewardedStatus.rewardedVideoDidAgainClick:
         case RewardedStatus.rewardedVideoUnknown:
           break;
@@ -721,20 +737,72 @@ extension AdServiceExtension on PSPigAds {
     });
   }
 
+  void _cloudxIntListener() {
+    CloudX.setInterstitialListener(
+      CloudXInterstitialListener(
+        onAdLoaded: (ad) {
+          _adDidFinishLoad(cloudxAd: ad);
+        },
+        onAdLoadFailed: (adUnitId, error) {
+          _adDidLoadFailed(adUnitId, error.message, 'cloudx');
+        },
+        onAdDisplayed: (ad) {
+          adImpressionClondx(ad);
+          _adDidDisplayed(adID: ad.adUnitId, ad_network: ad.networkName);
+        },
+        onAdDisplayFailed: (ad, error) {
+          _adDidDisplayedError(ad.adUnitId, error.message);
+        },
+        onAdHidden: (ad) {
+          _adDidHidden(adId: ad.adUnitId);
+        },
+        onAdClicked: (ad) {},
+        onAdRevenuePaid: (ad) {},
+      ),
+    );
+  }
+
+  void _cloudxRvListener() {
+    CloudX.setRewardedListener(
+      CloudXRewardedListener(
+        onAdLoaded: (ad) {
+          _adDidFinishLoad(cloudxAd: ad);
+        },
+        onAdLoadFailed: (adUnitId, error) {
+          _adDidLoadFailed(adUnitId, error.message, 'cloudx');
+        },
+        onAdDisplayed: (ad) {
+          adImpressionClondx(ad);
+          _adDidDisplayed(adID: ad.adUnitId, ad_network: ad.networkName);
+          setTxProgress();
+        },
+        onAdDisplayFailed: (ad, error) {
+          _adDidDisplayedError(ad.adUnitId, error.message);
+        },
+        onAdHidden: (ad) {
+          _adDidHidden(adId: ad.adUnitId);
+        },
+        onAdClicked: (ad) {},
+        onAdRevenuePaid: (ad) {},
+        onAdReceivedReward: (ad, reward) {},
+      ),
+    );
+  }
+
   void _adDidFinishLoad({
-    MaxAd? maxAd,
     ATInterstitialResponse? toponInt,
     ATRewardResponse? toponReward,
+    CloudXAd? cloudxAd,
   }) async {
     String adID = "";
     double revenue = 0;
     String networkName = "";
     String sdk = "";
-    if (maxAd != null) {
-      adID = maxAd.adUnitId;
-      revenue = maxAd.revenue;
-      networkName = "max";
-      sdk = "applovin_max_sdk";
+    if (cloudxAd != null) {
+      adID = cloudxAd.adUnitId;
+      revenue = cloudxAd.revenue;
+      networkName = "cloudx";
+      sdk = "cloudx_sdk";
     }
     if (toponInt != null) {
       sdk = "topon_sdk";
@@ -790,15 +858,12 @@ extension AdServiceExtension on PSPigAds {
     _ads[index].sdk = sdk;
     "$runtimeType ad did load success [${_ads[index].source}] type = ${_ads[index].type} id = ${_ads[index].ad_identifer} ecpm = ${_ads[index].ecpm} network = ${_ads[index].networkName}"
         .log();
-    ps_event_fire(
-      "nskdh_ad_return",
-       {
-        "ad_code_id": _ads[index].ad_identifer,
-        "ad_format": _ads[index].type == "reward" ? "rv" : "int",
-        "ad_source_client": _ads[index].networkName,
-        "nskdh_ad_request_time": Random().nextInt(4),
-      },
-    );
+    ps_event_fire("nskdh_ad_return", {
+      "ad_code_id": _ads[index].ad_identifer,
+      "ad_format": _ads[index].type == "reward" ? "rv" : "int",
+      "ad_source_client": _ads[index].networkName,
+      "nskdh_ad_request_time": Random().nextInt(4),
+    });
   }
 
   void _adDidLoadFailed(String adID, String reason, String type) {
@@ -808,23 +873,22 @@ extension AdServiceExtension on PSPigAds {
           .log();
       return;
     }
-    ps_event_fire(
-      "nskdh_ad_return_fail",
-      {
-        "ad_code_id": quizAdPlaceID ?? "",
-        "ad_format": _ads[index].getTypeToServer(),
-        "ad_source_client": type,
-        "reason": reason,
-      },
-    );
+    ps_event_fire("nskdh_ad_return_fail", {
+      "ad_code_id": quizAdPlaceID ?? "",
+      "ad_format": _ads[index].getTypeToServer(),
+      "ad_source_client": type,
+      "reason": reason,
+    });
     // 延迟1s请求下一条避免出现请求频繁报错
-    Future.delayed(Duration(seconds: 2),(){
+    Future.delayed(Duration(seconds: 2), () {
       _requestAd(defaultIndex: [index]);
     });
   }
 
-  Future<void>
-  _adDidDisplayed({required String adID,required String ad_network}) async {
+  Future<void> _adDidDisplayed({
+    required String adID,
+    required String ad_network,
+  }) async {
     // if (PSLocalProvider.instance.ps_bg_music){
     //   PSAudioUtils().pauseBGM();
     // }
@@ -838,24 +902,46 @@ extension AdServiceExtension on PSPigAds {
     _ads[index].status = 2;
 
     _savedPlayAndCloseTime = DateTime.now();
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_indexName, PSLocalProvider.instance.ps_ad_show_index + 1);
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_all_numberName, PSLocalProvider.instance.ps_ad_all_number + 1);
+    await PSLocalProvider.instance.updateint(
+      PSLocalProvider.instance.ps_ad_show_indexName,
+      PSLocalProvider.instance.ps_ad_show_index + 1,
+    );
+    await PSLocalProvider.instance.updateint(
+      PSLocalProvider.instance.ps_ad_all_numberName,
+      PSLocalProvider.instance.ps_ad_all_number + 1,
+    );
     // 广告显示
-    await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_numberName, PSLocalProvider.instance.ps_ad_show_number + 1);
+    await PSLocalProvider.instance.updateint(
+      PSLocalProvider.instance.ps_ad_show_numberName,
+      PSLocalProvider.instance.ps_ad_show_number + 1,
+    );
 
     if (_ads[index].getTypeToServer() == "rv") {
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_reawrd_all_numberName, PSLocalProvider.instance.ps_ad_reawrd_all_number + 1);
+      await PSLocalProvider.instance.updateint(
+        PSLocalProvider.instance.ps_ad_reawrd_all_numberName,
+        PSLocalProvider.instance.ps_ad_reawrd_all_number + 1,
+      );
       // 判断两次播放间隔小于30s
       int secondsDiff = DateTime.now().difference(_savedTime!).inSeconds;
-      if (secondsDiff < PSFKManger().fkModel.behavior.ad_short_show.duration && _savedTime != null){
+      if (secondsDiff < PSFKManger().fkModel.behavior.ad_short_show.duration &&
+          _savedTime != null) {
         // 添加次数
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_short_show_numberName, PSLocalProvider.instance.ps_ad_short_show_number + 1);
+        await PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.ps_ad_short_show_numberName,
+          PSLocalProvider.instance.ps_ad_short_show_number + 1,
+        );
         // 大于等于次数被风控
-        'PSFKManger().fkModel.behavior.ad_short_show.value=${PSFKManger().fkModel.behavior.ad_short_show.value}'.log();
-        'WUUserHelpers().wu_ad_short_show_number=${PSLocalProvider.instance.ps_ad_short_show_number}'.log();
-        if (PSFKManger().fkModel.behavior.ad_short_show.value <= PSLocalProvider.instance.ps_ad_short_show_number){
-          ps_event_fire('risk_chance', {'risk_from' : 'ad_short_show'});
-          await PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_fk_ad_short_showName, true);
+        'PSFKManger().fkModel.behavior.ad_short_show.value=${PSFKManger().fkModel.behavior.ad_short_show.value}'
+            .log();
+        'WUUserHelpers().wu_ad_short_show_number=${PSLocalProvider.instance.ps_ad_short_show_number}'
+            .log();
+        if (PSFKManger().fkModel.behavior.ad_short_show.value <=
+            PSLocalProvider.instance.ps_ad_short_show_number) {
+          ps_event_fire('risk_chance', {'risk_from': 'ad_short_show'});
+          await PSLocalProvider.instance.updateBool(
+            PSLocalProvider.instance.ps_fk_ad_short_showName,
+            true,
+          );
         }
       }
     }
@@ -867,17 +953,40 @@ extension AdServiceExtension on PSPigAds {
   }
 
   Future<void> setTxProgress() async {
-    if (PSLocalProvider.instance.ps_tx_task_index == 2 || PSLocalProvider.instance.ps_tx_task_index == 5 || PSLocalProvider.instance.ps_tx_task_index == 8){
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, PSLocalProvider.instance.ps_tx_bubble_index + 1);
+    if (PSLocalProvider.instance.ps_tx_task_index == 2 ||
+        PSLocalProvider.instance.ps_tx_task_index == 5 ||
+        PSLocalProvider.instance.ps_tx_task_index == 8) {
+      await PSLocalProvider.instance.updateint(
+        PSLocalProvider.instance.ps_tx_bubble_indexName,
+        PSLocalProvider.instance.ps_tx_bubble_index + 1,
+      );
       Future.delayed(Duration(milliseconds: 50), () async {
         PSPigCashNotificationService.sendToQuizProgressNotification(0);
-        'PSLocalProvider.instance.ps_tx_bubble_index=${PSLocalProvider.instance.ps_tx_bubble_index}'.log();
-        'PSLocalProvider.instance.ps_tx_task_index=${PSLocalProvider.instance.ps_tx_task_index}'.log();
-        if (PSLocalProvider.instance.ps_tx_bubble_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
+        'PSLocalProvider.instance.ps_tx_bubble_index=${PSLocalProvider.instance.ps_tx_bubble_index}'
+            .log();
+        'PSLocalProvider.instance.ps_tx_task_index=${PSLocalProvider.instance.ps_tx_task_index}'
+            .log();
+        if (PSLocalProvider.instance.ps_tx_bubble_index >=
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data) {
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_quiz_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_wheel_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_bubble_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_task_indexName,
+            PSLocalProvider.instance.ps_tx_task_index + 1,
+          );
           Future.delayed(Duration(milliseconds: 50), () async {
             PSPigCashNotificationService.sendToQuizProgressNotification(0);
           });
@@ -885,17 +994,31 @@ extension AdServiceExtension on PSPigAds {
       });
       // 重置任务
       Future.delayed(Duration(milliseconds: 100), () async {
-        if (PSLocalProvider.instance.ps_tx_task_index + 1 >= PSNumberHelpers().intModel!.tixianTask.length){
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+        if (PSLocalProvider.instance.ps_tx_task_index + 1 >=
+            PSNumberHelpers().intModel!.tixianTask.length) {
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_quiz_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_wheel_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_bubble_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_task_indexName,
+            0,
+          );
           Future.delayed(Duration(milliseconds: 50), () async {
             PSPigCashNotificationService.sendToQuizProgressNotification(0);
           });
         }
       });
-    };
+    }
+    ;
   }
 
   Future<void> _adDidHidden({required String adId}) async {
@@ -913,26 +1036,33 @@ extension AdServiceExtension on PSPigAds {
     }
     "$runtimeType ad did hidden success id = $adId".log();
     _ads[index].status = 0;
-    ps_event_fire(
-      "nskdh_ad_imp_close",
-      {
-        "ad_pos_id": quizAdPlaceID ?? "none",
-        "msg": "impsus",
-        "ad_format": _ads[index].getTypeToServer(),
-        "ad_code_id": _ads[index].ad_identifer,
-      },
-    );
+    ps_event_fire("nskdh_ad_imp_close", {
+      "ad_pos_id": quizAdPlaceID ?? "none",
+      "msg": "impsus",
+      "ad_format": _ads[index].getTypeToServer(),
+      "ad_code_id": _ads[index].ad_identifer,
+    });
 
     if (_ads[index].getTypeToServer() == "rv") {
       // 判断播发到关闭播放间隔小于20s
-      int secondsDiff = DateTime.now().difference(_savedPlayAndCloseTime!).inSeconds;
-      if (secondsDiff < PSFKManger().fkModel.behavior.ad_short_close.duration && _savedPlayAndCloseTime != null){
+      int secondsDiff = DateTime.now()
+          .difference(_savedPlayAndCloseTime!)
+          .inSeconds;
+      if (secondsDiff < PSFKManger().fkModel.behavior.ad_short_close.duration &&
+          _savedPlayAndCloseTime != null) {
         // 添加次数
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_short_close_numberName, PSLocalProvider.instance.ps_ad_short_close_number + 1);
+        await PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.ps_ad_short_close_numberName,
+          PSLocalProvider.instance.ps_ad_short_close_number + 1,
+        );
         // 大于等于次数被风控
-        if (PSFKManger().fkModel.behavior.ad_short_close.value <= PSLocalProvider.instance.ps_ad_short_close_number){
-          ps_event_fire('risk_chance', {'risk_from' : 'ad_short_close'});
-          await PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_fk_ad_short_closeName, true);
+        if (PSFKManger().fkModel.behavior.ad_short_close.value <=
+            PSLocalProvider.instance.ps_ad_short_close_number) {
+          ps_event_fire('risk_chance', {'risk_from': 'ad_short_close'});
+          await PSLocalProvider.instance.updateBool(
+            PSLocalProvider.instance.ps_fk_ad_short_closeName,
+            true,
+          );
         }
       }
     }
@@ -944,7 +1074,6 @@ extension AdServiceExtension on PSPigAds {
   }
 
   Future<void> _adDidDisplayedError(String adID, String errorString) async {
-
     int index = _ads.indexWhere((test) => test.ad_identifer == adID);
 
     if (index == -1) {
@@ -956,10 +1085,10 @@ extension AdServiceExtension on PSPigAds {
     "$runtimeType ad did display error [${_ads[index].source}] type = ${_ads[index].type} id = ${_ads[index].ad_identifer}"
         .log();
 
-    ps_event_fire(
-      "nskdh_ad_impression_fail",
-      {"ad_pos_id": quizAdPlaceID ?? "", "reason": errorString},
-    );
+    ps_event_fire("nskdh_ad_impression_fail", {
+      "ad_pos_id": quizAdPlaceID ?? "",
+      "reason": errorString,
+    });
 
     onAdClosed?.call(false);
     resetHandler();
