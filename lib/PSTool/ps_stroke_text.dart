@@ -1,3 +1,4 @@
+import 'PSResponsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,33 +38,37 @@ class PSStrokeText extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Text(
-          text,
-          textAlign: align,
-          maxLines: maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            foreground: paint,
-            fontSize: size,
-            height: 1.15,
-            fontWeight: weight,
-            fontFamily: is_btn ? '' : 'Black_mianfeiziti',
-            decoration: TextDecoration.none,
+        PSFitText(
+          span: TextSpan(
+            text: text,
+            style: TextStyle(
+              foreground: paint,
+              fontSize: size,
+              height: 1.15,
+              fontWeight: weight,
+              fontFamily: is_btn ? '' : 'Black_mianfeiziti',
+              fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+              decoration: TextDecoration.none,
+            ),
           ),
+          align: align,
+          maxLines: maxLines,
         ),
-        Text(
-          text,
-          maxLines: maxLines,
-          overflow: TextOverflow.ellipsis,
-          textAlign: align,
-          style: TextStyle(
-            fontSize: size,
-            color: color,
-            height: 1.15,
-            fontWeight: weight,
-            fontFamily: is_btn ? '' : 'Black_mianfeiziti',
-            decoration: TextDecoration.none,
+        PSFitText(
+          span: TextSpan(
+            text: text,
+            style: TextStyle(
+              color: color,
+              fontSize: size,
+              height: 1.15,
+              fontWeight: weight,
+              fontFamily: is_btn ? '' : 'Black_mianfeiziti',
+              fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+              decoration: TextDecoration.none,
+            ),
           ),
+          align: align,
+          maxLines: maxLines,
         ),
       ],
     );

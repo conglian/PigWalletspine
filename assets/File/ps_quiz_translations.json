@@ -1,0 +1,3112 @@
+{
+  "Dog": {
+    "id": "Anjing",
+    "fil": "Aso",
+    "pt": "Cachorro",
+    "es": "Perro",
+    "ja": "犬",
+    "ru": "Собака",
+    "de": "Hund",
+    "fr": "Chien"
+  },
+  "Elephant": {
+    "id": "Gajah",
+    "fil": "Elepante",
+    "pt": "Elefante",
+    "es": "Elefante",
+    "ja": "ゾウ",
+    "ru": "Слон",
+    "de": "Elefant",
+    "fr": "Éléphant"
+  },
+  "Giraffe": {
+    "id": "Jerapah",
+    "fil": "Dyirap",
+    "pt": "Girafa",
+    "es": "Jirafa",
+    "ja": "キリン",
+    "ru": "Жираф",
+    "de": "Giraffe",
+    "fr": "Girafe"
+  },
+  "Tortoise": {
+    "id": "Kura-kura darat",
+    "fil": "Pagong",
+    "pt": "Jabuti",
+    "es": "Tortuga terrestre",
+    "ja": "リクガメ",
+    "ru": "Сухопутная черепаха",
+    "de": "Landschildkröte",
+    "fr": "Tortue terrestre"
+  },
+  "Monkey": {
+    "id": "Monyet",
+    "fil": "Unggoy",
+    "pt": "Macaco",
+    "es": "Mono",
+    "ja": "サル",
+    "ru": "Обезьяна",
+    "de": "Affe",
+    "fr": "Singe"
+  },
+  "Horse": {
+    "id": "Kuda",
+    "fil": "Kabayo",
+    "pt": "Cavalo",
+    "es": "Caballo",
+    "ja": "馬",
+    "ru": "Лошадь",
+    "de": "Pferd",
+    "fr": "Cheval"
+  },
+  "Cheetah": {
+    "id": "Citah",
+    "fil": "Gepardo",
+    "pt": "Guepardo",
+    "es": "Guepardo",
+    "ja": "チーター",
+    "ru": "Гепард",
+    "de": "Gepard",
+    "fr": "Guépard"
+  },
+  "Zebra": {
+    "id": "Zebra",
+    "fil": "Sebra",
+    "pt": "Zebra",
+    "es": "Cebra",
+    "ja": "シマウマ",
+    "ru": "Зебра",
+    "de": "Zebra",
+    "fr": "Zèbre"
+  },
+  "Lion": {
+    "id": "Singa",
+    "fil": "Leon",
+    "pt": "Leão",
+    "es": "León",
+    "ja": "ライオン",
+    "ru": "Лев",
+    "de": "Löwe",
+    "fr": "Lion"
+  },
+  "Jellyfish": {
+    "id": "Ubur-ubur",
+    "fil": "Dikya",
+    "pt": "Água-viva",
+    "es": "Medusa",
+    "ja": "クラゲ",
+    "ru": "Медуза",
+    "de": "Qualle",
+    "fr": "Méduse"
+  },
+  "Tiger": {
+    "id": "Harimau",
+    "fil": "Tigre",
+    "pt": "Tigre",
+    "es": "Tigre",
+    "ja": "トラ",
+    "ru": "Тигр",
+    "de": "Tiger",
+    "fr": "Tigre"
+  },
+  "Emperor penguin": {
+    "id": "Penguin kaisar",
+    "fil": "Emperor penguin",
+    "pt": "Pinguim-imperador",
+    "es": "Pingüino emperador",
+    "ja": "コウテイペンギン",
+    "ru": "Императорский пингвин",
+    "de": "Kaiserpinguin",
+    "fr": "Manchot empereur"
+  },
+  "Gentoo penguin": {
+    "id": "Penguin gentoo",
+    "fil": "Gentoo penguin",
+    "pt": "Pinguim-gentoo",
+    "es": "Pingüino papúa",
+    "ja": "ジェンツーペンギン",
+    "ru": "Папуанский пингвин",
+    "de": "Eselspinguin",
+    "fr": "Manchot papou"
+  },
+  "Turtle": {
+    "id": "Kura-kura",
+    "fil": "Pagong",
+    "pt": "Tartaruga",
+    "es": "Tortuga",
+    "ja": "カメ",
+    "ru": "Черепаха",
+    "de": "Schildkröte",
+    "fr": "Tortue"
+  },
+  "Rabbit": {
+    "id": "Kelinci",
+    "fil": "Kuneho",
+    "pt": "Coelho",
+    "es": "Conejo",
+    "ja": "ウサギ",
+    "ru": "Кролик",
+    "de": "Kaninchen",
+    "fr": "Lapin"
+  },
+  "Bat": {
+    "id": "Kelelawar",
+    "fil": "Paniki",
+    "pt": "Morcego",
+    "es": "Murciélago",
+    "ja": "コウモリ",
+    "ru": "Летучая мышь",
+    "de": "Fledermaus",
+    "fr": "Chauve-souris"
+  },
+  "Eagle": {
+    "id": "Elang",
+    "fil": "Agila",
+    "pt": "Águia",
+    "es": "Águila",
+    "ja": "ワシ",
+    "ru": "Орёл",
+    "de": "Adler",
+    "fr": "Aigle"
+  },
+  "Dolphin": {
+    "id": "Lumba-lumba",
+    "fil": "Lumba-lumba",
+    "pt": "Golfinho",
+    "es": "Delfín",
+    "ja": "イルカ",
+    "ru": "Дельфин",
+    "de": "Delfin",
+    "fr": "Dauphin"
+  },
+  "Tiger shark": {
+    "id": "Hiu macan",
+    "fil": "Tiger shark",
+    "pt": "Tubarão-tigre",
+    "es": "Tiburón tigre",
+    "ja": "イタチザメ",
+    "ru": "Тигровая акула",
+    "de": "Tigerhai",
+    "fr": "Requin-tigre"
+  },
+  "Chameleon": {
+    "id": "Bunglon",
+    "fil": "Hunyango",
+    "pt": "Camaleão",
+    "es": "Camaleón",
+    "ja": "カメレオン",
+    "ru": "Хамелеон",
+    "de": "Chamäleon",
+    "fr": "Caméléon"
+  },
+  "Penguin": {
+    "id": "Penguin",
+    "fil": "Penguin",
+    "pt": "Pinguim",
+    "es": "Pingüino",
+    "ja": "ペンギン",
+    "ru": "Пингвин",
+    "de": "Pinguin",
+    "fr": "Manchot"
+  },
+  "Camel": {
+    "id": "Unta",
+    "fil": "Kamelyo",
+    "pt": "Camelo",
+    "es": "Camello",
+    "ja": "ラクダ",
+    "ru": "Верблюд",
+    "de": "Kamel",
+    "fr": "Chameau"
+  },
+  "Gorilla": {
+    "id": "Gorila",
+    "fil": "Gorilya",
+    "pt": "Gorila",
+    "es": "Gorila",
+    "ja": "ゴリラ",
+    "ru": "Горилла",
+    "de": "Gorilla",
+    "fr": "Gorille"
+  },
+  "Bear": {
+    "id": "Beruang",
+    "fil": "Oso",
+    "pt": "Urso",
+    "es": "Oso",
+    "ja": "クマ",
+    "ru": "Медведь",
+    "de": "Bär",
+    "fr": "Ours"
+  },
+  "Anteater": {
+    "id": "Trenggiling pemakan semut",
+    "fil": "Anteater",
+    "pt": "Tamanduá",
+    "es": "Oso hormiguero",
+    "ja": "アリクイ",
+    "ru": "Муравьед",
+    "de": "Ameisenbär",
+    "fr": "Fourmilier"
+  },
+  "Crab": {
+    "id": "Kepiting",
+    "fil": "Alimango",
+    "pt": "Caranguejo",
+    "es": "Cangrejo",
+    "ja": "カニ",
+    "ru": "Краб",
+    "de": "Krabbe",
+    "fr": "Crabe"
+  },
+  "Panda": {
+    "id": "Panda",
+    "fil": "Panda",
+    "pt": "Panda",
+    "es": "Panda",
+    "ja": "パンダ",
+    "ru": "Панда",
+    "de": "Panda",
+    "fr": "Panda"
+  },
+  "Seal": {
+    "id": "Anjing laut",
+    "fil": "Selyo",
+    "pt": "Foca",
+    "es": "Foca",
+    "ja": "アザラシ",
+    "ru": "Тюлень",
+    "de": "Robbe",
+    "fr": "Phoque"
+  },
+  "Sloth": {
+    "id": "Kungkang",
+    "fil": "Sloth",
+    "pt": "Preguiça",
+    "es": "Perezoso",
+    "ja": "ナマケモノ",
+    "ru": "Ленивец",
+    "de": "Faultier",
+    "fr": "Paresseux"
+  },
+  "Parrot": {
+    "id": "Burung beo",
+    "fil": "Loro",
+    "pt": "Papagaio",
+    "es": "Loro",
+    "ja": "オウム",
+    "ru": "Попугай",
+    "de": "Papagei",
+    "fr": "Perroquet"
+  },
+  "Shark": {
+    "id": "Hiu",
+    "fil": "Pating",
+    "pt": "Tubarão",
+    "es": "Tiburón",
+    "ja": "サメ",
+    "ru": "Акула",
+    "de": "Hai",
+    "fr": "Requin"
+  },
+  "Beaver": {
+    "id": "Berang-berang",
+    "fil": "Beaver",
+    "pt": "Castor",
+    "es": "Castor",
+    "ja": "ビーバー",
+    "ru": "Бобр",
+    "de": "Biber",
+    "fr": "Castor"
+  },
+  "Moose": {
+    "id": "Rusa besar",
+    "fil": "Moose",
+    "pt": "Alce",
+    "es": "Alce",
+    "ja": "ヘラジカ",
+    "ru": "Лось",
+    "de": "Elch",
+    "fr": "Élan"
+  },
+  "Ostrich": {
+    "id": "Burung unta",
+    "fil": "Abestrus",
+    "pt": "Avestruz",
+    "es": "Avestruz",
+    "ja": "ダチョウ",
+    "ru": "Страус",
+    "de": "Strauß",
+    "fr": "Autruche"
+  },
+  "Square": {
+    "id": "Persegi",
+    "fil": "Parisukat",
+    "pt": "Quadrado",
+    "es": "Cuadrado",
+    "ja": "正方形",
+    "ru": "Квадрат",
+    "de": "Quadrat",
+    "fr": "Carré"
+  },
+  "Round": {
+    "id": "Bulat",
+    "fil": "Bilog",
+    "pt": "Redondo",
+    "es": "Redondo",
+    "ja": "丸い",
+    "ru": "Круглая",
+    "de": "Rund",
+    "fr": "Rond"
+  },
+  "Circle": {
+    "id": "Lingkaran",
+    "fil": "Bilog",
+    "pt": "Círculo",
+    "es": "Círculo",
+    "ja": "円",
+    "ru": "Круг",
+    "de": "Kreis",
+    "fr": "Cercle"
+  },
+  "Triangle": {
+    "id": "Segitiga",
+    "fil": "Tatsulok",
+    "pt": "Triângulo",
+    "es": "Triángulo",
+    "ja": "三角形",
+    "ru": "Треугольник",
+    "de": "Dreieck",
+    "fr": "Triangle"
+  },
+  "Rectangle": {
+    "id": "Persegi panjang",
+    "fil": "Parihaba",
+    "pt": "Retângulo",
+    "es": "Rectángulo",
+    "ja": "長方形",
+    "ru": "Прямоугольник",
+    "de": "Rechteck",
+    "fr": "Rectangle"
+  },
+  "Oval": {
+    "id": "Oval",
+    "fil": "Habilog",
+    "pt": "Oval",
+    "es": "Óvalo",
+    "ja": "楕円",
+    "ru": "Овал",
+    "de": "Oval",
+    "fr": "Ovale"
+  },
+  "Cell": {
+    "id": "Sel",
+    "fil": "Selula",
+    "pt": "Célula",
+    "es": "Célula",
+    "ja": "細胞",
+    "ru": "Клетка",
+    "de": "Zelle",
+    "fr": "Cellule"
+  },
+  "Organ": {
+    "id": "Organ",
+    "fil": "Organo",
+    "pt": "Órgão",
+    "es": "Órgano",
+    "ja": "器官",
+    "ru": "Орган",
+    "de": "Organ",
+    "fr": "Organe"
+  },
+  "Atom": {
+    "id": "Atom",
+    "fil": "Atomo",
+    "pt": "Átomo",
+    "es": "Átomo",
+    "ja": "原子",
+    "ru": "Атом",
+    "de": "Atom",
+    "fr": "Atome"
+  },
+  "Electron": {
+    "id": "Elektron",
+    "fil": "Elektron",
+    "pt": "Elétron",
+    "es": "Electrón",
+    "ja": "電子",
+    "ru": "Электрон",
+    "de": "Elektron",
+    "fr": "Électron"
+  },
+  "Neptune": {
+    "id": "Neptunus",
+    "fil": "Neptune",
+    "pt": "Netuno",
+    "es": "Neptuno",
+    "ja": "海王星",
+    "ru": "Нептун",
+    "de": "Neptun",
+    "fr": "Neptune"
+  },
+  "Jupiter": {
+    "id": "Jupiter",
+    "fil": "Jupiter",
+    "pt": "Júpiter",
+    "es": "Júpiter",
+    "ja": "木星",
+    "ru": "Юпитер",
+    "de": "Jupiter",
+    "fr": "Jupiter"
+  },
+  "Moon": {
+    "id": "Bulan",
+    "fil": "Buwan",
+    "pt": "Lua",
+    "es": "Luna",
+    "ja": "月",
+    "ru": "Луна",
+    "de": "Mond",
+    "fr": "Lune"
+  },
+  "Venus": {
+    "id": "Venus",
+    "fil": "Venus",
+    "pt": "Vênus",
+    "es": "Venus",
+    "ja": "金星",
+    "ru": "Венера",
+    "de": "Venus",
+    "fr": "Vénus"
+  },
+  "Evolution": {
+    "id": "Evolusi",
+    "fil": "Ebolusyon",
+    "pt": "Evolução",
+    "es": "Evolución",
+    "ja": "進化",
+    "ru": "Эволюция",
+    "de": "Evolution",
+    "fr": "Évolution"
+  },
+  "Genetics": {
+    "id": "Genetika",
+    "fil": "Henetika",
+    "pt": "Genética",
+    "es": "Genética",
+    "ja": "遺伝学",
+    "ru": "Генетика",
+    "de": "Genetik",
+    "fr": "Génétique"
+  },
+  "Newton": {
+    "id": "Newton",
+    "fil": "Newton",
+    "pt": "Newton",
+    "es": "Newton",
+    "ja": "ニュートン",
+    "ru": "Ньютон",
+    "de": "Newton",
+    "fr": "Newton"
+  },
+  "Joule": {
+    "id": "Joule",
+    "fil": "Joule",
+    "pt": "Joule",
+    "es": "Julio",
+    "ja": "ジュール",
+    "ru": "Джоуль",
+    "de": "Joule",
+    "fr": "Joule"
+  },
+  "Gravity": {
+    "id": "Gravitasi",
+    "fil": "Grabidad",
+    "pt": "Gravidade",
+    "es": "Gravedad",
+    "ja": "重力",
+    "ru": "Гравитация",
+    "de": "Schwerkraft",
+    "fr": "Gravité"
+  },
+  "Drag": {
+    "id": "Gaya hambat",
+    "fil": "Drag",
+    "pt": "Arrasto",
+    "es": "Resistencia",
+    "ja": "抗力",
+    "ru": "Сопротивление",
+    "de": "Strömungswiderstand",
+    "fr": "Traînée"
+  },
+  "Oxygen": {
+    "id": "Oksigen",
+    "fil": "Oksiheno",
+    "pt": "Oxigênio",
+    "es": "Oxígeno",
+    "ja": "酸素",
+    "ru": "Кислород",
+    "de": "Sauerstoff",
+    "fr": "Oxygène"
+  },
+  "Silicon": {
+    "id": "Silikon",
+    "fil": "Silicon",
+    "pt": "Silício",
+    "es": "Silicio",
+    "ja": "ケイ素",
+    "ru": "Кремний",
+    "de": "Silizium",
+    "fr": "Silicium"
+  },
+  "Green": {
+    "id": "Hijau",
+    "fil": "Berde",
+    "pt": "Verde",
+    "es": "Verde",
+    "ja": "緑",
+    "ru": "Зелёный",
+    "de": "Grün",
+    "fr": "Vert"
+  },
+  "Yellow": {
+    "id": "Kuning",
+    "fil": "Dilaw",
+    "pt": "Amarelo",
+    "es": "Amarillo",
+    "ja": "黄色",
+    "ru": "Жёлтый",
+    "de": "Gelb",
+    "fr": "Jaune"
+  },
+  "Skin": {
+    "id": "Kulit",
+    "fil": "Balat",
+    "pt": "Pele",
+    "es": "Piel",
+    "ja": "皮膚",
+    "ru": "Кожа",
+    "de": "Haut",
+    "fr": "Peau"
+  },
+  "Brain": {
+    "id": "Otak",
+    "fil": "Utak",
+    "pt": "Cérebro",
+    "es": "Cerebro",
+    "ja": "脳",
+    "ru": "Мозг",
+    "de": "Gehirn",
+    "fr": "Cerveau"
+  },
+  "Ecology": {
+    "id": "Ekologi",
+    "fil": "Ekolohiya",
+    "pt": "Ecologia",
+    "es": "Ecología",
+    "ja": "生態学",
+    "ru": "Экология",
+    "de": "Ökologie",
+    "fr": "Écologie"
+  },
+  "Condensation": {
+    "id": "Kondensasi",
+    "fil": "Kondensasyon",
+    "pt": "Condensação",
+    "es": "Condensación",
+    "ja": "凝縮",
+    "ru": "Конденсация",
+    "de": "Kondensation",
+    "fr": "Condensation"
+  },
+  "Melting": {
+    "id": "Pencairan",
+    "fil": "Pagkatunaw",
+    "pt": "Fusão",
+    "es": "Fusión",
+    "ja": "融解",
+    "ru": "Плавление",
+    "de": "Schmelzen",
+    "fr": "Fusion"
+  },
+  "Reproduction": {
+    "id": "Reproduksi",
+    "fil": "Pagpaparami",
+    "pt": "Reprodução",
+    "es": "Reproducción",
+    "ja": "生殖",
+    "ru": "Размножение",
+    "de": "Fortpflanzung",
+    "fr": "Reproduction"
+  },
+  "Development": {
+    "id": "Perkembangan",
+    "fil": "Pag-unlad",
+    "pt": "Desenvolvimento",
+    "es": "Desarrollo",
+    "ja": "発達",
+    "ru": "Развитие",
+    "de": "Entwicklung",
+    "fr": "Développement"
+  },
+  "Ampere": {
+    "id": "Ampere",
+    "fil": "Ampere",
+    "pt": "Ampère",
+    "es": "Amperio",
+    "ja": "アンペア",
+    "ru": "Ампер",
+    "de": "Ampere",
+    "fr": "Ampère"
+  },
+  "Ohm": {
+    "id": "Ohm",
+    "fil": "Ohm",
+    "pt": "Ohm",
+    "es": "Ohmio",
+    "ja": "オーム",
+    "ru": "Ом",
+    "de": "Ohm",
+    "fr": "Ohm"
+  },
+  "Mount Fuji": {
+    "id": "Gunung Fuji",
+    "fil": "Bundok Fuji",
+    "pt": "Monte Fuji",
+    "es": "Monte Fuji",
+    "ja": "富士山",
+    "ru": "Гора Фудзи",
+    "de": "Berg Fuji",
+    "fr": "Mont Fuji"
+  },
+  "Mount Everest": {
+    "id": "Gunung Everest",
+    "fil": "Bundok Everest",
+    "pt": "Monte Everest",
+    "es": "Monte Everest",
+    "ja": "エベレスト",
+    "ru": "Эверест",
+    "de": "Mount Everest",
+    "fr": "Mont Everest"
+  },
+  "carrot": {
+    "id": "Wortel",
+    "fil": "Karot",
+    "pt": "Cenoura",
+    "es": "Zanahoria",
+    "ja": "ニンジン",
+    "ru": "Морковь",
+    "de": "Karotte",
+    "fr": "Carotte"
+  },
+  "goldfish": {
+    "id": "Ikan mas",
+    "fil": "Goldfish",
+    "pt": "Peixe-dourado",
+    "es": "Pez dorado",
+    "ja": "金魚",
+    "ru": "Золотая рыбка",
+    "de": "Goldfisch",
+    "fr": "Poisson rouge"
+  },
+  "Freezing": {
+    "id": "Pembekuan",
+    "fil": "Pagyeyelo",
+    "pt": "Congelamento",
+    "es": "Congelación",
+    "ja": "凍結",
+    "ru": "Замерзание",
+    "de": "Gefrieren",
+    "fr": "Congélation"
+  },
+  "Nitrogen": {
+    "id": "Nitrogen",
+    "fil": "Nitroheno",
+    "pt": "Nitrogênio",
+    "es": "Nitrógeno",
+    "ja": "窒素",
+    "ru": "Азот",
+    "de": "Stickstoff",
+    "fr": "Azote"
+  },
+  "Sublimation": {
+    "id": "Sublimasi",
+    "fil": "Sublimasyon",
+    "pt": "Sublimação",
+    "es": "Sublimación",
+    "ja": "昇華",
+    "ru": "Сублимация",
+    "de": "Sublimation",
+    "fr": "Sublimation"
+  },
+  "Evaporation": {
+    "id": "Penguapan",
+    "fil": "Pagsingaw",
+    "pt": "Evaporação",
+    "es": "Evaporación",
+    "ja": "蒸発",
+    "ru": "Испарение",
+    "de": "Verdunstung",
+    "fr": "Évaporation"
+  },
+  "Pod": {
+    "id": "Kawanan paus",
+    "fil": "Grupo ng balyena",
+    "pt": "Grupo de baleias",
+    "es": "Manada de ballenas",
+    "ja": "鯨の群れ",
+    "ru": "Стая китов",
+    "de": "Walschule",
+    "fr": "Groupe de baleines"
+  },
+  "Flock": {
+    "id": "Kawanan burung",
+    "fil": "Kawan",
+    "pt": "Bando",
+    "es": "Bandada",
+    "ja": "鳥の群れ",
+    "ru": "Стая птиц",
+    "de": "Vogelschwarm",
+    "fr": "Volée"
+  },
+  "frog": {
+    "id": "Katak",
+    "fil": "Palaka",
+    "pt": "Sapo",
+    "es": "Rana",
+    "ja": "カエル",
+    "ru": "Лягушка",
+    "de": "Frosch",
+    "fr": "Grenouille"
+  },
+  "butterfly": {
+    "id": "Kupu-kupu",
+    "fil": "Paruparo",
+    "pt": "Borboleta",
+    "es": "Mariposa",
+    "ja": "チョウ",
+    "ru": "Бабочка",
+    "de": "Schmetterling",
+    "fr": "Papillon"
+  },
+  "Carbon dioxide": {
+    "id": "Karbon dioksida",
+    "fil": "Carbon dioxide",
+    "pt": "Dióxido de carbono",
+    "es": "Dióxido de carbono",
+    "ja": "二酸化炭素",
+    "ru": "Углекислый газ",
+    "de": "Kohlendioxid",
+    "fr": "Dioxyde de carbone"
+  },
+  "Methane": {
+    "id": "Metana",
+    "fil": "Metano",
+    "pt": "Metano",
+    "es": "Metano",
+    "ja": "メタン",
+    "ru": "Метан",
+    "de": "Methan",
+    "fr": "Méthane"
+  },
+  "Precipitation": {
+    "id": "Presipitasi",
+    "fil": "Pag-ulan",
+    "pt": "Precipitação",
+    "es": "Precipitación",
+    "ja": "降水",
+    "ru": "Осадки",
+    "de": "Niederschlag",
+    "fr": "Précipitation"
+  },
+  "Mercury": {
+    "id": "Merkurius",
+    "fil": "Mercury",
+    "pt": "Mercúrio",
+    "es": "Mercurio",
+    "ja": "水星",
+    "ru": "Меркурий",
+    "de": "Merkur",
+    "fr": "Mercure"
+  },
+  "spider": {
+    "id": "Laba-laba",
+    "fil": "Gagamba",
+    "pt": "Aranha",
+    "es": "Araña",
+    "ja": "クモ",
+    "ru": "Паук",
+    "de": "Spinne",
+    "fr": "Araignée"
+  },
+  "bee": {
+    "id": "Lebah",
+    "fil": "Bubuyog",
+    "pt": "Abelha",
+    "es": "Abeja",
+    "ja": "ハチ",
+    "ru": "Пчела",
+    "de": "Biene",
+    "fr": "Abeille"
+  },
+  "pigeon": {
+    "id": "Merpati",
+    "fil": "Kalapati",
+    "pt": "Pombo",
+    "es": "Paloma",
+    "ja": "ハト",
+    "ru": "Голубь",
+    "de": "Taube",
+    "fr": "Pigeon"
+  },
+  "swan": {
+    "id": "Angsa",
+    "fil": "Sisne",
+    "pt": "Cisne",
+    "es": "Cisne",
+    "ja": "ハクチョウ",
+    "ru": "Лебедь",
+    "de": "Schwan",
+    "fr": "Cygne"
+  },
+  "Mars": {
+    "id": "Mars",
+    "fil": "Mars",
+    "pt": "Marte",
+    "es": "Marte",
+    "ja": "火星",
+    "ru": "Марс",
+    "de": "Mars",
+    "fr": "Mars"
+  },
+  "Food": {
+    "id": "Makanan",
+    "fil": "Pagkain",
+    "pt": "Comida",
+    "es": "Comida",
+    "ja": "食べ物",
+    "ru": "Еда",
+    "de": "Nahrung",
+    "fr": "Nourriture"
+  },
+  "Light and heat": {
+    "id": "Cahaya dan panas",
+    "fil": "Liwanag at init",
+    "pt": "Luz e calor",
+    "es": "Luz y calor",
+    "ja": "光と熱",
+    "ru": "Свет и тепло",
+    "de": "Licht und Wärme",
+    "fr": "Lumière et chaleur"
+  },
+  "Fish": {
+    "id": "Ikan",
+    "fil": "Isda",
+    "pt": "Peixe",
+    "es": "Pez",
+    "ja": "魚",
+    "ru": "Рыба",
+    "de": "Fisch",
+    "fr": "Poisson"
+  },
+  "Herd": {
+    "id": "Kawanan hewan",
+    "fil": "Kawan",
+    "pt": "Manada",
+    "es": "Manada",
+    "ja": "獣の群れ",
+    "ru": "Стадо",
+    "de": "Herde",
+    "fr": "Troupeau"
+  },
+  "Swarm": {
+    "id": "Kawanan lebah",
+    "fil": "Kuyog",
+    "pt": "Enxame",
+    "es": "Enjambre",
+    "ja": "ハチの群れ",
+    "ru": "Рой",
+    "de": "Bienenschwarm",
+    "fr": "Essaim"
+  },
+  "Ganymede": {
+    "id": "Ganimede",
+    "fil": "Ganymede",
+    "pt": "Ganimedes",
+    "es": "Ganímedes",
+    "ja": "ガニメデ",
+    "ru": "Ганимед",
+    "de": "Ganymed",
+    "fr": "Ganymède"
+  },
+  "Titan": {
+    "id": "Titan",
+    "fil": "Titan",
+    "pt": "Titã",
+    "es": "Titán",
+    "ja": "タイタン",
+    "ru": "Титан",
+    "de": "Titan",
+    "fr": "Titan"
+  },
+  "Mouse": {
+    "id": "Tikus",
+    "fil": "Daga",
+    "pt": "Camundongo",
+    "es": "Ratón",
+    "ja": "ネズミ",
+    "ru": "Мышь",
+    "de": "Maus",
+    "fr": "Souris"
+  },
+  "Squirrel": {
+    "id": "Tupai",
+    "fil": "Ardilya",
+    "pt": "Esquilo",
+    "es": "Ardilla",
+    "ja": "リス",
+    "ru": "Белка",
+    "de": "Eichhörnchen",
+    "fr": "Écureuil"
+  },
+  "Volt": {
+    "id": "Volt",
+    "fil": "Volt",
+    "pt": "Volt",
+    "es": "Voltio",
+    "ja": "ボルト",
+    "ru": "Вольт",
+    "de": "Volt",
+    "fr": "Volt"
+  },
+  "Rainwater": {
+    "id": "Air hujan",
+    "fil": "Tubig-ulan",
+    "pt": "Água da chuva",
+    "es": "Agua de lluvia",
+    "ja": "雨水",
+    "ru": "Дождевая вода",
+    "de": "Regenwasser",
+    "fr": "Eau de pluie"
+  },
+  "Photosynthesis": {
+    "id": "Fotosintesis",
+    "fil": "Potosintesis",
+    "pt": "Fotossíntese",
+    "es": "Fotosíntesis",
+    "ja": "光合成",
+    "ru": "Фотосинтез",
+    "de": "Photosynthese",
+    "fr": "Photosynthèse"
+  },
+  "Deer": {
+    "id": "Rusa",
+    "fil": "Usa",
+    "pt": "Cervo",
+    "es": "Ciervo",
+    "ja": "シカ",
+    "ru": "Олень",
+    "de": "Hirsch",
+    "fr": "Cerf"
+  },
+  "Mosquito": {
+    "id": "Nyamuk",
+    "fil": "Lamok",
+    "pt": "Mosquito",
+    "es": "Mosquito",
+    "ja": "蚊",
+    "ru": "Комар",
+    "de": "Mücke",
+    "fr": "Moustique"
+  },
+  "Bird": {
+    "id": "Burung",
+    "fil": "Ibon",
+    "pt": "Pássaro",
+    "es": "Ave",
+    "ja": "鳥",
+    "ru": "Птица",
+    "de": "Vogel",
+    "fr": "Oiseau"
+  },
+  "Rose": {
+    "id": "Mawar",
+    "fil": "Rosas",
+    "pt": "Rosa",
+    "es": "Rosa",
+    "ja": "バラ",
+    "ru": "Роза",
+    "de": "Rose",
+    "fr": "Rose"
+  },
+  "Trees": {
+    "id": "Pohon",
+    "fil": "Mga puno",
+    "pt": "Árvores",
+    "es": "Árboles",
+    "ja": "木",
+    "ru": "Деревья",
+    "de": "Bäume",
+    "fr": "Arbres"
+  },
+  "Thermosphere": {
+    "id": "Termosfer",
+    "fil": "Termospera",
+    "pt": "Termosfera",
+    "es": "Termosfera",
+    "ja": "熱圏",
+    "ru": "Термосфера",
+    "de": "Thermosphäre",
+    "fr": "Thermosphère"
+  },
+  "Stratosphere": {
+    "id": "Stratosfer",
+    "fil": "Estratospera",
+    "pt": "Estratosfera",
+    "es": "Estratosfera",
+    "ja": "成層圏",
+    "ru": "Стратосфера",
+    "de": "Stratosphäre",
+    "fr": "Stratosphère"
+  },
+  "Cat": {
+    "id": "Kucing",
+    "fil": "Pusa",
+    "pt": "Gato",
+    "es": "Gato",
+    "ja": "猫",
+    "ru": "Кошка",
+    "de": "Katze",
+    "fr": "Chat"
+  },
+  "School": {
+    "id": "Kawanan ikan",
+    "fil": "Pangkat ng isda",
+    "pt": "Cardume",
+    "es": "Banco de peces",
+    "ja": "魚群",
+    "ru": "Косяк рыб",
+    "de": "Fischschwarm",
+    "fr": "Banc de poissons"
+  },
+  "Snake": {
+    "id": "Ular",
+    "fil": "Ahas",
+    "pt": "Cobra",
+    "es": "Serpiente",
+    "ja": "ヘビ",
+    "ru": "Змея",
+    "de": "Schlange",
+    "fr": "Serpent"
+  },
+  "Whale": {
+    "id": "Paus",
+    "fil": "Balyena",
+    "pt": "Baleia",
+    "es": "Ballena",
+    "ja": "クジラ",
+    "ru": "Кит",
+    "de": "Wal",
+    "fr": "Baleine"
+  },
+  "Ant": {
+    "id": "Semut",
+    "fil": "Langgam",
+    "pt": "Formiga",
+    "es": "Hormiga",
+    "ja": "アリ",
+    "ru": "Муравей",
+    "de": "Ameise",
+    "fr": "Fourmi"
+  },
+  "Watt": {
+    "id": "Watt",
+    "fil": "Watt",
+    "pt": "Watt",
+    "es": "Vatio",
+    "ja": "ワット",
+    "ru": "Ватт",
+    "de": "Watt",
+    "fr": "Watt"
+  },
+  "Decibel": {
+    "id": "Desibel",
+    "fil": "Desibel",
+    "pt": "Decibel",
+    "es": "Decibelio",
+    "ja": "デシベル",
+    "ru": "Децибел",
+    "de": "Dezibel",
+    "fr": "Décibel"
+  },
+  "London": {
+    "id": "London",
+    "fil": "London",
+    "pt": "Londres",
+    "es": "Londres",
+    "ja": "ロンドン",
+    "ru": "Лондон",
+    "de": "London",
+    "fr": "Londres"
+  },
+  "Paris": {
+    "id": "Paris",
+    "fil": "Paris",
+    "pt": "Paris",
+    "es": "París",
+    "ja": "パリ",
+    "ru": "Париж",
+    "de": "Paris",
+    "fr": "Paris"
+  },
+  "Earth": {
+    "id": "Bumi",
+    "fil": "Daigdig",
+    "pt": "Terra",
+    "es": "Tierra",
+    "ja": "地球",
+    "ru": "Земля",
+    "de": "Erde",
+    "fr": "Terre"
+  },
+  "Atlantic Ocean": {
+    "id": "Samudra Atlantik",
+    "fil": "Karagatang Atlantiko",
+    "pt": "Oceano Atlântico",
+    "es": "Océano Atlántico",
+    "ja": "大西洋",
+    "ru": "Атлантический океан",
+    "de": "Atlantischer Ozean",
+    "fr": "Océan Atlantique"
+  },
+  "Pacific Ocean": {
+    "id": "Samudra Pasifik",
+    "fil": "Karagatang Pasipiko",
+    "pt": "Oceano Pacífico",
+    "es": "Océano Pacífico",
+    "ja": "太平洋",
+    "ru": "Тихий океан",
+    "de": "Pazifischer Ozean",
+    "fr": "Océan Pacifique"
+  },
+  "Hawk": {
+    "id": "Elang alap-alap",
+    "fil": "Lawin",
+    "pt": "Falcão",
+    "es": "Halcón",
+    "ja": "タカ",
+    "ru": "Ястреб",
+    "de": "Habicht",
+    "fr": "Faucon"
+  },
+  "Degree Fahrenheit": {
+    "id": "Derajat Fahrenheit",
+    "fil": "Digri Fahrenheit",
+    "pt": "Grau Fahrenheit",
+    "es": "Grado Fahrenheit",
+    "ja": "華氏",
+    "ru": "Градус Фаренгейта",
+    "de": "Grad Fahrenheit",
+    "fr": "Degré Fahrenheit"
+  },
+  "Degree Celsius": {
+    "id": "Derajat Celsius",
+    "fil": "Digri Celsius",
+    "pt": "Grau Celsius",
+    "es": "Grado Celsius",
+    "ja": "摂氏",
+    "ru": "Градус Цельсия",
+    "de": "Grad Celsius",
+    "fr": "Degré Celsius"
+  },
+  "Sydney": {
+    "id": "Sydney",
+    "fil": "Sydney",
+    "pt": "Sydney",
+    "es": "Sídney",
+    "ja": "シドニー",
+    "ru": "Сидней",
+    "de": "Sydney",
+    "fr": "Sydney"
+  },
+  "Canberra": {
+    "id": "Canberra",
+    "fil": "Canberra",
+    "pt": "Camberra",
+    "es": "Canberra",
+    "ja": "キャンベラ",
+    "ru": "Канберра",
+    "de": "Canberra",
+    "fr": "Canberra"
+  },
+  "February": {
+    "id": "Februari",
+    "fil": "Pebrero",
+    "pt": "Fevereiro",
+    "es": "Febrero",
+    "ja": "2月",
+    "ru": "Февраль",
+    "de": "Februar",
+    "fr": "Février"
+  },
+  "January": {
+    "id": "Januari",
+    "fil": "Enero",
+    "pt": "Janeiro",
+    "es": "Enero",
+    "ja": "1月",
+    "ru": "Январь",
+    "de": "Januar",
+    "fr": "Janvier"
+  },
+  "Saturn": {
+    "id": "Saturnus",
+    "fil": "Saturn",
+    "pt": "Saturno",
+    "es": "Saturno",
+    "ja": "土星",
+    "ru": "Сатурн",
+    "de": "Saturn",
+    "fr": "Saturne"
+  },
+  "Amazon River": {
+    "id": "Sungai Amazon",
+    "fil": "Ilog Amazon",
+    "pt": "Rio Amazonas",
+    "es": "Río Amazonas",
+    "ja": "アマゾン川",
+    "ru": "Амазонка",
+    "de": "Amazonas",
+    "fr": "Amazone"
+  },
+  "Nile River": {
+    "id": "Sungai Nil",
+    "fil": "Ilog Nile",
+    "pt": "Rio Nilo",
+    "es": "Río Nilo",
+    "ja": "ナイル川",
+    "ru": "Нил",
+    "de": "Nil",
+    "fr": "Nil"
+  },
+  "Mumbai": {
+    "id": "Mumbai",
+    "fil": "Mumbai",
+    "pt": "Mumbai",
+    "es": "Bombay",
+    "ja": "ムンバイ",
+    "ru": "Мумбаи",
+    "de": "Mumbai",
+    "fr": "Mumbai"
+  },
+  "New Delhi": {
+    "id": "New Delhi",
+    "fil": "New Delhi",
+    "pt": "Nova Délhi",
+    "es": "Nueva Delhi",
+    "ja": "ニューデリー",
+    "ru": "Нью-Дели",
+    "de": "Neu-Delhi",
+    "fr": "New Delhi"
+  },
+  "Berlin": {
+    "id": "Berlin",
+    "fil": "Berlin",
+    "pt": "Berlim",
+    "es": "Berlín",
+    "ja": "ベルリン",
+    "ru": "Берлин",
+    "de": "Berlin",
+    "fr": "Berlin"
+  },
+  "Munich": {
+    "id": "Munich",
+    "fil": "Munich",
+    "pt": "Munique",
+    "es": "Múnich",
+    "ja": "ミュンヘン",
+    "ru": "Мюнхен",
+    "de": "München",
+    "fr": "Munich"
+  },
+  "Liter": {
+    "id": "Liter",
+    "fil": "Litro",
+    "pt": "Litro",
+    "es": "Litro",
+    "ja": "リットル",
+    "ru": "Литр",
+    "de": "Liter",
+    "fr": "Litre"
+  },
+  "Meter": {
+    "id": "Meter",
+    "fil": "Metro",
+    "pt": "Metro",
+    "es": "Metro",
+    "ja": "メートル",
+    "ru": "Метр",
+    "de": "Meter",
+    "fr": "Mètre"
+  },
+  "Tokyo": {
+    "id": "Tokyo",
+    "fil": "Tokyo",
+    "pt": "Tóquio",
+    "es": "Tokio",
+    "ja": "東京",
+    "ru": "Токио",
+    "de": "Tokio",
+    "fr": "Tokyo"
+  },
+  "Osaka": {
+    "id": "Osaka",
+    "fil": "Osaka",
+    "pt": "Osaka",
+    "es": "Osaka",
+    "ja": "大阪",
+    "ru": "Осака",
+    "de": "Osaka",
+    "fr": "Osaka"
+  },
+  "Caspian Sea": {
+    "id": "Laut Kaspia",
+    "fil": "Dagat Caspian",
+    "pt": "Mar Cáspio",
+    "es": "Mar Caspio",
+    "ja": "カスピ海",
+    "ru": "Каспийское море",
+    "de": "Kaspisches Meer",
+    "fr": "Mer Caspienne"
+  },
+  "Mediterranean Sea": {
+    "id": "Laut Mediterania",
+    "fil": "Dagat Mediteraneo",
+    "pt": "Mar Mediterrâneo",
+    "es": "Mar Mediterráneo",
+    "ja": "地中海",
+    "ru": "Средиземное море",
+    "de": "Mittelmeer",
+    "fr": "Mer Méditerranée"
+  },
+  "Sunday": {
+    "id": "Minggu",
+    "fil": "Linggo",
+    "pt": "Domingo",
+    "es": "Domingo",
+    "ja": "日曜日",
+    "ru": "Воскресенье",
+    "de": "Sonntag",
+    "fr": "Dimanche"
+  },
+  "Monday": {
+    "id": "Senin",
+    "fil": "Lunes",
+    "pt": "Segunda-feira",
+    "es": "Lunes",
+    "ja": "月曜日",
+    "ru": "Понедельник",
+    "de": "Montag",
+    "fr": "Lundi"
+  },
+  "Canada": {
+    "id": "Kanada",
+    "fil": "Canada",
+    "pt": "Canadá",
+    "es": "Canadá",
+    "ja": "カナダ",
+    "ru": "Канада",
+    "de": "Kanada",
+    "fr": "Canada"
+  },
+  "Russia": {
+    "id": "Rusia",
+    "fil": "Russia",
+    "pt": "Rússia",
+    "es": "Rusia",
+    "ja": "ロシア",
+    "ru": "Россия",
+    "de": "Russland",
+    "fr": "Russie"
+  },
+  "Rio de Janeiro": {
+    "id": "Rio de Janeiro",
+    "fil": "Rio de Janeiro",
+    "pt": "Rio de Janeiro",
+    "es": "Río de Janeiro",
+    "ja": "リオデジャネイロ",
+    "ru": "Рио-де-Жанейро",
+    "de": "Rio de Janeiro",
+    "fr": "Rio de Janeiro"
+  },
+  "Brasilia": {
+    "id": "Brasilia",
+    "fil": "Brasilia",
+    "pt": "Brasília",
+    "es": "Brasilia",
+    "ja": "ブラジリア",
+    "ru": "Бразилиа",
+    "de": "Brasília",
+    "fr": "Brasilia"
+  },
+  "Oceania": {
+    "id": "Oseania",
+    "fil": "Oceania",
+    "pt": "Oceania",
+    "es": "Oceanía",
+    "ja": "オセアニア",
+    "ru": "Океания",
+    "de": "Ozeanien",
+    "fr": "Océanie"
+  },
+  "Australia": {
+    "id": "Australia",
+    "fil": "Australia",
+    "pt": "Austrália",
+    "es": "Australia",
+    "ja": "オーストラリア",
+    "ru": "Австралия",
+    "de": "Australien",
+    "fr": "Australie"
+  },
+  "Gram": {
+    "id": "Gram",
+    "fil": "Gramo",
+    "pt": "Grama",
+    "es": "Gramo",
+    "ja": "グラム",
+    "ru": "Грамм",
+    "de": "Gramm",
+    "fr": "Gramme"
+  },
+  "Lake Baikal": {
+    "id": "Danau Baikal",
+    "fil": "Lawa ng Baikal",
+    "pt": "Lago Baikal",
+    "es": "Lago Baikal",
+    "ja": "バイカル湖",
+    "ru": "Озеро Байкал",
+    "de": "Baikalsee",
+    "fr": "Lac Baïkal"
+  },
+  "Shanghai": {
+    "id": "Shanghai",
+    "fil": "Shanghai",
+    "pt": "Xangai",
+    "es": "Shanghái",
+    "ja": "上海",
+    "ru": "Шанхай",
+    "de": "Shanghai",
+    "fr": "Shanghai"
+  },
+  "Beijing": {
+    "id": "Beijing",
+    "fil": "Beijing",
+    "pt": "Pequim",
+    "es": "Pekín",
+    "ja": "北京",
+    "ru": "Пекин",
+    "de": "Peking",
+    "fr": "Pékin"
+  },
+  "Montreal": {
+    "id": "Montreal",
+    "fil": "Montreal",
+    "pt": "Montreal",
+    "es": "Montreal",
+    "ja": "モントリオール",
+    "ru": "Монреаль",
+    "de": "Montreal",
+    "fr": "Montréal"
+  },
+  "Ottawa": {
+    "id": "Ottawa",
+    "fil": "Ottawa",
+    "pt": "Ottawa",
+    "es": "Ottawa",
+    "ja": "オタワ",
+    "ru": "Оттава",
+    "de": "Ottawa",
+    "fr": "Ottawa"
+  },
+  "Pluto": {
+    "id": "Pluto",
+    "fil": "Pluto",
+    "pt": "Plutão",
+    "es": "Plutón",
+    "ja": "冥王星",
+    "ru": "Плутон",
+    "de": "Pluto",
+    "fr": "Pluton"
+  },
+  "Moscow": {
+    "id": "Moskow",
+    "fil": "Moscow",
+    "pt": "Moscou",
+    "es": "Moscú",
+    "ja": "モスクワ",
+    "ru": "Москва",
+    "de": "Moskau",
+    "fr": "Moscou"
+  },
+  "St. Petersburg": {
+    "id": "Sankt Peterburg",
+    "fil": "St. Petersburg",
+    "pt": "São Petersburgo",
+    "es": "San Petersburgo",
+    "ja": "サンクトペテルブルク",
+    "ru": "Санкт-Петербург",
+    "de": "Sankt Petersburg",
+    "fr": "Saint-Pétersbourg"
+  },
+  " Whale shark": {
+    "id": "Hiu paus",
+    "fil": "Butanding",
+    "pt": "Tubarão-baleia",
+    "es": "Tiburón ballena",
+    "ja": "ジンベエザメ",
+    "ru": "Китовая акула",
+    "de": "Walhai",
+    "fr": "Requin-baleine"
+  },
+  "elephant": {
+    "id": "Gajah",
+    "fil": "Elepante",
+    "pt": "Elefante",
+    "es": "Elefante",
+    "ja": "ゾウ",
+    "ru": "Слон",
+    "de": "Elefant",
+    "fr": "Éléphant"
+  },
+  "dolphin": {
+    "id": "Lumba-lumba",
+    "fil": "Lumba-lumba",
+    "pt": "Golfinho",
+    "es": "Delfín",
+    "ja": "イルカ",
+    "ru": "Дельфин",
+    "de": "Delfin",
+    "fr": "Dauphin"
+  },
+  "Frog": {
+    "id": "Katak",
+    "fil": "Palaka",
+    "pt": "Sapo",
+    "es": "Rana",
+    "ja": "カエル",
+    "ru": "Лягушка",
+    "de": "Frosch",
+    "fr": "Grenouille"
+  },
+  "Bee": {
+    "id": "Lebah",
+    "fil": "Bubuyog",
+    "pt": "Abelha",
+    "es": "Abeja",
+    "ja": "ハチ",
+    "ru": "Пчела",
+    "de": "Biene",
+    "fr": "Abeille"
+  },
+  "What is the result of 2 + 2?": {
+    "id": "2 + 2 = ?",
+    "fil": "2 + 2 = ?",
+    "pt": "2 + 2 = ?",
+    "es": "2 + 2 = ?",
+    "ja": "2 + 2 = ?",
+    "ru": "2 + 2 = ?",
+    "de": "2 + 2 = ?",
+    "fr": "2 + 2 = ?"
+  },
+  "What is the shape of a circle?": {
+    "id": "Apa bentuk Lingkaran?",
+    "fil": "Ano ang hugis ng Bilog?",
+    "pt": "Qual é a forma de Círculo?",
+    "es": "¿Qué forma tiene Círculo?",
+    "ja": "円はどんな形？",
+    "ru": "Какую форму имеет Круг?",
+    "de": "Welche Form hat Kreis?",
+    "fr": "Quelle est la forme de Cercle ?"
+  },
+  "What is the number that comes after 5?": {
+    "id": "Angka setelah 5?",
+    "fil": "Anong numero pagkatapos ng 5?",
+    "pt": "Qual número vem depois de 5?",
+    "es": "¿Qué número sigue a 5?",
+    "ja": "5の次の数は？",
+    "ru": "Какое число после 5?",
+    "de": "Welche Zahl kommt nach 5?",
+    "fr": "Quel nombre vient après 5 ?"
+  },
+  "What is the result of 5 × 3?": {
+    "id": "5 × 3 = ?",
+    "fil": "5 × 3 = ?",
+    "pt": "5 × 3 = ?",
+    "es": "5 × 3 = ?",
+    "ja": "5 × 3 = ?",
+    "ru": "5 × 3 = ?",
+    "de": "5 × 3 = ?",
+    "fr": "5 × 3 = ?"
+  },
+  "What is the result of 3 squared?": {
+    "id": "3² = ?",
+    "fil": "3² = ?",
+    "pt": "3² = ?",
+    "es": "3² = ?",
+    "ja": "3² = ?",
+    "ru": "3² = ?",
+    "de": "3² = ?",
+    "fr": "3² = ?"
+  },
+  "What is the number that comes before 8?": {
+    "id": "Angka sebelum 8?",
+    "fil": "Anong numero bago ang 8?",
+    "pt": "Qual número vem antes de 8?",
+    "es": "¿Qué número va antes de 8?",
+    "ja": "8の前の数は？",
+    "ru": "Какое число перед 8?",
+    "de": "Welche Zahl kommt vor 8?",
+    "fr": "Quel nombre vient avant 8 ?"
+  },
+  "What is 12 ÷ 3?": {
+    "id": "12 ÷ 3 = ?",
+    "fil": "12 ÷ 3 = ?",
+    "pt": "12 ÷ 3 = ?",
+    "es": "12 ÷ 3 = ?",
+    "ja": "12 ÷ 3 = ?",
+    "ru": "12 ÷ 3 = ?",
+    "de": "12 ÷ 3 = ?",
+    "fr": "12 ÷ 3 = ?"
+  },
+  "What is the shape of a triangle?": {
+    "id": "Apa bentuk Segitiga?",
+    "fil": "Ano ang hugis ng Tatsulok?",
+    "pt": "Qual é a forma de Triângulo?",
+    "es": "¿Qué forma tiene Triángulo?",
+    "ja": "三角形はどんな形？",
+    "ru": "Какую форму имеет Треугольник?",
+    "de": "Welche Form hat Dreieck?",
+    "fr": "Quelle est la forme de Triangle ?"
+  },
+  "What is 4 + 3?": {
+    "id": "4 + 3 = ?",
+    "fil": "4 + 3 = ?",
+    "pt": "4 + 3 = ?",
+    "es": "4 + 3 = ?",
+    "ja": "4 + 3 = ?",
+    "ru": "4 + 3 = ?",
+    "de": "4 + 3 = ?",
+    "fr": "4 + 3 = ?"
+  },
+  "What is the number that comes after 9?": {
+    "id": "Angka setelah 9?",
+    "fil": "Anong numero pagkatapos ng 9?",
+    "pt": "Qual número vem depois de 9?",
+    "es": "¿Qué número sigue a 9?",
+    "ja": "9の次の数は？",
+    "ru": "Какое число после 9?",
+    "de": "Welche Zahl kommt nach 9?",
+    "fr": "Quel nombre vient après 9 ?"
+  },
+  "What is the result of 7 - 3?": {
+    "id": "7 - 3 = ?",
+    "fil": "7 - 3 = ?",
+    "pt": "7 - 3 = ?",
+    "es": "7 - 3 = ?",
+    "ja": "7 - 3 = ?",
+    "ru": "7 - 3 = ?",
+    "de": "7 - 3 = ?",
+    "fr": "7 - 3 = ?"
+  },
+  "What is 15 - 8?": {
+    "id": "15 - 8 = ?",
+    "fil": "15 - 8 = ?",
+    "pt": "15 - 8 = ?",
+    "es": "15 - 8 = ?",
+    "ja": "15 - 8 = ?",
+    "ru": "15 - 8 = ?",
+    "de": "15 - 8 = ?",
+    "fr": "15 - 8 = ?"
+  },
+  "What is the shape of a rectangle?": {
+    "id": "Apa bentuk Persegi panjang?",
+    "fil": "Ano ang hugis ng Parihaba?",
+    "pt": "Qual é a forma de Retângulo?",
+    "es": "¿Qué forma tiene Rectángulo?",
+    "ja": "長方形はどんな形？",
+    "ru": "Какую форму имеет Прямоугольник?",
+    "de": "Welche Form hat Rechteck?",
+    "fr": "Quelle est la forme de Rectangle ?"
+  },
+  "What is 5 x 3?": {
+    "id": "5 x 3 = ?",
+    "fil": "5 x 3 = ?",
+    "pt": "5 x 3 = ?",
+    "es": "5 x 3 = ?",
+    "ja": "5 x 3 = ?",
+    "ru": "5 x 3 = ?",
+    "de": "5 x 3 = ?",
+    "fr": "5 x 3 = ?"
+  },
+  "What is the number that comes before 4?": {
+    "id": "Angka sebelum 4?",
+    "fil": "Anong numero bago ang 4?",
+    "pt": "Qual número vem antes de 4?",
+    "es": "¿Qué número va antes de 4?",
+    "ja": "4の前の数は？",
+    "ru": "Какое число перед 4?",
+    "de": "Welche Zahl kommt vor 4?",
+    "fr": "Quel nombre vient avant 4 ?"
+  },
+  "What is 9 ÷ 3?": {
+    "id": "9 ÷ 3 = ?",
+    "fil": "9 ÷ 3 = ?",
+    "pt": "9 ÷ 3 = ?",
+    "es": "9 ÷ 3 = ?",
+    "ja": "9 ÷ 3 = ?",
+    "ru": "9 ÷ 3 = ?",
+    "de": "9 ÷ 3 = ?",
+    "fr": "9 ÷ 3 = ?"
+  },
+  "What is the shape of an oval?": {
+    "id": "Apa bentuk Oval?",
+    "fil": "Ano ang hugis ng Habilog?",
+    "pt": "Qual é a forma de Oval?",
+    "es": "¿Qué forma tiene Óvalo?",
+    "ja": "楕円はどんな形？",
+    "ru": "Какую форму имеет Овал?",
+    "de": "Welche Form hat Oval?",
+    "fr": "Quelle est la forme de Ovale ?"
+  },
+  "What is the result of 2 to the power of 4?": {
+    "id": "2⁴ = ?",
+    "fil": "2⁴ = ?",
+    "pt": "2⁴ = ?",
+    "es": "2⁴ = ?",
+    "ja": "2⁴ = ?",
+    "ru": "2⁴ = ?",
+    "de": "2⁴ = ?",
+    "fr": "2⁴ = ?"
+  },
+  "What is 7 + 3?": {
+    "id": "7 + 3 = ?",
+    "fil": "7 + 3 = ?",
+    "pt": "7 + 3 = ?",
+    "es": "7 + 3 = ?",
+    "ja": "7 + 3 = ?",
+    "ru": "7 + 3 = ?",
+    "de": "7 + 3 = ?",
+    "fr": "7 + 3 = ?"
+  },
+  "What is the number that comes after 12?": {
+    "id": "Angka setelah 12?",
+    "fil": "Anong numero pagkatapos ng 12?",
+    "pt": "Qual número vem depois de 12?",
+    "es": "¿Qué número sigue a 12?",
+    "ja": "12の次の数は？",
+    "ru": "Какое число после 12?",
+    "de": "Welche Zahl kommt nach 12?",
+    "fr": "Quel nombre vient après 12 ?"
+  },
+  "What is 8 - 3?": {
+    "id": "8 - 3 = ?",
+    "fil": "8 - 3 = ?",
+    "pt": "8 - 3 = ?",
+    "es": "8 - 3 = ?",
+    "ja": "8 - 3 = ?",
+    "ru": "8 - 3 = ?",
+    "de": "8 - 3 = ?",
+    "fr": "8 - 3 = ?"
+  },
+  "What is the result of 6 × 2?": {
+    "id": "6 × 2 = ?",
+    "fil": "6 × 2 = ?",
+    "pt": "6 × 2 = ?",
+    "es": "6 × 2 = ?",
+    "ja": "6 × 2 = ?",
+    "ru": "6 × 2 = ?",
+    "de": "6 × 2 = ?",
+    "fr": "6 × 2 = ?"
+  },
+  "What is the capital of France?": {
+    "id": "Apa ibu kota Prancis?",
+    "fil": "Ano ang kabisera ng France?",
+    "pt": "Qual é a capital de França?",
+    "es": "¿Cuál es la capital de Francia?",
+    "ja": "フランスの首都は？",
+    "ru": "Какая столица страны Франция?",
+    "de": "Was ist die Hauptstadt von Frankreich?",
+    "fr": "Quelle est la capitale de France ?"
+  },
+  "What is the capital of Australia?": {
+    "id": "Apa ibu kota Australia?",
+    "fil": "Ano ang kabisera ng Australia?",
+    "pt": "Qual é a capital de Austrália?",
+    "es": "¿Cuál es la capital de Australia?",
+    "ja": "オーストラリアの首都は？",
+    "ru": "Какая столица страны Австралия?",
+    "de": "Was ist die Hauptstadt von Australien?",
+    "fr": "Quelle est la capitale de Australie ?"
+  },
+  "What is the name of the capital of India?": {
+    "id": "Apa ibu kota India?",
+    "fil": "Ano ang kabisera ng India?",
+    "pt": "Qual é a capital de Índia?",
+    "es": "¿Cuál es la capital de India?",
+    "ja": "インドの首都は？",
+    "ru": "Какая столица страны Индия?",
+    "de": "Was ist die Hauptstadt von Indien?",
+    "fr": "Quelle est la capitale de Inde ?"
+  },
+  "What is the capital of Germany?": {
+    "id": "Apa ibu kota Jerman?",
+    "fil": "Ano ang kabisera ng Germany?",
+    "pt": "Qual é a capital de Alemanha?",
+    "es": "¿Cuál es la capital de Alemania?",
+    "ja": "ドイツの首都は？",
+    "ru": "Какая столица страны Германия?",
+    "de": "Was ist die Hauptstadt von Deutschland?",
+    "fr": "Quelle est la capitale de Allemagne ?"
+  },
+  "What is the capital of Japan?": {
+    "id": "Apa ibu kota Jepang?",
+    "fil": "Ano ang kabisera ng Japan?",
+    "pt": "Qual é a capital de Japão?",
+    "es": "¿Cuál es la capital de Japón?",
+    "ja": "日本の首都は？",
+    "ru": "Какая столица страны Япония?",
+    "de": "Was ist die Hauptstadt von Japan?",
+    "fr": "Quelle est la capitale de Japon ?"
+  },
+  "What is the capital of Brazil?": {
+    "id": "Apa ibu kota Brasil?",
+    "fil": "Ano ang kabisera ng Brazil?",
+    "pt": "Qual é a capital de Brasil?",
+    "es": "¿Cuál es la capital de Brasil?",
+    "ja": "ブラジルの首都は？",
+    "ru": "Какая столица страны Бразилия?",
+    "de": "Was ist die Hauptstadt von Brasilien?",
+    "fr": "Quelle est la capitale de Brésil ?"
+  },
+  "What is the capital of China?": {
+    "id": "Apa ibu kota Tiongkok?",
+    "fil": "Ano ang kabisera ng China?",
+    "pt": "Qual é a capital de China?",
+    "es": "¿Cuál es la capital de China?",
+    "ja": "中国の首都は？",
+    "ru": "Какая столица страны Китай?",
+    "de": "Was ist die Hauptstadt von China?",
+    "fr": "Quelle est la capitale de Chine ?"
+  },
+  "What is the capital of Canada?": {
+    "id": "Apa ibu kota Kanada?",
+    "fil": "Ano ang kabisera ng Canada?",
+    "pt": "Qual é a capital de Canadá?",
+    "es": "¿Cuál es la capital de Canadá?",
+    "ja": "カナダの首都は？",
+    "ru": "Какая столица страны Канада?",
+    "de": "Was ist die Hauptstadt von Kanada?",
+    "fr": "Quelle est la capitale de Canada ?"
+  },
+  "What is the capital of Russia?": {
+    "id": "Apa ibu kota Rusia?",
+    "fil": "Ano ang kabisera ng Russia?",
+    "pt": "Qual é a capital de Rússia?",
+    "es": "¿Cuál es la capital de Rusia?",
+    "ja": "ロシアの首都は？",
+    "ru": "Какая столица страны Россия?",
+    "de": "Was ist die Hauptstadt von Russland?",
+    "fr": "Quelle est la capitale de Russie ?"
+  },
+  "What is the largest land animal in the world?": {
+    "id": "Hewan darat terbesar?",
+    "fil": "Pinakamalaking hayop sa lupa?",
+    "pt": "Maior animal terrestre?",
+    "es": "¿Animal terrestre más grande?",
+    "ja": "最大の陸上動物は？",
+    "ru": "Крупнейшее наземное животное?",
+    "de": "Größtes Landtier?",
+    "fr": "Plus grand animal terrestre ?"
+  },
+  "What animal has a long trunk?": {
+    "id": "Hewan dengan belalai panjang?",
+    "fil": "Hayop na may mahabang nguso?",
+    "pt": "Animal com tromba longa?",
+    "es": "¿Animal con trompa larga?",
+    "ja": "長い鼻を持つ動物は？",
+    "ru": "У кого длинный хобот?",
+    "de": "Tier mit langem Rüssel?",
+    "fr": "Animal à longue trompe ?"
+  },
+  "Which animal has the longest lifespan?": {
+    "id": "Hewan berumur paling panjang?",
+    "fil": "Hayop na pinakamatagal mabuhay?",
+    "pt": "Animal que vive mais tempo?",
+    "es": "¿Animal más longevo?",
+    "ja": "最も長生きする動物は？",
+    "ru": "Кто живёт дольше всех?",
+    "de": "Welches Tier lebt am längsten?",
+    "fr": "Animal à la plus longue vie ?"
+  },
+  "What is the fastest land animal?": {
+    "id": "Hewan darat tercepat?",
+    "fil": "Pinakamabilis na hayop sa lupa?",
+    "pt": "Animal terrestre mais rápido?",
+    "es": "¿Animal terrestre más rápido?",
+    "ja": "最速の陸上動物は？",
+    "ru": "Самое быстрое наземное животное?",
+    "de": "Schnellstes Landtier?",
+    "fr": "Animal terrestre le plus rapide ?"
+  },
+  "Which animal is known for its black and white stripes?": {
+    "id": "Hewan bergaris hitam putih?",
+    "fil": "Hayop na may itim-puting guhit?",
+    "pt": "Animal com listras pretas e brancas?",
+    "es": "¿Animal con rayas blancas y negras?",
+    "ja": "白黒のしま模様の動物は？",
+    "ru": "У кого чёрно-белые полосы?",
+    "de": "Tier mit schwarz-weißen Streifen?",
+    "fr": "Animal aux rayures noires et blanches ?"
+  },
+  "Which animal has a long neck and eats leaves from tall trees?": {
+    "id": "Hewan berleher panjang pemakan daun pohon tinggi?",
+    "fil": "Hayop na mahaba ang leeg at kumakain ng dahon sa matataas na puno?",
+    "pt": "Animal de pescoço longo que come folhas no alto?",
+    "es": "¿Animal de cuello largo que come hojas altas?",
+    "ja": "首が長く高い木の葉を食べる動物は？",
+    "ru": "Кто с длинной шеей ест листья высоких деревьев?",
+    "de": "Tier mit langem Hals, das hohe Blätter frisst?",
+    "fr": "Animal au long cou mangeant les feuilles en hauteur ?"
+  },
+  "Which animal is capable of producing venom?": {
+    "id": "Hewan yang menghasilkan racun?",
+    "fil": "Hayop na gumagawa ng lason?",
+    "pt": "Animal que produz veneno?",
+    "es": "¿Animal que produce veneno?",
+    "ja": "毒を作る動物は？",
+    "ru": "Какое животное вырабатывает яд?",
+    "de": "Welches Tier produziert Gift?",
+    "fr": "Animal produisant du venin ?"
+  },
+  "What is the largest species of penguin?": {
+    "id": "Spesies penguin terbesar?",
+    "fil": "Pinakamalaking uri ng penguin?",
+    "pt": "Maior espécie de pinguim?",
+    "es": "¿Mayor especie de pingüino?",
+    "ja": "最大のペンギンの種類は？",
+    "ru": "Крупнейший вид пингвинов?",
+    "de": "Größte Pinguinart?",
+    "fr": "Plus grande espèce de manchot ?"
+  },
+  "What animal has a hard shell and moves slowly?": {
+    "id": "Hewan bercangkang keras yang bergerak lambat?",
+    "fil": "Hayop na mabagal at may matigas na talukab?",
+    "pt": "Animal lento com casco duro?",
+    "es": "¿Animal lento con caparazón duro?",
+    "ja": "硬い甲羅でゆっくり動く動物は？",
+    "ru": "Кто медленно движется и имеет панцирь?",
+    "de": "Langsames Tier mit hartem Panzer?",
+    "fr": "Animal lent à carapace dure ?"
+  },
+  "What is the national bird of the United States?": {
+    "id": "Burung nasional Amerika Serikat?",
+    "fil": "Pambansang ibon ng Estados Unidos?",
+    "pt": "Ave nacional dos Estados Unidos?",
+    "es": "¿Ave nacional de Estados Unidos?",
+    "ja": "アメリカの国鳥は？",
+    "ru": "Национальная птица США?",
+    "de": "Nationalvogel der USA?",
+    "fr": "Oiseau national des États-Unis ?"
+  },
+  "Which animal is known for its long neck?": {
+    "id": "Hewan yang terkenal berleher panjang?",
+    "fil": "Hayop na kilala sa mahabang leeg?",
+    "pt": "Animal conhecido pelo pescoço longo?",
+    "es": "¿Animal conocido por su cuello largo?",
+    "ja": "長い首で知られる動物は？",
+    "ru": "Какое животное известно длинной шеей?",
+    "de": "Tier, das für langen Hals bekannt ist?",
+    "fr": "Animal connu pour son long cou ?"
+  },
+  "What animal lives in the water and has a fin on its back?": {
+    "id": "Hewan air dengan sirip punggung?",
+    "fil": "Hayop sa tubig na may palikpik sa likod?",
+    "pt": "Animal aquático com barbatana nas costas?",
+    "es": "¿Animal acuático con aleta dorsal?",
+    "ja": "水中に住み背びれを持つ動物は？",
+    "ru": "У какого водного животного спинной плавник?",
+    "de": "Wassertier mit Rückenflosse?",
+    "fr": "Animal aquatique à nageoire dorsale ?"
+  },
+  "Which animal can fly?": {
+    "id": "Hewan yang bisa terbang?",
+    "fil": "Hayop na nakakalipad?",
+    "pt": "Animal que voa?",
+    "es": "¿Animal que puede volar?",
+    "ja": "飛べる動物は？",
+    "ru": "Какое животное летает?",
+    "de": "Welches Tier kann fliegen?",
+    "fr": "Quel animal peut voler ?"
+  },
+  "What is the largest species of shark?": {
+    "id": "Spesies hiu terbesar?",
+    "fil": "Pinakamalaking uri ng pating?",
+    "pt": "Maior espécie de tubarão?",
+    "es": "¿Mayor especie de tiburón?",
+    "ja": "最大のサメの種類は？",
+    "ru": "Крупнейший вид акул?",
+    "de": "Größte Haiart?",
+    "fr": "Plus grande espèce de requin ?"
+  },
+  "Which animal is known for its ability to camouflage?": {
+    "id": "Hewan yang bisa berkamuflase?",
+    "fil": "Hayop na kayang magbalatkayo?",
+    "pt": "Animal que se camufla?",
+    "es": "¿Animal que se camufla?",
+    "ja": "擬態できる動物は？",
+    "ru": "Кто умеет маскироваться?",
+    "de": "Welches Tier tarnt sich?",
+    "fr": "Quel animal se camoufle ?"
+  },
+  "What animal is known for its black and white color and waddling walk?": {
+    "id": "Hewan hitam putih yang berjalan bergoyang?",
+    "fil": "Hayop na itim-puti at umuugoy maglakad?",
+    "pt": "Animal preto e branco que anda bamboleando?",
+    "es": "¿Animal blanco y negro que camina balanceándose?",
+    "ja": "白黒でよちよち歩く動物は？",
+    "ru": "Чёрно-белое животное с походкой вразвалку?",
+    "de": "Schwarz-weißes Tier mit Watschelgang?",
+    "fr": "Animal noir et blanc qui se dandine ?"
+  },
+  "What animal lives in the desert and has humps on its back?": {
+    "id": "Hewan gurun dengan punuk?",
+    "fil": "Hayop sa disyerto na may umbok?",
+    "pt": "Animal do deserto com corcovas?",
+    "es": "¿Animal del desierto con jorobas?",
+    "ja": "砂漠に住みこぶを持つ動物は？",
+    "ru": "Животное пустыни с горбами?",
+    "de": "Wüstentier mit Höckern?",
+    "fr": "Animal du désert avec des bosses ?"
+  },
+  "Which animal is known for its humps on its back?": {
+    "id": "Hewan yang terkenal memiliki punuk?",
+    "fil": "Hayop na kilala sa umbok sa likod?",
+    "pt": "Animal conhecido pelas corcovas?",
+    "es": "¿Animal conocido por sus jorobas?",
+    "ja": "背中のこぶで知られる動物は？",
+    "ru": "Какое животное известно горбами?",
+    "de": "Tier, das für seine Höcker bekannt ist?",
+    "fr": "Animal connu pour ses bosses ?"
+  },
+  "What animal has a long neck and spots on its body?": {
+    "id": "Hewan berleher panjang dan berbintik?",
+    "fil": "Hayop na mahaba ang leeg at may batik?",
+    "pt": "Animal de pescoço longo e manchas?",
+    "es": "¿Animal de cuello largo y manchas?",
+    "ja": "首が長く斑点がある動物は？",
+    "ru": "У кого длинная шея и пятна?",
+    "de": "Tier mit langem Hals und Flecken?",
+    "fr": "Animal au long cou et à taches ?"
+  },
+  "Which animal is known for its black and white coloration and bamboo diet?": {
+    "id": "Hewan hitam putih pemakan bambu?",
+    "fil": "Hayop na itim-puti at kumakain ng kawayan?",
+    "pt": "Animal preto e branco que come bambu?",
+    "es": "¿Animal blanco y negro que come bambú?",
+    "ja": "白黒で竹を食べる動物は？",
+    "ru": "Кто чёрно-белый и ест бамбук?",
+    "de": "Schwarz-weißes Tier, das Bambus frisst?",
+    "fr": "Animal noir et blanc mangeant du bambou ?"
+  },
+  "Which animal is known for its ability to swim and balance a ball on its nose?": {
+    "id": "Hewan yang berenang dan menyeimbangkan bola di hidung?",
+    "fil": "Hayop na lumalangoy at nagbabalanse ng bola sa ilong?",
+    "pt": "Animal que nada e equilibra bola no nariz?",
+    "es": "¿Animal que nada y equilibra una pelota en la nariz?",
+    "ja": "泳いで鼻にボールを乗せる動物は？",
+    "ru": "Кто плавает и держит мяч на носу?",
+    "de": "Tier, das schwimmt und einen Ball auf der Nase balanciert?",
+    "fr": "Animal nageant et équilibrant une balle sur son nez ?"
+  },
+  "What animal has a long, sticky tongue and can climb trees?": {
+    "id": "Hewan berlidah panjang lengket yang memanjat pohon?",
+    "fil": "Hayop na may mahabang malagkit na dila at umaakyat sa puno?",
+    "pt": "Animal de língua longa e pegajosa que sobe em árvores?",
+    "es": "¿Animal de lengua larga y pegajosa que trepa árboles?",
+    "ja": "長く粘る舌で木に登る動物は？",
+    "ru": "Кто лазает по деревьям с длинным липким языком?",
+    "de": "Baumkletterer mit langer klebriger Zunge?",
+    "fr": "Animal grimpant aux arbres avec une longue langue collante ?"
+  },
+  "What animal lives in the jungle and has orange fur with black stripes?": {
+    "id": "Hewan hutan berbulu oranye bergaris hitam?",
+    "fil": "Hayop sa gubat na kulay kahel na may itim na guhit?",
+    "pt": "Animal da selva com pelo laranja e listras pretas?",
+    "es": "¿Animal de selva con pelo naranja y rayas negras?",
+    "ja": "ジャングルに住みオレンジ色に黒しまの動物は？",
+    "ru": "У кого в джунглях оранжевая шерсть с чёрными полосами?",
+    "de": "Dschungeltier mit orangefarbenem Fell und schwarzen Streifen?",
+    "fr": "Animal de jungle orange à rayures noires ?"
+  },
+  "Which animal is known for its ability to hang upside down from trees?": {
+    "id": "Hewan yang bergantung terbalik di pohon?",
+    "fil": "Hayop na nakabitin nang patiwarik sa puno?",
+    "pt": "Animal que fica pendurado de cabeça para baixo?",
+    "es": "¿Animal que cuelga boca abajo de los árboles?",
+    "ja": "木に逆さにぶら下がる動物は？",
+    "ru": "Кто висит на деревьях вниз головой?",
+    "de": "Tier, das kopfüber an Bäumen hängt?",
+    "fr": "Animal suspendu aux arbres la tête en bas ?"
+  },
+  "What animal is known for its bright colors and ability to mimic other animals?": {
+    "id": "Hewan berwarna cerah yang meniru hewan lain?",
+    "fil": "Hayop na makulay at gumagaya sa iba?",
+    "pt": "Animal colorido que imita outros animais?",
+    "es": "¿Animal colorido que imita a otros?",
+    "ja": "鮮やかな色で他の動物をまねる動物は？",
+    "ru": "Яркое животное, подражающее другим?",
+    "de": "Buntes Tier, das andere Tiere nachahmt?",
+    "fr": "Animal coloré imitant d’autres animaux ?"
+  },
+  "What animal lives in the ocean and has a hard shell on its back?": {
+    "id": "Hewan laut dengan cangkang keras di punggung?",
+    "fil": "Hayop sa dagat na may matigas na talukab?",
+    "pt": "Animal marinho com casco duro?",
+    "es": "¿Animal marino con caparazón duro?",
+    "ja": "海に住み硬い甲羅を持つ動物は？",
+    "ru": "Морское животное с твёрдым панцирем?",
+    "de": "Meerestier mit hartem Panzer?",
+    "fr": "Animal marin à carapace dure ?"
+  },
+  "What is the national animal of Canada?": {
+    "id": "Hewan nasional Kanada?",
+    "fil": "Pambansang hayop ng Canada?",
+    "pt": "Animal nacional do Canadá?",
+    "es": "¿Animal nacional de Canadá?",
+    "ja": "カナダの国の動物は？",
+    "ru": "Национальное животное Канады?",
+    "de": "Nationaltier Kanadas?",
+    "fr": "Animal national du Canada ?"
+  },
+  "Which animal can change its color to match its surroundings? ": {
+    "id": "Hewan yang berubah warna mengikuti lingkungan?",
+    "fil": "Hayop na nagbabago ng kulay ayon sa paligid?",
+    "pt": "Animal que muda de cor conforme o ambiente?",
+    "es": "¿Animal que cambia de color según su entorno?",
+    "ja": "周囲に合わせて色を変える動物は？",
+    "ru": "Кто меняет цвет под окружение?",
+    "de": "Tier, das seine Farbe der Umgebung anpasst?",
+    "fr": "Animal changeant de couleur selon son environnement ?"
+  },
+  "How many sides does a triangle have?": {
+    "id": "Berapa sisi segitiga?",
+    "fil": "Ilang gilid ang tatsulok?",
+    "pt": "Quantos lados tem um triângulo?",
+    "es": "¿Cuántos lados tiene un triángulo?",
+    "ja": "三角形の辺はいくつ？",
+    "ru": "Сколько сторон у треугольника?",
+    "de": "Wie viele Seiten hat ein Dreieck?",
+    "fr": "Combien de côtés a un triangle ?"
+  },
+  "What is the square root of 64?": {
+    "id": "Akar kuadrat dari 64?",
+    "fil": "Ano ang square root ng 64?",
+    "pt": "Raiz quadrada de 64?",
+    "es": "¿Raíz cuadrada de 64?",
+    "ja": "64の平方根は？",
+    "ru": "Квадратный корень из 64?",
+    "de": "Quadratwurzel aus 64?",
+    "fr": "Racine carrée de 64 ?"
+  },
+  "How many legs does a dog have?": {
+    "id": "Berapa kaki anjing?",
+    "fil": "Ilang paa ang aso?",
+    "pt": "Quantas patas tem um cachorro?",
+    "es": "¿Cuántas patas tiene un perro?",
+    "ja": "犬の足は何本？",
+    "ru": "Сколько ног у собаки?",
+    "de": "Wie viele Beine hat ein Hund?",
+    "fr": "Combien de pattes a un chien ?"
+  },
+  "How many corners does a rectangle have?": {
+    "id": "Berapa sudut persegi panjang?",
+    "fil": "Ilang sulok ang parihaba?",
+    "pt": "Quantos cantos tem um retângulo?",
+    "es": "¿Cuántas esquinas tiene un rectángulo?",
+    "ja": "長方形の角はいくつ？",
+    "ru": "Сколько углов у прямоугольника?",
+    "de": "Wie viele Ecken hat ein Rechteck?",
+    "fr": "Combien de coins a un rectangle ?"
+  },
+  "How many days are there in a week?": {
+    "id": "Berapa hari dalam seminggu?",
+    "fil": "Ilang araw sa isang linggo?",
+    "pt": "Quantos dias tem uma semana?",
+    "es": "¿Cuántos días tiene una semana?",
+    "ja": "1週間は何日？",
+    "ru": "Сколько дней в неделе?",
+    "de": "Wie viele Tage hat eine Woche?",
+    "fr": "Combien de jours par semaine ?"
+  },
+  "How many legs does a spider have?": {
+    "id": "Berapa kaki laba-laba?",
+    "fil": "Ilang paa ang gagamba?",
+    "pt": "Quantas patas tem uma aranha?",
+    "es": "¿Cuántas patas tiene una araña?",
+    "ja": "クモの足は何本？",
+    "ru": "Сколько ног у паука?",
+    "de": "Wie viele Beine hat eine Spinne?",
+    "fr": "Combien de pattes a une araignée ?"
+  },
+  "How many corners does a hexagon have?": {
+    "id": "Berapa sudut segi enam?",
+    "fil": "Ilang sulok ang heksagon?",
+    "pt": "Quantos cantos tem um hexágono?",
+    "es": "¿Cuántas esquinas tiene un hexágono?",
+    "ja": "六角形の角はいくつ？",
+    "ru": "Сколько углов у шестиугольника?",
+    "de": "Wie viele Ecken hat ein Sechseck?",
+    "fr": "Combien de coins a un hexagone ?"
+  },
+  "What is the fundamental unit of life?": {
+    "id": "Unit dasar kehidupan?",
+    "fil": "Pangunahing yunit ng buhay?",
+    "pt": "Unidade básica da vida?",
+    "es": "¿Unidad básica de la vida?",
+    "ja": "生命の基本単位は？",
+    "ru": "Основная единица жизни?",
+    "de": "Grundeinheit des Lebens?",
+    "fr": "Unité fondamentale de la vie ?"
+  },
+  "What is the smallest unit of an element that retains its chemical properties?": {
+    "id": "Unit terkecil unsur yang mempertahankan sifat kimia?",
+    "fil": "Pinakamaliit na yunit ng elemento na may katangiang kemikal?",
+    "pt": "Menor unidade de um elemento que mantém suas propriedades químicas?",
+    "es": "¿Menor unidad de un elemento que conserva sus propiedades químicas?",
+    "ja": "元素の化学的性質を保つ最小単位は？",
+    "ru": "Наименьшая единица элемента, сохраняющая химические свойства?",
+    "de": "Kleinste Einheit eines Elements mit dessen chemischen Eigenschaften?",
+    "fr": "Plus petite unité d’un élément gardant ses propriétés chimiques ?"
+  },
+  "What is the largest planet in our solar system?": {
+    "id": "Planet terbesar di tata surya?",
+    "fil": "Pinakamalaking planeta sa solar system?",
+    "pt": "Maior planeta do Sistema Solar?",
+    "es": "¿Mayor planeta del sistema solar?",
+    "ja": "太陽系で最大の惑星は？",
+    "ru": "Крупнейшая планета Солнечной системы?",
+    "de": "Größter Planet im Sonnensystem?",
+    "fr": "Plus grande planète du système solaire ?"
+  },
+  "Which of the following is a natural satellite of the Earth? ": {
+    "id": "Satelit alami Bumi?",
+    "fil": "Likas na satelayt ng Daigdig?",
+    "pt": "Satélite natural da Terra?",
+    "es": "¿Satélite natural de la Tierra?",
+    "ja": "地球の自然衛星は？",
+    "ru": "Естественный спутник Земли?",
+    "de": "Natürlicher Satellit der Erde?",
+    "fr": "Satellite naturel de la Terre ?"
+  },
+  "What is the scientific study of heredity called?": {
+    "id": "Ilmu tentang pewarisan sifat?",
+    "fil": "Agham ng pagmamana?",
+    "pt": "Ciência da hereditariedade?",
+    "es": "¿Ciencia de la herencia?",
+    "ja": "遺伝を研究する学問は？",
+    "ru": "Наука о наследственности?",
+    "de": "Wissenschaft der Vererbung?",
+    "fr": "Science de l’hérédité ?"
+  },
+  "What is the SI unit of force?": {
+    "id": "Satuan SI untuk gaya?",
+    "fil": "Yunit SI ng puwersa?",
+    "pt": "Unidade SI de força?",
+    "es": "¿Unidad SI de fuerza?",
+    "ja": "力のSI単位は？",
+    "ru": "Единица силы в СИ?",
+    "de": "SI-Einheit der Kraft?",
+    "fr": "Unité SI de force ?"
+  },
+  "What is the pH of pure water?": {
+    "id": "pH air murni?",
+    "fil": "pH ng purong tubig?",
+    "pt": "pH da água pura?",
+    "es": "¿pH del agua pura?",
+    "ja": "純水のpHは？",
+    "ru": "pH чистой воды?",
+    "de": "pH-Wert von reinem Wasser?",
+    "fr": "pH de l’eau pure ?"
+  },
+  "What is the force that opposes the motion of objects through a fluid called?": {
+    "id": "Gaya yang melawan gerak benda dalam fluida?",
+    "fil": "Puwersang humahadlang sa galaw sa fluid?",
+    "pt": "Força contrária ao movimento em um fluido?",
+    "es": "¿Fuerza que se opone al movimiento en un fluido?",
+    "ja": "流体中の運動に逆らう力は？",
+    "ru": "Сила, мешающая движению в жидкости или газе?",
+    "de": "Kraft gegen die Bewegung in einem Fluid?",
+    "fr": "Force opposée au mouvement dans un fluide ?"
+  },
+  "What element is the most abundant in the Earth's crust?": {
+    "id": "Unsur terbanyak di kerak Bumi?",
+    "fil": "Pinakamaraming elemento sa balat ng Daigdig?",
+    "pt": "Elemento mais abundante na crosta terrestre?",
+    "es": "¿Elemento más abundante de la corteza terrestre?",
+    "ja": "地殻で最も多い元素は？",
+    "ru": "Самый распространённый элемент земной коры?",
+    "de": "Häufigstes Element der Erdkruste?",
+    "fr": "Élément le plus abondant de la croûte terrestre ?"
+  },
+  "Which of the following is NOT a primary color?": {
+    "id": "Yang BUKAN warna primer?",
+    "fil": "Alin ang HINDI pangunahing kulay?",
+    "pt": "Qual NÃO é cor primária?",
+    "es": "¿Cuál NO es un color primario?",
+    "ja": "原色ではない色は？",
+    "ru": "Какой цвет НЕ основной?",
+    "de": "Welche Farbe ist KEINE Primärfarbe?",
+    "fr": "Quelle couleur n’est PAS primaire ?"
+  },
+  "What is the largest organ in the human body?": {
+    "id": "Organ terbesar tubuh manusia?",
+    "fil": "Pinakamalaking organo ng tao?",
+    "pt": "Maior órgão do corpo humano?",
+    "es": "¿Mayor órgano del cuerpo humano?",
+    "ja": "人体で最大の器官は？",
+    "ru": "Крупнейший орган человека?",
+    "de": "Größtes Organ des Menschen?",
+    "fr": "Plus grand organe humain ?"
+  },
+  "What is the study of the interactions between organisms and their environment called?": {
+    "id": "Ilmu interaksi organisme dan lingkungannya?",
+    "fil": "Agham ng ugnayan ng organismo at kapaligiran?",
+    "pt": "Estudo dos organismos e seu ambiente?",
+    "es": "¿Estudio de organismos y su entorno?",
+    "ja": "生物と環境の関係を研究する学問は？",
+    "ru": "Наука о взаимодействии организмов и среды?",
+    "de": "Wissenschaft von Organismen und ihrer Umwelt?",
+    "fr": "Étude des organismes et de leur environnement ?"
+  },
+  "What is the hottest planet in our solar system?": {
+    "id": "Planet terpanas di tata surya?",
+    "fil": "Pinakamainit na planeta sa solar system?",
+    "pt": "Planeta mais quente do Sistema Solar?",
+    "es": "¿Planeta más caliente del sistema solar?",
+    "ja": "太陽系で最も熱い惑星は？",
+    "ru": "Самая горячая планета Солнечной системы?",
+    "de": "Heißester Planet im Sonnensystem?",
+    "fr": "Planète la plus chaude du système solaire ?"
+  },
+  "What is the process by which a substance changes from a gas to a liquid called?": {
+    "id": "Perubahan gas menjadi cair disebut?",
+    "fil": "Pagbabago ng gas tungo sa likido?",
+    "pt": "Mudança de gás para líquido?",
+    "es": "¿Cambio de gas a líquido?",
+    "ja": "気体が液体になる変化は？",
+    "ru": "Переход из газа в жидкость?",
+    "de": "Übergang von Gas zu Flüssigkeit?",
+    "fr": "Passage du gaz au liquide ?"
+  },
+  "What is the process by which an organism produces offspring called?": {
+    "id": "Proses organisme menghasilkan keturunan?",
+    "fil": "Proseso ng paggawa ng supling?",
+    "pt": "Processo de gerar descendentes?",
+    "es": "¿Proceso de producir descendencia?",
+    "ja": "生物が子孫を作る過程は？",
+    "ru": "Процесс появления потомства?",
+    "de": "Prozess der Erzeugung von Nachkommen?",
+    "fr": "Processus de production de descendants ?"
+  },
+  "What is the unit of measurement for electric current?": {
+    "id": "Satuan arus listrik?",
+    "fil": "Yunit ng kuryente?",
+    "pt": "Unidade de corrente elétrica?",
+    "es": "¿Unidad de corriente eléctrica?",
+    "ja": "電流の単位は？",
+    "ru": "Единица электрического тока?",
+    "de": "Einheit der Stromstärke?",
+    "fr": "Unité du courant électrique ?"
+  },
+  "What is the chemical symbol for gold?": {
+    "id": "Simbol kimia emas?",
+    "fil": "Simbolong kemikal ng ginto?",
+    "pt": "Símbolo químico do ouro?",
+    "es": "¿Símbolo químico del oro?",
+    "ja": "金の元素記号は？",
+    "ru": "Химический символ золота?",
+    "de": "Chemisches Symbol für Gold?",
+    "fr": "Symbole chimique de l’or ?"
+  },
+  "What is the highest mountain on Earth?": {
+    "id": "Gunung tertinggi di Bumi?",
+    "fil": "Pinakamataas na bundok sa Daigdig?",
+    "pt": "Montanha mais alta da Terra?",
+    "es": "¿Montaña más alta de la Tierra?",
+    "ja": "地球で最も高い山は？",
+    "ru": "Самая высокая гора на Земле?",
+    "de": "Höchster Berg der Erde?",
+    "fr": "Plus haute montagne sur Terre ?"
+  },
+  "Which one is a fish?": {
+    "id": "Yang mana ikan?",
+    "fil": "Alin ang isda?",
+    "pt": "Qual é um peixe?",
+    "es": "¿Cuál es un pez?",
+    "ja": "魚はどれ？",
+    "ru": "Кто из них рыба?",
+    "de": "Welches ist ein Fisch?",
+    "fr": "Lequel est un poisson ?"
+  },
+  "What is the largest mammal on land？": {
+    "id": "Mamalia darat terbesar?",
+    "fil": "Pinakamalaking mamalya sa lupa?",
+    "pt": "Maior mamífero terrestre?",
+    "es": "¿Mayor mamífero terrestre?",
+    "ja": "最大の陸上哺乳類は？",
+    "ru": "Крупнейшее наземное млекопитающее?",
+    "de": "Größtes Landsäugetier?",
+    "fr": "Plus grand mammifère terrestre ?"
+  },
+  "What is the process by which water is turned into ice": {
+    "id": "Proses air menjadi es?",
+    "fil": "Proseso ng tubig tungo sa yelo?",
+    "pt": "Processo de água virar gelo?",
+    "es": "¿Proceso del agua al hielo?",
+    "ja": "水が氷になる過程は？",
+    "ru": "Превращение воды в лёд?",
+    "de": "Vorgang, bei dem Wasser zu Eis wird?",
+    "fr": "Transformation de l’eau en glace ?"
+  },
+  "What is the main gas that makes up the Earth's atmosphere?": {
+    "id": "Gas utama atmosfer Bumi?",
+    "fil": "Pangunahing gas sa atmospera?",
+    "pt": "Principal gás da atmosfera terrestre?",
+    "es": "¿Gas principal de la atmósfera terrestre?",
+    "ja": "地球の大気の主成分は？",
+    "ru": "Основной газ атмосферы Земли?",
+    "de": "Hauptgas der Erdatmosphäre?",
+    "fr": "Gaz principal de l’atmosphère terrestre ?"
+  },
+  "What is the process by which water changes from a liquid to a gas called?": {
+    "id": "Proses air cair menjadi gas?",
+    "fil": "Proseso ng likidong tubig tungo sa gas?",
+    "pt": "Processo de água líquida virar gás?",
+    "es": "¿Proceso del agua líquida a gas?",
+    "ja": "水が液体から気体になる過程は？",
+    "ru": "Переход воды из жидкости в газ?",
+    "de": "Übergang von flüssigem Wasser zu Gas?",
+    "fr": "Passage de l’eau liquide au gaz ?"
+  },
+  "What is the name for a group of whales?": {
+    "id": "Sebutan kelompok paus?",
+    "fil": "Tawag sa grupo ng balyena?",
+    "pt": "Nome de um grupo de baleias?",
+    "es": "¿Nombre de un grupo de ballenas?",
+    "ja": "クジラの群れの呼び方は？",
+    "ru": "Как называют группу китов?",
+    "de": "Bezeichnung für eine Gruppe Wale?",
+    "fr": "Nom d’un groupe de baleines ?"
+  },
+  "Which one is an amphibian?": {
+    "id": "Yang mana amfibi?",
+    "fil": "Alin ang ampibyan?",
+    "pt": "Qual é um anfíbio?",
+    "es": "¿Cuál es un anfibio?",
+    "ja": "両生類はどれ？",
+    "ru": "Кто из них земноводное?",
+    "de": "Welches ist eine Amphibie?",
+    "fr": "Lequel est un amphibien ?"
+  },
+  "What is the primary gas responsible for climate change?": {
+    "id": "Gas utama penyebab perubahan iklim?",
+    "fil": "Pangunahing gas sa pagbabago ng klima?",
+    "pt": "Principal gás da mudança climática?",
+    "es": "¿Principal gas del cambio climático?",
+    "ja": "気候変動の主な原因となる気体は？",
+    "ru": "Основной газ, вызывающий изменение климата?",
+    "de": "Hauptgas des Klimawandels?",
+    "fr": "Principal gaz responsable du changement climatique ?"
+  },
+  "Which one is a marine mammal?": {
+    "id": "Yang mana mamalia laut?",
+    "fil": "Alin ang mamalyang-dagat?",
+    "pt": "Qual é um mamífero marinho?",
+    "es": "¿Cuál es un mamífero marino?",
+    "ja": "海洋哺乳類はどれ？",
+    "ru": "Кто из них морское млекопитающее?",
+    "de": "Welches ist ein Meeressäugetier?",
+    "fr": "Lequel est un mammifère marin ?"
+  },
+  "Which is the planet that is closest to the Sun?": {
+    "id": "Planet terdekat dengan Matahari?",
+    "fil": "Planetang pinakamalapit sa Araw?",
+    "pt": "Planeta mais próximo do Sol?",
+    "es": "¿Planeta más cercano al Sol?",
+    "ja": "太陽に最も近い惑星は？",
+    "ru": "Ближайшая к Солнцу планета?",
+    "de": "Sonnennächster Planet?",
+    "fr": "Planète la plus proche du Soleil ?"
+  },
+  "Which one is a source of honey?": {
+    "id": "Yang menghasilkan madu?",
+    "fil": "Alin ang gumagawa ng pulot?",
+    "pt": "Quem produz mel?",
+    "es": "¿Quién produce miel?",
+    "ja": "蜂蜜を作るのは？",
+    "ru": "Кто производит мёд?",
+    "de": "Wer erzeugt Honig?",
+    "fr": "Qui produit le miel ?"
+  },
+  "Which one is a migratory bird?": {
+    "id": "Yang mana burung migran?",
+    "fil": "Alin ang ibong migrante?",
+    "pt": "Qual é uma ave migratória?",
+    "es": "¿Cuál es un ave migratoria?",
+    "ja": "渡り鳥はどれ？",
+    "ru": "Кто из них перелётная птица?",
+    "de": "Welches ist ein Zugvogel?",
+    "fr": "Lequel est un oiseau migrateur ?"
+  },
+  "Which planet is known as the \"Red Planet\"?": {
+    "id": "Planet yang disebut Planet Merah?",
+    "fil": "Planetang tinatawag na Pulang Planeta?",
+    "pt": "Planeta conhecido como Planeta Vermelho?",
+    "es": "¿Planeta conocido como Planeta Rojo?",
+    "ja": "赤い惑星と呼ばれるのは？",
+    "ru": "Какую планету называют Красной?",
+    "de": "Welcher Planet heißt Roter Planet?",
+    "fr": "Quelle planète est appelée planète rouge ?"
+  },
+  "What does the sun provide us with?": {
+    "id": "Apa yang diberikan Matahari?",
+    "fil": "Ano ang ibinibigay ng Araw?",
+    "pt": "O que o Sol nos fornece?",
+    "es": "¿Qué nos proporciona el Sol?",
+    "ja": "太陽が与えてくれるものは？",
+    "ru": "Что нам даёт Солнце?",
+    "de": "Was gibt uns die Sonne?",
+    "fr": "Que nous apporte le Soleil ?"
+  },
+  "Which animal lives in water and on land?": {
+    "id": "Hewan yang hidup di air dan darat?",
+    "fil": "Hayop na nabubuhay sa tubig at lupa?",
+    "pt": "Animal que vive na água e na terra?",
+    "es": "¿Animal que vive en agua y tierra?",
+    "ja": "水中と陸上に住む動物は？",
+    "ru": "Кто живёт в воде и на суше?",
+    "de": "Tier, das im Wasser und an Land lebt?",
+    "fr": "Animal vivant dans l’eau et sur terre ?"
+  },
+  "What is the name for a group of bees?": {
+    "id": "Sebutan kelompok lebah?",
+    "fil": "Tawag sa grupo ng bubuyog?",
+    "pt": "Nome de um grupo de abelhas?",
+    "es": "¿Nombre de un grupo de abejas?",
+    "ja": "ハチの群れの呼び方は？",
+    "ru": "Как называют группу пчёл?",
+    "de": "Bezeichnung für eine Gruppe Bienen?",
+    "fr": "Nom d’un groupe d’abeilles ?"
+  },
+  "Which is the largest moon in our solar system?": {
+    "id": "Bulan terbesar di tata surya?",
+    "fil": "Pinakamalaking buwan sa solar system?",
+    "pt": "Maior lua do Sistema Solar?",
+    "es": "¿Mayor luna del sistema solar?",
+    "ja": "太陽系で最大の衛星は？",
+    "ru": "Крупнейший спутник Солнечной системы?",
+    "de": "Größter Mond im Sonnensystem?",
+    "fr": "Plus grande lune du système solaire ?"
+  },
+  "What animal lives in trees and builds nests?": {
+    "id": "Hewan yang hidup di pohon dan membuat sarang?",
+    "fil": "Hayop sa puno na gumagawa ng pugad?",
+    "pt": "Animal que vive em árvores e faz ninhos?",
+    "es": "¿Animal que vive en árboles y hace nidos?",
+    "ja": "木に住んで巣を作る動物は？",
+    "ru": "Кто живёт на деревьях и строит гнёзда?",
+    "de": "Tier, das auf Bäumen lebt und Nester baut?",
+    "fr": "Animal vivant dans les arbres et faisant des nids ?"
+  },
+  "What gas do we breathe in?": {
+    "id": "Gas yang kita hirup?",
+    "fil": "Gas na nilalanghap natin?",
+    "pt": "Gás que respiramos?",
+    "es": "¿Gas que respiramos?",
+    "ja": "呼吸で吸う気体は？",
+    "ru": "Какой газ мы вдыхаем?",
+    "de": "Welches Gas atmen wir ein?",
+    "fr": "Quel gaz respirons-nous ?"
+  },
+  "What is the unit of measurement for electrical resistance?": {
+    "id": "Satuan hambatan listrik?",
+    "fil": "Yunit ng resistansiya ng kuryente?",
+    "pt": "Unidade de resistência elétrica?",
+    "es": "¿Unidad de resistencia eléctrica?",
+    "ja": "電気抵抗の単位は？",
+    "ru": "Единица электрического сопротивления?",
+    "de": "Einheit des elektrischen Widerstands?",
+    "fr": "Unité de résistance électrique ?"
+  },
+  "How do plants make food?": {
+    "id": "Bagaimana tumbuhan membuat makanan?",
+    "fil": "Paano gumagawa ng pagkain ang halaman?",
+    "pt": "Como as plantas produzem alimento?",
+    "es": "¿Cómo producen alimento las plantas?",
+    "ja": "植物はどうやって養分を作る？",
+    "ru": "Как растения производят пищу?",
+    "de": "Wie erzeugen Pflanzen Nahrung?",
+    "fr": "Comment les plantes produisent-elles leur nourriture ?"
+  },
+  "Which animal grows new antlers every year?": {
+    "id": "Hewan yang tumbuh tanduk baru tiap tahun?",
+    "fil": "Hayop na tinutubuan ng bagong sungay taun-taon?",
+    "pt": "Animal que renova os chifres todo ano?",
+    "es": "¿Animal que renueva sus astas cada año?",
+    "ja": "毎年新しい角が生える動物は？",
+    "ru": "У кого каждый год вырастают новые рога?",
+    "de": "Tier, dem jedes Jahr neue Geweihe wachsen?",
+    "fr": "Animal renouvelant ses bois chaque année ?"
+  },
+  "Which animal uses feathers to fly?": {
+    "id": "Hewan berbulu yang terbang?",
+    "fil": "Hayop na may balahibo para lumipad?",
+    "pt": "Animal que voa usando penas?",
+    "es": "¿Animal que vuela con plumas?",
+    "ja": "羽毛を使って飛ぶ動物は？",
+    "ru": "Кто летает с помощью перьев?",
+    "de": "Welches Tier fliegt mit Federn?",
+    "fr": "Animal volant avec des plumes ?"
+  },
+  "Which plant can be used to make paper?": {
+    "id": "Tumbuhan untuk membuat kertas?",
+    "fil": "Halamang ginagawang papel?",
+    "pt": "Planta usada para fazer papel?",
+    "es": "¿Planta usada para hacer papel?",
+    "ja": "紙の原料になる植物は？",
+    "ru": "Из какого растения делают бумагу?",
+    "de": "Pflanze zur Papierherstellung?",
+    "fr": "Plante utilisée pour fabriquer du papier ?"
+  },
+  "What is the outermost layer of the Earth's atmosphere called?": {
+    "id": "Lapisan terluar atmosfer Bumi?",
+    "fil": "Pinakalabas na suson ng atmospera?",
+    "pt": "Camada externa da atmosfera terrestre?",
+    "es": "¿Capa más externa de la atmósfera terrestre?",
+    "ja": "地球の大気の最も外側の層は？",
+    "ru": "Внешний слой атмосферы Земли?",
+    "de": "Äußerste Schicht der Erdatmosphäre?",
+    "fr": "Couche externe de l’atmosphère terrestre ?"
+  },
+  "Which animal swims in water using its tail?": {
+    "id": "Hewan yang berenang menggunakan ekor?",
+    "fil": "Hayop na lumalangoy gamit ang buntot?",
+    "pt": "Animal que nada usando a cauda?",
+    "es": "¿Animal que nada con la cola?",
+    "ja": "尾を使って泳ぐ動物は？",
+    "ru": "Кто плавает с помощью хвоста?",
+    "de": "Tier, das mit dem Schwanz schwimmt?",
+    "fr": "Animal nageant avec sa queue ?"
+  },
+  "What is the name for a group of fish?": {
+    "id": "Sebutan kelompok ikan?",
+    "fil": "Tawag sa grupo ng isda?",
+    "pt": "Nome de um grupo de peixes?",
+    "es": "¿Nombre de un grupo de peces?",
+    "ja": "魚の群れの呼び方は？",
+    "ru": "Как называют группу рыб?",
+    "de": "Bezeichnung für eine Gruppe Fische?",
+    "fr": "Nom d’un groupe de poissons ?"
+  },
+  "Which animal is covered in scales?": {
+    "id": "Hewan yang bersisik?",
+    "fil": "Hayop na may kaliskis?",
+    "pt": "Animal coberto de escamas?",
+    "es": "¿Animal cubierto de escamas?",
+    "ja": "うろこで覆われた動物は？",
+    "ru": "Кто покрыт чешуёй?",
+    "de": "Welches Tier hat Schuppen?",
+    "fr": "Quel animal a des écailles ?"
+  },
+  "Which animal sprays water through a blowhole?": {
+    "id": "Hewan yang menyemprot air dari lubang napas?",
+    "fil": "Hayop na nagbubuga ng tubig sa butas sa ulo?",
+    "pt": "Animal que lança água pelo espiráculo?",
+    "es": "¿Animal que expulsa agua por el espiráculo?",
+    "ja": "噴気孔から水を噴く動物は？",
+    "ru": "Кто выпускает воду через дыхало?",
+    "de": "Tier, das Wasser aus dem Blasloch spritzt?",
+    "fr": "Animal projetant de l’eau par son évent ?"
+  },
+  "Which animal lives in trees and builds beehives?": {
+    "id": "Hewan di pohon yang membuat sarang lebah?",
+    "fil": "Hayop sa puno na gumagawa ng bahay-pukyutan?",
+    "pt": "Animal que faz colmeias em árvores?",
+    "es": "¿Animal que hace colmenas en árboles?",
+    "ja": "木に住み蜂の巣を作る動物は？",
+    "ru": "Кто строит ульи на деревьях?",
+    "de": "Tier, das Bienenstöcke in Bäumen baut?",
+    "fr": "Animal construisant des ruches dans les arbres ?"
+  },
+  "What is the unit of measurement for sound intensity?": {
+    "id": "Satuan intensitas suara?",
+    "fil": "Yunit ng tindi ng tunog?",
+    "pt": "Unidade de intensidade sonora?",
+    "es": "¿Unidad de intensidad del sonido?",
+    "ja": "音の強さの単位は？",
+    "ru": "Единица интенсивности звука?",
+    "de": "Einheit der Schallintensität?",
+    "fr": "Unité de l’intensité sonore ?"
+  },
+  "How many hours are there in a day?": {
+    "id": "Berapa jam dalam sehari?",
+    "fil": "Ilang oras sa isang araw?",
+    "pt": "Quantas horas tem um dia?",
+    "es": "¿Cuántas horas tiene un día?",
+    "ja": "1日は何時間？",
+    "ru": "Сколько часов в сутках?",
+    "de": "Wie viele Stunden hat ein Tag?",
+    "fr": "Combien d’heures par jour ?"
+  },
+  "How many colors are there in a rainbow?": {
+    "id": "Berapa warna pelangi?",
+    "fil": "Ilang kulay ang bahaghari?",
+    "pt": "Quantas cores tem o arco-íris?",
+    "es": "¿Cuántos colores tiene el arcoíris?",
+    "ja": "虹は何色？",
+    "ru": "Сколько цветов в радуге?",
+    "de": "Wie viele Farben hat ein Regenbogen?",
+    "fr": "Combien de couleurs dans l’arc-en-ciel ?"
+  },
+  "What is the largest ocean in the world?": {
+    "id": "Samudra terbesar di dunia?",
+    "fil": "Pinakamalaking karagatan sa mundo?",
+    "pt": "Maior oceano do mundo?",
+    "es": "¿Mayor océano del mundo?",
+    "ja": "世界最大の海洋は？",
+    "ru": "Крупнейший океан мира?",
+    "de": "Größter Ozean der Welt?",
+    "fr": "Plus grand océan du monde ?"
+  },
+  "What is the unit of measurement for temperature in the Celsius scale?": {
+    "id": "Satuan suhu skala Celsius?",
+    "fil": "Yunit ng temperatura sa Celsius?",
+    "pt": "Unidade de temperatura na escala Celsius?",
+    "es": "¿Unidad de temperatura Celsius?",
+    "ja": "摂氏温度の単位は？",
+    "ru": "Единица температуры по Цельсию?",
+    "de": "Temperatureinheit auf der Celsius-Skala?",
+    "fr": "Unité de température Celsius ?"
+  },
+  "How many sides does a square have?": {
+    "id": "Berapa sisi persegi?",
+    "fil": "Ilang gilid ang parisukat?",
+    "pt": "Quantos lados tem um quadrado?",
+    "es": "¿Cuántos lados tiene un cuadrado?",
+    "ja": "正方形の辺はいくつ？",
+    "ru": "Сколько сторон у квадрата?",
+    "de": "Wie viele Seiten hat ein Quadrat?",
+    "fr": "Combien de côtés a un carré ?"
+  },
+  "What is the chemical symbol for oxygen?": {
+    "id": "Simbol kimia oksigen?",
+    "fil": "Simbolong kemikal ng oksiheno?",
+    "pt": "Símbolo químico do oxigênio?",
+    "es": "¿Símbolo químico del oxígeno?",
+    "ja": "酸素の元素記号は？",
+    "ru": "Химический символ кислорода?",
+    "de": "Chemisches Symbol für Sauerstoff?",
+    "fr": "Symbole chimique de l’oxygène ?"
+  },
+  "What is the name of the first month of the year?": {
+    "id": "Bulan pertama dalam setahun?",
+    "fil": "Unang buwan ng taon?",
+    "pt": "Primeiro mês do ano?",
+    "es": "¿Primer mes del año?",
+    "ja": "1年の最初の月は？",
+    "ru": "Первый месяц года?",
+    "de": "Erster Monat des Jahres?",
+    "fr": "Premier mois de l’année ?"
+  },
+  "How many days are there in a leap year?": {
+    "id": "Berapa hari dalam tahun kabisat?",
+    "fil": "Ilang araw sa taong bisyesto?",
+    "pt": "Quantos dias tem um ano bissexto?",
+    "es": "¿Cuántos días tiene un año bisiesto?",
+    "ja": "うるう年は何日？",
+    "ru": "Сколько дней в високосном году?",
+    "de": "Wie viele Tage hat ein Schaltjahr?",
+    "fr": "Combien de jours dans une année bissextile ?"
+  },
+  "What is the color of a ripe banana?": {
+    "id": "Warna pisang matang?",
+    "fil": "Kulay ng hinog na saging?",
+    "pt": "Cor da banana madura?",
+    "es": "¿Color de un plátano maduro?",
+    "ja": "熟したバナナの色は？",
+    "ru": "Цвет спелого банана?",
+    "de": "Farbe einer reifen Banane?",
+    "fr": "Couleur d’une banane mûre ?"
+  },
+  "What is the name of the longest river in the world?": {
+    "id": "Sungai terpanjang di dunia?",
+    "fil": "Pinakamahabang ilog sa mundo?",
+    "pt": "Rio mais longo do mundo?",
+    "es": "¿Río más largo del mundo?",
+    "ja": "世界で最も長い川は？",
+    "ru": "Самая длинная река мира?",
+    "de": "Längster Fluss der Welt?",
+    "fr": "Plus long fleuve du monde ?"
+  },
+  "How many continents are there in the world?": {
+    "id": "Berapa benua di dunia?",
+    "fil": "Ilang kontinente sa mundo?",
+    "pt": "Quantos continentes existem?",
+    "es": "¿Cuántos continentes hay?",
+    "ja": "世界の大陸はいくつ？",
+    "ru": "Сколько континентов в мире?",
+    "de": "Wie viele Kontinente gibt es?",
+    "fr": "Combien de continents dans le monde ?"
+  },
+  "What is the unit of measurement for volume in the metric system?": {
+    "id": "Satuan volume sistem metrik?",
+    "fil": "Yunit ng dami sa sistemang metriko?",
+    "pt": "Unidade métrica de volume?",
+    "es": "¿Unidad métrica de volumen?",
+    "ja": "メートル法で体積の単位は？",
+    "ru": "Метрическая единица объёма?",
+    "de": "Metrische Einheit des Volumens?",
+    "fr": "Unité métrique de volume ?"
+  },
+  "How many sides does a hexagon have?": {
+    "id": "Berapa sisi segi enam?",
+    "fil": "Ilang gilid ang heksagon?",
+    "pt": "Quantos lados tem um hexágono?",
+    "es": "¿Cuántos lados tiene un hexágono?",
+    "ja": "六角形の辺はいくつ？",
+    "ru": "Сколько сторон у шестиугольника?",
+    "de": "Wie viele Seiten hat ein Sechseck?",
+    "fr": "Combien de côtés a un hexagone ?"
+  },
+  "What is the name of the largest sea in the world?": {
+    "id": "Laut terbesar di dunia?",
+    "fil": "Pinakamalaking dagat sa mundo?",
+    "pt": "Maior mar do mundo?",
+    "es": "¿Mayor mar del mundo?",
+    "ja": "世界最大の海は？",
+    "ru": "Самое большое море мира?",
+    "de": "Größtes Meer der Welt?",
+    "fr": "Plus grande mer du monde ?"
+  },
+  "What is the name of the first day of the week?": {
+    "id": "Hari pertama dalam seminggu?",
+    "fil": "Unang araw ng linggo?",
+    "pt": "Primeiro dia da semana?",
+    "es": "¿Primer día de la semana?",
+    "ja": "週の最初の曜日は？",
+    "ru": "Первый день недели?",
+    "de": "Erster Tag der Woche?",
+    "fr": "Premier jour de la semaine ?"
+  },
+  "What is the chemical symbol for hydrogen?": {
+    "id": "Simbol kimia hidrogen?",
+    "fil": "Simbolong kemikal ng hidroheno?",
+    "pt": "Símbolo químico do hidrogênio?",
+    "es": "¿Símbolo químico del hidrógeno?",
+    "ja": "水素の元素記号は？",
+    "ru": "Химический символ водорода?",
+    "de": "Chemisches Symbol für Wasserstoff?",
+    "fr": "Symbole chimique de l’hydrogène ?"
+  },
+  "What is the name of the largest country in the world by area?": {
+    "id": "Negara terluas di dunia?",
+    "fil": "Pinakamalawak na bansa sa mundo?",
+    "pt": "Maior país do mundo em área?",
+    "es": "¿País más grande por superficie?",
+    "ja": "世界で面積が最大の国は？",
+    "ru": "Крупнейшая страна по площади?",
+    "de": "Flächenmäßig größtes Land?",
+    "fr": "Plus grand pays par superficie ?"
+  },
+  "What is the name of the planet we live on?": {
+    "id": "Planet tempat kita tinggal?",
+    "fil": "Planetang tinitirhan natin?",
+    "pt": "Planeta onde vivemos?",
+    "es": "¿Planeta donde vivimos?",
+    "ja": "私たちが住む惑星は？",
+    "ru": "На какой планете мы живём?",
+    "de": "Planet, auf dem wir leben?",
+    "fr": "Planète où nous vivons ?"
+  },
+  "What is the name of the smallest continent?": {
+    "id": "Benua terkecil?",
+    "fil": "Pinakamaliit na kontinente?",
+    "pt": "Menor continente?",
+    "es": "¿Continente más pequeño?",
+    "ja": "最小の大陸は？",
+    "ru": "Самый маленький континент?",
+    "de": "Kleinster Kontinent?",
+    "fr": "Plus petit continent ?"
+  },
+  "What is the unit of measurement for weight in the metric system?": {
+    "id": "Satuan berat sistem metrik?",
+    "fil": "Yunit ng timbang sa sistemang metriko?",
+    "pt": "Unidade métrica de peso?",
+    "es": "¿Unidad métrica de peso?",
+    "ja": "メートル法で重さの単位は？",
+    "ru": "Метрическая единица веса?",
+    "de": "Metrische Gewichtseinheit?",
+    "fr": "Unité métrique de poids ?"
+  },
+  "What is the name of the largest lake in the world by area?": {
+    "id": "Danau terluas di dunia?",
+    "fil": "Pinakamalawak na lawa sa mundo?",
+    "pt": "Maior lago do mundo em área?",
+    "es": "¿Lago más grande por superficie?",
+    "ja": "面積が世界最大の湖は？",
+    "ru": "Крупнейшее озеро по площади?",
+    "de": "Flächenmäßig größter See?",
+    "fr": "Plus grand lac par superficie ?"
+  },
+  "What is the name of the planet with rings?": {
+    "id": "Planet yang memiliki cincin?",
+    "fil": "Planeta na may mga singsing?",
+    "pt": "Planeta com anéis?",
+    "es": "¿Planeta con anillos?",
+    "ja": "環がある惑星は？",
+    "ru": "Планета с кольцами?",
+    "de": "Planet mit Ringen?",
+    "fr": "Planète avec des anneaux ?"
+  },
+  "How many states are there in the United States?": {
+    "id": "Berapa negara bagian Amerika Serikat?",
+    "fil": "Ilang estado ang Estados Unidos?",
+    "pt": "Quantos estados têm os EUA?",
+    "es": "¿Cuántos estados tiene Estados Unidos?",
+    "ja": "アメリカの州はいくつ？",
+    "ru": "Сколько штатов в США?",
+    "de": "Wie viele Bundesstaaten haben die USA?",
+    "fr": "Combien d’États aux États-Unis ?"
+  },
+  "What is the name of the planet that is closest to the Earth in size?": {
+    "id": "Planet terdekat ukurannya dengan Bumi?",
+    "fil": "Planeta na pinakamalapit sa laki ng Daigdig?",
+    "pt": "Planeta de tamanho mais próximo da Terra?",
+    "es": "¿Planeta más parecido a la Tierra en tamaño?",
+    "ja": "地球に最も大きさが近い惑星は？",
+    "ru": "Какая планета ближе к Земле по размеру?",
+    "de": "Planet mit der ähnlichsten Größe zur Erde?",
+    "fr": "Planète la plus proche de la Terre en taille ?"
+  },
+  "What is the name of the smallest planet in our solar system?": {
+    "id": "Planet terkecil di tata surya?",
+    "fil": "Pinakamaliit na planeta sa solar system?",
+    "pt": "Menor planeta do Sistema Solar?",
+    "es": "¿Planeta más pequeño del sistema solar?",
+    "ja": "太陽系で最小の惑星は？",
+    "ru": "Самая маленькая планета Солнечной системы?",
+    "de": "Kleinster Planet im Sonnensystem?",
+    "fr": "Plus petite planète du système solaire ?"
+  },
+  "What animal is known for its black and white color and eats bamboo?": {
+    "id": "Hewan hitam putih pemakan bambu?",
+    "fil": "Hayop na itim-puti at kumakain ng kawayan?",
+    "pt": "Animal preto e branco que come bambu?",
+    "es": "¿Animal blanco y negro que come bambú?",
+    "ja": "白黒で竹を食べる動物は？",
+    "ru": "Кто чёрно-белый и ест бамбук?",
+    "de": "Schwarz-weißes Tier, das Bambus frisst?",
+    "fr": "Animal noir et blanc mangeant du bambou ?"
+  },
+  "Which animal is known for its ability to camouflage and change colors?": {
+    "id": "Hewan yang berubah warna mengikuti lingkungan?",
+    "fil": "Hayop na nagbabago ng kulay ayon sa paligid?",
+    "pt": "Animal que muda de cor conforme o ambiente?",
+    "es": "¿Animal que cambia de color según su entorno?",
+    "ja": "周囲に合わせて色を変える動物は？",
+    "ru": "Кто меняет цвет под окружение?",
+    "de": "Tier, das seine Farbe der Umgebung anpasst?",
+    "fr": "Animal changeant de couleur selon son environnement ?"
+  },
+  "What is the process of a liquid turning into a gas called?": {
+    "id": "Proses air cair menjadi gas?",
+    "fil": "Proseso ng likidong tubig tungo sa gas?",
+    "pt": "Processo de água líquida virar gás?",
+    "es": "¿Proceso del agua líquida a gas?",
+    "ja": "水が液体から気体になる過程は？",
+    "ru": "Переход воды из жидкости в газ?",
+    "de": "Übergang von flüssigem Wasser zu Gas?",
+    "fr": "Passage de l’eau liquide au gaz ?"
+  },
+  "Which animal has a long neck?": {
+    "id": "Hewan yang terkenal berleher panjang?",
+    "fil": "Hayop na kilala sa mahabang leeg?",
+    "pt": "Animal conhecido pelo pescoço longo?",
+    "es": "¿Animal conocido por su cuello largo?",
+    "ja": "長い首で知られる動物は？",
+    "ru": "Какое животное известно длинной шеей?",
+    "de": "Tier, das für langen Hals bekannt ist?",
+    "fr": "Animal connu pour son long cou ?"
+  },
+  "What is the largest moon in our solar system?": {
+    "id": "Bulan terbesar di tata surya?",
+    "fil": "Pinakamalaking buwan sa solar system?",
+    "pt": "Maior lua do Sistema Solar?",
+    "es": "¿Mayor luna del sistema solar?",
+    "ja": "太陽系で最大の衛星は？",
+    "ru": "Крупнейший спутник Солнечной системы?",
+    "de": "Größter Mond im Sonnensystem?",
+    "fr": "Plus grande lune du système solaire ?"
+  },
+  "What is the name of the planet closest to the Sun?": {
+    "id": "Planet terdekat dengan Matahari?",
+    "fil": "Planetang pinakamalapit sa Araw?",
+    "pt": "Planeta mais próximo do Sol?",
+    "es": "¿Planeta más cercano al Sol?",
+    "ja": "太陽に最も近い惑星は？",
+    "ru": "Ближайшая к Солнцу планета?",
+    "de": "Sonnennächster Planet?",
+    "fr": "Planète la plus proche du Soleil ?"
+  },
+  "What is the symbol for the element gold?": {
+    "id": "Simbol kimia emas?",
+    "fil": "Simbolong kemikal ng ginto?",
+    "pt": "Símbolo químico do ouro?",
+    "es": "¿Símbolo químico del oro?",
+    "ja": "金の元素記号は？",
+    "ru": "Химический символ золота?",
+    "de": "Chemisches Symbol für Gold?",
+    "fr": "Symbole chimique de l’or ?"
+  },
+  "What is the name of the planet known as the Red Planet?": {
+    "id": "Planet yang disebut Planet Merah?",
+    "fil": "Planetang tinatawag na Pulang Planeta?",
+    "pt": "Planeta conhecido como Planeta Vermelho?",
+    "es": "¿Planeta conocido como Planeta Rojo?",
+    "ja": "赤い惑星と呼ばれるのは？",
+    "ru": "Какую планету называют Красной?",
+    "de": "Welcher Planet heißt Roter Planet?",
+    "fr": "Quelle planète est appelée planète rouge ?"
+  },
+  "What is the name of the largest moon in the solar system?": {
+    "id": "Bulan terbesar di tata surya?",
+    "fil": "Pinakamalaking buwan sa solar system?",
+    "pt": "Maior lua do Sistema Solar?",
+    "es": "¿Mayor luna del sistema solar?",
+    "ja": "太陽系で最大の衛星は？",
+    "ru": "Крупнейший спутник Солнечной системы?",
+    "de": "Größter Mond im Sonnensystem?",
+    "fr": "Plus grande lune du système solaire ?"
+  },
+  "What is the name of the hottest planet in our solar system?": {
+    "id": "Planet terpanas di tata surya?",
+    "fil": "Pinakamainit na planeta sa solar system?",
+    "pt": "Planeta mais quente do Sistema Solar?",
+    "es": "¿Planeta más caliente del sistema solar?",
+    "ja": "太陽系で最も熱い惑星は？",
+    "ru": "Самая горячая планета Солнечной системы?",
+    "de": "Heißester Planet im Sonnensystem?",
+    "fr": "Planète la plus chaude du système solaire ?"
+  }
+}

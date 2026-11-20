@@ -641,6 +641,10 @@ class AndroidFlutterLocalNotificationsPlugin
     }
   }
 
+  Future<bool?> unsubscribeFromTopic(String topic) async {
+    return await _channel.invokeMethod<bool>('unsubscribeFromTopic', {'topic': topic});
+  }
+
   Future<bool?> subscribeToTopic(String topic, AndroidNotificationDetails notificationDetails) async {
     return await _channel.invokeMethod('subscribeToTopic', <String, Object?>{
       'id': 0,

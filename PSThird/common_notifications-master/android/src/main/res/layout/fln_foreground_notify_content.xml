@@ -12,42 +12,26 @@
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal"
-        >
-
-        <!-- Title -->
-        <TextView
-            android:id="@+id/fln_beauty_notify_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="29dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#FFD500"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            tools:text="This is title" />
-
-        <!-- Title -->
-        <TextView
-            android:text=" Is Waiting In Your Wallet."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="29dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            tools:text=" Is Waiting In Your Wallet." />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/fln_beauty_notify_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="14sp"
+        android:autoSizeStepGranularity="1sp"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="$12.34 is waiting in your wallet." />
 
     <!-- Button -->
     <TextView
@@ -61,7 +45,6 @@
         android:textColor="#503803"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:text="Withdraw"
         tools:text="Withdraw" />
 
 </FrameLayout>

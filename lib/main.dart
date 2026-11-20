@@ -1,3 +1,6 @@
+import 'PSTool/PSResponsive.dart';
+import 'PSTool/PSLocale.dart';
+import 'PSTool/PSNoticeHelp.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
@@ -9,7 +12,7 @@ import 'package:piggywalletspinearn/PSHome/PSHome.dart';
 import 'package:pigwalletspineFK/pigwalletspineFK.dart';
 import 'package:provider/provider.dart';
 import 'package:spine_flutter/spine_flutter.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'PSBase/PSLuanch.dart';
 import 'PSTool/AESHelper.dart';
 import 'PSTool/PSFKManger.dart';
@@ -37,6 +40,8 @@ Future<void> main() async {
     ),
   );
 
+  await PSLocale.initialize(PlatformDispatcher.instance.locale);
+  await PSNumberHelpers().initNumberModel();
   await Firebase.initializeApp();
 
   FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
@@ -65,6 +70,7 @@ Future<void> main() async {
   // 1. 创建LocalStorageProvider实例并初始化（加载本地数据）
   final localStorageProvider = PSLocalProvider.instance;
   await localStorageProvider.init();
+  await localStorageProvider.syncPayoutCountry();
   await trigger.init();
   // 模拟排队完成
   // PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_quiz_all_numName, 0);
@@ -96,53 +102,54 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  Locale? _locale;
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     PSSDKHelpers().initSDK();
-    PSNumberHelpers().initNumberModel();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeLocales(List<Locale>? locales) async {
+    if (locales == null || locales.isEmpty) return;
+    final country = PSLocale.resolve(locales.first);
+    if (country == PSLocale.current) return;
+    PSLocale.current = country;
+    await PSLocalProvider.instance.syncPayoutCountry();
+    if (!mounted) return;
+    setState(() {});
+    PSNoticeHelp().refreshLocalization();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      // 字体自动适配
-      splitScreenMode: true,
-      // 支持平板分屏
-      builder: (context, child) {
-        return MaterialApp(
-          navigatorObservers: [routeObserver],
-          theme: ThemeData(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            hoverColor: Colors.transparent,
-            focusColor: Colors.transparent,
-            splashFactory: NoSplash.splashFactory, // 彻底取消水波纹
-          ),
-          debugShowCheckedModeBanner: false,
-          builder: (context, widget) {
-            // 防止系统字体缩放影响
-            return MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              child: widget!,
-            );
-          },
-          home: child,
-        );
-      },
-      child: PSLaunch(),
+    return MaterialApp(
+      key: ValueKey(PSLocale.current.country),
+      locale: Locale(PSLocale.current.language, PSLocale.current.country),
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: const [Locale('en'), Locale('id'), Locale('fil'), Locale('pt'),
+        Locale('es'), Locale('ja'), Locale('ru'), Locale('de'), Locale('fr')],
+      navigatorObservers: [routeObserver],
+      theme: ThemeData(
+        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
+      ),
+      debugShowCheckedModeBanner: false,
+      builder: (context, child) => PSResponsiveViewport(child: child!),
+      home: PSLaunch(),
     );
   }
 }

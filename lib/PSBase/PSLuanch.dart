@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSSpineWidget.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +20,11 @@ import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import 'PSTbaBar.dart';
 
-
 class PSLaunch extends StatefulWidget {
-   PSLaunch({super.key});
+  final bool _startServices;
+  PSLaunch({super.key}) : _startServices = true;
+  @visibleForTesting
+  PSLaunch.preview({super.key}) : _startServices = false;
 
   @override
   State<PSLaunch> createState() => PSLaunchState();
@@ -28,7 +32,6 @@ class PSLaunch extends StatefulWidget {
 
 class PSLaunchState extends State<PSLaunch>
     with SingleTickerProviderStateMixin {
-
   var _daydateString = '';
 
   late spine.SpineWidgetController _controller;
@@ -36,22 +39,23 @@ class PSLaunchState extends State<PSLaunch>
   @override
   void initState() {
     super.initState();
-    _setConfigDateInfoData();
-    PSNoticeHelp().setNoticeStatus();
-    Future.delayed(Duration(milliseconds: 1),(){
-      ps_getUserCloakConfig();
-    });
-    ps_event_fire('launch_page', {'source_from' : 'icon'});
-
-    _controller = spine.SpineWidgetController(onInitialized: (controller) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        controller.animationState.setAnimationByName(0, "animation", true);
+    if (widget._startServices) {
+      _setConfigDateInfoData();
+      PSNoticeHelp().setNoticeStatus();
+      Future.delayed(Duration(milliseconds: 1), () {
+        ps_getUserCloakConfig();
       });
-    });
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      PSNumberHelpers().updateBrazilianPortuguese(context);
-    });
+      ps_event_fire('launch_page', {'source_from': 'icon'});
+    }
 
+    _controller = spine.SpineWidgetController(
+      onInitialized: (controller) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
+          controller.animationState.setAnimationByName(0, "animation", true);
+        });
+      },
+    );
   }
 
   void ps_getUserCloakConfig() async {
@@ -63,10 +67,13 @@ class PSLaunchState extends State<PSLaunch>
         "cloak_user": responseData.toString() == "freshen" ? 1 : 0,
       });
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.getBool('sp_install_status') == null){
+      if (prefs.getBool('sp_install_status') == null) {
         prefs.setBool('sp_install_status', true);
       }
-      PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_cloak_statusName, responseData.toString() == "freshen" ? true : false);
+      PSLocalProvider.instance.updateBool(
+        PSLocalProvider.instance.ps_cloak_statusName,
+        responseData.toString() == "freshen" ? true : false,
+      );
     } catch (e) {
       print('pigwalletspine Request Error: $e');
       Future.delayed(Duration(seconds: 1), () {
@@ -88,7 +95,10 @@ class PSLaunchState extends State<PSLaunch>
       prefs.setBool('ps_first_instll', true);
     } else {
       if (_daydateString != formattedDate) {
-        await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_ad_show_indexName, 0);
+        await PSLocalProvider.instance.updateint(
+          PSLocalProvider.instance.ps_ad_show_indexName,
+          0,
+        );
         // 隔天
         prefs.setString('ps_day_date', formattedDate);
         prefs.setBool('ps_old_guide', false);
@@ -116,15 +126,27 @@ class PSLaunchState extends State<PSLaunch>
             children: [
               SizedBox(height: 25.h),
               SizedBox(
-                width: 352.w, height: 236.h,
-                child: spine.SpineWidget.fromAsset('assets/spine/logo/skeleton.atlas', 'assets/spine/logo/skeleton.skel', _controller),
+                width: 352.w,
+                height: 236.h,
+                child: PSSpineWidget.fromAsset(
+                  'assets/spine/logo/skeleton.atlas',
+                  'assets/spine/logo/skeleton.skel',
+                  _controller,
+                ),
               ),
               Spacer(),
-              PSStrokeText(text: "Grow your piggy, unlock real cash", size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#4C0E0E'.color()),
+              PSStrokeText(
+                text: PSLocale.tr("Grow your piggy, unlock real cash"),
+                size: 14,
+                color: '#FFFFFF'.color(),
+                weight: FontWeight.w900,
+                skWidth: 1,
+                skColor: '#4C0E0E'.color(),
+              ),
               SizedBox(height: 12.h),
               SJGradientProgressBar(
                 onCompleted: () {
-                  pushToGuide();
+                  if (widget._startServices) pushToGuide();
                 },
               ),
               SizedBox(height: 120.h),
@@ -136,34 +158,33 @@ class PSLaunchState extends State<PSLaunch>
   }
 
   Future<void> pushToGuide() async {
-
     final state = await PSGuideManager.getState();
 
     int step = state.currentStep;
 
     if (step >= 12) {
-      if (!PSPigAds().is_showAd){
-        PSPigAds().ps_showAd(context, 'nskdh_launch',showDialog: false, onCacheResponse: (onCacheResponse){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
-          );
-        }, adDidClosed: (adDidClosed){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
-          );
-        });
+      if (!PSPigAds().is_showAd) {
+        PSPigAds().ps_showAd(
+          context,
+          'nskdh_launch',
+          showDialog: false,
+          onCacheResponse: (onCacheResponse) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
+            );
+          },
+          adDidClosed: (adDidClosed) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
+            );
+          },
+        );
       } else {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (_) => PigBottomExample(key: homeKey),
-          ),
+          MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
         );
       }
 
@@ -175,7 +196,6 @@ class PSLaunchState extends State<PSLaunch>
       //         : PigBottomExample(key: homeKey),
       //   ),
       // );
-
     } else {
       PSGuideManager.showStep(context);
     }
@@ -279,6 +299,7 @@ class _SJGradientProgressBarState extends State<SJGradientProgressBar>
                       '$progressPercent%',
                       style: TextStyle(
                         fontFamily: 'Black_mianfeiziti',
+                        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
                         color: Colors.white,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w700,

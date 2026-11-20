@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSResponsive.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
@@ -106,17 +108,23 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                         Positioned(
                           left: 48,
                           top: 20,
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
+                          child: PSFitText(
+                            align: TextAlign.center,
+                            span: TextSpan(
                               style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.w900,
                                 color: '#873709'.color(),
                                 fontFamily: text_fontName,
+                                fontFamilyFallback: const [
+                                  'PSFallback',
+                                  'PSJapanese',
+                                ],
                               ),
                               children: <TextSpan>[
-                                TextSpan(text: 'Energy Point: '),
+                                TextSpan(
+                                  text: PSLocale.tr("Energy Point:") + " ",
+                                ),
                                 TextSpan(
                                   text: '20',
                                   style: TextStyle(color: '#006AFF'.color()),
@@ -180,7 +188,7 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                         Positioned(
                           left: 20,
                           top: 40,
-                          child: PSImg(name: 'ps_pig_3', width: 47, height: 47),
+                          child: PSImg(name: 'ps_pig_2', width: 47, height: 47),
                         ),
                         Positioned(
                           right: 20,
@@ -209,8 +217,9 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                           width: 303,
                           height: 34,
                           child: PSText(
-                            text:
-                                'Every quiz boosts your knowledge — and your Piggy’s evolution!',
+                            text: PSLocale.tr(
+                              "Every quiz boosts your knowledge — and your Piggy’s evolution!",
+                            ),
                             size: 14,
                             color: '#11407A'.color(),
                             weight: FontWeight.w900,
@@ -238,7 +247,7 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                       decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
                       child: Center(
                         child: PSStrokeText(
-                          text: 'Let’s Start',
+                          text: PSLocale.tr("Let’s Start"),
                           size: 24,
                           color: '#FFFFFF'.color(),
                           weight: FontWeight.w900,

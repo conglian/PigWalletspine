@@ -1,3 +1,4 @@
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'package:adjust_sdk/adjust.dart';
@@ -109,7 +110,7 @@ class PSPigAds {
   // 是否显示广告中
   late bool is_showAd = false;
   // 测试打开，上线关闭
-  final bool skipAd = false;
+  final bool skipAd = true;
 
   Future<void> init({PSAdModel? inputAd}) async {
     _ads = [];
@@ -181,7 +182,7 @@ class PSPigAds {
       '风控不发起广告显示'.log();
       PSDialogTool.toast(
         context,
-        'Something went wrong, please try again later.',
+        PSLocale.tr("Something went wrong, please try again later."),
       );
       ps_event_fire('ps_fk_un', {});
       onCacheResponse.call(false);

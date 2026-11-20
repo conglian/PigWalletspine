@@ -1,3 +1,4 @@
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _PigWheelPageState extends State<PigWheelPage>
   late Animation<double> _animation;
   double _rotationAngle = 0.0;
   bool _isAnimating = false;
+  StreamSubscription? _wheelSubscription;
 
   // 假设转盘有8个奖项，每个奖项占45度
   final int itemCount = 8;
@@ -58,13 +60,14 @@ class _PigWheelPageState extends State<PigWheelPage>
   }
 
   void _submitWheelIndex() {
-    WheelStartNotificationService.stream.listen((value) {
+    _wheelSubscription = WheelStartNotificationService.stream.listen((value) {
       startRotation(value);
     });
   }
 
   @override
   void dispose() {
+    _wheelSubscription?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -137,13 +140,13 @@ class _PigWheelPageState extends State<PigWheelPage>
                         return Column(
                           children: [
                             SizedBox(height: 50.h),
-                            PSStrokeText(text: '${0.dolasType()}${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
+                            PSStrokeText(text: '${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first)}-${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last)}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
                             Spacer(),
                             Transform(
                               alignment: Alignment.center, // 旋转的中心点
                               transform: Matrix4.rotationZ(3.14159265), // 180度 = π 弧度
                               child: PSStrokeText(
-                                text: '${0.dolasType()}${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first}-${PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last}',
+                                text: '${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first)}-${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last)}',
                                 size: 14,
                                 color: '#FFFFFF'.color(),
                                 weight: FontWeight.w900,

@@ -1,0 +1,482 @@
+[
+  {
+    "source": "Group 4899258.png",
+    "asset": "ps_payment_gcash_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 8631,
+    "webpBytes": 3356
+  },
+  {
+    "source": "Group 4899259.png",
+    "asset": "ps_payment_gcash_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 9697,
+    "webpBytes": 3716
+  },
+  {
+    "source": "Group 4899260.png",
+    "asset": "ps_payment_gcash_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 45336,
+    "webpBytes": 24714
+  },
+  {
+    "source": "Group 4899261.png",
+    "asset": "ps_payment_gcash_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 16462,
+    "webpBytes": 10904
+  },
+  {
+    "source": "Group 4899262.png",
+    "asset": "ps_payment_gcash_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 11802,
+    "webpBytes": 8014
+  },
+  {
+    "source": "Group 4899187.png",
+    "asset": "ps_payment_paypal_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 13660,
+    "webpBytes": 8230
+  },
+  {
+    "source": "Group 4899192.png",
+    "asset": "ps_payment_paypal_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 14557,
+    "webpBytes": 8562
+  },
+  {
+    "source": "Group 4899189.png",
+    "asset": "ps_payment_paypal_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 50141,
+    "webpBytes": 29396
+  },
+  {
+    "source": "Group 4899101.png",
+    "asset": "ps_payment_paypal_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 23054,
+    "webpBytes": 16506
+  },
+  {
+    "source": "Group 4899216.png",
+    "asset": "ps_payment_paypal_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 15661,
+    "webpBytes": 11336
+  },
+  {
+    "source": "Group 4899188.png",
+    "asset": "ps_payment_cashapp_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 18146,
+    "webpBytes": 10880
+  },
+  {
+    "source": "Group 4899193.png",
+    "asset": "ps_payment_cashapp_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 19079,
+    "webpBytes": 11588
+  },
+  {
+    "source": "Group 4899194.png",
+    "asset": "ps_payment_cashapp_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 48054,
+    "webpBytes": 27168
+  },
+  {
+    "source": "Group 4899217.png",
+    "asset": "ps_payment_cashapp_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 23017,
+    "webpBytes": 16202
+  },
+  {
+    "source": "Group 4899220.png",
+    "asset": "ps_payment_cashapp_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 14497,
+    "webpBytes": 10454
+  },
+  {
+    "source": "Group 4899185.png",
+    "asset": "ps_payment_pix_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 12413,
+    "webpBytes": 5584
+  },
+  {
+    "source": "Group 4899190.png",
+    "asset": "ps_payment_pix_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 13502,
+    "webpBytes": 6148
+  },
+  {
+    "source": "Group 4899195.png",
+    "asset": "ps_payment_pix_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 49108,
+    "webpBytes": 27072
+  },
+  {
+    "source": "Group 4899218.png",
+    "asset": "ps_payment_pix_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 18003,
+    "webpBytes": 11550
+  },
+  {
+    "source": "Group 4899221.png",
+    "asset": "ps_payment_pix_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 13508,
+    "webpBytes": 8972
+  },
+  {
+    "source": "Group 4899186.png",
+    "asset": "ps_payment_pagbank_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 16644,
+    "webpBytes": 8158
+  },
+  {
+    "source": "Group 4899191.png",
+    "asset": "ps_payment_pagbank_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 17772,
+    "webpBytes": 9238
+  },
+  {
+    "source": "Group 4899196.png",
+    "asset": "ps_payment_pagbank_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 52857,
+    "webpBytes": 29706
+  },
+  {
+    "source": "Group 4899219.png",
+    "asset": "ps_payment_pagbank_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 22844,
+    "webpBytes": 14464
+  },
+  {
+    "source": "Group 4899222.png",
+    "asset": "ps_payment_pagbank_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 14499,
+    "webpBytes": 9436
+  },
+  {
+    "source": "Group 4899223.png",
+    "asset": "ps_payment_gopay_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 6313,
+    "webpBytes": 2304
+  },
+  {
+    "source": "Group 4899224.png",
+    "asset": "ps_payment_gopay_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 7350,
+    "webpBytes": 2714
+  },
+  {
+    "source": "Group 4899225.png",
+    "asset": "ps_payment_gopay_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 46389,
+    "webpBytes": 25518
+  },
+  {
+    "source": "Group 4899244.png",
+    "asset": "ps_payment_gopay_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 16077,
+    "webpBytes": 10638
+  },
+  {
+    "source": "Group 4899251.png",
+    "asset": "ps_payment_gopay_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 11846,
+    "webpBytes": 8096
+  },
+  {
+    "source": "Group 4899226.png",
+    "asset": "ps_payment_ovo_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 6413,
+    "webpBytes": 2214
+  },
+  {
+    "source": "Group 4899227.png",
+    "asset": "ps_payment_ovo_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 7478,
+    "webpBytes": 2596
+  },
+  {
+    "source": "Group 4899238.png",
+    "asset": "ps_payment_ovo_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 44638,
+    "webpBytes": 23498
+  },
+  {
+    "source": "Group 4899245.png",
+    "asset": "ps_payment_ovo_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 16953,
+    "webpBytes": 10786
+  },
+  {
+    "source": "Group 4899252.png",
+    "asset": "ps_payment_ovo_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 11793,
+    "webpBytes": 7810
+  },
+  {
+    "source": "Group 4899228.png",
+    "asset": "ps_payment_maya_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 5488,
+    "webpBytes": 1850
+  },
+  {
+    "source": "Group 4899229.png",
+    "asset": "ps_payment_maya_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 6462,
+    "webpBytes": 2230
+  },
+  {
+    "source": "Group 4899239.png",
+    "asset": "ps_payment_maya_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 42739,
+    "webpBytes": 22984
+  },
+  {
+    "source": "Group 4899246.png",
+    "asset": "ps_payment_maya_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 15106,
+    "webpBytes": 10012
+  },
+  {
+    "source": "Group 4899253.png",
+    "asset": "ps_payment_maya_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 10911,
+    "webpBytes": 7662
+  },
+  {
+    "source": "Group 4899230.png",
+    "asset": "ps_payment_mercado_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 9682,
+    "webpBytes": 3464
+  },
+  {
+    "source": "Group 4899231.png",
+    "asset": "ps_payment_mercado_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 10689,
+    "webpBytes": 3856
+  },
+  {
+    "source": "Group 4899240.png",
+    "asset": "ps_payment_mercado_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 47430,
+    "webpBytes": 24444
+  },
+  {
+    "source": "Group 4899247.png",
+    "asset": "ps_payment_mercado_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 18634,
+    "webpBytes": 11582
+  },
+  {
+    "source": "Group 4899254.png",
+    "asset": "ps_payment_mercado_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 13272,
+    "webpBytes": 8634
+  },
+  {
+    "source": "Group 4899232.png",
+    "asset": "ps_payment_payoneer_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 9416,
+    "webpBytes": 5724
+  },
+  {
+    "source": "Group 4899233.png",
+    "asset": "ps_payment_payoneer_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 10537,
+    "webpBytes": 6362
+  },
+  {
+    "source": "Group 4899241.png",
+    "asset": "ps_payment_payoneer_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 45532,
+    "webpBytes": 26162
+  },
+  {
+    "source": "Group 4899248.png",
+    "asset": "ps_payment_payoneer_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 18423,
+    "webpBytes": 12918
+  },
+  {
+    "source": "Group 4899255.png",
+    "asset": "ps_payment_payoneer_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 12303,
+    "webpBytes": 8800
+  },
+  {
+    "source": "Group 4899234.png",
+    "asset": "ps_payment_sbp_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 17433,
+    "webpBytes": 9580
+  },
+  {
+    "source": "Group 4899235.png",
+    "asset": "ps_payment_sbp_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 18329,
+    "webpBytes": 9824
+  },
+  {
+    "source": "Group 4899242.png",
+    "asset": "ps_payment_sbp_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 49039,
+    "webpBytes": 26676
+  },
+  {
+    "source": "Group 4899249.png",
+    "asset": "ps_payment_sbp_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 22203,
+    "webpBytes": 15626
+  },
+  {
+    "source": "Group 4899256.png",
+    "asset": "ps_payment_sbp_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 14984,
+    "webpBytes": 10938
+  },
+  {
+    "source": "Group 4899236.png",
+    "asset": "ps_payment_yoomoney_normal.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 11880,
+    "webpBytes": 5968
+  },
+  {
+    "source": "Group 4899237.png",
+    "asset": "ps_payment_yoomoney_selected.webp",
+    "width": 459,
+    "height": 174,
+    "pngBytes": 13060,
+    "webpBytes": 6424
+  },
+  {
+    "source": "Group 4899243.png",
+    "asset": "ps_payment_yoomoney_card.webp",
+    "width": 501,
+    "height": 309,
+    "pngBytes": 46231,
+    "webpBytes": 26042
+  },
+  {
+    "source": "Group 4899250.png",
+    "asset": "ps_payment_yoomoney_badge.webp",
+    "width": 423,
+    "height": 96,
+    "pngBytes": 18823,
+    "webpBytes": 12434
+  },
+  {
+    "source": "Group 4899257.png",
+    "asset": "ps_payment_yoomoney_small.webp",
+    "width": 217,
+    "height": 75,
+    "pngBytes": 13140,
+    "webpBytes": 8826
+  }
+]

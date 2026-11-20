@@ -1,3 +1,4 @@
+import 'PSResponsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,7 @@ class PSText extends StatelessWidget {
         height: 1.15,
         fontWeight: weight,
         fontFamily: is_btn ? '' : 'Black_mianfeiziti',
+        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
         decoration: TextDecoration.none,
       );
     } else {
@@ -42,16 +44,15 @@ class PSText extends StatelessWidget {
         height: 1.15,
         fontWeight: weight,
         fontFamily: is_btn ? '' : 'Black_mianfeiziti',
+        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
         decoration: TextDecoration.none,
       );
     }
 
-    return Text(
-      text,
-      textAlign: align,
+    return PSFitText(
+      span: TextSpan(text: text, style: textStyle),
+      align: align ?? TextAlign.center,
       maxLines: maxLines,
-      overflow: TextOverflow.ellipsis,
-      style: textStyle,
     );
   }
 }
@@ -98,6 +99,7 @@ class PSUnderlineTextButton extends StatelessWidget {
       text,
       style: TextStyle(
         fontFamily: 'Black_mianfeiziti',
+        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
         fontSize: fontSize,
         color: gradient == null ? textColor : Colors.white,
         decoration: TextDecoration.underline,
@@ -200,6 +202,7 @@ class _PSBouncyTextState extends State<PSBouncyText>
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'Black_mianfeiziti',
+          fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
           fontSize: widget.fontSize,
           color: widget.color,
           fontWeight: widget.fontWeight,
@@ -214,6 +217,7 @@ class _PSBouncyTextState extends State<PSBouncyText>
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'Black_mianfeiziti',
+          fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
           fontSize: widget.fontSize,
           color: widget.color,
           fontWeight: widget.fontWeight,

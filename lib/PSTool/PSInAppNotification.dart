@@ -1,3 +1,4 @@
+import 'PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -24,15 +25,7 @@ class PSInAppNotification {
   // 可随机金额列表
   final List<int> _amounts = [100, 120, 150, 200];
 
-  // 文案模板列表，使用 {amount} 占位符
-  final List<Map<String, String>> _messages = [
-    {'title': '🎉 PayPal Payout Success', 'content': 'Mary received ${0.dolasType()} {amount} via PayPal successfully 💰'},
-    {'title': '💸 Cash Out Completed', 'content': 'James just cashed out ${0.dolasType()} {amount} to PayPal ✅'},
-    {'title': '🎯 Another Winner Paid', 'content': 'Linda received ${0.dolasType()} {amount} in her PayPal account'},
-    {'title': '💰 Big Payout Alert', 'content': 'Robert successfully withdrew ${0.dolasType()} {amount} via PayPal'},
-    {'title': '🎉 Withdrawal Sent', 'content': 'Sarah just received ${0.dolasType()} {amount} through PayPal'},
-    {'title': '💸 PayPal Transfer Done', 'content': 'Michael cashed out ${0.dolasType()} {amount} successfully'},
-  ];
+  final List<String> _names = ['Mary', 'James', 'Linda', 'Robert', 'Sarah', 'Michael'];
 
   int _currentIndex = 0;
 
@@ -52,16 +45,12 @@ class PSInAppNotification {
   void _startTimer(int minutes) {
     _timer?.cancel();
     _timer = Timer(Duration(minutes: minutes), () {
-      final msg = _messages[_currentIndex];
-
-      // 随机金额替换 {amount} 占位符
       final amount = _amounts[_random.nextInt(_amounts.length)];
-      final content = msg['content']!.replaceAll('{amount}', amount.toString());
-
-      _showNotification(msg['title']!, content);
-
-      // 下一个索引循环
-      _currentIndex = (_currentIndex + 1) % _messages.length;
+      final content = PSLocale.tr('{p0} received {p1} via {p2} successfully', {
+        'p0': _names[_currentIndex], 'p1': PSLocale.money(amount), 'p2': PSLocale.payment(0),
+      });
+      _showNotification(PSLocale.tr('Withdrawal Sent'), content);
+      _currentIndex = (_currentIndex + 1) % _names.length;
 
       // 下一条 5~10 分钟
       _startTimer(_random.nextInt(6) + 5);

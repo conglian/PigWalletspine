@@ -1,3 +1,6 @@
+import '../PSTool/PSResponsive.dart';
+import '../PSTool/PSPayoutForm.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
@@ -23,15 +26,34 @@ class PSPigCash extends StatefulWidget {
   State<PSPigCash> createState() => _PSPigCashState();
 }
 
-class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMixin {
-
+class _PSPigCashState extends State<PSPigCash>
+    with SingleTickerProviderStateMixin {
   bool is_tap_wheel = false;
 
-  int atc_selecd_index = PSLocalProvider.instance.ps_tx_ing_account;
+  int atc_selecd_index = PSLocale.paymentIndex(
+    PSLocalProvider.instance.ps_tx_ing_account,
+  );
 
   List<int> tx_list = PSNumberHelpers().intModel!.eqRange;
   // 每个 cell 高度数组
-  List<double> cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 && PSLocalProvider.instance.ps_pig_level >= 1 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 && PSLocalProvider.instance.ps_pig_level >= 1  ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 && PSLocalProvider.instance.ps_pig_level >= 1  ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 && PSLocalProvider.instance.ps_pig_level >= 1  ? 159 : 78];
+  List<double> cellHeights = [
+    PSLocalProvider.instance.ps_tx_ing_number == 0 &&
+            PSLocalProvider.instance.ps_pig_level >= 1
+        ? 159
+        : 78,
+    PSLocalProvider.instance.ps_tx_ing_number == 1 &&
+            PSLocalProvider.instance.ps_pig_level >= 1
+        ? 159
+        : 78,
+    PSLocalProvider.instance.ps_tx_ing_number == 2 &&
+            PSLocalProvider.instance.ps_pig_level >= 1
+        ? 159
+        : 78,
+    PSLocalProvider.instance.ps_tx_ing_number == 3 &&
+            PSLocalProvider.instance.ps_pig_level >= 1
+        ? 159
+        : 78,
+  ];
 
   late StreamSubscription _subscription;
 
@@ -45,30 +67,31 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
       setState(() {
         cellHeights = [
           PSLocalProvider.instance.ps_tx_ing_number == 0 &&
-              PSLocalProvider.instance.ps_pig_level >= 1
+                  PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78,
           PSLocalProvider.instance.ps_tx_ing_number == 1 &&
-              PSLocalProvider.instance.ps_pig_level >= 1
+                  PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78,
           PSLocalProvider.instance.ps_tx_ing_number == 2 &&
-              PSLocalProvider.instance.ps_pig_level >= 1
+                  PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
               : 78,
           PSLocalProvider.instance.ps_tx_ing_number == 3 &&
-              PSLocalProvider.instance.ps_pig_level >= 1
+                  PSLocalProvider.instance.ps_pig_level >= 1
               ? 159
-              : 78
+              : 78,
         ];
       });
     });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        atc_selecd_index = PSLocalProvider.instance.ps_tx_ing_account;
+        atc_selecd_index = PSLocale.paymentIndex(
+          PSLocalProvider.instance.ps_tx_ing_account,
+        );
       });
     });
-
   }
 
   @override
@@ -90,244 +113,344 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
               children: [
                 SizedBox(height: 48.h),
                 Consumer<PSLocalProvider>(
-                    builder: (context, provider, child) {
-                       return Container(
-                         width: 349,
-                         height: 164,
-                         decoration: BoxDecoration(
-                             image: PSDImg('ps_cash_top_wtd')
-                         ),
-                         child: Stack(
-                           children: [
-                             Positioned(
-                               left: 24,
-                               top: 34,
-                               child: RichText(
-                                 textAlign: TextAlign.center,
-                                 text: TextSpan(
-                                   style: TextStyle(
-                                       fontSize: 12.0,
-                                       fontWeight: FontWeight.w500,
-                                       fontFamily: 'Black_mianfeiziti',
-                                       color: '#873709'.color()
-                                   ),
-                                   children: <TextSpan>[
-                                     TextSpan(
-                                       text: 'My Account: ',
-                                     ),
-                                   ],
-                                 ),
-                               ),
-                             ),
-                             Positioned(
-                                 left: 104,
-                                 top: 30,child: PSGradientNumberRoller(
-                               value: provider.ps_dolas_number,
-                               duration: 800,
-                               fontSize: 14.0,
-                               gradientColors: ['#0BA408'.color(), '#0BA408'.color()],
-                               borderColor: Colors.transparent,
-                               borderWidth: 0.0,
-                               decimalPlaces: 2,
-                             )),
-                             Positioned(right: 22,top: 18,child: PSImg(name: 'ps_cash_tip', width: 126, height: 32)),
-                             Positioned(
-                               left: 30,
-                               top: 52,
-                               child: SizedBox(
-                                 width: 292,
-                                 height: 30,
-                                 child: Stack(
-                                   alignment: Alignment.centerLeft,
-                                   children: [
-                                     Container(
-                                       width: 292,
-                                       height: 30,
-                                       decoration: BoxDecoration(image: PSDImg('ps_pro_bg_t')),
-                                     ),
-                                     Positioned(
-                                       left: 7,
-                                       child: Container(
-                                         width: 278 * (provider.ps_dolas_number / 100), // Use provider data
-                                         height: 18,
-                                         decoration: BoxDecoration(
-                                           color: '#39B101'.color(),
-                                           borderRadius: BorderRadius.circular(10),
-                                         ),
-                                       ),
-                                     ),
-                                   ],
-                                 ),
-                               ),
-                             ),
-                             Positioned(
-                               right: 20,
-                               top: 50,
-                               child: Container(
-                                 width: 39,
-                                 height: 29,
-                                 decoration: BoxDecoration(image: PSDImg('ps_dolas_1')),
-                                 child: Column(
-                                   children: [
-                                     Spacer(),
-                                     PSStrokeText(
-                                       text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic value based on provider data
-                                       size: 12,
-                                       color: '#FFE711'.color(),
-                                       weight: FontWeight.w900,
-                                       skWidth: 1,
-                                       skColor: '#04226'.color(),
-                                     ),
-                                   ],
-                                 ),
-                               ),
-                             ),
-                             Positioned(
-                               bottom: 60.5,
-                               left: 32,
-                               child: Stack(
-                                 children: [
-                                   // 👇 First Layer: Stroke
-                                   RichText(
-                                     textAlign: TextAlign.center,
-                                     text: TextSpan(
-                                       style: TextStyle(
-                                         fontSize: 12,
-                                         fontWeight: FontWeight.w500,
-                                         fontFamily: 'Black_mianfeiziti',
-                                         foreground: Paint()
-                                           ..style = PaintingStyle.stroke
-                                           ..strokeWidth = 1
-                                           ..color = '#042267'.color(),
-                                       ),
-                                       children: [
-                                         TextSpan(text: 'Only '),
-                                         TextSpan(text: '${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number)}'), // Static or dynamic based on provider
-                                         TextSpan(text: ' Left To Withdraw '),
-                                         TextSpan(text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}'), // Static or dynamic based on provider
-                                       ],
-                                     ),
-                                   ),
-                                   // 👇 Second Layer: Normal Fill
-                                   RichText(
-                                     textAlign: TextAlign.center,
-                                     text: TextSpan(
-                                       style: TextStyle(
-                                         fontSize: 12,
-                                         fontWeight: FontWeight.w500,
-                                         fontFamily: 'Black_mianfeiziti',
-                                         color: '#FFFFFF'.color(),
-                                       ),
-                                       children: [
-                                         TextSpan(text: 'Only '),
-                                         TextSpan(
-                                           text: '${0.dolasType()}${0.to2Double(PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number)}', // Static or dynamic based on provider
-                                           style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
-                                         ),
-                                         TextSpan(text: ' Left To Withdraw '),
-                                         TextSpan(
-                                           text: '${0.dolasType()}${PSNumberHelpers().intModel!.eqRange.first}', // Static or dynamic based on provider
-                                           style: TextStyle(color: '#FFE711'.color(), fontSize: 12),
-                                         ),
-                                       ],
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                             ),
-                             Positioned(left: (0.width(context) - 172) * 0.5,bottom: 24,child: ParticleButton(
-                               onTap: (){
-                                 if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange.first){
-                                   context.tipShow(PSTXOutDialog(seletcd_row: atc_selecd_index));
-                                 } else if (PSLocalProvider.instance.ps_pig_level == 1){
-                                   context.tipShow(PSReviewingDialog());
-                                 } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
-                                   context.tipShow(PSGuide4Dialog());
-                                 } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
-                                   context.tipShow(PSTXRankDialog());
-                                 } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
-                                   context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
-                                 }
-
-                               },
-                               child: Container(
-                                 width: 172,
-                                 height: 34,
-                                 decoration: BoxDecoration(
-                                     image: PSDImg('ps_wtd_btn')
-                                 ),
-                                 child: Center(
-                                   child: PSStrokeText(text: 'Cash Out', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#025003'.color()),
-                                 ),
-                               ),
-                             ),
-                             )
-                           ],
-                         ),
-                       );
-                    }
+                  builder: (context, provider, child) {
+                    return Container(
+                      width: 349,
+                      height: 164,
+                      decoration: BoxDecoration(
+                        image: PSDImg('ps_cash_top_wtd'),
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 24,
+                            top: 34,
+                            width: 76,
+                            child: PSFitText(
+                              align: TextAlign.center,
+                              span: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'Black_mianfeiziti',
+                                  fontFamilyFallback: const [
+                                    'PSFallback',
+                                    'PSJapanese',
+                                  ],
+                                  color: '#873709'.color(),
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: PSLocale.tr("My Account:") + " ",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: 108,
+                            width: 85,
+                            height: 22,
+                            top: 30,
+                            child: PSGradientNumberRoller(
+                              value: provider.ps_dolas_number,
+                              duration: 800,
+                              fontSize: 14.0,
+                              gradientColors: [
+                                '#0BA408'.color(),
+                                '#0BA408'.color(),
+                              ],
+                              borderColor: Colors.transparent,
+                              borderWidth: 0.0,
+                              decimalPlaces: 2,
+                            ),
+                          ),
+                          Positioned(
+                            right: 22,
+                            top: 18,
+                            child: PSImg(
+                              name: 'ps_cash_tip',
+                              width: 126,
+                              height: 32,
+                            ),
+                          ),
+                          Positioned(
+                            left: 30,
+                            top: 52,
+                            child: SizedBox(
+                              width: 292,
+                              height: 30,
+                              child: Stack(
+                                alignment: Alignment.centerLeft,
+                                children: [
+                                  Container(
+                                    width: 292,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      image: PSDImg('ps_pro_bg_t'),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 7,
+                                    child: Container(
+                                      width:
+                                          278 *
+                                          (provider.ps_dolas_number /
+                                                  PSNumberHelpers()
+                                                      .intModel!
+                                                      .eqRange
+                                                      .first)
+                                              .clamp(
+                                                0.0,
+                                                1.0,
+                                              ), // Use provider data
+                                      height: 18,
+                                      decoration: BoxDecoration(
+                                        color: '#39B101'.color(),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            right: 20,
+                            top: 47,
+                            child: SizedBox(
+                              width: 86,
+                              height: 34,
+                              child: Stack(
+                                alignment: Alignment.bottomRight,
+                                children: [
+                                  PSImg(
+                                    name: 'ps_dolas_1',
+                                    width: 39,
+                                    height: 29,
+                                  ),
+                                  Positioned(
+                                    left: 0,
+                                    right: 0,
+                                    top: 0,
+                                    child: PSStrokeText(
+                                      text: PSLocale.money(
+                                        PSNumberHelpers()
+                                            .intModel!
+                                            .eqRange
+                                            .first,
+                                      ),
+                                      size: 12,
+                                      color: '#FFE711'.color(),
+                                      weight: FontWeight.w900,
+                                      skWidth: 1,
+                                      skColor: '#042267'.color(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 60.5,
+                            left: 32,
+                            right: 32,
+                            child: Stack(
+                              children: [
+                                // 👇 First Layer: Stroke
+                                PSFitText(
+                                  align: TextAlign.center,
+                                  span: TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Black_mianfeiziti',
+                                      fontFamilyFallback: const [
+                                        'PSFallback',
+                                        'PSJapanese',
+                                      ],
+                                      foreground: Paint()
+                                        ..style = PaintingStyle.stroke
+                                        ..strokeWidth = 1
+                                        ..color = '#042267'.color(),
+                                    ),
+                                    children: [
+                                      TextSpan(text: PSLocale.tr("Only") + " "),
+                                      TextSpan(
+                                        text:
+                                            '${PSLocale.money(0.to2Double(PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number))}',
+                                      ), // Static or dynamic based on provider
+                                      TextSpan(
+                                        text:
+                                            " " +
+                                            PSLocale.tr("Left To Withdraw") +
+                                            " ",
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '${PSLocale.money(PSNumberHelpers().intModel!.eqRange.first)}',
+                                      ), // Static or dynamic based on provider
+                                    ],
+                                  ),
+                                ),
+                                // 👇 Second Layer: Normal Fill
+                                PSFitText(
+                                  align: TextAlign.center,
+                                  span: TextSpan(
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Black_mianfeiziti',
+                                      fontFamilyFallback: const [
+                                        'PSFallback',
+                                        'PSJapanese',
+                                      ],
+                                      color: '#FFFFFF'.color(),
+                                    ),
+                                    children: [
+                                      TextSpan(text: PSLocale.tr("Only") + " "),
+                                      TextSpan(
+                                        text:
+                                            '${PSLocale.money(0.to2Double(PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first ? 0 : PSNumberHelpers().intModel!.eqRange.first - provider.ps_dolas_number))}', // Static or dynamic based on provider
+                                        style: TextStyle(
+                                          color: '#FFE711'.color(),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            " " +
+                                            PSLocale.tr("Left To Withdraw") +
+                                            " ",
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '${PSLocale.money(PSNumberHelpers().intModel!.eqRange.first)}', // Static or dynamic based on provider
+                                        style: TextStyle(
+                                          color: '#FFE711'.color(),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            left: (0.width(context) - 172) * 0.5,
+                            bottom: 24,
+                            child: ParticleButton(
+                              onTap: () {
+                                if (PSLocalProvider.instance.ps_dolas_number <
+                                    PSNumberHelpers().intModel!.eqRange.first) {
+                                  context.tipShow(
+                                    PSTXOutDialog(
+                                      seletcd_row: atc_selecd_index,
+                                    ),
+                                  );
+                                } else if (PSLocalProvider
+                                        .instance
+                                        .ps_pig_level ==
+                                    1) {
+                                  context.tipShow(PSReviewingDialog());
+                                } else if (PSLocalProvider
+                                            .instance
+                                            .ps_pig_level ==
+                                        2 &&
+                                    PSLocalProvider.instance.ps_tx_ing_status ==
+                                        false) {
+                                  context.tipShow(PSGuide4Dialog());
+                                } else if (PSLocalProvider
+                                            .instance
+                                            .ps_pig_level_index >=
+                                        10 &&
+                                    PSLocalProvider.instance.ps_pig_level ==
+                                        2 &&
+                                    PSLocalProvider
+                                            .instance
+                                            .ps_current_ranking !=
+                                        1) {
+                                  context.tipShow(PSTXRankDialog());
+                                } else if (PSLocalProvider
+                                        .instance
+                                        .ps_current_ranking <=
+                                    1) {
+                                  context.tipShow(
+                                    PSTXLastDialog(
+                                      type: PSLocalProvider
+                                          .instance
+                                          .ps_tx_task_index,
+                                    ),
+                                  );
+                                }
+                              },
+                              child: Container(
+                                width: 172,
+                                height: 34,
+                                decoration: BoxDecoration(
+                                  image: PSDImg('ps_wtd_btn'),
+                                ),
+                                child: Center(
+                                  child: PSStrokeText(
+                                    text: PSLocale.tr("Cash Out"),
+                                    size: 12,
+                                    color: '#FFFFFF'.color(),
+                                    weight: FontWeight.w900,
+                                    skWidth: 1,
+                                    skColor: '#025003'.color(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: 28.h),
-                Row(
-                  mainAxisAlignment: .center,
-                  children: [
-                    ParticleButton(child: Container(
-                      width: 153,
-                      height: 58,
-                      decoration: BoxDecoration(
-                        image: PSDImg('ps_act_${0}${isBrazilianPortuguese(context) == true ? 'pt' : ''}'),
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          width: 2,
-                          color: atc_selecd_index == 0 ? '#0077B3'.color() : Colors.transparent
-                        )
-                      ),
-                    ), onTap: (){
-                       setState(() {
-                         atc_selecd_index  = 0;
-                         if (PSLocalProvider.instance.ps_tx_ing_account == 0 && PSLocalProvider.instance.ps_pig_level >= 1) {
-                           cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 ? 159 : 78];
-                         } else {
-                           cellHeights = [78, 78, 78, 78];
-                         }
-                       });
-                    }),
-                    SizedBox(width: 13.w),
-                    ParticleButton(child: Container(
-                      width: 153,
-                      height: 58,
-                      decoration: BoxDecoration(
-                          image: PSDImg('ps_act_${1}${isBrazilianPortuguese(context) == true ? 'pt' : ''}'),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              width: 2,
-                              color: atc_selecd_index == 1 ? '#0077B3'.color() : Colors.transparent
-                          )
-                      ),
-                    ), onTap: (){
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                  child: PSPaymentSelector(
+                    selected: atc_selecd_index,
+                    onChanged: (value) {
                       setState(() {
-                        atc_selecd_index  = 1;
-                        if (PSLocalProvider.instance.ps_tx_ing_account == 1 && PSLocalProvider.instance.ps_pig_level >= 1) {
-                          cellHeights = [PSLocalProvider.instance.ps_tx_ing_number == 0 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 1 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 2 ? 159 : 78, PSLocalProvider.instance.ps_tx_ing_number == 3 ? 159 : 78];
-                        } else {
-                          cellHeights = [78, 78, 78, 78];
-                        }
+                        atc_selecd_index = value;
+                        cellHeights = List.generate(
+                          4,
+                          (index) =>
+                              PSLocalProvider.instance.ps_tx_ing_account ==
+                                      value &&
+                                  PSLocalProvider.instance.ps_tx_ing_number ==
+                                      index &&
+                                  PSLocalProvider.instance.ps_pig_level >= 1
+                              ? 159
+                              : 78,
+                        );
                       });
-                    }),
-                  ],
+                    },
+                  ),
                 ),
                 SizedBox(height: 17.h),
-                PSText(text: 'Choose Withdraw Amount', size: 14, color: '#3B5588'.color(), weight: FontWeight.w900),
+                PSText(
+                  text: PSLocale.tr("Choose Withdraw Amount"),
+                  size: 14,
+                  color: '#3B5588'.color(),
+                  weight: FontWeight.w900,
+                ),
                 SizedBox(height: 20.h),
-                SizedBox(
-                  height: 370.h,
+                Expanded(
                   child: ListView.builder(
                     padding: EdgeInsets.zero,
                     itemCount: cellHeights.length,
                     itemBuilder: (context, index) {
                       return Container(
                         height: cellHeights[index],
-                        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         child: getCashListtype(index),
                       );
                     },
@@ -336,9 +459,18 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
               ],
             ),
           ),
-          Positioned(left: 28.w,top: 44.h,child: PSImg(name: 'ps_act_cash_${PSLocalProvider.instance.ps_account_seled_index}${isBrazilianPortuguese(context) == true ? 'pt' : ''}', width: 136, height: 33)),
-        ]
-       )
+          Positioned(
+            left: 28.w,
+            top: 44.h,
+            child: PSImg(
+              name:
+                  'ps_act_cash_${PSLocalProvider.instance.ps_account_seled_index}${isBrazilianPortuguese(context) == true ? 'pt' : ''}',
+              width: 136,
+              height: 33,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -347,25 +479,24 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
     Locale currentLocale = Localizations.localeOf(context);
 
     // 判断是否是巴西葡萄牙语
-    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
+    return PSLocale.current.country == 'BR';
   }
 
-
   Widget getCashListtype(int row) {
-    if (row == PSLocalProvider.instance.ps_tx_ing_number && PSLocalProvider.instance.ps_tx_ing_account == atc_selecd_index && PSLocalProvider.instance.ps_pig_level >= 1){
+    if (row == PSLocalProvider.instance.ps_tx_ing_number &&
+        PSLocalProvider.instance.ps_tx_ing_account == atc_selecd_index &&
+        PSLocalProvider.instance.ps_pig_level >= 1) {
       return getCashTypeTwo(row);
     } else {
       return getCashTypeOne(row);
     }
   }
 
-  Widget getCashTypeTwo(int row){
+  Widget getCashTypeTwo(int row) {
     return Container(
       width: 333,
       height: 142,
-      decoration: BoxDecoration(
-        image: PSDImg('ps_cash_bg_1')
-      ),
+      decoration: BoxDecoration(image: PSDImg('ps_cash_bg_1')),
       child: Stack(
         children: [
           Column(
@@ -374,8 +505,15 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
               Row(
                 children: [
                   SizedBox(width: 14),
-                  PSText(text: '${0.dolasType()}${tx_list[row]}', size: 32, color: '#0BA408'.color(), weight: FontWeight.w900),
-                  Spacer(),
+                  Expanded(
+                    child: PSText(
+                      text: PSLocale.money(tx_list[row]),
+                      size: 32,
+                      color: '#0BA408'.color(),
+                      weight: FontWeight.w900,
+                    ),
+                  ),
+                  SizedBox(width: 8),
                   Visibility(
                     visible: PSLocalProvider.instance.ps_current_ranking != 1,
                     child: ParticleButton(
@@ -383,20 +521,37 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                         width: 111,
                         height: 28,
                         decoration: BoxDecoration(
-                            image: PSDImg(getCashbtnName(row))
+                          image: PSDImg(getCashbtnName(row)),
                         ),
                       ),
-                      onTap: (){
-                        if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange.first){
-                          context.tipShow(PSTXOutDialog(seletcd_row: atc_selecd_index));
-                        } else if (PSLocalProvider.instance.ps_pig_level == 1){
+                      onTap: () {
+                        if (PSLocalProvider.instance.ps_dolas_number <
+                            PSNumberHelpers().intModel!.eqRange.first) {
+                          context.tipShow(
+                            PSTXOutDialog(seletcd_row: atc_selecd_index),
+                          );
+                        } else if (PSLocalProvider.instance.ps_pig_level == 1) {
                           context.tipShow(PSReviewingDialog());
-                        } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
+                        } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+                            PSLocalProvider.instance.ps_tx_ing_status ==
+                                false) {
                           context.tipShow(PSGuide4Dialog());
-                        } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
+                        } else if (PSLocalProvider
+                                    .instance
+                                    .ps_pig_level_index >=
+                                10 &&
+                            PSLocalProvider.instance.ps_pig_level == 2 &&
+                            PSLocalProvider.instance.ps_current_ranking != 1) {
                           context.tipShow(PSTXRankDialog());
-                        } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
-                          context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
+                        } else if (PSLocalProvider
+                                .instance
+                                .ps_current_ranking <=
+                            1) {
+                          context.tipShow(
+                            PSTXLastDialog(
+                              type: PSLocalProvider.instance.ps_tx_task_index,
+                            ),
+                          );
                         }
                       },
                     ),
@@ -405,31 +560,43 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                 ],
               ),
               SizedBox(height: 9),
-              PSText(text: getCenterTips(), size: 11, color: '#AF7C1E'.color(), weight: FontWeight.w900),
+              PSText(
+                text: getCenterTips(),
+                size: 11,
+                color: '#AF7C1E'.color(),
+                weight: FontWeight.w900,
+              ),
               SizedBox(height: 20),
               Row(
                 children: [
                   SizedBox(width: 16),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      style: TextStyle(
+                  Flexible(
+                    child: PSFitText(
+                      align: TextAlign.center,
+                      span: TextSpan(
+                        style: TextStyle(
                           fontSize: 10.0,
                           fontWeight: FontWeight.w900,
                           fontFamily: 'Black_mianfeiziti',
-                          color: '#733A1B'.color()
+                          fontFamilyFallback: const [
+                            'PSFallback',
+                            'PSJapanese',
+                          ],
+                          color: '#733A1B'.color(),
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(text: getTaskTips()),
+                          TextSpan(
+                            text: getTaskString(),
+                            style: TextStyle(
+                              color: '#104AC5'.color(),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: getTaskTips(),
-                        ),
-                        TextSpan(
-                          text: getTaskString(),
-                          style: TextStyle(color: '#104AC5'.color(), fontSize: 12),
-                        ),
-                      ],
                     ),
-                  )
+                  ),
                 ],
               ),
               SizedBox(height: 8),
@@ -439,9 +606,7 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                   Container(
                     width: 189,
                     height: 23,
-                    decoration: BoxDecoration(
-                        image: PSDImg('ps_cash_pro_bg')
-                    ),
+                    decoration: BoxDecoration(image: PSDImg('ps_cash_pro_bg')),
                     child: Stack(
                       children: [
                         Positioned(
@@ -459,202 +624,373 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
                         Positioned(
                           top: 5,
                           left: (189 - 45) * 0.55,
-                          child: PSStrokeText(text: getTaskSize(), size: 10, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#084207'.color(), align: TextAlign.center),
+                          child: PSStrokeText(
+                            text: getTaskSize(),
+                            size: 10,
+                            color: '#FFFFFF'.color(),
+                            weight: FontWeight.w900,
+                            skWidth: 1,
+                            skColor: '#084207'.color(),
+                            align: TextAlign.center,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   SizedBox(width: 20),
-                  ParticleButton(child: Container(
-                    width: 98,
-                    height: 28,
-                    decoration: BoxDecoration(
-                        image: PSDImg('ps_cah_green_s')
+                  ParticleButton(
+                    child: Container(
+                      width: 98,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        image: PSDImg('ps_cah_green_s'),
+                      ),
+                      child: Center(
+                        child: PSStrokeText(
+                          text: PSLocale.tr("Go"),
+                          size: 12,
+                          color: '#FFFFFF'.color(),
+                          weight: FontWeight.w900,
+                          skWidth: 1,
+                          skColor: '#025003'.color(),
+                        ),
+                      ),
                     ),
-                    child: Center(
-                      child: PSStrokeText(text: 'Go', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#025003'.color()),
-                    ),
-                  ), onTap: (){
-                    if (PSLocalProvider.instance.ps_pig_level == 1){
-                      PigTabController.switchTo(Random().nextInt(2) + 1);
-                    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
-                      PigTabController.switchTo(Random().nextInt(2) + 1);
-                    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
-                      context.tipShow(PSTXRankDialog());
-                    } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
-                      context.tipShow(PSTXLastDialog(type: PSLocalProvider.instance.ps_tx_task_index));
-                    }
-
-                  })
+                    onTap: () {
+                      if (PSLocalProvider.instance.ps_pig_level == 1) {
+                        PigTabController.switchTo(Random().nextInt(2) + 1);
+                      } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+                          PSLocalProvider.instance.ps_tx_ing_status == false) {
+                        PigTabController.switchTo(Random().nextInt(2) + 1);
+                      } else if (PSLocalProvider.instance.ps_pig_level_index >=
+                              10 &&
+                          PSLocalProvider.instance.ps_pig_level == 2 &&
+                          PSLocalProvider.instance.ps_current_ranking != 1) {
+                        context.tipShow(PSTXRankDialog());
+                      } else if (PSLocalProvider.instance.ps_current_ranking <=
+                          1) {
+                        context.tipShow(
+                          PSTXLastDialog(
+                            type: PSLocalProvider.instance.ps_tx_task_index,
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ],
-              )
+              ),
             ],
           ),
           // Positioned(right: 6,bottom: 34,child: PSImg(name: 'ps_ad_icon', width: 27, height: 29))
         ],
-      )
+      ),
     );
   }
 
-  String getCenterTips(){
-    if ((PSLocalProvider.instance.ps_pig_level == 1) && PSLocalProvider.instance.ps_tx_ing_status == false){
-      return 'Almost done! Collect 20 more diamonds to finish review';
-    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
-      return "Security check in progress to protect your payout";
-    } else if (PSLocalProvider.instance.ps_current_ranking != 1 && PSLocalProvider.instance.ps_tx_ing_status == true) {
-      return "You're in line. Payouts are released in order";
-    } else  {
-      return 'Final Step！Complete the final task to release your cash';
+  String getCenterTips() {
+    if ((PSLocalProvider.instance.ps_pig_level == 1) &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return PSLocale.tr(
+        "Almost done! Collect 20 more diamonds to finish review",
+      );
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return PSLocale.tr("Security check in progress to protect your payout");
+    } else if (PSLocalProvider.instance.ps_current_ranking != 1 &&
+        PSLocalProvider.instance.ps_tx_ing_status == true) {
+      return PSLocale.tr("You're in line. Payouts are released in order");
+    } else {
+      return PSLocale.tr(
+        "Final Step！Complete the final task to release your cash",
+      );
     }
   }
 
-  String getTaskTips(){
-    if ((PSLocalProvider.instance.ps_pig_level == 1) && PSLocalProvider.instance.ps_tx_ing_status == false){
-      return 'Review task: ';
-    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
-      return "Verification task: ";
-    } else if (PSLocalProvider.instance.ps_current_ranking != 1 && PSLocalProvider.instance.ps_tx_ing_status == true) {
-      return "Queue Progress: ";
-    } else  {
-      return 'Final Task: ';
+  String getTaskTips() {
+    if ((PSLocalProvider.instance.ps_pig_level == 1) &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return PSLocale.tr("Review task:") + " ";
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return PSLocale.tr("Verification task:") + " ";
+    } else if (PSLocalProvider.instance.ps_current_ranking != 1 &&
+        PSLocalProvider.instance.ps_tx_ing_status == true) {
+      return PSLocale.tr("Queue Progress:") + " ";
+    } else {
+      return PSLocale.tr("Final Task:") + " ";
     }
   }
 
-  String getCashbtnName(int row){
-    if (PSLocalProvider.instance.ps_pig_level == 1){
+  String getCashbtnName(int row) {
+    if (PSLocalProvider.instance.ps_pig_level == 1) {
       return 'ps_unlock_payout';
-    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
       return 'ps_pro_btn';
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_show_rank && PSLocalProvider.instance.ps_current_ranking != 1) {
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 &&
+        PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_show_rank &&
+        PSLocalProvider.instance.ps_current_ranking != 1) {
       return 'ps_inqueue_btn';
     }
     return 'ps_unlock_payout';
   }
 
-  String getTaskSize(){
-    if (PSLocalProvider.instance.ps_pig_level == 1){
+  String getTaskSize() {
+    if (PSLocalProvider.instance.ps_pig_level == 1) {
       return '${0.to2Double(PSLocalProvider.instance.ps_pig_level_index)}/20';
-    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
       return '${0.to2Double(PSLocalProvider.instance.ps_pig_level_index)}/10';
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 &&
+        PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_current_ranking != 1) {
       return '${(((99 - PSLocalProvider.instance.ps_current_ranking) / 99) * 100).toInt()}%';
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
-      if (PSLocalProvider.instance.ps_tx_task_index == 0){
+      if (PSLocalProvider.instance.ps_tx_task_index == 0) {
         return '${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 1) {
         return '${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 2){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 2) {
         return '${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 3) {
         return '${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 4) {
         return '${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 5) {
         return '${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 6) {
         return '${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 7) {
         return '${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 8) {
         return '${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data}';
       }
     }
     return '';
   }
 
-  double getTaskProgress(){
-    if (PSLocalProvider.instance.ps_pig_level == 1){
+  double getTaskProgress() {
+    if (PSLocalProvider.instance.ps_pig_level == 1) {
       return PSLocalProvider.instance.ps_pig_level_index / 20;
-    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
       return PSLocalProvider.instance.ps_pig_level_index / 10;
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 &&
+        PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_current_ranking != 1) {
       return (99 - PSLocalProvider.instance.ps_current_ranking) / 99;
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
-      if (PSLocalProvider.instance.ps_tx_task_index == 0){
-        return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
-        return PSLocalProvider.instance.ps_tx_wheel_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 2){
-        return PSLocalProvider.instance.ps_tx_bubble_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
-        return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
-        return PSLocalProvider.instance.ps_tx_wheel_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
-        return PSLocalProvider.instance.ps_tx_bubble_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
-        return PSLocalProvider.instance.ps_tx_quiz_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
-        return PSLocalProvider.instance.ps_tx_wheel_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
-        return PSLocalProvider.instance.ps_tx_bubble_index / PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data;
+      if (PSLocalProvider.instance.ps_tx_task_index == 0) {
+        return PSLocalProvider.instance.ps_tx_quiz_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 1) {
+        return PSLocalProvider.instance.ps_tx_wheel_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 2) {
+        return PSLocalProvider.instance.ps_tx_bubble_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 3) {
+        return PSLocalProvider.instance.ps_tx_quiz_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 4) {
+        return PSLocalProvider.instance.ps_tx_wheel_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 5) {
+        return PSLocalProvider.instance.ps_tx_bubble_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 6) {
+        return PSLocalProvider.instance.ps_tx_quiz_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 7) {
+        return PSLocalProvider.instance.ps_tx_wheel_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 8) {
+        return PSLocalProvider.instance.ps_tx_bubble_index /
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data;
       }
     }
     return 0;
   }
 
-  String getTaskString(){
-    if (PSLocalProvider.instance.ps_pig_level == 1){
-      return 'Collect 20 diamonds.';
-    } else if (PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_tx_ing_status == false) {
-      return 'Collect 10 Gold Bricks.';
-    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 && PSLocalProvider.instance.ps_pig_level == 2 && PSLocalProvider.instance.ps_current_ranking != 1) {
-      return 'Queued all the way to the front';
+  String getTaskString() {
+    if (PSLocalProvider.instance.ps_pig_level == 1) {
+      return PSLocale.tr("Collect 20 diamonds.");
+    } else if (PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_tx_ing_status == false) {
+      return PSLocale.tr("Collect 10 Gold Bricks.");
+    } else if (PSLocalProvider.instance.ps_pig_level_index >= 10 &&
+        PSLocalProvider.instance.ps_pig_level == 2 &&
+        PSLocalProvider.instance.ps_current_ranking != 1) {
+      return PSLocale.tr("Queued all the way to the front");
     } else if (PSLocalProvider.instance.ps_current_ranking <= 1) {
-      if (PSLocalProvider.instance.ps_tx_task_index == 0){
-        return 'Answer ${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Question Right';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 1){
-        return 'Spin ${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Times';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 2){
-        return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 3){
-        return 'Answer ${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Question Right';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 4){
-        return 'Spin ${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Times';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 5){
-        return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 6){
-        return 'Answer ${PSLocalProvider.instance.ps_tx_quiz_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Question Right';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 7){
-        return 'Spin ${PSLocalProvider.instance.ps_tx_wheel_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Times';
-      } else if (PSLocalProvider.instance.ps_tx_task_index == 8){
-        return 'Watch ${PSLocalProvider.instance.ps_tx_bubble_index}/${PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data} Ad Video';
+      if (PSLocalProvider.instance.ps_tx_task_index == 0) {
+        return PSLocale.tr("Answer {p0}/{p1} Question Right", {
+          'p0': PSLocalProvider.instance.ps_tx_quiz_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 1) {
+        return PSLocale.tr("Spin {p0}/{p1} Times", {
+          'p0': PSLocalProvider.instance.ps_tx_wheel_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 2) {
+        return PSLocale.tr("Watch {p0}/{p1} Ad Video", {
+          'p0': PSLocalProvider.instance.ps_tx_bubble_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 3) {
+        return PSLocale.tr("Answer {p0}/{p1} Question Right", {
+          'p0': PSLocalProvider.instance.ps_tx_quiz_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 4) {
+        return PSLocale.tr("Spin {p0}/{p1} Times", {
+          'p0': PSLocalProvider.instance.ps_tx_wheel_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 5) {
+        return PSLocale.tr("Watch {p0}/{p1} Ad Video", {
+          'p0': PSLocalProvider.instance.ps_tx_bubble_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 6) {
+        return PSLocale.tr("Answer {p0}/{p1} Question Right", {
+          'p0': PSLocalProvider.instance.ps_tx_quiz_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 7) {
+        return PSLocale.tr("Spin {p0}/{p1} Times", {
+          'p0': PSLocalProvider.instance.ps_tx_wheel_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
+      } else if (PSLocalProvider.instance.ps_tx_task_index == 8) {
+        return PSLocale.tr("Watch {p0}/{p1} Ad Video", {
+          'p0': PSLocalProvider.instance.ps_tx_bubble_index,
+          'p1': PSNumberHelpers()
+              .intModel!
+              .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+              .data,
+        });
       }
     }
     return '';
   }
 
-  Widget getCashTypeOne(int row){
+  Widget getCashTypeOne(int row) {
     return Container(
       width: 331,
       height: 61,
-      decoration: BoxDecoration(
-        image: PSDImg('ps_cash_bg_0')
-      ),
+      decoration: BoxDecoration(image: PSDImg('ps_cash_bg_0')),
       child: Row(
         children: [
           SizedBox(width: 14),
-          PSText(text: '${0.dolasType()}${tx_list[row]}', size: 32, color: '#0BA408'.color(), weight: FontWeight.w900),          Spacer(),
+          Expanded(
+            child: PSText(
+              text: PSLocale.money(tx_list[row]),
+              size: 32,
+              color: '#0BA408'.color(),
+              weight: FontWeight.w900,
+            ),
+          ),
+          SizedBox(width: 8),
           ParticleButton(
             child: Container(
               width: 115,
               height: 36,
-              decoration: BoxDecoration(
-                image: PSDImg('ps_cah_green_b')
+              decoration: BoxDecoration(image: PSDImg('ps_cah_green_b')),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: PSStrokeText(
+                    text: PSLocale.tr("Withdraw"),
+                    size: 12,
+                    color: '#FFFFFF'.color(),
+                    weight: FontWeight.w900,
+                    skWidth: 1,
+                    skColor: '#025003'.color(),
+                  ),
+                ),
               ),
-              child: PSStrokeText(text: 'Withdraw', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#025003'.color()),
             ),
-            onTap: (){
+            onTap: () {
               if (PSLocalProvider.instance.ps_tx_ing_status == true) {
-                PSDialogTool.toast(context, 'Withdrawal in progress—hurry up and complete the tasks!');
+                PSDialogTool.toast(
+                  context,
+                  PSLocale.tr(
+                    "Withdrawal in progress—hurry up and complete the tasks!",
+                  ),
+                );
               } else {
-                if (PSLocalProvider.instance.ps_dolas_number < PSNumberHelpers().intModel!.eqRange[row]){
+                if (PSLocalProvider.instance.ps_dolas_number <
+                    PSNumberHelpers().intModel!.eqRange[row]) {
                   context.tipShow(PSTXOutDialog(seletcd_row: row));
                 } else {
-                  if (PSLocalProvider.instance.ps_pig_level == 1){
-                    PSDialogTool.toast(context, 'Collect 20 Diamonds to complete the withdrawal.');
+                  if (PSLocalProvider.instance.ps_pig_level == 1) {
+                    PSDialogTool.toast(
+                      context,
+                      PSLocale.tr(
+                        "Collect 20 Diamonds to complete the withdrawal.",
+                      ),
+                    );
                   } else {
-                    PSDialogTool.toast(context, 'Collect 10 Gold Bricks to complete the withdrawal.');
+                    PSDialogTool.toast(
+                      context,
+                      PSLocale.tr(
+                        "Collect 10 Gold Bricks to complete the withdrawal.",
+                      ),
+                    );
                   }
                 }
               }
@@ -665,13 +1001,11 @@ class _PSPigCashState extends State<PSPigCash> with SingleTickerProviderStateMix
       ),
     );
   }
-
 }
-
 
 class PSPigCashNotificationService {
   static final StreamController<int> _streamController =
-  StreamController<int>.broadcast();
+      StreamController<int>.broadcast();
 
   static Stream<int> get stream => _streamController.stream;
 

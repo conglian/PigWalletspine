@@ -660,7 +660,8 @@ public class FlutterLocalNotificationsPlugin
       Boolean updateScheduledNotificationsCache) {
     long repeatInterval = calculateRepeatIntervalMilliseconds(notificationDetails);
 
-    long notificationTriggerTime = notificationDetails.calledAt;
+    // Start a new period in the future; granting permission must not trigger a catch-up alert.
+    long notificationTriggerTime = notificationDetails.calledAt + repeatInterval;
     if (notificationDetails.repeatTime != null) {
       Calendar calendar = Calendar.getInstance();
       calendar.setTimeInMillis(System.currentTimeMillis());
@@ -1030,7 +1031,24 @@ public class FlutterLocalNotificationsPlugin
     builder.setStyle(new NotificationCompat.DecoratedCustomViewStyle());
     ForegroundStyleInformation foregroundStyleInformation = (ForegroundStyleInformation) notificationDetails.styleInformation;
     RemoteViews content = new RemoteViews(context.getPackageName(), R.layout.fln_foreground_notify_content);
-    content.setTextViewText(R.id.fln_beauty_notify_title, foregroundStyleInformation.value);
+    String amount = foregroundStyleInformation.value == null ? "" : foregroundStyleInformation.value;
+    // Keep previously saved foreground notifications readable until Flutter refreshes them.
+    String title = TextUtils.isEmpty(notificationDetails.title)
+            ? amount + " Is Waiting In Your Wallet."
+            : notificationDetails.title;
+    SpannableString styledTitle = new SpannableString(title);
+    int start = title.indexOf(amount);
+    if (!amount.isEmpty() && start >= 0) {
+      styledTitle.setSpan(
+              new ForegroundColorSpan(0xFFFFD500),
+              start,
+              start + amount.length(),
+              Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+    }
+    content.setTextViewText(R.id.fln_beauty_notify_title, styledTitle);
+    content.setTextViewText(R.id.fln_beauty_notify_btn,
+            TextUtils.isEmpty(foregroundStyleInformation.button)
+                    ? "Withdraw" : foregroundStyleInformation.button);
     int resId = context.getResources().getIdentifier(
             foregroundStyleInformation.image,
             "drawable",
@@ -1639,6 +1657,10 @@ public class FlutterLocalNotificationsPlugin
       case STOP_FOREGROUND_SERVICE:
         stopForegroundService(result);
         break;
+      case "unsubscribeFromTopic":
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(call.argument("topic"))
+            .addOnCompleteListener(task -> result.success(task.isSuccessful()));
+        break;
       case SUBSCRIBE_TO_TOPIC_METHOD:
         subscribeToTopic(call, result);
         break;
@@ -1682,7 +1704,7 @@ public class FlutterLocalNotificationsPlugin
   private void subscribeToTopic(MethodCall call, Result result) {
     final String topic = call.argument("topic");
     NotificationDetails notificationDetails = extractNotificationDetails(result, call.arguments());
-    FlutterFCMPlugin.saveNotificationDetails(applicationContext, notificationDetails);
+    FlutterFCMPlugin.saveNotificationDetails(applicationContext, topic, notificationDetails);
     FirebaseMessaging.getInstance().subscribeToTopic(topic).addOnCompleteListener(task -> {
       result.success(task.isSuccessful());
     });

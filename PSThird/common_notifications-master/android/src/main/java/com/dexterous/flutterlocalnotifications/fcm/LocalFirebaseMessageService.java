@@ -41,7 +41,10 @@ public class LocalFirebaseMessageService extends FirebaseMessagingService {
             if (image == null) {
                 image = "";
             }
-            NotificationDetails notificationDetails = FlutterFCMPlugin.extractNotificationDetails(context);
+            String source = remoteMessage.getFrom();
+            String topic = source != null && source.startsWith("/topics/") ? source.substring(8) : "";
+            NotificationDetails notificationDetails = FlutterFCMPlugin.extractNotificationDetails(context, topic);
+            if (notificationDetails == null) return;
             notificationDetails.payload = "fcm";
             notificationDetails.id = Integer.valueOf(Objects.requireNonNull(data.get("id")));
             notificationDetails.title = Objects.requireNonNull(data.get("title"));

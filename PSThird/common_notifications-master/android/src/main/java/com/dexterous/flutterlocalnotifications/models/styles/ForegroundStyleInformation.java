@@ -6,9 +6,12 @@ import androidx.annotation.Keep;
 public class ForegroundStyleInformation extends DefaultStyleInformation {
     public String value;
     public String image;
-    public ForegroundStyleInformation(String value,String image) {
+    public String button;
+
+    public ForegroundStyleInformation(String value, String image, String button) {
         super(false, false);
         this.value = value;
         this.image = image;
+        this.button = button;
     }
 }

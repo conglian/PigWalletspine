@@ -12,6 +12,7 @@ import '../PSPigVC/PSPigCash.dart';
 import '../PSPigVC/PSPigHome.dart';
 import '../main.dart';
 import 'PSNoticeHelp.dart';
+import 'PSLocale.dart';
 
 class PSLocalProvider extends ChangeNotifier {
   // 1. 私有构造函数（禁止外部直接创建实例）
@@ -317,6 +318,23 @@ class PSLocalProvider extends ChangeNotifier {
 
 
   // 3. 初始化：从本地存储加载数据（组件初始化时调用）
+  Future<void> syncPayoutCountry() async {
+    final prefs = await SharedPreferences.getInstance();
+    final country = PSLocale.current.country;
+    final previous = prefs.getString('ps_payout_country');
+    if (previous != null && previous != country) {
+      // 不把上一国家的账号及渠道下标套用到另一国家。
+      await prefs.setString(ps_account_idName, '');
+      await prefs.setInt(ps_account_seled_indexName, 0);
+      await prefs.setInt(ps_tx_ing_accountName, 0);
+      for (final key in ['ps_payout_method', 'ps_payout_name', 'ps_payout_cpf', 'ps_payout_type']) {
+        await prefs.remove(key);
+      }
+    }
+    await prefs.setString('ps_payout_country', country);
+    await init();
+  }
+
   Future<void> init() async {
     final prefs = await SharedPreferences.getInstance();
     // 从本地读取值（key自定义，需与存储时一致）
@@ -341,7 +359,7 @@ class PSLocalProvider extends ChangeNotifier {
     ps_rank_ad_count = prefs.getInt('ps_rank_ad_count') ?? 388;
     ps_tx_task_index = prefs.getInt('ps_tx_task_index') ?? 0;
     ps_quiz_task_index = prefs.getInt('ps_quiz_task_index') ?? 0;
-    ps_tx_ing_account = prefs.getInt('ps_tx_ing_account') ?? 0;
+    ps_tx_ing_account = PSLocale.paymentIndex(prefs.getInt('ps_tx_ing_account') ?? 0);
     ps_tx_ing_number = prefs.getInt('ps_tx_ing_number') ?? 0;
     ps_card_a_number = prefs.getInt('ps_card_a_number') ?? 0;
     ps_quiz_model_index = prefs.getInt('ps_quiz_model_index') ?? 0;
@@ -351,7 +369,7 @@ class PSLocalProvider extends ChangeNotifier {
     ps_quiz_tap_index = prefs.getInt('ps_quiz_tap_index') ?? 0;
     ps_scratch_not_award_number =
         prefs.getInt('ps_scratch_not_award_number') ?? 0;
-    ps_account_seled_index = prefs.getInt('ps_account_seled_index') ?? 0;
+    ps_account_seled_index = PSLocale.paymentIndex(prefs.getInt('ps_account_seled_index') ?? 0);
     ps_scrach_unlock_index_0 = prefs.getInt('ps_scrach_unlock_index_0') ?? 0;
     ps_scrach_unlock_index_1 = prefs.getInt('ps_scrach_unlock_index_1') ?? 0;
     ps_ad_short_show_number = prefs.getInt('ps_ad_short_show_number') ?? 0;
@@ -527,10 +545,10 @@ class PSLocalProvider extends ChangeNotifier {
       });
       await updateBool(ps_show_dolas_aniName, true);
     }
-    if (key == PSLocalProvider.instance.ps_dolas_numberName) {
-        PSNoticeHelp().startSJForegroundService();
-    }
     await init();
+    if (result && key == ps_dolas_numberName) {
+      PSNoticeHelp().startSJForegroundService();
+    }
     return result;
   }
 

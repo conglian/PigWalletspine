@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSResponsive.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -41,6 +43,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
   List<QuestionModel> math_questions = [];
   List<QuestionModel> animal_questions = [];
   List<QuestionModel> current_questions = [];
+  StreamSubscription? _quizSubscription;
 
   @override
   void initState() {
@@ -77,10 +80,12 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
       _bottomContainerController.forward();
     });
     loadQuizModel();
-    PSPigQuizUpdateNotificationService.stream.listen((value) async {
+    _quizSubscription = PSPigQuizUpdateNotificationService.stream.listen((
+      value,
+    ) async {
       // 当前帧构建完成后
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        getCurrentModel();
+        if (mounted) getCurrentModel();
       });
     });
   }
@@ -89,23 +94,23 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
   void loadQuizModel() {
     final daily_decrypted = AESHelper.decryptString(dailyLifeString);
     daily_questions = questionListFromJson(jsonDecode(daily_decrypted));
-    '${daily_questions.first.question}'.log();
+    '${daily_questions.first.localizedQuestion}'.log();
 
     final nature_decrypted = AESHelper.decryptString(natureLifeString);
     nature_questions = questionListFromJson(jsonDecode(nature_decrypted));
-    '${nature_questions.first.question}'.log();
+    '${nature_questions.first.localizedQuestion}'.log();
 
     final science_decrypted = AESHelper.decryptString(scienceString);
     science_questions = questionListFromJson(jsonDecode(science_decrypted));
-    '${science_questions.first.question}'.log();
+    '${science_questions.first.localizedQuestion}'.log();
 
     final math_decrypted = AESHelper.decryptString(mathString);
     math_questions = questionListFromJson(jsonDecode(math_decrypted));
-    '${math_questions.first.question}'.log();
+    '${math_questions.first.localizedQuestion}'.log();
 
     final animal_decrypted = AESHelper.decryptString(animalString);
     animal_questions = questionListFromJson(jsonDecode(animal_decrypted));
-    '${animal_questions.first.question}'.log();
+    '${animal_questions.first.localizedQuestion}'.log();
 
     getCurrentModel();
   }
@@ -116,6 +121,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _quizSubscription?.cancel();
     _topContainerController.dispose();
     _bottomContainerController.dispose();
     super.dispose();
@@ -206,17 +212,23 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                             Positioned(
                               left: 48,
                               top: 20,
-                              child: RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
+                              child: PSFitText(
+                                align: TextAlign.center,
+                                span: TextSpan(
                                   style: TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w900,
                                     color: '#873709'.color(),
                                     fontFamily: text_fontName,
+                                    fontFamilyFallback: const [
+                                      'PSFallback',
+                                      'PSJapanese',
+                                    ],
                                   ),
                                   children: <TextSpan>[
-                                    const TextSpan(text: 'Energy Point: '),
+                                    TextSpan(
+                                      text: PSLocale.tr("Energy Point:") + " ",
+                                    ),
                                     TextSpan(
                                       text: provider.ps_pig_level == 0
                                           ? '20'
@@ -284,7 +296,9 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                               left: 200,
                               top: provider.ps_pig_level == 0 ? 58 : 62,
                               child: PSImg(
-                                name: provider.ps_pig_level == 0 ? 'ps_domand_s' : 'ps_zhuan_smail',
+                                name: provider.ps_pig_level == 0
+                                    ? 'ps_domand_s'
+                                    : 'ps_zhuan_smail',
                                 width: provider.ps_pig_level == 0 ? 18 : 13,
                                 height: provider.ps_pig_level == 0 ? 17 : 11,
                               ),
@@ -295,7 +309,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                               child: PSImg(
                                 name: provider.ps_pig_level == 0
                                     ? 'ps_pig_1'
-                                    : 'ps_pig_3',
+                                    : 'ps_pig_2',
                                 width: 47,
                                 height: 47,
                               ),
@@ -305,7 +319,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                               top: 40,
                               child: PSImg(
                                 name: provider.ps_pig_level == 0
-                                    ? 'ps_pig_3'
+                                    ? 'ps_pig_2'
                                     : 'ps_pig_2',
                                 width: 47,
                                 height: 47,
@@ -333,7 +347,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                           left: 108.w,
                           top: 12.h,
                           child: PSStrokeText(
-                            text: 'Quiz Cash',
+                            text: PSLocale.tr("Quiz Cash"),
                             size: 32,
                             color: '#F8FFAD'.color(),
                             weight: FontWeight.w900,
@@ -353,7 +367,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                                     current_questions[PSLocalProvider
                                             .instance
                                             .ps_quiz_num_index]
-                                        .question,
+                                        .localizedQuestion,
                                 size: 24,
                                 color: '#FCFFE5'.color(),
                                 weight: FontWeight.w900,
@@ -422,7 +436,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                                       current_questions[PSLocalProvider
                                               .instance
                                               .ps_quiz_num_index]
-                                          .a,
+                                          .localizedA,
                                   size: 24,
                                   color: '#FFFFFF'.color(),
                                   weight: FontWeight.w900,
@@ -490,7 +504,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                                       current_questions[PSLocalProvider
                                               .instance
                                               .ps_quiz_num_index]
-                                          .b,
+                                          .localizedB,
                                   size: 24,
                                   color: '#FFFFFF'.color(),
                                   weight: FontWeight.w900,
@@ -562,7 +576,8 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
       PSLocalProvider.instance.ps_pig_level_indexName,
       PSLocalProvider.instance.ps_pig_level_index + 1,
     );
-    if (PSLocalProvider.instance.ps_pig_level == 0 && PSLocalProvider.instance.ps_pig_level_index >= 20){
+    if (PSLocalProvider.instance.ps_pig_level == 0 &&
+        PSLocalProvider.instance.ps_pig_level_index >= 20) {
       await PSLocalProvider.instance.updateint(
         PSLocalProvider.instance.ps_pig_level_indexName,
         0,
@@ -571,7 +586,8 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
         PSLocalProvider.instance.ps_pig_levelName,
         1,
       );
-    } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
+    } else if (PSLocalProvider.instance.ps_pig_level == 1 &&
+        PSLocalProvider.instance.ps_pig_level_index >= 10) {
       await PSLocalProvider.instance.updateint(
         PSLocalProvider.instance.ps_pig_level_indexName,
         10,

@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSResponsive.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
@@ -69,17 +71,23 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                           Positioned(
                             left: 48,
                             top: 20,
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
+                            child: PSFitText(
+                              align: TextAlign.center,
+                              span: TextSpan(
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w900,
                                   color: '#873709'.color(),
                                   fontFamily: text_fontName,
+                                  fontFamilyFallback: const [
+                                    'PSFallback',
+                                    'PSJapanese',
+                                  ],
                                 ),
                                 children: <TextSpan>[
-                                  const TextSpan(text: 'Energy Point: '),
+                                  TextSpan(
+                                    text: PSLocale.tr("Energy Point:") + " ",
+                                  ),
                                   TextSpan(
                                     text: provider.ps_pig_level == 0
                                         ? '20'
@@ -143,7 +151,9 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                             left: 200,
                             top: provider.ps_pig_level == 0 ? 58 : 62,
                             child: PSImg(
-                              name: provider.ps_pig_level == 0 ? 'ps_domand_s' : 'ps_zhuan_smail',
+                              name: provider.ps_pig_level == 0
+                                  ? 'ps_domand_s'
+                                  : 'ps_zhuan_smail',
                               width: provider.ps_pig_level == 0 ? 18 : 13,
                               height: provider.ps_pig_level == 0 ? 17 : 11,
                             ),
@@ -154,7 +164,7 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                             child: PSImg(
                               name: provider.ps_pig_level == 0
                                   ? 'ps_pig_1'
-                                  : 'ps_pig_3',
+                                  : 'ps_pig_2',
                               width: 47,
                               height: 47,
                             ),
@@ -164,7 +174,7 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                             top: 40,
                             child: PSImg(
                               name: provider.ps_pig_level == 0
-                                  ? 'ps_pig_3'
+                                  ? 'ps_pig_2'
                                   : 'ps_pig_2',
                               width: 47,
                               height: 47,
@@ -187,7 +197,7 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                           width: 340.w,
                           height: 340.w,
                           child: PigWheelPage(
-                            imagePath: 'ps_wheel_center_iocn'.image(),
+                            imagePath: 'ps_wheel_center_iocn',
                           ),
                         ),
                       ),

@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSResponsive.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,10 +32,10 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
 
   final int itemCount = 4;
   List<String> names = [
-    'Everyday Trivia',
-    'Chill Time Quiz',
-    'Brain Teasers',
-    'Warm-Up Quiz',
+    PSLocale.tr("Everyday Trivia"),
+    PSLocale.tr("Chill Time Quiz"),
+    PSLocale.tr("Brain Teasers"),
+    PSLocale.tr("Warm-Up Quiz"),
   ];
 
   @override
@@ -125,17 +127,23 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                           Positioned(
                             left: 48,
                             top: 20,
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
+                            child: PSFitText(
+                              align: TextAlign.center,
+                              span: TextSpan(
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   fontWeight: FontWeight.w900,
                                   color: '#873709'.color(),
                                   fontFamily: text_fontName,
+                                  fontFamilyFallback: const [
+                                    'PSFallback',
+                                    'PSJapanese',
+                                  ],
                                 ),
                                 children: <TextSpan>[
-                                  const TextSpan(text: 'Energy Point: '),
+                                  TextSpan(
+                                    text: PSLocale.tr("Energy Point:") + " ",
+                                  ),
                                   TextSpan(
                                     text: provider.ps_pig_level == 0
                                         ? '20'
@@ -199,7 +207,9 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                             left: 200,
                             top: provider.ps_pig_level == 0 ? 58 : 62,
                             child: PSImg(
-                              name: provider.ps_pig_level == 0 ? 'ps_domand_s' : 'ps_zhuan_smail',
+                              name: provider.ps_pig_level == 0
+                                  ? 'ps_domand_s'
+                                  : 'ps_zhuan_smail',
                               width: provider.ps_pig_level == 0 ? 18 : 13,
                               height: provider.ps_pig_level == 0 ? 17 : 11,
                             ),
@@ -210,7 +220,7 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                             child: PSImg(
                               name: provider.ps_pig_level == 0
                                   ? 'ps_pig_1'
-                                  : 'ps_pig_3',
+                                  : 'ps_pig_2',
                               width: 47,
                               height: 47,
                             ),
@@ -220,7 +230,7 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                             top: 40,
                             child: PSImg(
                               name: provider.ps_pig_level == 0
-                                  ? 'ps_pig_3'
+                                  ? 'ps_pig_2'
                                   : 'ps_pig_2',
                               width: 47,
                               height: 47,
@@ -391,13 +401,20 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
               ],
             ),
           ),
+
           /// =================== 6 个按钮渐显 + 缩放 ===================
           Consumer<PSLocalProvider>(
             builder: (context, provider, child) {
               return Positioned(
                 left: (0.width(context) - 227) * 0.5,
                 top: 148.h,
-                child: PSImg(name: provider.ps_pig_level <= 1 ? 'ps_b_pig_icon_${provider.ps_pig_level}' : 'ps_b_pig_icon_2', width: 227, height: 224),
+                child: PSImg(
+                  name: provider.ps_pig_level <= 1
+                      ? 'ps_b_pig_icon_${provider.ps_pig_level}'
+                      : 'ps_b_pig_icon_2',
+                  width: 227,
+                  height: 224,
+                ),
               );
             },
           ),
@@ -415,7 +432,7 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                     PSAdAHelper().show(
                       context,
                       (hasCache) {
-                        if (!hasCache){
+                        if (!hasCache) {
                           PSAdAHelper().resetBlock();
                         }
                       },
@@ -425,7 +442,8 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                           PSLocalProvider.instance.ps_pig_level_indexName,
                           PSLocalProvider.instance.ps_pig_level_index + 2,
                         );
-                        if (PSLocalProvider.instance.ps_pig_level == 0 && PSLocalProvider.instance.ps_pig_level_index >= 20){
+                        if (PSLocalProvider.instance.ps_pig_level == 0 &&
+                            PSLocalProvider.instance.ps_pig_level_index >= 20) {
                           await PSLocalProvider.instance.updateint(
                             PSLocalProvider.instance.ps_pig_level_indexName,
                             0,
@@ -434,7 +452,8 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                             PSLocalProvider.instance.ps_pig_levelName,
                             1,
                           );
-                        } else if (PSLocalProvider.instance.ps_pig_level == 1 && PSLocalProvider.instance.ps_pig_level_index >= 10){
+                        } else if (PSLocalProvider.instance.ps_pig_level == 1 &&
+                            PSLocalProvider.instance.ps_pig_level_index >= 10) {
                           await PSLocalProvider.instance.updateint(
                             PSLocalProvider.instance.ps_pig_level_indexName,
                             10,
@@ -488,7 +507,9 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                       Consumer<PSLocalProvider>(
                         builder: (context, provider, child) {
                           return PSBouncyImage(
-                            imagePath: provider.ps_pig_level == 0 ? 'ps_domand_bubble' : 'ps_zhuan_bubble',
+                            imagePath: provider.ps_pig_level == 0
+                                ? 'ps_home_pop_1'
+                                : 'ps_zhuan_bubble',
                             width: 68.44,
                             height: 69.2,
                             enableAnimation: true,
@@ -529,7 +550,9 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                       Consumer<PSLocalProvider>(
                         builder: (context, provider, child) {
                           return PSBouncyImage(
-                            imagePath: provider.ps_pig_level == 0 ? 'ps_domand_bubble' : 'ps_zhuan_bubble',
+                            imagePath: provider.ps_pig_level == 0
+                                ? 'ps_home_pop_1'
+                                : 'ps_zhuan_bubble',
                             width: 68.44,
                             height: 69.2,
                             enableAnimation: true,
@@ -570,7 +593,9 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                       Consumer<PSLocalProvider>(
                         builder: (context, provider, child) {
                           return PSBouncyImage(
-                            imagePath: provider.ps_pig_level == 0 ? 'ps_domand_bubble' : 'ps_zhuan_bubble',
+                            imagePath: provider.ps_pig_level == 0
+                                ? 'ps_home_pop_1'
+                                : 'ps_zhuan_bubble',
                             width: 68.44,
                             height: 69.2,
                             enableAnimation: true,
@@ -651,8 +676,9 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                   MaterialPageRoute(
                     builder: (builder) {
                       return PSWebkitview(
-                        url: "https://sites.google.com/view/piggywallet-pp/home",
-                        title: 'Privacy Policy',
+                        url:
+                            "https://sites.google.com/view/piggywallet-pp/home",
+                        title: PSLocale.tr("Privacy Policy"),
                       );
                     },
                   ),

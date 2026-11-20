@@ -28,17 +28,19 @@ public class FlutterFCMPlugin {
         return sharedPreferences.getInt("message_received_num" + payload, 0);
     }
 
-    public static void saveNotificationDetails(Context context, NotificationDetails details) {
+    public static void saveNotificationDetails(Context context, String topic, NotificationDetails details) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FlutterLocalNotificationsPlugin.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = FlutterLocalNotificationsPlugin.buildGson();
         editor.putString("fcmNotificationDetails", gson.toJson(details));
+        editor.putString("fcmNotificationDetails_" + topic, gson.toJson(details));
         editor.apply();
     }
 
-    public static NotificationDetails extractNotificationDetails(Context context) {
+    public static NotificationDetails extractNotificationDetails(Context context, String topic) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(FlutterLocalNotificationsPlugin.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
-        String detailsJson = sharedPreferences.getString("fcmNotificationDetails", "");
+        String detailsJson = sharedPreferences.getString("fcmNotificationDetails_" + topic,
+                sharedPreferences.getString("fcmNotificationDetails", ""));
         Gson gson = FlutterLocalNotificationsPlugin.buildGson();
         Type type = new TypeToken<NotificationDetails>() {
         }.getType();

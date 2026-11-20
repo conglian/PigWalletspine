@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSResponsive.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
@@ -57,6 +59,7 @@ class _PSMarqueeTextState extends State<PSMarqueeText>
 
   // Function to measure width after build
   void _measure() {
+    if (!mounted) return;
     final ctx1 = context.findRenderObject() as RenderBox?;
     final ctx2 = context.findRenderObject() as RenderBox?;
 
@@ -90,6 +93,7 @@ class _PSMarqueeTextState extends State<PSMarqueeText>
 
   // Function to update data after build is completed
   void _updateData() {
+    if (!mounted) return;
     setState(() {
       user1 = user2;
       money1 = money2;
@@ -116,7 +120,7 @@ class _PSMarqueeTextState extends State<PSMarqueeText>
       height: widget.height,
       child: ClipRect(
         child: _itemWidth1 == 0 || _itemWidth2 == 0
-            ? _buildSingle(user1, money1, user2, money2)
+            ? SingleChildScrollView(scrollDirection: Axis.horizontal, child: _buildSingle(user1, money1, user2, money2))
             : AnimatedBuilder(
           animation: _controller,
           builder: (_, __) {
@@ -171,37 +175,37 @@ class _PSMarqueeTextState extends State<PSMarqueeText>
     return Stack(
       children: [
         // Stroke Text
-        RichText(
-          text: TextSpan(
+        PSFitText(
+          span: TextSpan(
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              fontFamily: 'Black_mianfeiziti',
+              fontFamily: 'Black_mianfeiziti', fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
               foreground: Paint()
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 1
                 ..color = const Color(0xFF600E0E),
             ),
             children: [
-              TextSpan(text: 'Congrats! User $user just cashed out '),
-              TextSpan(text: '${0.dolasType()}$money!'),
+              TextSpan(text: PSLocale.tr("Congrats! User {p0} just cashed out", {'p0': user}) + " "),
+              TextSpan(text: '${PSLocale.money(money)}!'),
             ],
           ),
         ),
 
         // Filled Text
-        RichText(
-          text: TextSpan(
+        PSFitText(
+          span: TextSpan(
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              fontFamily: 'Black_mianfeiziti',
+              fontFamily: 'Black_mianfeiziti', fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
               color: Colors.white,
             ),
             children: [
-              TextSpan(text: 'Congrats! User $user just cashed out '),
+              TextSpan(text: PSLocale.tr("Congrats! User {p0} just cashed out", {'p0': user}) + " "),
               TextSpan(
-                text: '${0.dolasType()}$money!',
+                text: '${PSLocale.money(money)}!',
                 style: const TextStyle(
                   color: Color(0xFFFFFF00),
                 ),

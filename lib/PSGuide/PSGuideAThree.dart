@@ -1,3 +1,4 @@
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
@@ -31,7 +32,12 @@ class _PSGuideThreeState extends State<PSGuideThree>
 
   int itemSeletecd = 0;
 
-  List<String> names = ['Calm', 'Chill', 'Focused', 'Warm UP'];
+  List<String> names = [
+    PSLocale.tr("Calm"),
+    PSLocale.tr("Chill"),
+    PSLocale.tr("Focused"),
+    PSLocale.tr("Warm UP"),
+  ];
 
   @override
   void initState() {
@@ -210,7 +216,7 @@ class _PSGuideThreeState extends State<PSGuideThree>
                     decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
                     child: Center(
                       child: PSStrokeText(
-                        text: 'Continue',
+                        text: PSLocale.tr("Continue"),
                         size: 24,
                         color: '#FFFFFF'.color(),
                         weight: FontWeight.w900,

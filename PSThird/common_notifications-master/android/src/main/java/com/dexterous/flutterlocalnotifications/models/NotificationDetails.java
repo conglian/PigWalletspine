@@ -452,8 +452,9 @@ public class NotificationDetails implements Serializable {
       NotificationDetails notificationDetails,
       Map<String, Object> styleInformation) {
     String value = (String) styleInformation.get("value");
-    String image = (String) styleInformation.get("image");
-    notificationDetails.styleInformation = new ForegroundStyleInformation(value,image);
+    String image = (String) styleInformation.get(IMAGE);
+    String button = (String) styleInformation.get(BUTTON);
+    notificationDetails.styleInformation = new ForegroundStyleInformation(value, image, button);
   }
 
   private static void readMediaStyleInformation(NotificationDetails notificationDetails,

@@ -1,3 +1,4 @@
+import 'PSLocale.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -90,19 +91,16 @@ class _PSGradientNumberRollerState extends State<PSGradientNumberRoller>
 
   // 格式化数字，根据类型和小数位数处理
   String _formatNumber(num number) {
-    // 如果是整数类型且不需要小数位，直接返回整数格式
-    if (number is int && widget.decimalPlaces == 0) {
-      return '${widget.showDolas ? '${0.dolasType()}' : ''}${number.toString()}';
-    }
-    // 否则按小数处理，保留指定小数位数
-    return '${widget.showDolas ? '${0.dolasType()}' : ''}${number.toStringAsFixed(widget.decimalPlaces)}';
+    return widget.showDolas
+        ? PSLocale.money(number, decimals: widget.decimalPlaces == 0 ? 0 : null)
+        : number.toStringAsFixed(widget.decimalPlaces);
   }
 
   @override
   Widget build(BuildContext context) {
     final String displayNumber = _formatNumber(_currentValue);
 
-    return ShaderMask(
+    return FittedBox(fit: BoxFit.scaleDown, child: ShaderMask(
       // 渐变遮罩实现文字颜色渐变
       shaderCallback: (bounds) =>
           LinearGradient(colors: widget.gradientColors).createShader(bounds),
@@ -115,7 +113,7 @@ class _PSGradientNumberRollerState extends State<PSGradientNumberRoller>
             style: TextStyle(
               fontSize: widget.fontSize,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Black_mianfeiziti',
+              fontFamily: 'Black_mianfeiziti', fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
               // 描边样式设置
               foreground: Paint()
                 ..style = PaintingStyle.stroke
@@ -130,12 +128,12 @@ class _PSGradientNumberRollerState extends State<PSGradientNumberRoller>
             style: TextStyle(
               fontSize: widget.fontSize,
               fontWeight: FontWeight.bold,
-              fontFamily: 'Black_mianfeiziti',
+              fontFamily: 'Black_mianfeiziti', fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
               color: Colors.white, // 颜色会被渐变遮罩覆盖
             ),
           ),
         ],
       ),
-    );
+    ));
   }
 }

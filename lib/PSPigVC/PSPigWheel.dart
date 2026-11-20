@@ -1,3 +1,5 @@
+import 'package:piggywalletspinearn/PSTool/PSSpineWidget.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
@@ -27,8 +29,8 @@ class PSPigWheel extends StatefulWidget {
   State<PSPigWheel> createState() => _PSPigWheelState();
 }
 
-class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateMixin {
-  
+class _PSPigWheelState extends State<PSPigWheel>
+    with SingleTickerProviderStateMixin {
   bool is_tap_wheel = false;
 
   late spine.SpineWidgetController _controller;
@@ -37,11 +39,14 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
   void initState() {
     super.initState();
 
-    _controller = spine.SpineWidgetController(onInitialized: (controller) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        controller.animationState.setAnimationByName(0, "animation", true);
-      });
-    });
+    _controller = spine.SpineWidgetController(
+      onInitialized: (controller) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
+          controller.animationState.setAnimationByName(0, "animation", true);
+        });
+      },
+    );
   }
 
   @override
@@ -62,13 +67,13 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
               children: [
                 SizedBox(height: 44.h),
                 Consumer<PSLocalProvider>(
-                    builder: (context, provider, child) {
-                      if (provider.ps_pig_level == 0) {
-                        return PigblancePage();
-                      } else {
-                        return PigblancePage2();
-                      }
+                  builder: (context, provider, child) {
+                    if (provider.ps_pig_level == 0) {
+                      return PigblancePage();
+                    } else {
+                      return PigblancePage2();
                     }
+                  },
                 ),
                 SizedBox(height: 20.h),
                 Container(
@@ -110,7 +115,7 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
                                 width: 125,
                                 height: 125,
                                 decoration: BoxDecoration(
-                                    image: PSDImg('ps_wheel_spin_iocn')
+                                  image: PSDImg('ps_wheel_spin_iocn'),
                                 ),
                                 child: Stack(
                                   children: [
@@ -121,10 +126,17 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
                                         width: 27,
                                         height: 27,
                                         decoration: BoxDecoration(
-                                            image: PSDImg('ps_wheel_number_bg')
+                                          image: PSDImg('ps_wheel_number_bg'),
                                         ),
                                         child: Center(
-                                          child: PSStrokeText(text: '${provider.ps_wheel_number}', size: 12, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 1, skColor: '#085F1D'.color()),
+                                          child: PSStrokeText(
+                                            text: '${provider.ps_wheel_number}',
+                                            size: 12,
+                                            color: '#FFFFFF'.color(),
+                                            weight: FontWeight.w900,
+                                            skWidth: 1,
+                                            skColor: '#085F1D'.color(),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -135,49 +147,67 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
                           );
                         },
                       ),
-                      Positioned(right: 96.w,bottom: 88.h,child: ParticleButton(
-                        onTap: (){
-                          tapWheel();
-                        },
-                        child: SizedBox(
-                          width: 55,
-                          height: 88,
-                          child: spine.SpineWidget.fromAsset(
-                            'assets/spine/shouzhi/skeleton.atlas',
-                            'assets/spine/shouzhi/skeleton.skel',
-                            _controller,
+                      Positioned(
+                        right: 96.w,
+                        bottom: 88.h,
+                        child: ParticleButton(
+                          onTap: () {
+                            tapWheel();
+                          },
+                          child: SizedBox(
+                            width: 55,
+                            height: 88,
+                            child: PSSpineWidget.fromAsset(
+                              'assets/spine/shouzhi/skeleton.atlas',
+                              'assets/spine/shouzhi/skeleton.skel',
+                              _controller,
+                            ),
                           ),
                         ),
-                      ))
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
           ),
-          Positioned(right: 20.w,top: 160.h,child: ParticleButton(child: PSBouncyImage(
-               imagePath: 'ps_quzi_btn_pop',
-               width: 69,
-               height: 66,
-               enableAnimation: true,
-            ), onTap: (){
-            PigTabController.switchTo(1);
-          })),
-          Positioned(left: 18.w,top: 168.h,child: ParticleButton(onTap: () async {
-            ps_event_fire(' h5_show', {});
-            ps_event_fire(' h5_page', {});
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (builder) {
-                  ps_event_fire('h5_page', {});
-                  return PSWebkitview(
-                    url: "https://tinyurl.com/5n6u64vn",
-                    title: 'Game',
-                  );
-                },
+          Positioned(
+            right: 20.w,
+            top: 160.h,
+            child: ParticleButton(
+              child: PSBouncyImage(
+                imagePath: 'ps_quzi_btn_pop',
+                width: 69,
+                height: 66,
+                enableAnimation: true,
               ),
-            );
-          },child: PSImg(name: 'ps_box_btns', width: 50, height: 50))),
+              onTap: () {
+                PigTabController.switchTo(1);
+              },
+            ),
+          ),
+          Positioned(
+            left: 18.w,
+            top: 168.h,
+            child: ParticleButton(
+              onTap: () async {
+                ps_event_fire(' h5_show', {});
+                ps_event_fire(' h5_page', {});
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (builder) {
+                      ps_event_fire('h5_page', {});
+                      return PSWebkitview(
+                        url: "https://tinyurl.com/5n6u64vn",
+                        title: PSLocale.tr("Game"),
+                      );
+                    },
+                  ),
+                );
+              },
+              child: PSImg(name: 'ps_box_btns', width: 50, height: 50),
+            ),
+          ),
         ],
       ),
     );
@@ -188,7 +218,7 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
     Locale currentLocale = Localizations.localeOf(context);
 
     // 判断是否是巴西葡萄牙语
-    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
+    return PSLocale.current.country == 'BR';
   }
 
   Future<void> tapWheel() async {
@@ -214,25 +244,50 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
       WheelStartNotificationService.sendToStartIndexNotification(4);
     }
     // if (row != 6) {
-      Future.delayed(Duration(milliseconds: 2000), () async {
-        is_tap_wheel = false;
-        if (!mounted) return;
-        if (PSLocalProvider.instance.ps_pig_level == 0) {
-          int code = await context.tipShow(PSPopAwardToolDialog(type: .wheel, isGuide: false, award: PSNumberHelpers().getPrizeWithDolasNum()));
-          // 到达80%提现确认
-          if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
-            context.tipShow(PSAboutTXDialog(isConfim: true));
-            PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
-          }
-        } else {
-          int code = await context.tipShowAdvanced(PSPopWheelAwaradDialog(type: .wheel, is_rv: false, award: PSNumberHelpers().getPrizeWithDomandGoldNum(), is_wheel: false));
-          // 到达80%提现确认
-          if (code >= 0 && PSLocalProvider.instance.ps_dolas_number >= PSNumberHelpers().intModel!.eqRange.first * 0.8 && PSLocalProvider.instance.ps_show_80_pop == false) {
-            context.tipShow(PSAboutTXDialog(isConfim: true));
-            PSLocalProvider.instance.updateBool(PSLocalProvider.instance.ps_show_80_popName, true);
-          }
+    Future.delayed(Duration(milliseconds: 2000), () async {
+      is_tap_wheel = false;
+      if (!mounted) return;
+      if (PSLocalProvider.instance.ps_pig_level == 0) {
+        int code = await context.tipShow(
+          PSPopAwardToolDialog(
+            type: .wheel,
+            isGuide: false,
+            award: PSNumberHelpers().getPrizeWithDolasNum(),
+          ),
+        );
+        // 到达80%提现确认
+        if (code >= 0 &&
+            PSLocalProvider.instance.ps_dolas_number >=
+                PSNumberHelpers().intModel!.eqRange.first * 0.8 &&
+            PSLocalProvider.instance.ps_show_80_pop == false) {
+          context.tipShow(PSAboutTXDialog(isConfim: true));
+          PSLocalProvider.instance.updateBool(
+            PSLocalProvider.instance.ps_show_80_popName,
+            true,
+          );
         }
-      });
+      } else {
+        int code = await context.tipShowAdvanced(
+          PSPopWheelAwaradDialog(
+            type: .wheel,
+            is_rv: false,
+            award: PSNumberHelpers().getPrizeWithDomandGoldNum(),
+            is_wheel: false,
+          ),
+        );
+        // 到达80%提现确认
+        if (code >= 0 &&
+            PSLocalProvider.instance.ps_dolas_number >=
+                PSNumberHelpers().intModel!.eqRange.first * 0.8 &&
+            PSLocalProvider.instance.ps_show_80_pop == false) {
+          context.tipShow(PSAboutTXDialog(isConfim: true));
+          PSLocalProvider.instance.updateBool(
+            PSLocalProvider.instance.ps_show_80_popName,
+            true,
+          );
+        }
+      }
+    });
     // }
     // else {
     //   is_tap_wheel = false;
@@ -246,34 +301,71 @@ class _PSPigWheelState extends State<PSPigWheel> with SingleTickerProviderStateM
   }
 
   Future<void> setTxProgress() async {
-    if (PSLocalProvider.instance.ps_tx_task_index == 1 || PSLocalProvider.instance.ps_tx_task_index == 4 || PSLocalProvider.instance.ps_tx_task_index == 7){
-      await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, PSLocalProvider.instance.ps_tx_wheel_index + 1);
+    if (PSLocalProvider.instance.ps_tx_task_index == 1 ||
+        PSLocalProvider.instance.ps_tx_task_index == 4 ||
+        PSLocalProvider.instance.ps_tx_task_index == 7) {
+      await PSLocalProvider.instance.updateint(
+        PSLocalProvider.instance.ps_tx_wheel_indexName,
+        PSLocalProvider.instance.ps_tx_wheel_index + 1,
+      );
       Future.delayed(Duration(milliseconds: 50), () async {
         PSPigCashNotificationService.sendToQuizProgressNotification(0);
-        'PSLocalProvider.instance.ps_tx_wheel_index=${PSLocalProvider.instance.ps_tx_wheel_index}'.log();
-        'PSLocalProvider.instance.ps_tx_task_index=${PSLocalProvider.instance.ps_tx_task_index}'.log();
-        if (PSLocalProvider.instance.ps_tx_wheel_index >= PSNumberHelpers().intModel!.tixianTask[PSLocalProvider.instance.ps_tx_task_index].data) {
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, PSLocalProvider.instance.ps_tx_task_index + 1);
-          Future.delayed(Duration(milliseconds: 50), () async {
-              PSPigCashNotificationService.sendToQuizProgressNotification(0);
-          });
-        }
-      });
-      // 重置任务
-      Future.delayed(Duration(milliseconds: 100), () async {
-        if (PSLocalProvider.instance.ps_tx_task_index + 1 >= PSNumberHelpers().intModel!.tixianTask.length){
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_quiz_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_wheel_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_bubble_indexName, 0);
-          await PSLocalProvider.instance.updateint(PSLocalProvider.instance.ps_tx_task_indexName, 0);
+        'PSLocalProvider.instance.ps_tx_wheel_index=${PSLocalProvider.instance.ps_tx_wheel_index}'
+            .log();
+        'PSLocalProvider.instance.ps_tx_task_index=${PSLocalProvider.instance.ps_tx_task_index}'
+            .log();
+        if (PSLocalProvider.instance.ps_tx_wheel_index >=
+            PSNumberHelpers()
+                .intModel!
+                .tixianTask[PSLocalProvider.instance.ps_tx_task_index]
+                .data) {
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_quiz_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_wheel_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_bubble_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_task_indexName,
+            PSLocalProvider.instance.ps_tx_task_index + 1,
+          );
           Future.delayed(Duration(milliseconds: 50), () async {
             PSPigCashNotificationService.sendToQuizProgressNotification(0);
           });
         }
       });
-    };
+      // 重置任务
+      Future.delayed(Duration(milliseconds: 100), () async {
+        if (PSLocalProvider.instance.ps_tx_task_index + 1 >=
+            PSNumberHelpers().intModel!.tixianTask.length) {
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_quiz_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_wheel_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_bubble_indexName,
+            0,
+          );
+          await PSLocalProvider.instance.updateint(
+            PSLocalProvider.instance.ps_tx_task_indexName,
+            0,
+          );
+          Future.delayed(Duration(milliseconds: 50), () async {
+            PSPigCashNotificationService.sendToQuizProgressNotification(0);
+          });
+        }
+      });
+    }
+    ;
   }
 }

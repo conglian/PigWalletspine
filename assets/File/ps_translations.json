@@ -1,0 +1,2432 @@
+{
+  "Earn": {
+    "id": "Hasilkan",
+    "fil": "Kumita",
+    "pt": "Ganhar",
+    "es": "Ganar",
+    "ja": "獲得",
+    "ru": "Заработать",
+    "de": "Verdienen",
+    "fr": "Gagner"
+  },
+  "Quiz": {
+    "id": "Kuis",
+    "fil": "Pagsusulit",
+    "pt": "Quiz",
+    "es": "Preguntas",
+    "ja": "クイズ",
+    "ru": "Викторина",
+    "de": "Quiz",
+    "fr": "Quiz"
+  },
+  "Wheel": {
+    "id": "Roda",
+    "fil": "Gulong",
+    "pt": "Roleta",
+    "es": "Ruleta",
+    "ja": "ルーレット",
+    "ru": "Колесо",
+    "de": "Glücksrad",
+    "fr": "Roue"
+  },
+  "Cash": {
+    "id": "Uang",
+    "fil": "Pera",
+    "pt": "Dinheiro",
+    "es": "Dinero",
+    "ja": "現金",
+    "ru": "Деньги",
+    "de": "Geld",
+    "fr": "Argent"
+  },
+  "Piggy": {
+    "id": "Celengan",
+    "fil": "Alkansiya",
+    "pt": "Porquinho",
+    "es": "Cerdito",
+    "ja": "貯金箱",
+    "ru": "Копилка",
+    "de": "Sparschwein",
+    "fr": "Tirelire"
+  },
+  "Cash Out": {
+    "id": "Tarik Tunai",
+    "fil": "Mag-withdraw",
+    "pt": "Sacar",
+    "es": "Retirar",
+    "ja": "出金",
+    "ru": "Вывести",
+    "de": "Auszahlen",
+    "fr": "Retirer"
+  },
+  "Withdraw": {
+    "id": "Tarik",
+    "fil": "I-withdraw",
+    "pt": "Sacar",
+    "es": "Retirar",
+    "ja": "出金",
+    "ru": "Вывести",
+    "de": "Auszahlen",
+    "fr": "Retirer"
+  },
+  "Claim": {
+    "id": "Klaim",
+    "fil": "Kunin",
+    "pt": "Resgatar",
+    "es": "Reclamar",
+    "ja": "受け取る",
+    "ru": "Получить",
+    "de": "Abholen",
+    "fr": "Récupérer"
+  },
+  "Collect": {
+    "id": "Ambil",
+    "fil": "Kunin",
+    "pt": "Coletar",
+    "es": "Recoger",
+    "ja": "集める",
+    "ru": "Собрать",
+    "de": "Sammeln",
+    "fr": "Collecter"
+  },
+  "Confirm": {
+    "id": "Konfirmasi",
+    "fil": "Kumpirmahin",
+    "pt": "Confirmar",
+    "es": "Confirmar",
+    "ja": "確認",
+    "ru": "Подтвердить",
+    "de": "Bestätigen",
+    "fr": "Confirmer"
+  },
+  "Continue": {
+    "id": "Lanjutkan",
+    "fil": "Magpatuloy",
+    "pt": "Continuar",
+    "es": "Continuar",
+    "ja": "続ける",
+    "ru": "Продолжить",
+    "de": "Weiter",
+    "fr": "Continuer"
+  },
+  "Got It": {
+    "id": "Mengerti",
+    "fil": "Naintindihan",
+    "pt": "Entendi",
+    "es": "Entendido",
+    "ja": "了解",
+    "ru": "Понятно",
+    "de": "Verstanden",
+    "fr": "Compris"
+  },
+  "Try Again": {
+    "id": "Coba Lagi",
+    "fil": "Subukan Muli",
+    "pt": "Tentar novamente",
+    "es": "Reintentar",
+    "ja": "再試行",
+    "ru": "Повторить",
+    "de": "Erneut versuchen",
+    "fr": "Réessayer"
+  },
+  "Next Step": {
+    "id": "Langkah Berikutnya",
+    "fil": "Susunod",
+    "pt": "Próximo passo",
+    "es": "Siguiente paso",
+    "ja": "次へ",
+    "ru": "Далее",
+    "de": "Nächster Schritt",
+    "fr": "Étape suivante"
+  },
+  "Start Now": {
+    "id": "Mulai Sekarang",
+    "fil": "Magsimula",
+    "pt": "Começar agora",
+    "es": "Empezar ahora",
+    "ja": "今すぐ開始",
+    "ru": "Начать",
+    "de": "Jetzt starten",
+    "fr": "Commencer"
+  },
+  "Give Up": {
+    "id": "Menyerah",
+    "fil": "Sumuko",
+    "pt": "Desistir",
+    "es": "Abandonar",
+    "ja": "やめる",
+    "ru": "Отказаться",
+    "de": "Aufgeben",
+    "fr": "Abandonner"
+  },
+  "Go Earn": {
+    "id": "Mulai Hasilkan",
+    "fil": "Kumita Na",
+    "pt": "Ganhar agora",
+    "es": "Ir a ganar",
+    "ja": "獲得する",
+    "ru": "Заработать",
+    "de": "Jetzt verdienen",
+    "fr": "Gagner"
+  },
+  "Earn Now": {
+    "id": "Hasilkan Sekarang",
+    "fil": "Kumita Ngayon",
+    "pt": "Ganhar agora",
+    "es": "Ganar ahora",
+    "ja": "今すぐ獲得",
+    "ru": "Заработать сейчас",
+    "de": "Jetzt verdienen",
+    "fr": "Gagner maintenant"
+  },
+  "Keep Earning": {
+    "id": "Terus Hasilkan",
+    "fil": "Patuloy na Kumita",
+    "pt": "Continuar ganhando",
+    "es": "Seguir ganando",
+    "ja": "獲得を続ける",
+    "ru": "Продолжить заработок",
+    "de": "Weiter verdienen",
+    "fr": "Continuer à gagner"
+  },
+  "Collect Double": {
+    "id": "Ambil Dua Kali Lipat",
+    "fil": "Kunin ang Doble",
+    "pt": "Coletar em dobro",
+    "es": "Recoger el doble",
+    "ja": "2倍受け取る",
+    "ru": "Получить вдвойне",
+    "de": "Doppelt sammeln",
+    "fr": "Collecter le double"
+  },
+  "Try It Now": {
+    "id": "Coba Sekarang",
+    "fil": "Subukan Ngayon",
+    "pt": "Experimentar agora",
+    "es": "Probar ahora",
+    "ja": "今すぐ試す",
+    "ru": "Попробовать",
+    "de": "Jetzt testen",
+    "fr": "Essayer"
+  },
+  "Confirm Now": {
+    "id": "Konfirmasi Sekarang",
+    "fil": "Kumpirmahin Ngayon",
+    "pt": "Confirmar agora",
+    "es": "Confirmar ahora",
+    "ja": "今すぐ確認",
+    "ru": "Подтвердить сейчас",
+    "de": "Jetzt bestätigen",
+    "fr": "Confirmer"
+  },
+  "Confirm Account": {
+    "id": "Konfirmasi Akun",
+    "fil": "Kumpirmahin ang Account",
+    "pt": "Confirmar conta",
+    "es": "Confirmar cuenta",
+    "ja": "口座を確認",
+    "ru": "Подтвердить счёт",
+    "de": "Konto bestätigen",
+    "fr": "Confirmer le compte"
+  },
+  "Apply For Payout": {
+    "id": "Ajukan Penarikan",
+    "fil": "Humiling ng Payout",
+    "pt": "Solicitar saque",
+    "es": "Solicitar retiro",
+    "ja": "出金を申請",
+    "ru": "Запросить выплату",
+    "de": "Auszahlung beantragen",
+    "fr": "Demander un retrait"
+  },
+  "Confirm Payment Information": {
+    "id": "Konfirmasi Informasi Pembayaran",
+    "fil": "Kumpirmahin ang Detalye ng Bayad",
+    "pt": "Confirmar dados de pagamento",
+    "es": "Confirmar datos de pago",
+    "ja": "支払情報を確認",
+    "ru": "Подтвердите платёжные данные",
+    "de": "Zahlungsdaten bestätigen",
+    "fr": "Confirmer les informations de paiement"
+  },
+  "Payment Method:": {
+    "id": "Metode Pembayaran:",
+    "fil": "Paraan ng Pagbayad:",
+    "pt": "Método de pagamento:",
+    "es": "Método de pago:",
+    "ja": "支払方法：",
+    "ru": "Способ выплаты:",
+    "de": "Zahlungsmethode:",
+    "fr": "Mode de paiement :"
+  },
+  "Account Type:": {
+    "id": "Jenis Akun:",
+    "fil": "Uri ng Account:",
+    "pt": "Tipo de conta:",
+    "es": "Tipo de cuenta:",
+    "ja": "口座の種類：",
+    "ru": "Тип счёта:",
+    "de": "Kontotyp:",
+    "fr": "Type de compte :"
+  },
+  "Account": {
+    "id": "Akun",
+    "fil": "Account",
+    "pt": "Conta",
+    "es": "Cuenta",
+    "ja": "口座",
+    "ru": "Счёт",
+    "de": "Konto",
+    "fr": "Compte"
+  },
+  "Account Name: {p0}": {
+    "id": "Nama Akun: {p0}",
+    "fil": "Pangalan ng Account: {p0}",
+    "pt": "Nome da conta: {p0}",
+    "es": "Nombre de cuenta: {p0}",
+    "ja": "口座名：{p0}",
+    "ru": "Имя счёта: {p0}",
+    "de": "Kontoname: {p0}",
+    "fr": "Nom du compte : {p0}"
+  },
+  "Name": {
+    "id": "Nama",
+    "fil": "Pangalan",
+    "pt": "Nome",
+    "es": "Nombre",
+    "ja": "氏名",
+    "ru": "Имя",
+    "de": "Name",
+    "fr": "Nom"
+  },
+  "Email": {
+    "id": "Email",
+    "fil": "Email",
+    "pt": "E-mail",
+    "es": "Correo",
+    "ja": "メール",
+    "ru": "Эл. почта",
+    "de": "E-Mail",
+    "fr": "E-mail"
+  },
+  "Phone": {
+    "id": "Telepon",
+    "fil": "Telepono",
+    "pt": "Telefone",
+    "es": "Teléfono",
+    "ja": "電話番号",
+    "ru": "Телефон",
+    "de": "Telefon",
+    "fr": "Téléphone"
+  },
+  "Please Input Your Account ID": {
+    "id": "Masukkan ID akun Anda",
+    "fil": "Ilagay ang iyong Account ID",
+    "pt": "Insira o ID da sua conta",
+    "es": "Ingresa el ID de tu cuenta",
+    "ja": "口座IDを入力してください",
+    "ru": "Введите ID счёта",
+    "de": "Konto-ID eingeben",
+    "fr": "Saisissez votre identifiant"
+  },
+  "Please Input Your Name": {
+    "id": "Masukkan nama Anda",
+    "fil": "Ilagay ang iyong pangalan",
+    "pt": "Insira seu nome",
+    "es": "Ingresa tu nombre",
+    "ja": "氏名を入力してください",
+    "ru": "Введите имя",
+    "de": "Namen eingeben",
+    "fr": "Saisissez votre nom"
+  },
+  "The format you entered is incorrect.": {
+    "id": "Format yang Anda masukkan salah.",
+    "fil": "Mali ang format na inilagay mo.",
+    "pt": "O formato inserido está incorreto.",
+    "es": "El formato ingresado es incorrecto.",
+    "ja": "入力形式が正しくありません。",
+    "ru": "Неверный формат ввода.",
+    "de": "Das eingegebene Format ist falsch.",
+    "fr": "Le format saisi est incorrect."
+  },
+  "Enter 11-digit CPF number": {
+    "id": "Masukkan CPF 11 digit",
+    "fil": "Maglagay ng 11-digit na CPF",
+    "pt": "Insira um CPF de 11 dígitos",
+    "es": "Ingresa un CPF de 11 dígitos",
+    "ja": "11桁のCPFを入力してください",
+    "ru": "Введите CPF из 11 цифр",
+    "de": "11-stellige CPF eingeben",
+    "fr": "Saisissez un CPF à 11 chiffres"
+  },
+  "Enter the correct name": {
+    "id": "Masukkan nama yang benar",
+    "fil": "Ilagay ang tamang pangalan",
+    "pt": "Insira o nome correto",
+    "es": "Ingresa el nombre correcto",
+    "ja": "正しい氏名を入力してください",
+    "ru": "Введите правильное имя",
+    "de": "Gültigen Namen eingeben",
+    "fr": "Saisissez un nom valide"
+  },
+  "Please enter a valid phone number starting with 55.": {
+    "id": "Masukkan nomor valid yang diawali +55.",
+    "fil": "Maglagay ng wastong numero na nagsisimula sa +55.",
+    "pt": "Insira um telefone válido começando com +55.",
+    "es": "Ingresa un teléfono válido que empiece con +55.",
+    "ja": "+55で始まる有効な電話番号を入力してください。",
+    "ru": "Введите номер, начинающийся с +55.",
+    "de": "Gültige Telefonnummer mit +55 eingeben.",
+    "fr": "Saisissez un numéro valide commençant par +55."
+  },
+  "Enter the correct EVP": {
+    "id": "Masukkan EVP yang benar",
+    "fil": "Ilagay ang tamang EVP",
+    "pt": "Insira a EVP correta",
+    "es": "Ingresa el EVP correcto",
+    "ja": "正しいEVPを入力してください",
+    "ru": "Введите правильный EVP",
+    "de": "Gültigen EVP eingeben",
+    "fr": "Saisissez un EVP valide"
+  },
+  "Safe & Secure": {
+    "id": "Aman & Terjamin",
+    "fil": "Ligtas at Protektado",
+    "pt": "Seguro e protegido",
+    "es": "Seguro y protegido",
+    "ja": "安全・安心",
+    "ru": "Безопасно и надёжно",
+    "de": "Sicher und geschützt",
+    "fr": "Fiable et sécurisé"
+  },
+  "We’ll only use this for sending your withdrawal": {
+    "id": "Hanya digunakan untuk mengirim penarikan Anda",
+    "fil": "Gagamitin lamang ito para sa iyong withdrawal",
+    "pt": "Usaremos apenas para enviar seu saque",
+    "es": "Solo lo usaremos para enviar tu retiro",
+    "ja": "出金の送金のみに使用します",
+    "ru": "Только для отправки вашей выплаты",
+    "de": "Nur für Ihre Auszahlung verwendet",
+    "fr": "Utilisé uniquement pour votre retrait"
+  },
+  "Choose Withdraw Amount": {
+    "id": "Pilih Jumlah Penarikan",
+    "fil": "Piliin ang Halagang Iwi-withdraw",
+    "pt": "Escolha o valor do saque",
+    "es": "Elige el monto del retiro",
+    "ja": "出金額を選択",
+    "ru": "Выберите сумму вывода",
+    "de": "Auszahlungsbetrag wählen",
+    "fr": "Choisir le montant du retrait"
+  },
+  "Pending Balance": {
+    "id": "Saldo Tertunda",
+    "fil": "Nakabinbing Balanse",
+    "pt": "Saldo pendente",
+    "es": "Saldo pendiente",
+    "ja": "保留中の残高",
+    "ru": "Ожидающий баланс",
+    "de": "Ausstehendes Guthaben",
+    "fr": "Solde en attente"
+  },
+  "Pending Amount:": {
+    "id": "Jumlah Tertunda:",
+    "fil": "Nakabinbing Halaga:",
+    "pt": "Valor pendente:",
+    "es": "Monto pendiente:",
+    "ja": "保留金額：",
+    "ru": "Ожидаемая сумма:",
+    "de": "Ausstehender Betrag:",
+    "fr": "Montant en attente :"
+  },
+  "My Account:": {
+    "id": "Akun Saya:",
+    "fil": "Aking Account:",
+    "pt": "Minha conta:",
+    "es": "Mi cuenta:",
+    "ja": "マイ口座：",
+    "ru": "Мой счёт:",
+    "de": "Mein Konto:",
+    "fr": "Mon compte :"
+  },
+  "My Cash :{p0}": {
+    "id": "Uang Saya: {p0}",
+    "fil": "Aking Pera: {p0}",
+    "pt": "Meu saldo: {p0}",
+    "es": "Mi dinero: {p0}",
+    "ja": "残高：{p0}",
+    "ru": "Мои деньги: {p0}",
+    "de": "Mein Guthaben: {p0}",
+    "fr": "Mon solde : {p0}"
+  },
+  "Insufficient Balance": {
+    "id": "Saldo Tidak Cukup",
+    "fil": "Kulang ang Balanse",
+    "pt": "Saldo insuficiente",
+    "es": "Saldo insuficiente",
+    "ja": "残高不足",
+    "ru": "Недостаточно средств",
+    "de": "Unzureichendes Guthaben",
+    "fr": "Solde insuffisant"
+  },
+  "Your Wallet": {
+    "id": "Dompet Anda",
+    "fil": "Iyong Wallet",
+    "pt": "Sua carteira",
+    "es": "Tu billetera",
+    "ja": "ウォレット",
+    "ru": "Ваш кошелёк",
+    "de": "Ihre Wallet",
+    "fr": "Votre portefeuille"
+  },
+  "Privacy Policy": {
+    "id": "Kebijakan Privasi",
+    "fil": "Patakaran sa Privacy",
+    "pt": "Política de privacidade",
+    "es": "Política de privacidad",
+    "ja": "プライバシーポリシー",
+    "ru": "Политика конфиденциальности",
+    "de": "Datenschutz",
+    "fr": "Politique de confidentialité"
+  },
+  "GamePlay": {
+    "id": "Cara Bermain",
+    "fil": "Paano Maglaro",
+    "pt": "Como jogar",
+    "es": "Cómo jugar",
+    "ja": "遊び方",
+    "ru": "Как играть",
+    "de": "Spielanleitung",
+    "fr": "Comment jouer"
+  },
+  "User ID": {
+    "id": "ID Pengguna",
+    "fil": "User ID",
+    "pt": "ID do usuário",
+    "es": "ID de usuario",
+    "ja": "ユーザーID",
+    "ru": "ID пользователя",
+    "de": "Benutzer-ID",
+    "fr": "Identifiant"
+  },
+  "Daily Bonus": {
+    "id": "Bonus Harian",
+    "fil": "Araw-araw na Bonus",
+    "pt": "Bônus diário",
+    "es": "Bono diario",
+    "ja": "デイリーボーナス",
+    "ru": "Ежедневный бонус",
+    "de": "Täglicher Bonus",
+    "fr": "Bonus quotidien"
+  },
+  "No More Chance": {
+    "id": "Kesempatan Habis",
+    "fil": "Wala Nang Pagkakataon",
+    "pt": "Sem chances",
+    "es": "Sin oportunidades",
+    "ja": "回数切れ",
+    "ru": "Попытки закончились",
+    "de": "Keine Versuche mehr",
+    "fr": "Plus de chances"
+  },
+  "Ad Loading Failed": {
+    "id": "Iklan Gagal Dimuat",
+    "fil": "Hindi Na-load ang Ad",
+    "pt": "Falha ao carregar anúncio",
+    "es": "Error al cargar anuncio",
+    "ja": "広告の読み込みに失敗",
+    "ru": "Не удалось загрузить рекламу",
+    "de": "Werbung konnte nicht geladen werden",
+    "fr": "Échec du chargement de la publicité"
+  },
+  "Ad Limit Reached": {
+    "id": "Batas Iklan Tercapai",
+    "fil": "Naabot ang Limitasyon ng Ad",
+    "pt": "Limite de anúncios atingido",
+    "es": "Límite de anuncios alcanzado",
+    "ja": "広告の上限に達しました",
+    "ru": "Лимит рекламы достигнут",
+    "de": "Werbelimit erreicht",
+    "fr": "Limite de publicités atteinte"
+  },
+  "No Network Currently": {
+    "id": "Tidak Ada Jaringan",
+    "fil": "Walang Koneksyon",
+    "pt": "Sem conexão",
+    "es": "Sin conexión",
+    "ja": "ネットワークに接続されていません",
+    "ru": "Нет подключения",
+    "de": "Keine Verbindung",
+    "fr": "Pas de connexion"
+  },
+  "Ad Loading Failed, Please Try Again Later~": {
+    "id": "Iklan gagal dimuat, coba lagi nanti",
+    "fil": "Hindi na-load ang ad, subukan ulit mamaya",
+    "pt": "Falha ao carregar anúncio. Tente mais tarde",
+    "es": "Error al cargar el anuncio. Intenta más tarde",
+    "ja": "広告を読み込めません。後でもう一度お試しください",
+    "ru": "Реклама не загрузилась. Попробуйте позже",
+    "de": "Werbung nicht geladen. Später erneut versuchen",
+    "fr": "Échec du chargement. Réessayez plus tard"
+  },
+  "You’ve watched all available ads for today. Try again tomorrow.": {
+    "id": "Semua iklan hari ini sudah ditonton. Coba lagi besok.",
+    "fil": "Napanood mo na ang lahat ng ad ngayon. Bumalik bukas.",
+    "pt": "Você viu todos os anúncios de hoje. Volte amanhã.",
+    "es": "Ya viste todos los anuncios de hoy. Vuelve mañana.",
+    "ja": "本日の広告はすべて視聴済みです。明日またお試しください。",
+    "ru": "Вы просмотрели всю рекламу на сегодня. Возвращайтесь завтра.",
+    "de": "Alle heutigen Anzeigen angesehen. Morgen erneut versuchen.",
+    "fr": "Vous avez vu toutes les publicités du jour. Revenez demain."
+  },
+  "Turn On Pushnotifications": {
+    "id": "Aktifkan Notifikasi",
+    "fil": "I-on ang Mga Abiso",
+    "pt": "Ativar notificações",
+    "es": "Activar notificaciones",
+    "ja": "通知をオンにする",
+    "ru": "Включить уведомления",
+    "de": "Benachrichtigungen aktivieren",
+    "fr": "Activer les notifications"
+  },
+  "open the notificationto receive cash": {
+    "id": "Aktifkan notifikasi untuk menerima uang",
+    "fil": "I-on ang abiso para makatanggap ng pera",
+    "pt": "Ative notificações para receber dinheiro",
+    "es": "Activa las notificaciones para recibir dinero",
+    "ja": "通知をオンにして現金を受け取る",
+    "ru": "Включите уведомления для получения денег",
+    "de": "Benachrichtigungen für Geldempfang aktivieren",
+    "fr": "Activez les notifications pour recevoir de l’argent"
+  },
+  "Reminder Me": {
+    "id": "Ingatkan Saya",
+    "fil": "Paalalahanan Ako",
+    "pt": "Lembrar-me",
+    "es": "Recordarme",
+    "ja": "通知する",
+    "ru": "Напомнить",
+    "de": "Erinnern",
+    "fr": "Me rappeler"
+  },
+  "Grow your piggy, unlock real cash": {
+    "id": "Besarkan celengan, buka hadiah uang",
+    "fil": "Palakihin ang alkansiya, mag-unlock ng pera",
+    "pt": "Evolua seu porquinho e libere dinheiro",
+    "es": "Haz crecer tu cerdito y desbloquea dinero",
+    "ja": "貯金箱を育てて現金を獲得",
+    "ru": "Растите копилку и открывайте денежные награды",
+    "de": "Sparschwein wachsen lassen und Geld freischalten",
+    "fr": "Faites grandir votre tirelire pour gagner de l’argent"
+  },
+  "Congratulations!": {
+    "id": "Selamat!",
+    "fil": "Binabati Kita!",
+    "pt": "Parabéns!",
+    "es": "¡Felicidades!",
+    "ja": "おめでとう！",
+    "ru": "Поздравляем!",
+    "de": "Glückwunsch!",
+    "fr": "Félicitations !"
+  },
+  "Congratulation!": {
+    "id": "Selamat!",
+    "fil": "Binabati Kita!",
+    "pt": "Parabéns!",
+    "es": "¡Felicidades!",
+    "ja": "おめでとう！",
+    "ru": "Поздравляем!",
+    "de": "Glückwunsch!",
+    "fr": "Félicitations !"
+  },
+  "Only": {
+    "id": "Hanya",
+    "fil": "Lamang",
+    "pt": "Só",
+    "es": "Solo",
+    "ja": "あと",
+    "ru": "Всего",
+    "de": "Nur",
+    "fr": "Seulement"
+  },
+  "Just": {
+    "id": "Hanya",
+    "fil": "Lamang",
+    "pt": "Só",
+    "es": "Solo",
+    "ja": "あと",
+    "ru": "Всего",
+    "de": "Nur",
+    "fr": "Seulement"
+  },
+  "Left To Withdraw": {
+    "id": "Lagi untuk Penarikan",
+    "fil": "Pa para Maka-withdraw",
+    "pt": "Para sacar",
+    "es": "Para retirar",
+    "ja": "で出金",
+    "ru": "До вывода",
+    "de": "Bis zur Auszahlung",
+    "fr": "Avant le retrait"
+  },
+  "Left To Cash Out": {
+    "id": "Lagi untuk Penarikan",
+    "fil": "Pa para Maka-withdraw",
+    "pt": "Para sacar",
+    "es": "Para retirar",
+    "ja": "で出金",
+    "ru": "До вывода",
+    "de": "Bis zur Auszahlung",
+    "fr": "Avant le retrait"
+  },
+  "To Cash Out!": {
+    "id": "Untuk Penarikan!",
+    "fil": "Para Maka-withdraw!",
+    "pt": "Para sacar!",
+    "es": "¡Para retirar!",
+    "ja": "で出金！",
+    "ru": "До вывода!",
+    "de": "Bis zur Auszahlung!",
+    "fr": "Avant le retrait !"
+  },
+  "more to cash out!": {
+    "id": "lagi untuk penarikan!",
+    "fil": "pa para maka-withdraw!",
+    "pt": "para sacar!",
+    "es": "¡para retirar!",
+    "ja": "で出金！",
+    "ru": "до вывода!",
+    "de": "bis zur Auszahlung!",
+    "fr": "avant le retrait !"
+  },
+  "Only One Step Away From Successful Withdrawal": {
+    "id": "Satu Langkah Lagi untuk Penarikan",
+    "fil": "Isang Hakbang na Lang sa Withdrawal",
+    "pt": "Só mais um passo para sacar",
+    "es": "Solo un paso para retirar",
+    "ja": "出金完了まであと1ステップ",
+    "ru": "Один шаг до успешного вывода",
+    "de": "Nur ein Schritt bis zur Auszahlung",
+    "fr": "Plus qu’une étape avant le retrait"
+  },
+  "One Last Step": {
+    "id": "Satu Langkah Terakhir",
+    "fil": "Huling Hakbang",
+    "pt": "Último passo",
+    "es": "Último paso",
+    "ja": "最後のステップ",
+    "ru": "Последний шаг",
+    "de": "Ein letzter Schritt",
+    "fr": "Une dernière étape"
+  },
+  "Oops, One More Step!": {
+    "id": "Ups, Satu Langkah Lagi!",
+    "fil": "Isa Pang Hakbang!",
+    "pt": "Ops, mais um passo!",
+    "es": "¡Un paso más!",
+    "ja": "あと1ステップ！",
+    "ru": "Ещё один шаг!",
+    "de": "Noch ein Schritt!",
+    "fr": "Encore une étape !"
+  },
+  "Review in progress...": {
+    "id": "Sedang ditinjau...",
+    "fil": "Sinusuri...",
+    "pt": "Em análise...",
+    "es": "En revisión...",
+    "ja": "審査中…",
+    "ru": "На проверке...",
+    "de": "Wird geprüft...",
+    "fr": "Vérification en cours..."
+  },
+  "Review task:": {
+    "id": "Tugas Peninjauan:",
+    "fil": "Gawain sa Pagsusuri:",
+    "pt": "Tarefa de análise:",
+    "es": "Tarea de revisión:",
+    "ja": "審査タスク：",
+    "ru": "Задание проверки:",
+    "de": "Prüfaufgabe:",
+    "fr": "Tâche de vérification :"
+  },
+  "Final Task:": {
+    "id": "Tugas Terakhir:",
+    "fil": "Huling Gawain:",
+    "pt": "Tarefa final:",
+    "es": "Tarea final:",
+    "ja": "最終タスク：",
+    "ru": "Последнее задание:",
+    "de": "Letzte Aufgabe:",
+    "fr": "Tâche finale :"
+  },
+  "Verification task:": {
+    "id": "Tugas Verifikasi:",
+    "fil": "Gawain sa Pagpapatunay:",
+    "pt": "Tarefa de verificação:",
+    "es": "Tarea de verificación:",
+    "ja": "確認タスク：",
+    "ru": "Задание подтверждения:",
+    "de": "Verifizierungsaufgabe:",
+    "fr": "Tâche de validation :"
+  },
+  "Queue Progress:": {
+    "id": "Progres Antrean:",
+    "fil": "Progreso ng Pila:",
+    "pt": "Progresso da fila:",
+    "es": "Progreso de la fila:",
+    "ja": "待機進捗：",
+    "ru": "Прогресс очереди:",
+    "de": "Warteschlangenfortschritt:",
+    "fr": "Progression de la file :"
+  },
+  "Your Current rank:": {
+    "id": "Peringkat Anda:",
+    "fil": "Iyong Ranggo:",
+    "pt": "Sua posição:",
+    "es": "Tu posición:",
+    "ja": "現在の順位：",
+    "ru": "Ваше место:",
+    "de": "Ihr aktueller Rang:",
+    "fr": "Votre rang actuel :"
+  },
+  "Left:": {
+    "id": "Tersisa:",
+    "fil": "Natitira:",
+    "pt": "Restante:",
+    "es": "Falta:",
+    "ja": "残り：",
+    "ru": "Осталось:",
+    "de": "Übrig:",
+    "fr": "Restant :"
+  },
+  "Collected:": {
+    "id": "Terkumpul:",
+    "fil": "Nakolekta:",
+    "pt": "Coletado:",
+    "es": "Recogido:",
+    "ja": "収集済み：",
+    "ru": "Собрано:",
+    "de": "Gesammelt:",
+    "fr": "Collecté :"
+  },
+  "Answer": {
+    "id": "Jawab",
+    "fil": "Sumagot",
+    "pt": "Responda",
+    "es": "Responde",
+    "ja": "回答",
+    "ru": "Ответьте",
+    "de": "Antworten",
+    "fr": "Répondez"
+  },
+  "Collect 20 diamonds.": {
+    "id": "Kumpulkan 20 berlian.",
+    "fil": "Mangolekta ng 20 diyamante.",
+    "pt": "Colete 20 diamantes.",
+    "es": "Recoge 20 diamantes.",
+    "ja": "ダイヤを20個集めよう。",
+    "ru": "Соберите 20 алмазов.",
+    "de": "20 Diamanten sammeln.",
+    "fr": "Collectez 20 diamants."
+  },
+  "Collect 10 Gold Bricks.": {
+    "id": "Kumpulkan 10 emas batangan.",
+    "fil": "Mangolekta ng 10 gintong bar.",
+    "pt": "Colete 10 barras de ouro.",
+    "es": "Recoge 10 lingotes de oro.",
+    "ja": "金塊を10個集めよう。",
+    "ru": "Соберите 10 слитков золота.",
+    "de": "10 Goldbarren sammeln.",
+    "fr": "Collectez 10 lingots d’or."
+  },
+  "Collect 20 Diamonds to complete the withdrawal.": {
+    "id": "Kumpulkan 20 berlian untuk menyelesaikan penarikan.",
+    "fil": "Mangolekta ng 20 diyamante para makumpleto ang withdrawal.",
+    "pt": "Colete 20 diamantes para concluir o saque.",
+    "es": "Recoge 20 diamantes para completar el retiro.",
+    "ja": "ダイヤを20個集めて出金を完了",
+    "ru": "Соберите 20 алмазов для завершения вывода.",
+    "de": "20 Diamanten sammeln, um die Auszahlung abzuschließen.",
+    "fr": "Collectez 20 diamants pour finaliser le retrait."
+  },
+  "Collect 10 Gold Bricks to complete the withdrawal.": {
+    "id": "Kumpulkan 10 emas untuk menyelesaikan penarikan.",
+    "fil": "Mangolekta ng 10 gintong bar para makumpleto ang withdrawal.",
+    "pt": "Colete 10 barras de ouro para concluir o saque.",
+    "es": "Recoge 10 lingotes para completar el retiro.",
+    "ja": "金塊を10個集めて出金を完了",
+    "ru": "Соберите 10 слитков для завершения вывода.",
+    "de": "10 Goldbarren sammeln, um die Auszahlung abzuschließen.",
+    "fr": "Collectez 10 lingots pour finaliser le retrait."
+  },
+  "20 Diamonds": {
+    "id": "20 Berlian",
+    "fil": "20 Diyamante",
+    "pt": "20 diamantes",
+    "es": "20 diamantes",
+    "ja": "ダイヤ20個",
+    "ru": "20 алмазов",
+    "de": "20 Diamanten",
+    "fr": "20 diamants"
+  },
+  "10 Gold Brick": {
+    "id": "10 Emas Batangan",
+    "fil": "10 Gintong Bar",
+    "pt": "10 barras de ouro",
+    "es": "10 lingotes de oro",
+    "ja": "金塊10個",
+    "ru": "10 слитков золота",
+    "de": "10 Goldbarren",
+    "fr": "10 lingots d’or"
+  },
+  "10 Gold Bars": {
+    "id": "10 Emas Batangan",
+    "fil": "10 Gintong Bar",
+    "pt": "10 barras de ouro",
+    "es": "10 lingotes de oro",
+    "ja": "金塊10個",
+    "ru": "10 слитков золота",
+    "de": "10 Goldbarren",
+    "fr": "10 lingots d’or"
+  },
+  "Skip Wait": {
+    "id": "Lewati Tunggu",
+    "fil": "Laktawan ang Paghintay",
+    "pt": "Pular espera",
+    "es": "Saltar espera",
+    "ja": "待機をスキップ",
+    "ru": "Пропустить ожидание",
+    "de": "Warten überspringen",
+    "fr": "Passer l’attente"
+  },
+  "Ensure Safety": {
+    "id": "Pastikan Keamanan",
+    "fil": "Tiyaking Ligtas",
+    "pt": "Garantir segurança",
+    "es": "Garantizar seguridad",
+    "ja": "安全確認",
+    "ru": "Проверка безопасности",
+    "de": "Sicherheit prüfen",
+    "fr": "Garantir la sécurité"
+  },
+  "Official Notice": {
+    "id": "Pemberitahuan Resmi",
+    "fil": "Opisyal na Abiso",
+    "pt": "Aviso oficial",
+    "es": "Aviso oficial",
+    "ja": "公式のお知らせ",
+    "ru": "Официальное уведомление",
+    "de": "Offizielle Mitteilung",
+    "fr": "Avis officiel"
+  },
+  "Withdrawal Completed": {
+    "id": "Penarikan Selesai",
+    "fil": "Tapos na ang Withdrawal",
+    "pt": "Saque concluído",
+    "es": "Retiro completado",
+    "ja": "出金完了",
+    "ru": "Вывод завершён",
+    "de": "Auszahlung abgeschlossen",
+    "fr": "Retrait effectué"
+  },
+  "Withdrawal Approval": {
+    "id": "Persetujuan Penarikan",
+    "fil": "Pag-apruba ng Withdrawal",
+    "pt": "Aprovação do saque",
+    "es": "Aprobación del retiro",
+    "ja": "出金承認",
+    "ru": "Одобрение вывода",
+    "de": "Auszahlungsgenehmigung",
+    "fr": "Approbation du retrait"
+  },
+  "You’re Ready To Cash Out!": {
+    "id": "Anda Siap Menarik Uang!",
+    "fil": "Handa Ka Nang Mag-withdraw!",
+    "pt": "Tudo pronto para sacar!",
+    "es": "¡Ya puedes retirar!",
+    "ja": "出金の準備ができました！",
+    "ru": "Всё готово к выводу!",
+    "de": "Bereit zur Auszahlung!",
+    "fr": "Prêt à retirer !"
+  },
+  "Money’s in-ready To Withdraw!": {
+    "id": "Uang Siap Ditarik!",
+    "fil": "Handa Nang I-withdraw!",
+    "pt": "Dinheiro pronto para sacar!",
+    "es": "¡Dinero listo para retirar!",
+    "ja": "出金できます！",
+    "ru": "Деньги готовы к выводу!",
+    "de": "Geld zur Auszahlung bereit!",
+    "fr": "Argent prêt à retirer !"
+  },
+  "Payout details confirmed. Quiz to release your {p0} cash out.": {
+    "id": "Detail pembayaran dikonfirmasi. Jawab kuis untuk menarik {p0}.",
+    "fil": "Kumpirmado ang payout. Sumagot ng quiz para ma-withdraw ang {p0}.",
+    "pt": "Dados confirmados. Responda ao quiz para liberar seu saque de {p0}.",
+    "es": "Datos confirmados. Responde para liberar tu retiro de {p0}.",
+    "ja": "支払情報を確認しました。クイズで{p0}の出金を解除。",
+    "ru": "Данные подтверждены. Пройдите викторину для вывода {p0}.",
+    "de": "Daten bestätigt. Quiz spielen, um {p0} freizugeben.",
+    "fr": "Données confirmées. Répondez au quiz pour débloquer {p0}."
+  },
+  "You're About To Withdraw {p0}!": {
+    "id": "Anda Akan Menarik {p0}!",
+    "fil": "Magwi-withdraw Ka na ng {p0}!",
+    "pt": "Você vai sacar {p0}!",
+    "es": "¡Vas a retirar {p0}!",
+    "ja": "まもなく{p0}を出金！",
+    "ru": "Вы скоро выведете {p0}!",
+    "de": "Sie können bald {p0} auszahlen!",
+    "fr": "Vous allez retirer {p0} !"
+  },
+  "Earned {p0}": {
+    "id": "Diperoleh {p0}",
+    "fil": "Nakuha ang {p0}",
+    "pt": "Ganhou {p0}",
+    "es": "Ganaste {p0}",
+    "ja": "{p0}獲得",
+    "ru": "Заработано {p0}",
+    "de": "{p0} verdient",
+    "fr": "{p0} gagné"
+  },
+  "Earned X{p0} Daimond": {
+    "id": "Diperoleh X{p0} Berlian",
+    "fil": "Nakuha ang X{p0} Diyamante",
+    "pt": "Ganhou X{p0} diamantes",
+    "es": "Ganaste X{p0} diamantes",
+    "ja": "ダイヤX{p0}獲得",
+    "ru": "Получено X{p0} алмазов",
+    "de": "X{p0} Diamanten verdient",
+    "fr": "X{p0} diamants gagnés"
+  },
+  "Earned X{p0} Gold": {
+    "id": "Diperoleh X{p0} Emas",
+    "fil": "Nakuha ang X{p0} Ginto",
+    "pt": "Ganhou X{p0} ouro",
+    "es": "Ganaste X{p0} oro",
+    "ja": "金塊X{p0}獲得",
+    "ru": "Получено X{p0} золота",
+    "de": "X{p0} Gold verdient",
+    "fr": "X{p0} or gagné"
+  },
+  "Total Earning:": {
+    "id": "Total Pendapatan:",
+    "fil": "Kabuuang Kita:",
+    "pt": "Ganhos totais:",
+    "es": "Ganancias totales:",
+    "ja": "合計獲得額：",
+    "ru": "Общий заработок:",
+    "de": "Gesamtverdienst:",
+    "fr": "Gains totaux :"
+  },
+  "Ads Watched:": {
+    "id": "Iklan Ditonton:",
+    "fil": "Mga Ad na Napanood:",
+    "pt": "Anúncios assistidos:",
+    "es": "Anuncios vistos:",
+    "ja": "広告視聴数：",
+    "ru": "Просмотрено рекламы:",
+    "de": "Angesehene Werbung:",
+    "fr": "Publicités vues :"
+  },
+  "Energy Point:": {
+    "id": "Poin Energi:",
+    "fil": "Energy Point:",
+    "pt": "Pontos de energia:",
+    "es": "Puntos de energía:",
+    "ja": "エネルギー：",
+    "ru": "Энергия:",
+    "de": "Energiepunkte:",
+    "fr": "Points d’énergie :"
+  },
+  "Quiz Cash": {
+    "id": "Uang Kuis",
+    "fil": "Pera sa Quiz",
+    "pt": "Dinheiro do quiz",
+    "es": "Dinero del quiz",
+    "ja": "クイズ報酬",
+    "ru": "Деньги за викторину",
+    "de": "Quiz-Geld",
+    "fr": "Argent du quiz"
+  },
+  "Wheel Cash": {
+    "id": "Uang Roda",
+    "fil": "Pera sa Gulong",
+    "pt": "Dinheiro da roleta",
+    "es": "Dinero de la ruleta",
+    "ja": "ルーレット報酬",
+    "ru": "Деньги за колесо",
+    "de": "Glücksrad-Geld",
+    "fr": "Argent de la roue"
+  },
+  "Get By Quiz": {
+    "id": "Dapatkan dari Kuis",
+    "fil": "Kunin sa Quiz",
+    "pt": "Ganhe no quiz",
+    "es": "Gana en el quiz",
+    "ja": "クイズで獲得",
+    "ru": "Получить в викторине",
+    "de": "Im Quiz gewinnen",
+    "fr": "Gagner au quiz"
+  },
+  "Right Answer Wins Cash": {
+    "id": "Jawaban Benar Menang Uang",
+    "fil": "Tamang Sagot, May Pera",
+    "pt": "Resposta certa vale dinheiro",
+    "es": "La respuesta correcta gana dinero",
+    "ja": "正解して現金を獲得",
+    "ru": "Верный ответ приносит деньги",
+    "de": "Richtige Antwort gewinnt Geld",
+    "fr": "La bonne réponse rapporte de l’argent"
+  },
+  "Everyday Trivia": {
+    "id": "Trivia Harian",
+    "fil": "Pang-araw-araw na Trivia",
+    "pt": "Trivia diária",
+    "es": "Trivia diaria",
+    "ja": "毎日の雑学",
+    "ru": "Ежедневные вопросы",
+    "de": "Tägliches Wissen",
+    "fr": "Culture générale"
+  },
+  "Chill Time Quiz": {
+    "id": "Kuis Santai",
+    "fil": "Relax na Quiz",
+    "pt": "Quiz relaxante",
+    "es": "Quiz relajado",
+    "ja": "リラックスクイズ",
+    "ru": "Лёгкая викторина",
+    "de": "Entspannungsquiz",
+    "fr": "Quiz détente"
+  },
+  "Brain Teasers": {
+    "id": "Asah Otak",
+    "fil": "Palaisipan",
+    "pt": "Desafios mentais",
+    "es": "Acertijos",
+    "ja": "頭の体操",
+    "ru": "Головоломки",
+    "de": "Denksport",
+    "fr": "Casse-têtes"
+  },
+  "Warm-Up Quiz": {
+    "id": "Kuis Pemanasan",
+    "fil": "Pampainit na Quiz",
+    "pt": "Quiz de aquecimento",
+    "es": "Quiz de calentamiento",
+    "ja": "ウォームアップ",
+    "ru": "Разминка",
+    "de": "Aufwärmquiz",
+    "fr": "Quiz d’échauffement"
+  },
+  "Game": {
+    "id": "Permainan",
+    "fil": "Laro",
+    "pt": "Jogo",
+    "es": "Juego",
+    "ja": "ゲーム",
+    "ru": "Игра",
+    "de": "Spiel",
+    "fr": "Jeu"
+  },
+  "Advertisers": {
+    "id": "Pengiklan",
+    "fil": "Mga Advertiser",
+    "pt": "Anunciantes",
+    "es": "Anunciantes",
+    "ja": "広告主",
+    "ru": "Рекламодатели",
+    "de": "Werbetreibende",
+    "fr": "Annonceurs"
+  },
+  "Other players": {
+    "id": "Pemain lain",
+    "fil": "Ibang manlalaro",
+    "pt": "Outros jogadores",
+    "es": "Otros jugadores",
+    "ja": "他のプレイヤー",
+    "ru": "Другие игроки",
+    "de": "Andere Spieler",
+    "fr": "Autres joueurs"
+  },
+  "Any time": {
+    "id": "Kapan saja",
+    "fil": "Kahit kailan",
+    "pt": "A qualquer hora",
+    "es": "En cualquier momento",
+    "ja": "いつでも",
+    "ru": "В любое время",
+    "de": "Jederzeit",
+    "fr": "À tout moment"
+  },
+  "Watch more ads": {
+    "id": "Tonton lebih banyak iklan",
+    "fil": "Manood ng higit pang ad",
+    "pt": "Assistir mais anúncios",
+    "es": "Ver más anuncios",
+    "ja": "広告をもっと見る",
+    "ru": "Смотреть больше рекламы",
+    "de": "Mehr Werbung ansehen",
+    "fr": "Voir plus de publicités"
+  },
+  "Wait without playing": {
+    "id": "Tunggu tanpa bermain",
+    "fil": "Maghintay nang hindi naglalaro",
+    "pt": "Esperar sem jogar",
+    "es": "Esperar sin jugar",
+    "ja": "遊ばずに待つ",
+    "ru": "Ждать без игры",
+    "de": "Warten ohne zu spielen",
+    "fr": "Attendre sans jouer"
+  },
+  "Who gives you money here?": {
+    "id": "Siapa yang memberi Anda uang di sini?",
+    "fil": "Sino ang nagbibigay sa iyo ng pera rito?",
+    "pt": "Quem paga você aqui?",
+    "es": "¿Quién te paga aquí?",
+    "ja": "誰が報酬を支払いますか？",
+    "ru": "Кто платит вам здесь?",
+    "de": "Wer bezahlt Sie hier?",
+    "fr": "Qui vous paie ici ?"
+  },
+  "When can you withdraw your cash?": {
+    "id": "Kapan Anda dapat menarik uang?",
+    "fil": "Kailan mo maaaring i-withdraw ang pera?",
+    "pt": "Quando você pode sacar?",
+    "es": "¿Cuándo puedes retirar?",
+    "ja": "いつ出金できますか？",
+    "ru": "Когда можно вывести деньги?",
+    "de": "Wann können Sie auszahlen?",
+    "fr": "Quand pouvez-vous retirer ?"
+  },
+  "What’s the fastest way to fill your PiggyBoost?": {
+    "id": "Apa cara tercepat mengisi PiggyBoost?",
+    "fil": "Ano ang pinakamabilis na paraan para mapuno ang PiggyBoost?",
+    "pt": "Como encher o PiggyBoost mais rápido?",
+    "es": "¿Cómo llenar PiggyBoost más rápido?",
+    "ja": "PiggyBoostを早く満たすには？",
+    "ru": "Как быстрее наполнить PiggyBoost?",
+    "de": "Wie füllen Sie PiggyBoost am schnellsten?",
+    "fr": "Comment remplir PiggyBoost plus vite ?"
+  },
+  "Piggy Almost Full!": {
+    "id": "Celengan Hampir Penuh!",
+    "fil": "Halos Puno na ang Alkansiya!",
+    "pt": "Porquinho quase cheio!",
+    "es": "¡Cerdito casi lleno!",
+    "ja": "貯金箱がもうすぐいっぱい！",
+    "ru": "Копилка почти полна!",
+    "de": "Sparschwein fast voll!",
+    "fr": "Tirelire presque pleine !"
+  },
+  "Cash-Out Time 🎉": {
+    "id": "Waktunya Tarik Uang 🎉",
+    "fil": "Oras na para Mag-withdraw 🎉",
+    "pt": "Hora de sacar 🎉",
+    "es": "Hora de retirar 🎉",
+    "ja": "出金の時間 🎉",
+    "ru": "Время вывода 🎉",
+    "de": "Zeit zur Auszahlung 🎉",
+    "fr": "L’heure du retrait 🎉"
+  },
+  "Your Payout Is Ready! 💰": {
+    "id": "Penarikan Anda Siap! 💰",
+    "fil": "Handa na ang Iyong Payout! 💰",
+    "pt": "Seu saque está pronto! 💰",
+    "es": "¡Tu retiro está listo! 💰",
+    "ja": "出金の準備完了！💰",
+    "ru": "Выплата готова! 💰",
+    "de": "Ihre Auszahlung ist bereit! 💰",
+    "fr": "Votre retrait est prêt ! 💰"
+  },
+  "Advertiser Just Paid You! 🎁": {
+    "id": "Pengiklan Baru Membayar Anda! 🎁",
+    "fil": "Binayaran Ka ng Advertiser! 🎁",
+    "pt": "O anunciante pagou você! 🎁",
+    "es": "¡El anunciante te pagó! 🎁",
+    "ja": "広告主から報酬が届きました！🎁",
+    "ru": "Рекламодатель заплатил вам! 🎁",
+    "de": "Der Werbetreibende hat bezahlt! 🎁",
+    "fr": "L’annonceur vous a payé ! 🎁"
+  },
+  "{p0} is waiting in your wallet.": {
+    "id": "{p0} sudah menanti di dompet Anda.",
+    "fil": "{p0} ang naghihintay sa wallet mo.",
+    "pt": "{p0} esperam por você na sua carteira.",
+    "es": "{p0} te esperan en tu billetera.",
+    "ja": "ウォレットに{p0}が入っています。",
+    "ru": "{p0} ждут вас в кошельке.",
+    "de": "{p0} warten in deiner Geldbörse auf dich.",
+    "fr": "{p0} vous attendent dans votre portefeuille."
+  },
+  "Wallet balance": {
+    "id": "Saldo dompet",
+    "fil": "Balanse sa wallet",
+    "pt": "Saldo da carteira",
+    "es": "Saldo de la billetera",
+    "ja": "ウォレット残高",
+    "ru": "Баланс кошелька",
+    "de": "Guthaben",
+    "fr": "Solde du portefeuille"
+  },
+  "Balance Near Max 💵": {
+    "id": "Saldo Hampir Maksimal 💵",
+    "fil": "Halos Puno na ang Balanse 💵",
+    "pt": "Saldo quase no máximo 💵",
+    "es": "Saldo casi al máximo 💵",
+    "ja": "残高がまもなく上限 💵",
+    "ru": "Баланс почти на максимуме 💵",
+    "de": "Guthaben fast voll 💵",
+    "fr": "Solde presque au maximum 💵"
+  },
+  "You’ve saved {p0}—cash out before it spills!": {
+    "id": "Anda menabung {p0}—tarik sebelum penuh!",
+    "fil": "May naipon kang {p0}—mag-withdraw na!",
+    "pt": "Você juntou {p0}—saque antes de transbordar!",
+    "es": "¡Ahorraste {p0}, retira antes de que se llene!",
+    "ja": "{p0}貯まりました。いっぱいになる前に出金！",
+    "ru": "Вы накопили {p0} — пора вывести!",
+    "de": "Sie haben {p0} gespart – jetzt auszahlen!",
+    "fr": "Vous avez économisé {p0}, retirez maintenant !"
+  },
+  "Spin & play—your balance is ready to grab!": {
+    "id": "Putar dan mainkan—saldo Anda siap diambil!",
+    "fil": "Umikot at maglaro—kunin ang iyong balanse!",
+    "pt": "Gire e jogue—seu saldo está pronto!",
+    "es": "¡Gira y juega, tu saldo está listo!",
+    "ja": "回して遊んで、残高を受け取ろう！",
+    "ru": "Крутите и играйте — баланс готов!",
+    "de": "Drehen und spielen – Guthaben wartet!",
+    "fr": "Tournez et jouez, votre solde est prêt !"
+  },
+  "Piggy bank is full and ready to pop—open the app to collect your cash.": {
+    "id": "Celengan penuh—buka aplikasi untuk mengambil uang Anda.",
+    "fil": "Puno na ang alkansiya—buksan ang app para kunin ang pera.",
+    "pt": "O porquinho está cheio—abra o app para receber.",
+    "es": "El cerdito está lleno: abre la app para cobrar.",
+    "ja": "貯金箱がいっぱいです。アプリを開いて受け取ろう。",
+    "ru": "Копилка полна — откройте приложение и заберите деньги.",
+    "de": "Sparschwein voll – App öffnen und Geld abholen.",
+    "fr": "La tirelire est pleine : ouvrez l’app pour récupérer votre argent."
+  },
+  "Tap to feed your piggy & claim today’s payout.": {
+    "id": "Ketuk untuk memberi makan celengan dan klaim hadiah hari ini.",
+    "fil": "I-tap para pakainin ang alkansiya at kunin ang payout ngayon.",
+    "pt": "Toque para alimentar o porquinho e resgatar hoje.",
+    "es": "Toca para alimentar al cerdito y cobrar hoy.",
+    "ja": "タップして貯金箱を育て、本日の報酬を受け取ろう。",
+    "ru": "Нажмите, покормите копилку и получите выплату.",
+    "de": "Tippen, Sparschwein füttern und heutige Auszahlung abholen.",
+    "fr": "Appuyez pour nourrir la tirelire et récupérer votre gain."
+  },
+  "Almost full—withdraw before it’s gone!": {
+    "id": "Hampir penuh—tarik sekarang!",
+    "fil": "Halos puno—mag-withdraw na!",
+    "pt": "Quase cheio—saque agora!",
+    "es": "¡Casi lleno, retira ahora!",
+    "ja": "もうすぐいっぱい。今すぐ出金！",
+    "ru": "Почти полна — выводите сейчас!",
+    "de": "Fast voll – jetzt auszahlen!",
+    "fr": "Presque pleine, retirez maintenant !"
+  },
+  "Withdrawal Sent": {
+    "id": "Penarikan Terkirim",
+    "fil": "Naipadala ang Withdrawal",
+    "pt": "Saque enviado",
+    "es": "Retiro enviado",
+    "ja": "出金送信済み",
+    "ru": "Выплата отправлена",
+    "de": "Auszahlung gesendet",
+    "fr": "Retrait envoyé"
+  },
+  "{p0} received {p1} via {p2} successfully": {
+    "id": "{p0} menerima {p1} melalui {p2}",
+    "fil": "Natanggap ni {p0} ang {p1} sa {p2}",
+    "pt": "{p0} recebeu {p1} via {p2}",
+    "es": "{p0} recibió {p1} por {p2}",
+    "ja": "{p0}さんが{p2}で{p1}を受け取りました",
+    "ru": "{p0} получил(а) {p1} через {p2}",
+    "de": "{p0} hat {p1} über {p2} erhalten",
+    "fr": "{p0} a reçu {p1} via {p2}"
+  },
+  "Congrats! User {p0} just cashed out": {
+    "id": "Selamat! Pengguna {p0} baru menarik",
+    "fil": "Binabati kita! Nag-withdraw si {p0} ng",
+    "pt": "Parabéns! Usuário {p0} sacou",
+    "es": "¡Felicidades! El usuario {p0} retiró",
+    "ja": "おめでとう！ユーザー{p0}さんが出金：",
+    "ru": "Пользователь {p0} вывел",
+    "de": "Glückwunsch! Nutzer {p0} hat ausgezahlt:",
+    "fr": "Bravo ! L’utilisateur {p0} a retiré"
+  },
+  "Security check in progress to protect your payout": {
+    "id": "Pemeriksaan keamanan untuk melindungi penarikan Anda",
+    "fil": "Sinusuri ang seguridad para protektahan ang payout",
+    "pt": "Verificação de segurança para proteger seu saque",
+    "es": "Verificación de seguridad para proteger tu retiro",
+    "ja": "出金保護のため安全確認中",
+    "ru": "Проверка безопасности вашей выплаты",
+    "de": "Sicherheitsprüfung für Ihre Auszahlung",
+    "fr": "Vérification de sécurité pour votre retrait"
+  },
+  "You're in line. Payouts are released in order": {
+    "id": "Anda dalam antrean. Pembayaran diproses berurutan",
+    "fil": "Nasa pila ka. Sunod-sunod ang payout",
+    "pt": "Você está na fila. Pagamentos por ordem",
+    "es": "Estás en la fila. Los pagos se liberan en orden",
+    "ja": "順番待ちです。順次出金されます",
+    "ru": "Вы в очереди. Выплаты идут по порядку",
+    "de": "Sie sind in der Warteschlange. Auszahlung nach Reihenfolge",
+    "fr": "Vous êtes dans la file. Les paiements suivent l’ordre"
+  },
+  "1M+ User Trusted": {
+    "id": "Dipercaya 1 Juta+ Pengguna",
+    "fil": "Pinagkakatiwalaan ng 1M+ User",
+    "pt": "Mais de 1 milhão de usuários",
+    "es": "Más de 1 millón de usuarios",
+    "ja": "100万人以上が利用",
+    "ru": "Доверяют более 1 млн пользователей",
+    "de": "Über 1 Mio. Nutzer vertrauen uns",
+    "fr": "Plus d’un million d’utilisateurs"
+  },
+  "Arrived within 24 hours": {
+    "id": "Tiba dalam 24 jam",
+    "fil": "Darating sa loob ng 24 oras",
+    "pt": "Receba em até 24 horas",
+    "es": "Llega en 24 horas",
+    "ja": "24時間以内に着金",
+    "ru": "Поступит в течение 24 часов",
+    "de": "Innerhalb von 24 Stunden",
+    "fr": "Reçu sous 24 heures"
+  },
+  "Advertiser apologized for the delay and sent you a Golden Pig!": {
+    "id": "Pengiklan meminta maaf atas penundaan dan mengirim Babi Emas!",
+    "fil": "Nagpadala ang advertiser ng Gintong Baboy bilang paumanhin!",
+    "pt": "O anunciante pediu desculpas e enviou um Porquinho de Ouro!",
+    "es": "¡El anunciante se disculpó y te envió un Cerdito Dorado!",
+    "ja": "遅延のお詫びに広告主から金のブタが届きました！",
+    "ru": "Рекламодатель извинился и прислал Золотую свинку!",
+    "de": "Der Werbetreibende entschuldigt sich mit einem Goldschwein!",
+    "fr": "L’annonceur s’excuse du retard avec un Cochon d’or !"
+  },
+  "Advertiser review isn’t complete.": {
+    "id": "Peninjauan pengiklan belum selesai.",
+    "fil": "Hindi pa tapos ang pagsusuri ng advertiser.",
+    "pt": "A análise do anunciante não terminou.",
+    "es": "La revisión del anunciante no terminó.",
+    "ja": "広告主の審査は未完了です。",
+    "ru": "Проверка рекламодателя не завершена.",
+    "de": "Prüfung des Werbetreibenden noch nicht abgeschlossen.",
+    "fr": "La vérification de l’annonceur est incomplète."
+  },
+  "Almost done! Collect 20 more diamonds to finish review": {
+    "id": "Hampir selesai! Kumpulkan 20 berlian untuk menyelesaikan peninjauan",
+    "fil": "Malapit na! Mangolekta ng 20 diyamante para matapos ang pagsusuri",
+    "pt": "Quase lá! Colete mais 20 diamantes para concluir a análise",
+    "es": "¡Casi listo! Recoge 20 diamantes para terminar la revisión",
+    "ja": "あと少し！ダイヤを20個集めて審査を完了",
+    "ru": "Почти готово! Соберите 20 алмазов для завершения проверки",
+    "de": "Fast fertig! Noch 20 Diamanten bis zum Prüfungsende",
+    "fr": "Presque fini ! Encore 20 diamants pour terminer la vérification"
+  },
+  "An advertiser just paid you.": {
+    "id": "Pengiklan baru membayar Anda.",
+    "fil": "Binayaran ka ng advertiser.",
+    "pt": "Um anunciante acabou de pagar você.",
+    "es": "Un anunciante acaba de pagarte.",
+    "ja": "広告主から報酬が届きました。",
+    "ru": "Рекламодатель только что заплатил вам.",
+    "de": "Ein Werbetreibender hat Sie bezahlt.",
+    "fr": "Un annonceur vient de vous payer."
+  },
+  "Answer fun quizzes to collect diamonds.": {
+    "id": "Jawab kuis seru untuk mengumpulkan berlian.",
+    "fil": "Sumagot ng masayang quiz para mangolekta ng diyamante.",
+    "pt": "Responda quizzes divertidos para coletar diamantes.",
+    "es": "Responde quizzes divertidos para recoger diamantes.",
+    "ja": "クイズに答えてダイヤを集めよう。",
+    "ru": "Отвечайте на вопросы и собирайте алмазы.",
+    "de": "Mit spannenden Quizfragen Diamanten sammeln.",
+    "fr": "Répondez aux quiz pour collecter des diamants."
+  },
+  "Congratulations, You are in the withdrawal approval queue.": {
+    "id": "Selamat, Anda masuk antrean persetujuan penarikan.",
+    "fil": "Binabati kita, nasa pila ka na para sa pag-apruba ng withdrawal.",
+    "pt": "Parabéns, você está na fila de aprovação do saque.",
+    "es": "Felicidades, estás en la fila de aprobación del retiro.",
+    "ja": "おめでとう！出金承認の順番待ちに入りました。",
+    "ru": "Поздравляем! Вы в очереди на одобрение вывода.",
+    "de": "Glückwunsch, Sie sind in der Genehmigungswarteschlange.",
+    "fr": "Félicitations, vous êtes dans la file d’approbation du retrait."
+  },
+  "Earnings From Quiz Game": {
+    "id": "Pendapatan dari Kuis",
+    "fil": "Kita Mula sa Quiz",
+    "pt": "Ganhos no quiz",
+    "es": "Ganancias del quiz",
+    "ja": "クイズの獲得額",
+    "ru": "Заработок в викторине",
+    "de": "Verdienst aus dem Quiz",
+    "fr": "Gains du quiz"
+  },
+  "Every diamond helps your Piggy level up — all the way to the Gold Pig!": {
+    "id": "Setiap berlian menaikkan level celengan hingga Babi Emas!",
+    "fil": "Bawat diyamante ay nagpapataas ng level hanggang sa Gintong Baboy!",
+    "pt": "Cada diamante evolui seu porquinho até o Porquinho de Ouro!",
+    "es": "¡Cada diamante hace evolucionar a tu cerdito hasta el Cerdito Dorado!",
+    "ja": "ダイヤを集めて金のブタまでレベルアップ！",
+    "ru": "Каждый алмаз приближает копилку к Золотой свинке!",
+    "de": "Jeder Diamant bringt Ihr Sparschwein dem Goldschwein näher!",
+    "fr": "Chaque diamant fait évoluer la tirelire jusqu’au Cochon d’or !"
+  },
+  "Every quiz boosts your knowledge — and your Piggy’s evolution!": {
+    "id": "Setiap kuis menambah pengetahuan dan mengembangkan celengan!",
+    "fil": "Bawat quiz ay nagpapatalino at nagpapalaki sa alkansiya!",
+    "pt": "Cada quiz aumenta seu conhecimento e evolui o porquinho!",
+    "es": "¡Cada quiz aumenta tu conocimiento y hace evolucionar a tu cerdito!",
+    "ja": "クイズで知識を増やし、貯金箱を育てよう！",
+    "ru": "Каждая викторина развивает знания и копилку!",
+    "de": "Jedes Quiz erweitert Ihr Wissen und entwickelt Ihr Sparschwein!",
+    "fr": "Chaque quiz enrichit vos connaissances et fait évoluer la tirelire !"
+  },
+  "Fill Your Piggy Bank, Cash Out Instantly": {
+    "id": "Isi Celengan, Tarik Langsung",
+    "fil": "Punuin ang Alkansiya, Mag-withdraw Agad",
+    "pt": "Encha o porquinho e saque na hora",
+    "es": "Llena tu cerdito y retira al instante",
+    "ja": "貯金箱を満たしてすぐ出金",
+    "ru": "Наполните копилку и выводите сразу",
+    "de": "Sparschwein füllen und sofort auszahlen",
+    "fr": "Remplissez la tirelire et retirez instantanément"
+  },
+  "Final Step！Complete the final task to release your cash": {
+    "id": "Langkah terakhir! Selesaikan tugas untuk menarik uang",
+    "fil": "Huling hakbang! Tapusin ang gawain para makuha ang pera",
+    "pt": "Último passo! Conclua a tarefa para liberar seu dinheiro",
+    "es": "¡Último paso! Completa la tarea para liberar tu dinero",
+    "ja": "最終ステップ！タスクを完了して現金を受け取ろう",
+    "ru": "Последний шаг! Завершите задание для выплаты",
+    "de": "Letzter Schritt! Aufgabe abschließen und Geld freigeben",
+    "fr": "Dernière étape ! Terminez la tâche pour débloquer votre argent"
+  },
+  "Grow Bonus Activated!": {
+    "id": "Bonus Pertumbuhan Aktif!",
+    "fil": "Aktibo na ang Growth Bonus!",
+    "pt": "Bônus de crescimento ativado!",
+    "es": "¡Bono de crecimiento activado!",
+    "ja": "成長ボーナス有効！",
+    "ru": "Бонус роста активирован!",
+    "de": "Wachstumsbonus aktiviert!",
+    "fr": "Bonus de croissance activé !"
+  },
+  "Growing Balance:": {
+    "id": "Saldo Bertambah:",
+    "fil": "Lumalaking Balanse:",
+    "pt": "Saldo crescente:",
+    "es": "Saldo en crecimiento:",
+    "ja": "増加中の残高：",
+    "ru": "Растущий баланс:",
+    "de": "Wachsendes Guthaben:",
+    "fr": "Solde croissant :"
+  },
+  "Let‘s Start Earning": {
+    "id": "Ayo Mulai Hasilkan",
+    "fil": "Magsimula Nang Kumita",
+    "pt": "Vamos começar a ganhar",
+    "es": "Empecemos a ganar",
+    "ja": "獲得を始めよう",
+    "ru": "Начнём зарабатывать",
+    "de": "Jetzt verdienen",
+    "fr": "Commençons à gagner"
+  },
+  "Let’s Start": {
+    "id": "Ayo Mulai",
+    "fil": "Magsimula Tayo",
+    "pt": "Vamos começar",
+    "es": "Empecemos",
+    "ja": "始めよう",
+    "ru": "Начнём",
+    "de": "Los geht’s",
+    "fr": "Commençons"
+  },
+  "No need to wait,": {
+    "id": "Tak perlu menunggu,",
+    "fil": "Hindi kailangang maghintay,",
+    "pt": "Sem precisar esperar,",
+    "es": "Sin esperar,",
+    "ja": "待つ必要なし、",
+    "ru": "Не нужно ждать,",
+    "de": "Kein Warten nötig,",
+    "fr": "Pas besoin d’attendre,"
+  },
+  "Now confirm your payout info.": {
+    "id": "Sekarang konfirmasi info pembayaran.",
+    "fil": "Kumpirmahin ang detalye ng payout.",
+    "pt": "Agora confirme os dados do saque.",
+    "es": "Ahora confirma tus datos de retiro.",
+    "ja": "支払情報を確認してください。",
+    "ru": "Подтвердите данные выплаты.",
+    "de": "Bestätigen Sie Ihre Auszahlungsdaten.",
+    "fr": "Confirmez vos informations de retrait."
+  },
+  "Piggy Payout": {
+    "id": "Penarikan Celengan",
+    "fil": "Payout ng Alkansiya",
+    "pt": "Saque do porquinho",
+    "es": "Retiro del cerdito",
+    "ja": "貯金箱の出金",
+    "ru": "Выплата из копилки",
+    "de": "Sparschwein-Auszahlung",
+    "fr": "Retrait de la tirelire"
+  },
+  "Platform approved. Funds are ready.": {
+    "id": "Platform menyetujui. Dana siap.",
+    "fil": "Aprubado na. Handa na ang pondo.",
+    "pt": "Plataforma aprovou. Fundos prontos.",
+    "es": "Plataforma aprobada. Fondos listos.",
+    "ja": "承認済み。資金の準備ができました。",
+    "ru": "Платформа одобрила. Средства готовы.",
+    "de": "Plattform genehmigt. Guthaben bereit.",
+    "fr": "Plateforme approuvée. Fonds prêts."
+  },
+  "Queued all the way to the front": {
+    "id": "Sudah di depan antrean",
+    "fil": "Nasa unahan na ng pila",
+    "pt": "Chegou ao início da fila",
+    "es": "Llegaste al frente de la fila",
+    "ja": "順番待ちの先頭です",
+    "ru": "Вы в начале очереди",
+    "de": "Am Anfang der Warteschlange",
+    "fr": "Vous êtes en tête de file"
+  },
+  "Quiz passed": {
+    "id": "Kuis lulus",
+    "fil": "Naipasa ang quiz",
+    "pt": "Quiz aprovado",
+    "es": "Quiz aprobado",
+    "ja": "クイズ合格",
+    "ru": "Викторина пройдена",
+    "de": "Quiz bestanden",
+    "fr": "Quiz réussi"
+  },
+  "Sent": {
+    "id": "Terkirim",
+    "fil": "Naipadala",
+    "pt": "Enviado",
+    "es": "Enviado",
+    "ja": "送信済み",
+    "ru": "Отправлено",
+    "de": "Gesendet",
+    "fr": "Envoyé"
+  },
+  "Payout": {
+    "id": "Penarikan",
+    "fil": "Payout",
+    "pt": "Saque",
+    "es": "Retiro",
+    "ja": "出金",
+    "ru": "Выплата",
+    "de": "Auszahlung",
+    "fr": "Retrait"
+  },
+  "To {p0}.": {
+    "id": "Kepada {p0}.",
+    "fil": "Kay {p0}.",
+    "pt": "Para {p0}.",
+    "es": "A {p0}.",
+    "ja": "{p0}さんへ。",
+    "ru": "Для {p0}.",
+    "de": "An {p0}.",
+    "fr": "À {p0}."
+  },
+  "Spin The Wheel Daily For Prize!": {
+    "id": "Putar Roda Setiap Hari untuk Hadiah!",
+    "fil": "Paikutin Araw-araw para sa Premyo!",
+    "pt": "Gire a roleta diariamente por prêmios!",
+    "es": "¡Gira la ruleta a diario por premios!",
+    "ja": "毎日回して賞品を獲得！",
+    "ru": "Крутите колесо каждый день ради призов!",
+    "de": "Täglich drehen und Preise gewinnen!",
+    "fr": "Tournez la roue chaque jour pour gagner !"
+  },
+  "To Speed Up Your": {
+    "id": "Untuk Mempercepat",
+    "fil": "Para Pabilisin ang",
+    "pt": "Para acelerar sua",
+    "es": "Para acelerar tu",
+    "ja": "スピードアップ：",
+    "ru": "Чтобы ускорить",
+    "de": "Beschleunigen Sie Ihre",
+    "fr": "Pour accélérer votre"
+  },
+  "Top Answerer": {
+    "id": "Penjawab Teratas",
+    "fil": "Nangungunang Mananagot",
+    "pt": "Melhor no quiz",
+    "es": "Mejor participante",
+    "ja": "トップ回答者",
+    "ru": "Лучший игрок",
+    "de": "Bester Quizspieler",
+    "fr": "Meilleur participant"
+  },
+  "Users Have Successfully Withdrawn Cash This Week": {
+    "id": "Pengguna Berhasil Menarik Uang Minggu Ini",
+    "fil": "Mga User na Nag-withdraw Ngayong Linggo",
+    "pt": "Usuários sacaram com sucesso nesta semana",
+    "es": "Usuarios retiraron con éxito esta semana",
+    "ja": "今週出金に成功したユーザー",
+    "ru": "Пользователи успешно вывели деньги на этой неделе",
+    "de": "Nutzer haben diese Woche erfolgreich ausgezahlt",
+    "fr": "Utilisateurs ayant retiré cette semaine"
+  },
+  "Want higher earnings? Spin the wheel to unlock up to": {
+    "id": "Ingin Lebih Banyak? Putar roda untuk membuka hingga",
+    "fil": "Gusto ng Higit na Kita? Paikutin para ma-unlock ang hanggang",
+    "pt": "Quer ganhar mais? Gire a roleta para liberar até",
+    "es": "¿Quieres ganar más? Gira para desbloquear hasta",
+    "ja": "もっと獲得したい？回して最大",
+    "ru": "Хотите больше? Крутите колесо и откройте до",
+    "de": "Mehr verdienen? Drehen und bis zu",
+    "fr": "Plus de gains ? Tournez pour débloquer jusqu’à"
+  },
+  "interest bonus in your savings. More bonus, faster withdrawals!": {
+    "id": "bonus tabungan. Lebih banyak bonus, lebih cepat menarik!",
+    "fil": "bonus sa ipon. Mas maraming bonus, mas mabilis ang withdrawal!",
+    "pt": "bônus na poupança. Mais bônus, saques mais rápidos!",
+    "es": "de bono en tus ahorros. ¡Más bonos, retiros más rápidos!",
+    "ja": "の貯金ボーナス。ボーナスを増やして早く出金！",
+    "ru": "бонуса к сбережениям. Больше бонусов — быстрее вывод!",
+    "de": "Sparbonus. Mehr Bonus, schnellere Auszahlung!",
+    "fr": "de bonus d’épargne. Plus de bonus, retraits plus rapides !"
+  },
+  "Want to stack up more cash? Keep earning now!": {
+    "id": "Ingin lebih banyak uang? Terus hasilkan!",
+    "fil": "Gusto ng mas maraming pera? Patuloy na kumita!",
+    "pt": "Quer juntar mais? Continue ganhando!",
+    "es": "¿Quieres más dinero? ¡Sigue ganando!",
+    "ja": "もっと貯めたい？今すぐ獲得を続けよう！",
+    "ru": "Хотите больше денег? Продолжайте зарабатывать!",
+    "de": "Mehr Geld ansparen? Jetzt weiter verdienen!",
+    "fr": "Envie de plus d’argent ? Continuez à gagner !"
+  },
+  "We apologize for the delay—earn 20 Diamonds to clear the last check and get paid instantly.": {
+    "id": "Maaf atas penundaan—kumpulkan 20 berlian untuk pemeriksaan terakhir dan pembayaran.",
+    "fil": "Paumanhin sa pagkaantala—kumita ng 20 diyamante para matapos ang pagsusuri at mabayaran.",
+    "pt": "Desculpe a demora—ganhe 20 diamantes para concluir a verificação e receber.",
+    "es": "Perdón por la demora: gana 20 diamantes para terminar la verificación y cobrar.",
+    "ja": "遅延のお詫びに、ダイヤ20個で最終確認を終えて報酬を受け取れます。",
+    "ru": "Приносим извинения за задержку — соберите 20 алмазов для последней проверки и выплаты.",
+    "de": "Entschuldigung für die Verzögerung – 20 Diamanten für letzte Prüfung und Auszahlung sammeln.",
+    "fr": "Désolés du retard : gagnez 20 diamants pour terminer la vérification et recevoir le paiement."
+  },
+  "When you get a Golden Pig": {
+    "id": "Saat mendapat Babi Emas",
+    "fil": "Kapag may Gintong Baboy ka na",
+    "pt": "Ao conseguir o Porquinho de Ouro",
+    "es": "Cuando consigues un Cerdito Dorado",
+    "ja": "金のブタを手に入れた時",
+    "ru": "Когда получите Золотую свинку",
+    "de": "Wenn Sie ein Goldschwein erhalten",
+    "fr": "Quand vous obtenez un Cochon d’or"
+  },
+  "Withdrawal Made Easy!!": {
+    "id": "Penarikan Jadi Mudah!",
+    "fil": "Madaling Mag-withdraw!",
+    "pt": "Sacar ficou fácil!",
+    "es": "¡Retirar es fácil!",
+    "ja": "簡単出金！",
+    "ru": "Вывод стал проще!",
+    "de": "Auszahlen leicht gemacht!",
+    "fr": "Retrait facile !"
+  },
+  "Dear User{p0}:": {
+    "id": "Pengguna yang terhormat{p0}:",
+    "fil": "Mahal na User{p0}:",
+    "pt": "Olá, usuário{p0}:",
+    "es": "Estimado usuario{p0}:",
+    "ja": "ユーザー{p0}様：",
+    "ru": "Уважаемый пользователь{p0}:",
+    "de": "Hallo, Nutzer{p0}:",
+    "fr": "Bonjour, utilisateur{p0} :"
+  },
+  "Your payment information has been confirmed successfully. As a new user, it will be super easy to withdraw cash today!": {
+    "id": "Info pembayaran dikonfirmasi. Pengguna baru dapat menarik dengan mudah hari ini!",
+    "fil": "Kumpirmado na ang detalye. Madaling mag-withdraw ngayong araw bilang bagong user!",
+    "pt": "Dados confirmados. Como novo usuário, será fácil sacar hoje!",
+    "es": "Datos confirmados. ¡Como nuevo usuario, retirar hoy será muy fácil!",
+    "ja": "支払情報を確認しました。新規ユーザーは本日簡単に出金できます！",
+    "ru": "Платёжные данные подтверждены. Новому пользователю легко вывести деньги сегодня!",
+    "de": "Zahlungsdaten bestätigt. Als neuer Nutzer können Sie heute leicht auszahlen!",
+    "fr": "Informations confirmées. Les nouveaux utilisateurs peuvent retirer facilement aujourd’hui !"
+  },
+  "in queue, Your Current rank:": {
+    "id": "dalam antrean, peringkat Anda:",
+    "fil": "sa pila, ranggo mo:",
+    "pt": "na fila, sua posição:",
+    "es": "en la fila, tu posición:",
+    "ja": "待機中、現在の順位：",
+    "ru": "в очереди, ваше место:",
+    "de": "in der Warteschlange, Ihr Rang:",
+    "fr": "dans la file, votre rang :"
+  },
+  "faster!": {
+    "id": "lebih cepat!",
+    "fil": "mas mabilis!",
+    "pt": "mais rápido!",
+    "es": "¡más rápido!",
+    "ja": "もっと早く！",
+    "ru": "быстрее!",
+    "de": "schneller!",
+    "fr": "plus vite !"
+  },
+  "watch ads and cash out": {
+    "id": "tonton iklan dan tarik",
+    "fil": "manood ng ad at mag-withdraw",
+    "pt": "assista anúncios e saque",
+    "es": "mira anuncios y retira",
+    "ja": "広告を見て出金",
+    "ru": "смотрите рекламу и выводите",
+    "de": "Werbung ansehen und auszahlen",
+    "fr": "regardez des publicités et retirez"
+  },
+  "⚡ Advertiser Review Pending": {
+    "id": "⚡ Menunggu Peninjauan Pengiklan",
+    "fil": "⚡ Nakabinbin ang Pagsusuri",
+    "pt": "⚡ Análise do anunciante pendente",
+    "es": "⚡ Revisión del anunciante pendiente",
+    "ja": "⚡ 広告主の審査待ち",
+    "ru": "⚡ Ожидается проверка рекламодателя",
+    "de": "⚡ Prüfung des Werbetreibenden ausstehend",
+    "fr": "⚡ Vérification de l’annonceur en attente"
+  },
+  "💰 Your First commission has arrived!": {
+    "id": "💰 Komisi Pertama Anda Tiba!",
+    "fil": "💰 Dumating na ang Una Mong Komisyon!",
+    "pt": "💰 Sua primeira comissão chegou!",
+    "es": "💰 ¡Llegó tu primera comisión!",
+    "ja": "💰 初報酬が届きました！",
+    "ru": "💰 Ваша первая комиссия получена!",
+    "de": "💰 Ihre erste Provision ist da!",
+    "fr": "💰 Votre première commission est arrivée !"
+  },
+  "💡 Come back tomorrow to feed your piggy again and get a +{p0}% cash boost!": {
+    "id": "💡 Kembali besok untuk memberi makan celengan dan dapatkan bonus +{p0}%!",
+    "fil": "💡 Bumalik bukas para pakainin ang alkansiya at makakuha ng +{p0}% bonus!",
+    "pt": "💡 Volte amanhã para alimentar o porquinho e ganhar +{p0}%!",
+    "es": "💡 ¡Vuelve mañana para alimentar al cerdito y ganar +{p0}%!",
+    "ja": "💡 明日も育てて\n+{p0}%ボーナスを獲得！",
+    "ru": "💡 Возвращайтесь завтра за бонусом +{p0}%!",
+    "de": "💡 Morgen wieder füttern und +{p0}% Bonus erhalten!",
+    "fr": "💡 Revenez demain pour nourrir la tirelire et gagner +{p0}% !"
+  },
+  "You've saved {p0} Today": {
+    "id": "Anda menabung {p0} hari ini",
+    "fil": "Nakaipon ka ng {p0} ngayon",
+    "pt": "Você juntou {p0} hoje",
+    "es": "Ahorraste {p0} hoy",
+    "ja": "本日{p0}貯まりました",
+    "ru": "Вы накопили {p0} сегодня",
+    "de": "Heute {p0} gespart",
+    "fr": "Vous avez économisé {p0} aujourd’hui"
+  },
+  "Deposit amount：{p0}": {
+    "id": "Jumlah simpanan: {p0}",
+    "fil": "Halagang nadeposito: {p0}",
+    "pt": "Valor depositado: {p0}",
+    "es": "Monto depositado: {p0}",
+    "ja": "預入額：{p0}",
+    "ru": "Сумма вклада: {p0}",
+    "de": "Einzahlungsbetrag: {p0}",
+    "fr": "Montant déposé : {p0}"
+  },
+  "Hey, I’m Jason. Just last week, I cashed out {p0} From this App.": {
+    "id": "Hai, saya Jason. Minggu lalu saya menarik {p0} dari aplikasi ini.",
+    "fil": "Hi, ako si Jason. Noong nakaraang linggo, nag-withdraw ako ng {p0} sa app na ito.",
+    "pt": "Oi, sou Jason. Na semana passada saquei {p0} neste app.",
+    "es": "Hola, soy Jason. La semana pasada retiré {p0} de esta app.",
+    "ja": "こんにちは、ジェイソンです。先週このアプリで{p0}出金しました。",
+    "ru": "Привет, я Джейсон. На прошлой неделе я вывел {p0} в этом приложении.",
+    "de": "Hallo, ich bin Jason. Letzte Woche habe ich hier {p0} ausgezahlt.",
+    "fr": "Salut, je suis Jason. La semaine dernière, j’ai retiré {p0} sur cette app."
+  },
+  "You wanna know how I did it? 👉 Let me show you. It’s easy — we earn money by watching ads.": {
+    "id": "Ingin tahu caranya? 👉 Mudah, kita menghasilkan uang dengan menonton iklan.",
+    "fil": "Gusto mong malaman? 👉 Madali, kumikita tayo sa panonood ng ad.",
+    "pt": "Quer saber como? 👉 É fácil: ganhamos assistindo anúncios.",
+    "es": "¿Quieres saber cómo? 👉 Es fácil: ganamos viendo anuncios.",
+    "ja": "やり方を知りたい？👉 広告を見て報酬を獲得するだけ。",
+    "ru": "Хотите узнать как? 👉 Всё просто: мы зарабатываем на просмотре рекламы.",
+    "de": "Möchten Sie wissen wie? 👉 Ganz einfach: Werbung ansehen und verdienen.",
+    "fr": "Vous voulez savoir comment ? 👉 C’est simple : on gagne en regardant des publicités."
+  },
+  "Fed it more apples, and boom — it evolved into a Gold Pig.That’s when the payout unlocked.": {
+    "id": "Beri lebih banyak apel hingga menjadi Babi Emas dan penarikan terbuka.",
+    "fil": "Pakainin ng mansanas hanggang maging Gintong Baboy para ma-unlock ang payout.",
+    "pt": "Alimentei com maçãs até virar Porquinho de Ouro e liberar o saque.",
+    "es": "Le di más manzanas hasta convertirlo en Cerdito Dorado y desbloquear el retiro.",
+    "ja": "リンゴで育てて金のブタになると出金が解除されます。",
+    "ru": "Кормите яблоками до Золотой свинки, чтобы открыть вывод.",
+    "de": "Mit Äpfeln zum Goldschwein entwickeln und Auszahlung freischalten.",
+    "fr": "Nourrissez-le de pommes jusqu’au Cochon d’or pour débloquer le retrait."
+  },
+  "Go": {
+    "id": "Mulai",
+    "fil": "Simulan",
+    "pt": "Ir",
+    "es": "Ir",
+    "ja": "進む",
+    "ru": "Начать",
+    "de": "Los",
+    "fr": "Aller"
+  },
+  "Number": {
+    "id": "Jumlah",
+    "fil": "Bilang",
+    "pt": "Quantidade",
+    "es": "Cantidad",
+    "ja": "回数",
+    "ru": "Количество",
+    "de": "Anzahl",
+    "fr": "Nombre"
+  },
+  "Amount": {
+    "id": "Jumlah uang",
+    "fil": "Halaga",
+    "pt": "Valor",
+    "es": "Monto",
+    "ja": "金額",
+    "ru": "Сумма",
+    "de": "Betrag",
+    "fr": "Montant"
+  },
+  "right": {
+    "id": "benar",
+    "fil": "tama",
+    "pt": "certas",
+    "es": "correctas",
+    "ja": "正解",
+    "ru": "верно",
+    "de": "richtig",
+    "fr": "correctes"
+  },
+  "Calm": {
+    "id": "Tenang",
+    "fil": "Kalmado",
+    "pt": "Calmo",
+    "es": "Calma",
+    "ja": "穏やか",
+    "ru": "Спокойно",
+    "de": "Ruhig",
+    "fr": "Calme"
+  },
+  "Chill": {
+    "id": "Santai",
+    "fil": "Relaks",
+    "pt": "Relaxar",
+    "es": "Relax",
+    "ja": "リラックス",
+    "ru": "Отдых",
+    "de": "Entspannt",
+    "fr": "Détente"
+  },
+  "Focused": {
+    "id": "Fokus",
+    "fil": "Pokus",
+    "pt": "Focado",
+    "es": "Concentración",
+    "ja": "集中",
+    "ru": "Внимание",
+    "de": "Konzentriert",
+    "fr": "Concentration"
+  },
+  "Warm UP": {
+    "id": "Pemanasan",
+    "fil": "Pampainit",
+    "pt": "Aquecimento",
+    "es": "Calentamiento",
+    "ja": "ウォームアップ",
+    "ru": "Разминка",
+    "de": "Aufwärmen",
+    "fr": "Échauffement"
+  },
+  "Data refreshed at midnight!": {
+    "id": "Data diperbarui tengah malam!",
+    "fil": "Nire-refresh ang data sa hatinggabi!",
+    "pt": "Dados atualizados à meia-noite!",
+    "es": "¡Datos actualizados a medianoche!",
+    "ja": "データは午前0時に更新！",
+    "ru": "Данные обновляются в полночь!",
+    "de": "Daten werden um Mitternacht aktualisiert!",
+    "fr": "Données actualisées à minuit !"
+  },
+  "Something went wrong, please try again later.": {
+    "id": "Terjadi kesalahan, coba lagi nanti.",
+    "fil": "May problema, subukan muli mamaya.",
+    "pt": "Algo deu errado. Tente novamente mais tarde.",
+    "es": "Algo salió mal. Inténtalo más tarde.",
+    "ja": "エラーが発生しました。後でもう一度お試しください。",
+    "ru": "Произошла ошибка. Повторите позже.",
+    "de": "Ein Fehler ist aufgetreten. Bitte später erneut versuchen.",
+    "fr": "Une erreur est survenue. Réessayez plus tard."
+  },
+  "Withdrawal in progress—hurry up and complete the tasks!": {
+    "id": "Penarikan diproses. Segera selesaikan tugas!",
+    "fil": "Pinoproseso ang withdrawal. Tapusin na ang mga gawain!",
+    "pt": "Saque em andamento. Conclua as tarefas!",
+    "es": "Retiro en curso. ¡Completa las tareas!",
+    "ja": "出金処理中です。タスクを完了してください！",
+    "ru": "Вывод в процессе. Выполните задания!",
+    "de": "Auszahlung läuft. Schließen Sie die Aufgaben ab!",
+    "fr": "Retrait en cours. Terminez les tâches !"
+  },
+  "Answer {p0}/{p1} Question Right": {
+    "id": "Jawab benar {p0}/{p1} soal",
+    "fil": "Sagutin nang tama ang {p0}/{p1} tanong",
+    "pt": "Acerte {p0}/{p1} perguntas",
+    "es": "Responde bien {p0}/{p1} preguntas",
+    "ja": "{p0}/{p1}問に正解",
+    "ru": "Ответьте верно на {p0}/{p1} вопросов",
+    "de": "{p0}/{p1} Fragen richtig beantworten",
+    "fr": "Répondez à {p0}/{p1} questions correctement"
+  },
+  "Spin {p0}/{p1} Times": {
+    "id": "Putar {p0}/{p1} kali",
+    "fil": "Umikot nang {p0}/{p1} beses",
+    "pt": "Gire {p0}/{p1} vezes",
+    "es": "Gira {p0}/{p1} veces",
+    "ja": "{p0}/{p1}回スピン",
+    "ru": "Сделайте {p0}/{p1} вращений",
+    "de": "{p0}/{p1} Mal drehen",
+    "fr": "Tournez {p0}/{p1} fois"
+  },
+  "Watch {p0}/{p1} Ad Video": {
+    "id": "Tonton {p0}/{p1} video iklan",
+    "fil": "Manood ng {p0}/{p1} video ad",
+    "pt": "Assista a {p0}/{p1} anúncios",
+    "es": "Mira {p0}/{p1} anuncios",
+    "ja": "広告を{p0}/{p1}本視聴",
+    "ru": "Посмотрите {p0}/{p1} рекламных видео",
+    "de": "{p0}/{p1} Werbevideos ansehen",
+    "fr": "Regardez {p0}/{p1} publicités"
+  },
+  "Keep Answering! Today's {p0} Cash Out Feels Easy": {
+    "id": "Terus jawab! Penarikan {p0} hari ini terasa mudah",
+    "fil": "Sagot pa! Madaling maabot ang {p0} ngayon",
+    "pt": "Continue respondendo! Sacar {p0} hoje parece fácil",
+    "es": "¡Sigue respondiendo! Retirar {p0} hoy parece fácil",
+    "ja": "回答を続けよう！今日の{p0}出金を目指そう",
+    "ru": "Продолжайте отвечать! Сегодня вывести {p0} легко",
+    "de": "Weiter antworten! Heute {p0} auszahlen",
+    "fr": "Continuez ! Retirer {p0} aujourd’hui semble facile"
+  },
+  "Keep Going! {p0} Is Within Reach — One Question Away": {
+    "id": "Terus maju! {p0} sudah dekat, tinggal satu soal",
+    "fil": "Tuloy lang! Abot-kamay na ang {p0}, isang tanong na lang",
+    "pt": "Continue! {p0} está perto, falta uma pergunta",
+    "es": "¡Sigue! {p0} está cerca, a una pregunta",
+    "ja": "続けよう！{p0}まであと1問",
+    "ru": "Не сдавайтесь! До {p0} один вопрос",
+    "de": "Weiter so! Nur eine Frage bis {p0}",
+    "fr": "Continuez ! Encore une question vers {p0}"
+  },
+  "Don't Stop Now! Today's {p0} Awaits Your Next Answer": {
+    "id": "Jangan berhenti! {p0} menanti jawaban berikutnya",
+    "fil": "Huwag huminto! Naghihintay ang {p0} sa susunod mong sagot",
+    "pt": "Não pare! {p0} espera sua próxima resposta",
+    "es": "¡No pares! {p0} espera tu próxima respuesta",
+    "ja": "今がチャンス！次の回答で{p0}を目指そう",
+    "ru": "Не останавливайтесь! {p0} ждут следующего ответа",
+    "de": "Nicht aufhören! {p0} warten auf Ihre Antwort",
+    "fr": "Ne vous arrêtez pas ! {p0} attendent votre réponse"
+  },
+  "Stay in the Game — {p0} Is Heating Up with Every Question": {
+    "id": "Terus bermain! Makin dekat ke {p0} di setiap soal",
+    "fil": "Laro pa! Mas malapit sa {p0} sa bawat tanong",
+    "pt": "Continue jogando! Mais perto de {p0} a cada pergunta",
+    "es": "¡Sigue jugando! Más cerca de {p0} con cada pregunta",
+    "ja": "プレイを続けよう！回答するたび{p0}に近づく",
+    "ru": "Играйте дальше! Каждый вопрос приближает {p0}",
+    "de": "Weiterspielen! Jede Frage bringt Sie {p0} näher",
+    "fr": "Continuez à jouer ! Chaque question vous rapproche de {p0}"
+  },
+  "Keep Answering — Today's {p0} Is Just a Few Questions Away": {
+    "id": "Terus jawab! {p0} hari ini tinggal beberapa soal",
+    "fil": "Sagot pa! Ilang tanong na lang para sa {p0}",
+    "pt": "Continue respondendo! Faltam poucas perguntas para {p0}",
+    "es": "¡Sigue respondiendo! Faltan pocas preguntas para {p0}",
+    "ja": "回答を続けよう！今日の{p0}まであと数問",
+    "ru": "Продолжайте! До {p0} осталось несколько вопросов",
+    "de": "Weiter antworten! Nur noch wenige Fragen bis {p0}",
+    "fr": "Continuez ! Encore quelques questions pour {p0}"
+  },
+  "Almost There! {p0} Feels Closer with Every Right Answer": {
+    "id": "Hampir sampai! Jawaban benar mendekatkan {p0}",
+    "fil": "Malapit na! Bawat tamang sagot ay lapit sa {p0}",
+    "pt": "Quase lá! Cada acerto aproxima você de {p0}",
+    "es": "¡Casi! Cada acierto te acerca a {p0}",
+    "ja": "あと少し！正解するたび{p0}に近づく",
+    "ru": "Почти готово! Каждый верный ответ приближает {p0}",
+    "de": "Fast geschafft! Jede richtige Antwort bringt {p0} näher",
+    "fr": "Presque ! Chaque bonne réponse vous rapproche de {p0}"
+  },
+  "Just withdrew {p0}—this app really pays!": {
+    "id": "Baru menarik {p0}, aplikasi ini benar-benar membayar!",
+    "fil": "Kaka-withdraw ko ng {p0}, totoong nagbabayad ang app!",
+    "pt": "Acabei de sacar {p0}. Este app paga mesmo!",
+    "es": "¡Acabo de retirar {p0}, esta app sí paga!",
+    "ja": "{p0}出金できた！本当に受け取れた！",
+    "ru": "Только что вывел {p0}. Приложение платит!",
+    "de": "Gerade {p0} ausgezahlt. Die App zahlt wirklich!",
+    "fr": "Je viens de retirer {p0}. Cette app paie vraiment !"
+  },
+  "Just got {p0} on {p1} — it’s real!": {
+    "id": "Baru menerima {p0} di {p1}, ini nyata!",
+    "fil": "Natanggap ko ang {p0} sa {p1}, totoo!",
+    "pt": "Recebi {p0} no {p1}. É real!",
+    "es": "¡Recibí {p0} en {p1}, es real!",
+    "ja": "{p1}で{p0}を受け取った！本当だった！",
+    "ru": "Получил {p0} на {p1}. Всё реально!",
+    "de": "Gerade {p0} auf {p1} erhalten. Echt!",
+    "fr": "Je viens de recevoir {p0} sur {p1}. C’est vrai !"
+  },
+  "Cashed out {p0} today, straight to my account.": {
+    "id": "Menarik {p0} hari ini, langsung ke akun saya.",
+    "fil": "Nag-withdraw ako ng {p0} ngayon, diretso sa account.",
+    "pt": "Saquei {p0} hoje, direto na minha conta.",
+    "es": "Retiré {p0} hoy, directo a mi cuenta.",
+    "ja": "今日{p0}を口座に直接出金できた。",
+    "ru": "Сегодня вывел {p0} прямо на свой счёт.",
+    "de": "Heute {p0} direkt auf mein Konto ausgezahlt.",
+    "fr": "J’ai retiré {p0} aujourd’hui, directement sur mon compte."
+  },
+  "{p0} received instantly, no fees at all.": {
+    "id": "{p0} langsung diterima, tanpa biaya.",
+    "fil": "Natanggap agad ang {p0}, walang bayad.",
+    "pt": "{p0} recebidos na hora, sem taxas.",
+    "es": "{p0} recibidos al instante, sin comisiones.",
+    "ja": "{p0}を即受取、手数料なし。",
+    "ru": "Мгновенно получил {p0} без комиссии.",
+    "de": "{p0} sofort erhalten, ohne Gebühren.",
+    "fr": "{p0} reçus instantanément, sans frais."
+  },
+  "Got my payout! Earning while watching ads works.": {
+    "id": "Pembayaran diterima! Menonton iklan bisa menghasilkan.",
+    "fil": "Natanggap ang payout! Gumagana ang kita sa ad.",
+    "pt": "Recebi! Ganhar assistindo anúncios funciona.",
+    "es": "¡Recibí mi pago! Ganar viendo anuncios funciona.",
+    "ja": "出金できた！広告を見て報酬がもらえた。",
+    "ru": "Выплата получена! Просмотр рекламы приносит доход.",
+    "de": "Auszahlung erhalten! Mit Werbung verdient.",
+    "fr": "Paiement reçu ! Regarder des publicités rapporte."
+  },
+  "Withdrawn {p0} successfully, money in my {p1} now.": {
+    "id": "Berhasil menarik {p0}, uang masuk ke {p1}.",
+    "fil": "Na-withdraw ang {p0}, nasa {p1} ko na.",
+    "pt": "Saque de {p0} concluído, dinheiro no {p1}.",
+    "es": "Retiré {p0} con éxito, ya está en mi {p1}.",
+    "ja": "{p0}出金成功、{p1}に入金された。",
+    "ru": "Вывел {p0}, деньги уже на {p1}.",
+    "de": "{p0} ausgezahlt, Geld jetzt auf {p1}.",
+    "fr": "{p0} retirés avec succès, l’argent est sur {p1}."
+  },
+  "Just started, already made {p0} by watching ads!": {
+    "id": "Baru mulai, sudah mendapat {p0} dari iklan!",
+    "fil": "Kakasimula lang, kumita na ng {p0} sa ad!",
+    "pt": "Comecei agora e já ganhei {p0} com anúncios!",
+    "es": "¡Acabo de empezar y ya gané {p0} viendo anuncios!",
+    "ja": "始めたばかりで広告を見て{p0}獲得！",
+    "ru": "Только начал и уже заработал {p0} на рекламе!",
+    "de": "Gerade begonnen und schon {p0} mit Werbung verdient!",
+    "fr": "Je viens de commencer et j’ai déjà gagné {p0} avec les pubs !"
+  },
+  "Watched a couple of ads and boom — {p0} in my balance!": {
+    "id": "Menonton beberapa iklan, saldo bertambah {p0}!",
+    "fil": "Ilang ad lang, may {p0} na sa balanse!",
+    "pt": "Assisti a alguns anúncios e pronto: {p0} no saldo!",
+    "es": "¡Vi unos anuncios y listo, {p0} en mi saldo!",
+    "ja": "広告を数本見たら残高が{p0}増えた！",
+    "ru": "Пара рекламных роликов — и {p0} на балансе!",
+    "de": "Ein paar Werbevideos und schon {p0} auf dem Konto!",
+    "fr": "Quelques pubs et voilà : {p0} sur mon solde !"
+  },
+  "Didn’t think it’d work, but after a few minutes I got my first cents. Feels real!": {
+    "id": "Awalnya ragu, tapi beberapa menit kemudian sudah mendapat uang pertama!",
+    "fil": "Akala ko hindi gagana, pero kumita ako sa ilang minuto!",
+    "pt": "Não acreditava, mas em minutos ganhei meus primeiros centavos!",
+    "es": "No lo creía, ¡pero en minutos gané mis primeras monedas!",
+    "ja": "半信半疑だったけど、数分で初めて報酬を獲得できた！",
+    "ru": "Не верил, но за пару минут получил первые деньги!",
+    "de": "Erst skeptisch, nach wenigen Minuten die ersten Cent verdient!",
+    "fr": "Je n’y croyais pas, mais j’ai gagné mes premiers centimes en quelques minutes !"
+  },
+  "Answer And Unlock!\nAdvertisers want to confirm you're Real.\n🎁 Pass their quiz = Unlock withdrawal Access!\n👉 Start now – only 3 Easy Questions!": {
+    "id": "Jawab dan buka!\nPengiklan ingin memastikan Anda pengguna asli.\n🎁 Lulus kuis untuk membuka penarikan!\n👉 Mulai sekarang, hanya 3 soal mudah!",
+    "fil": "Sumagot at i-unlock!\nGustong tiyakin ng advertiser na tunay kang user.\n🎁 Ipasa ang quiz para ma-unlock ang withdrawal!\n👉 Simulan na, 3 madaling tanong lang!",
+    "pt": "Responda e desbloqueie!\nO anunciante quer confirmar que você é real.\n🎁 Passe no quiz para liberar o saque!\n👉 Comece: apenas 3 perguntas fáceis!",
+    "es": "¡Responde y desbloquea!\nEl anunciante quiere confirmar que eres real.\n🎁 ¡Pasa el quiz para desbloquear el retiro!\n👉 ¡Empieza, solo 3 preguntas fáciles!",
+    "ja": "回答して解除！\n広告主が本人確認を行います。\n🎁 クイズに合格して出金を解除！\n👉 簡単な3問に挑戦！",
+    "ru": "Ответьте и разблокируйте!\nРекламодатель проверяет, что вы реальный пользователь.\n🎁 Пройдите тест, чтобы открыть вывод!\n👉 Всего 3 простых вопроса!",
+    "de": "Antworten und freischalten!\nDer Werbetreibende prüft, ob Sie echt sind.\n🎁 Quiz bestehen und Auszahlung freischalten!\n👉 Nur 3 einfache Fragen!",
+    "fr": "Répondez et débloquez !\nL’annonceur vérifie que vous êtes réel.\n🎁 Réussissez le quiz pour débloquer le retrait !\n👉 Seulement 3 questions faciles !"
+  },
+  "Grow Your Pig, Grow Your Rewards": {
+    "id": "Besarkan Babi, Tingkatkan Hadiah",
+    "fil": "Palakihin ang Baboy, Palakihin ang Gantimpala",
+    "pt": "Crie seu porquinho, aumente os prêmios",
+    "es": "Cría tu cerdito, aumenta tus premios",
+    "ja": "ブタを育てて報酬アップ",
+    "ru": "Растите свинку и увеличивайте награды",
+    "de": "Schweinchen füttern, Prämien steigern",
+    "fr": "Faites grandir le cochon et vos récompenses"
+  },
+  "We Partner With Advertisers — You Earn The Rewards": {
+    "id": "Kami bermitra dengan pengiklan, Anda mendapat hadiah",
+    "fil": "Kasama namin ang mga advertiser, sa iyo ang gantimpala",
+    "pt": "Trabalhamos com anunciantes, você ganha os prêmios",
+    "es": "Trabajamos con anunciantes, tú ganas los premios",
+    "ja": "広告主と提携し、あなたに報酬を届けます",
+    "ru": "Мы работаем с рекламодателями, а вы получаете награды",
+    "de": "Wir arbeiten mit Werbetreibenden, Sie erhalten die Prämien",
+    "fr": "Nous travaillons avec des annonceurs, vous gagnez les récompenses"
+  },
+  "Where Does The Ad Money Really Go?": {
+    "id": "Ke mana sebenarnya uang iklan pergi?",
+    "fil": "Saan talaga napupunta ang pera ng ad?",
+    "pt": "Para onde vai o dinheiro dos anúncios?",
+    "es": "¿Adónde va el dinero de los anuncios?",
+    "ja": "広告収入はどこへ行くの？",
+    "ru": "Куда идут деньги от рекламы?",
+    "de": "Wohin fließt das Werbegeld?",
+    "fr": "Où va l’argent de la publicité ?"
+  },
+  "Advertisers Pay And We Save With You": {
+    "id": "Pengiklan membayar, kami menabung bersama Anda",
+    "fil": "Nagbabayad ang advertiser, nag-iipon tayo",
+    "pt": "Os anunciantes pagam e nós poupamos com você",
+    "es": "Los anunciantes pagan y ahorramos contigo",
+    "ja": "広告主の支払いを一緒に貯めよう",
+    "ru": "Рекламодатели платят, мы копим вместе с вами",
+    "de": "Werbetreibende zahlen, wir sparen mit Ihnen",
+    "fr": "Les annonceurs paient et nous épargnons avec vous"
+  },
+  "Advertiser Approved + Bonus Unlocked!": {
+    "id": "Disetujui Pengiklan + Bonus Terbuka!",
+    "fil": "Aprubado ng Advertiser + Bukas na ang Bonus!",
+    "pt": "Aprovado pelo anunciante + Bônus liberado!",
+    "es": "¡Aprobado por el anunciante + Bono desbloqueado!",
+    "ja": "広告主承認＋ボーナス解除！",
+    "ru": "Одобрено рекламодателем + Бонус открыт!",
+    "de": "Vom Werbetreibenden genehmigt + Bonus freigeschaltet!",
+    "fr": "Approuvé par l’annonceur + Bonus débloqué !"
+  },
+  "Your Growth Journey Starts Now": {
+    "id": "Perjalanan Anda Dimulai Sekarang",
+    "fil": "Simula Na ng Iyong Pag-unlad",
+    "pt": "Sua jornada de crescimento começa agora",
+    "es": "Tu camino de crecimiento empieza ahora",
+    "ja": "成長の旅が今始まる",
+    "ru": "Ваш путь роста начинается сейчас",
+    "de": "Ihre Wachstumsreise beginnt jetzt",
+    "fr": "Votre parcours commence maintenant"
+  },
+  "Pick Your Mood, Start Your Quiz": {
+    "id": "Pilih Suasana Hati, Mulai Kuis",
+    "fil": "Piliin ang Mood, Simulan ang Quiz",
+    "pt": "Escolha seu humor e comece o quiz",
+    "es": "Elige tu ánimo y empieza el quiz",
+    "ja": "気分を選んでクイズ開始",
+    "ru": "Выберите настроение и начните тест",
+    "de": "Stimmung wählen und Quiz starten",
+    "fr": "Choisissez votre humeur et lancez le quiz"
+  },
+  "Mood Quiz": {
+    "id": "Kuis Suasana Hati",
+    "fil": "Mood Quiz",
+    "pt": "Quiz de humor",
+    "es": "Quiz de ánimo",
+    "ja": "気分クイズ",
+    "ru": "Тест настроения",
+    "de": "Stimmungsquiz",
+    "fr": "Quiz d’humeur"
+  },
+  "Unlock Payout": {
+    "id": "Buka Penarikan",
+    "fil": "I-unlock ang Payout",
+    "pt": "Liberar saque",
+    "es": "Desbloquear retiro",
+    "ja": "出金を解除",
+    "ru": "Открыть выплату",
+    "de": "Auszahlung freischalten",
+    "fr": "Débloquer le retrait"
+  },
+  "Processing": {
+    "id": "Diproses",
+    "fil": "Pinoproseso",
+    "pt": "Processando",
+    "es": "Procesando",
+    "ja": "処理中",
+    "ru": "Обработка",
+    "de": "In Bearbeitung",
+    "fr": "En cours"
+  },
+  "In Queue": {
+    "id": "Dalam Antrean",
+    "fil": "Nasa Pila",
+    "pt": "Na fila",
+    "es": "En la fila",
+    "ja": "順番待ち",
+    "ru": "В очереди",
+    "de": "In Warteschlange",
+    "fr": "Dans la file"
+  },
+  "Show Pig": {
+    "id": "Lihat Babi",
+    "fil": "Tingnan ang Baboy",
+    "pt": "Ver porquinho",
+    "es": "Ver cerdito",
+    "ja": "ブタを見る",
+    "ru": "Показать свинку",
+    "de": "Schwein zeigen",
+    "fr": "Voir le cochon"
+  },
+  "Keep Answer, Speed Cash": {
+    "id": "Terus Jawab, Percepat Penarikan",
+    "fil": "Sagot Pa, Pabilisin ang Payout",
+    "pt": "Continue respondendo, acelere o saque",
+    "es": "Sigue respondiendo, acelera el retiro",
+    "ja": "回答を続けて出金を早めよう",
+    "ru": "Отвечайте дальше для быстрой выплаты",
+    "de": "Weiter antworten, schneller auszahlen",
+    "fr": "Continuez à répondre pour retirer plus vite"
+  },
+  "{p0} Secured In Your Diamond Pig!": {
+    "id": "{p0} tersimpan dalam Babi Berlian!",
+    "fil": "Nakatabi ang {p0} sa Diyamanteng Baboy!",
+    "pt": "{p0} garantidos no Porquinho de Diamante!",
+    "es": "¡{p0} asegurados en tu Cerdito de Diamante!",
+    "ja": "ダイヤのブタに{p0}を確保！",
+    "ru": "{p0} в вашей Алмазной свинке!",
+    "de": "{p0} in Ihrem Diamantschwein gesichert!",
+    "fr": "{p0} assurés dans votre Cochon de diamant !"
+  },
+  "Super Easy Cash Today!": {
+    "id": "Uang Mudah Hari Ini!",
+    "fil": "Madaling Kita Ngayon!",
+    "pt": "Dinheiro fácil hoje!",
+    "es": "¡Dinero fácil hoy!",
+    "ja": "今日も簡単に報酬獲得！",
+    "ru": "Лёгкий заработок сегодня!",
+    "de": "Heute einfach Geld verdienen!",
+    "fr": "Gagnez facilement aujourd’hui !"
+  },
+  "Your Pig": {
+    "id": "Babi Anda",
+    "fil": "Baboy Mo",
+    "pt": "Seu porquinho",
+    "es": "Tu cerdito",
+    "ja": "あなたのブタ",
+    "ru": "Ваша свинка",
+    "de": "Ihr Schweinchen",
+    "fr": "Votre cochon"
+  },
+  "Gold Pig": {
+    "id": "Babi Emas",
+    "fil": "Gintong Baboy",
+    "pt": "Porquinho de Ouro",
+    "es": "Cerdito Dorado",
+    "ja": "金のブタ",
+    "ru": "Золотая свинка",
+    "de": "Goldschwein",
+    "fr": "Cochon d’or"
+  },
+  "Great! You Are The Next To Cash Out!": {
+    "id": "Hebat! Giliran Anda Menarik Uang!",
+    "fil": "Magaling! Ikaw na ang Susunod na Mag-withdraw!",
+    "pt": "Ótimo! Você é o próximo a sacar!",
+    "es": "¡Genial! ¡Eres el siguiente en retirar!",
+    "ja": "やった！次はあなたが出金する番！",
+    "ru": "Отлично! Вы следующий на выплату!",
+    "de": "Super! Sie sind als Nächstes dran!",
+    "fr": "Super ! Vous êtes le prochain à retirer !"
+  },
+  "Recent Quiz Rankings": {
+    "id": "Peringkat Kuis Terbaru",
+    "fil": "Pinakabagong Ranggo sa Quiz",
+    "pt": "Ranking recente do quiz",
+    "es": "Clasificación reciente del quiz",
+    "ja": "最近のクイズ順位",
+    "ru": "Последний рейтинг викторины",
+    "de": "Aktuelle Quiz-Rangliste",
+    "fr": "Classement récent du quiz"
+  },
+  "You Watched. They Earned.": {
+    "id": "Anda Menonton. Mereka Menghasilkan.",
+    "fil": "Nanood Ka. Sila ang Kumita.",
+    "pt": "Você assistiu. Eles ganharam.",
+    "es": "Tú miraste. Ellos ganaron.",
+    "ja": "あなたが視聴、収益は広告主へ。",
+    "ru": "Вы смотрели. Они заработали.",
+    "de": "Sie sahen zu. Andere verdienten.",
+    "fr": "Vous regardiez. Ils gagnaient."
+  },
+  "Watch Ad = Real Money": {
+    "id": "Tonton Iklan = Uang Nyata",
+    "fil": "Manood ng Ad = Tunay na Pera",
+    "pt": "Assistir anúncio = Dinheiro real",
+    "es": "Ver anuncios = Dinero real",
+    "ja": "広告視聴＝報酬",
+    "ru": "Просмотр рекламы = Деньги",
+    "de": "Werbung ansehen = Echtes Geld",
+    "fr": "Voir une publicité = De l’argent"
+  },
+  "More Fun": {
+    "id": "Lebih Seru",
+    "fil": "Mas Masaya",
+    "pt": "Mais diversão",
+    "es": "Más diversión",
+    "ja": "もっと楽しむ",
+    "ru": "Больше игр",
+    "de": "Mehr Spaß",
+    "fr": "Plus de jeux"
+  },
+  "Top Earning Pigs (Refresh At 0:00 Every Day)": {
+    "id": "Babi Penghasil Teratas (Diperbarui Setiap 00:00)",
+    "fil": "Mga Nangungunang Baboy (Ina-update sa 00:00)",
+    "pt": "Porquinhos com mais ganhos (Atualiza às 00:00)",
+    "es": "Cerditos con más ganancias (Se actualiza a las 00:00)",
+    "ja": "高収益のブタ（毎日0時更新）",
+    "ru": "Самые доходные свинки (Обновление в 00:00)",
+    "de": "Top-Schweinchen (Täglich um 00:00 aktualisiert)",
+    "fr": "Cochons les plus rentables (Actualisé à 00:00)"
+  },
+  "Spin": {
+    "id": "Putar",
+    "fil": "Ikot",
+    "pt": "Girar",
+    "es": "Girar",
+    "ja": "スピン",
+    "ru": "Крутить",
+    "de": "Drehen",
+    "fr": "Tourner"
+  },
+  "Lucky Bag": {
+    "id": "Kantong Keberuntungan",
+    "fil": "Masuwerteng Bag",
+    "pt": "Saco da sorte",
+    "es": "Bolsa de suerte",
+    "ja": "ラッキーバッグ",
+    "ru": "Мешок удачи",
+    "de": "Glücksbeutel",
+    "fr": "Sac chanceux"
+  },
+  "Cash Bag": {
+    "id": "Kantong Uang",
+    "fil": "Bag ng Pera",
+    "pt": "Saco de dinheiro",
+    "es": "Bolsa de dinero",
+    "ja": "報酬バッグ",
+    "ru": "Мешок денег",
+    "de": "Geldbeutel",
+    "fr": "Sac d’argent"
+  }
+}

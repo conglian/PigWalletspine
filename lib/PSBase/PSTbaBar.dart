@@ -1,5 +1,8 @@
+import '../PSTool/PSArtwork.dart';
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:piggywalletspinearn/PSHome/PSHome.dart';
 import 'package:piggywalletspinearn/PSHome/PSQuiz.dart';
@@ -15,6 +18,9 @@ import '../PSTool/ps_extension_help.dart';
 class PigTabController {
   PigTabController._();
 
+  static const int wheelIndex = 2;
+  static final LayerLink wheelIconLink = LayerLink();
+
   /// 当前选中的 tab
   static final ValueNotifier<int> currentIndex = ValueNotifier<int>(0);
 
@@ -23,7 +29,9 @@ class PigTabController {
     currentIndex.value = index;
   }
 }
-final GlobalKey<_PigBottomExampleState> homeKey = GlobalKey<_PigBottomExampleState>();
+
+final GlobalKey<_PigBottomExampleState> homeKey =
+    GlobalKey<_PigBottomExampleState>();
 
 class PigBottomExample extends StatefulWidget {
   const PigBottomExample({Key? key}) : super(key: key);
@@ -38,7 +46,12 @@ class _PigBottomExampleState extends State<PigBottomExample> {
 
   final List<Widget> _screens = const [PSHome(), PSQuiz(), PSWheel()];
 
-  final List<Widget> _screenbs = const [PSPigHome(), PSPigQuiz(), PSPigWheel(), PSPigCash()];
+  final List<Widget> _screenbs = const [
+    PSPigHome(),
+    PSPigQuiz(),
+    PSPigWheel(),
+    PSPigCash(),
+  ];
 
   @override
   void initState() {
@@ -66,35 +79,36 @@ class _PigBottomExampleState extends State<PigBottomExample> {
           return CustomNavBarWidget(
             [
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_home_icon'.image()),
-                inactiveIcon: Image.asset('ps_home_icon'.image()),
-                title: 'Earn',
+                icon: Image(image: PSArtwork.provider('ps_home_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_home_icon')),
+                title: PSLocale.tr("Earn"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_quiz_icon'.image()),
-                inactiveIcon: Image.asset('ps_quiz_icon'.image()),
-                title: 'Quiz',
+                icon: Image(image: PSArtwork.provider('ps_quiz_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_quiz_icon')),
+                title: PSLocale.tr("Quiz"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_wheel_icon'.image()),
-                inactiveIcon: Image.asset('ps_wheel_icon'.image()),
-                title: 'Wheel',
+                icon: Image(image: PSArtwork.provider('ps_wheel_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_wheel_icon')),
+                title: PSLocale.tr("Wheel"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_cash_icon'.image()),
-                inactiveIcon: Image.asset('ps_cash_icon'.image()),
-                title: 'Cash',
+                icon: Image(image: PSArtwork.provider('ps_cash_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_cash_icon')),
+                title: PSLocale.tr("Cash"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
             ],
             selectedIndex: index,
+            wheelIconLink: PigTabController.wheelIconLink,
 
             /// ✅ 不再 setState
             onItemSelected: (i) {
@@ -104,23 +118,23 @@ class _PigBottomExampleState extends State<PigBottomExample> {
           return CustomNavBarWidget(
             [
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_home_icon'.image()),
-                inactiveIcon: Image.asset('ps_home_icon'.image()),
-                title: 'Piggy',
+                icon: Image(image: PSArtwork.provider('ps_home_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_home_icon')),
+                title: PSLocale.tr("Piggy"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_quiz_icon'.image()),
-                inactiveIcon: Image.asset('ps_quiz_icon'.image()),
-                title: 'Quiz',
+                icon: Image(image: PSArtwork.provider('ps_quiz_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_quiz_icon')),
+                title: PSLocale.tr("Quiz"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
               PersistentBottomNavBarItem(
-                icon: Image.asset('ps_wheel_icon'.image()),
-                inactiveIcon: Image.asset('ps_wheel_icon'.image()),
-                title: 'Wheel',
+                icon: Image(image: PSArtwork.provider('ps_wheel_icon')),
+                inactiveIcon: Image(image: PSArtwork.provider('ps_wheel_icon')),
+                title: PSLocale.tr("Wheel"),
                 activeColorPrimary: Colors.transparent,
                 inactiveColorPrimary: Colors.transparent,
               ),
@@ -143,12 +157,17 @@ class CustomNavBarWidget extends StatefulWidget {
     this.items, {
     required this.selectedIndex,
     required this.onItemSelected,
+    this.wheelIconLink,
     Key? key,
   }) : super(key: key);
+
+  static const Size iconSize = Size(56, 54);
+  static const Color _bottomBackground = Color(0xFF0D3F83);
 
   final int selectedIndex;
   final List<PersistentBottomNavBarItem> items;
   final ValueChanged<int> onItemSelected;
+  final LayerLink? wheelIconLink;
 
   @override
   State<CustomNavBarWidget> createState() => _CustomNavBarWidgetState();
@@ -158,10 +177,14 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final bar = DecoratedBox(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(widget.items.length == 3 ? 'ps_tabbar_bg'.image() : 'ps_pig_tab_bg'.image()),
+          image: AssetImage(
+            widget.items.length == 3
+                ? 'ps_tabbar_bg'.image()
+                : 'ps_pig_tab_bg'.image(),
+          ),
           fit: BoxFit.fill,
         ),
       ),
@@ -176,16 +199,43 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
             return Expanded(
               child: ParticleButton(
                 onTap: () => widget.onItemSelected(index),
-                child: _buildItem(item, isSelected),
+                child: _buildItem(
+                  item,
+                  isSelected,
+                  iconLink: index == PigTabController.wheelIndex
+                      ? widget.wheelIconLink
+                      : null,
+                ),
               ),
             );
           }),
         ),
       ),
     );
+
+    // Keep tab controls above the gesture inset while painting behind it.
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        systemNavigationBarColor: CustomNavBarWidget._bottomBackground,
+        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarContrastEnforced: false,
+      ),
+      child: ColoredBox(
+        color: CustomNavBarWidget._bottomBackground,
+        child: SafeArea(top: false, child: bar),
+      ),
+    );
   }
 
-  Widget _buildItem(PersistentBottomNavBarItem item, bool isSelected) {
+  Widget _buildItem(
+    PersistentBottomNavBarItem item,
+    bool isSelected, {
+    LayerLink? iconLink,
+  }) {
+    final icon = SizedBox.fromSize(
+      size: CustomNavBarWidget.iconSize,
+      child: isSelected ? item.icon : item.inactiveIcon,
+    );
     return SizedBox(
       height: 81,
       child: Stack(
@@ -216,11 +266,9 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
               scale: isSelected ? 1.1 : 1.0,
               duration: const Duration(milliseconds: 500),
               curve: Curves.elasticOut,
-              child: SizedBox(
-                width: 56,
-                height: 54,
-                child: isSelected ? item.icon : item.inactiveIcon,
-              ),
+              child: iconLink == null
+                  ? icon
+                  : CompositedTransformTarget(link: iconLink, child: icon),
             ),
           ),
 

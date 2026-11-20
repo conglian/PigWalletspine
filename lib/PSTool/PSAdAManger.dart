@@ -1,3 +1,4 @@
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:developer';
 import 'dart:math';
 import 'package:applovin_max/applovin_max.dart';
@@ -107,7 +108,7 @@ class PSAdAHelper {
     }
 
     "pigwalletspinearn Reward request to show no cache!}".log();
-    PSDialogTool.toast(content, 'Ad Loading Failed, Please Try Again Later~');
+    PSDialogTool.toast(content, PSLocale.tr("Ad Loading Failed, Please Try Again Later~"));
     load();
     hasCache(false);
   }

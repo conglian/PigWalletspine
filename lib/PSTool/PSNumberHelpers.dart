@@ -36,25 +36,6 @@ class PSNumberHelpers {
     "PigWallets int model = ${intModel?.eqRange}".log();
   }
 
-  Future<void> updateBrazilianPortuguese(BuildContext context) async {
-    if (isBrazilianPortuguese(context)){
-      String jsonString = await rootBundle.loadString("gp152_pig_number".jsons());
-      Map<String, dynamic> jsonMap = json.decode(jsonString);
-      jsonMap['eq_range'] = [(intModel!.eqRange.first * 5).toInt(), (intModel!.eqRange[1] * 5).toInt(),(intModel!.eqRange[2] * 5).toInt(),(intModel!.eqRange.last * 5).toInt()];
-      intModel = AppConfig.fromJson(jsonMap);
-      "PigWallets int jsonMap = ${jsonMap}".log();
-      "PigWallets int model = ${intModel?.eqRange}".log();
-    }
-  }
-
-  bool isBrazilianPortuguese(BuildContext context) {
-    // 获取当前语言环境
-    Locale currentLocale = Localizations.localeOf(context);
-
-    // 判断是否是巴西葡萄牙语
-    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
-  }
-
   Future<void> _psloadtaskDataFromLocate() async {
     // String jsonString = await rootBundle.loadString("c130_withdraw_task".jsons());
     // Map<String, dynamic> jsonMap = json.decode(jsonString);

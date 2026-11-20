@@ -15,7 +15,6 @@ class PSGuideManager {
   static const int totalSteps = 14;
   static const int currentVersion = 1;
 
-
   /// 获取当前状态
   static Future<GuideState> getState() async {
     final prefs = await SharedPreferences.getInstance();
@@ -31,10 +30,7 @@ class PSGuideManager {
     final step = prefs.getInt(_stepKey) ?? 0;
     final finished = prefs.getBool(_finishedKey) ?? false;
 
-    return GuideState(
-      currentStep: step,
-      finished: finished,
-    );
+    return GuideState(currentStep: step, finished: finished);
   }
 
   // 外部调用显示引导
@@ -45,48 +41,38 @@ class PSGuideManager {
       case 0:
         Navigator.pushReplacement(
           contexts,
-          MaterialPageRoute(
-            builder: (_) => PSGuideNew1Dialog(),
-          ),
+          MaterialPageRoute(builder: (_) => PSGuideNew1Dialog()),
         );
         break;
       case 1:
         Navigator.pushReplacement(
           contexts,
-          MaterialPageRoute(
-            builder: (_) => PSGuideNew2Dialog(),
-          ),
+          MaterialPageRoute(builder: (_) => PSGuideNew2Dialog()),
         );
         break;
       case 2:
         Navigator.pushReplacement(
           contexts,
-          MaterialPageRoute(
-            builder: (_) => PSGuideNew3Dialog(),
-          ),
+          MaterialPageRoute(builder: (_) => PSGuideNew3Dialog()),
         );
         break;
       case 3:
         Navigator.pushReplacement(
           contexts,
-          MaterialPageRoute(
-            builder: (_) => PigBottomExample(key: homeKey),
-          ),
+          MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
         );
-        Future.delayed(Duration(seconds: 1),(){
+        Future.delayed(Duration(seconds: 1), () {
           homeKey.currentContext!.tipShow2(PSGuideNew4Dialog());
         });
         break;
       case 4:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow2(PSGuideNew5Dialog());
           });
         } else {
@@ -94,15 +80,13 @@ class PSGuideManager {
         }
         break;
       case 5:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow(PSGuideNew6Dialog());
           });
         } else {
@@ -110,15 +94,13 @@ class PSGuideManager {
         }
         break;
       case 6:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow(PSGuideNew7Dialog());
           });
         } else {
@@ -126,15 +108,13 @@ class PSGuideManager {
         }
         break;
       case 7:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow(PSGuideNew8Dialog());
           });
         } else {
@@ -142,15 +122,13 @@ class PSGuideManager {
         }
         break;
       case 8:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow(PSGuideNew9Dialog());
           });
         } else {
@@ -158,39 +136,37 @@ class PSGuideManager {
         }
         break;
       case 9:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
-            Navigator.push(homeKey.currentContext!,
-                MaterialPageRoute(
-                  builder: (_) => PSGuideNew10Dialog(showToast: false),
-                )
+          Future.delayed(Duration(seconds: 1), () {
+            Navigator.push(
+              homeKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => PSGuideNew10Dialog(showToast: false),
+              ),
             );
           });
         } else {
-          Navigator.push(contexts,
+          Navigator.push(
+            contexts,
             MaterialPageRoute(
               builder: (_) => PSGuideNew10Dialog(showToast: false),
-            )
+            ),
           );
         }
         break;
       case 10:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow(PSGuideNew11Dialog());
           });
         } else {
@@ -198,15 +174,13 @@ class PSGuideManager {
         }
         break;
       case 11:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow(PSGuideNew12Dialog(is_old: false));
           });
         } else {
@@ -214,15 +188,13 @@ class PSGuideManager {
         }
         break;
       case 12:
-        if (homeKey.currentContext == null){
+        if (homeKey.currentContext == null) {
           // 冷启动需要多处理一步
           Navigator.pushReplacement(
             contexts,
-            MaterialPageRoute(
-              builder: (_) => PigBottomExample(key: homeKey),
-            ),
+            MaterialPageRoute(builder: (_) => PigBottomExample(key: homeKey)),
           );
-          Future.delayed(Duration(seconds: 1),(){
+          Future.delayed(Duration(seconds: 1), () {
             homeKey.currentContext!.tipShow2(PSGuideNew13Dialog());
           });
         } else {
@@ -269,13 +241,9 @@ class PSGuideManager {
   }
 }
 
-
 class GuideState {
   final int currentStep;
   final bool finished;
 
-  GuideState({
-    required this.currentStep,
-    required this.finished,
-  });
+  GuideState({required this.currentStep, required this.finished});
 }

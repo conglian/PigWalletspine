@@ -1,3 +1,5 @@
+import 'PSArtwork.dart';
+import 'PSLocale.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 
@@ -19,10 +21,15 @@ class PSImg extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var p = "$name".image();
-    return Image.asset(
-      p,
-      fit: fit,
+    final index = PSLocale.paymentImageIndex(name);
+    if (index != null && PSLocale.paymentAsset(index) == null) {
+      return SizedBox(width: size ?? width, height: size ?? height,
+        child: FittedBox(fit: BoxFit.scaleDown, child: Text(PSLocale.payment(index),
+          style: const TextStyle(color: Color(0xFF0079C1), fontWeight: FontWeight.w900))));
+    }
+    return Image(
+      image: PSArtwork.provider(name),
+      fit: index != null ? BoxFit.contain : fit,
       width: size ?? width,
       height: size ?? height,
     );
@@ -30,8 +37,7 @@ class PSImg extends StatelessWidget {
 }
 
 DecorationImage PSDImg(String name, {BoxFit fit = BoxFit.fill}) {
-  var p = "$name".image();
-  return DecorationImage(image: AssetImage(p), fit: fit);
+  return DecorationImage(image: PSArtwork.provider(name), fit: fit);
 }
 
 Offset getWidgetLocal(BuildContext context) {
@@ -135,8 +141,8 @@ class _PSBouncyImageState extends State<PSBouncyImage>
   Widget build(BuildContext context) {
     // ❌ 如果动画关闭，直接返回静态图片
     if (!widget.enableAnimation) {
-      return Image.asset(
-        widget.imagePath.image(),
+      return Image(
+        image: PSArtwork.provider(widget.imagePath),
         width: widget.width,
         height: widget.height,
       );
@@ -145,8 +151,8 @@ class _PSBouncyImageState extends State<PSBouncyImage>
     // ✅ 启用动画时，应用缩放效果
     return ScaleTransition(
       scale: _scale,
-      child: Image.asset(
-        widget.imagePath.image(),
+      child: Image(
+        image: PSArtwork.provider(widget.imagePath),
         width: widget.width,
         height: widget.height,
       ),

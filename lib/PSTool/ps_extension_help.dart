@@ -1,3 +1,4 @@
+import 'PSLocale.dart';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
@@ -16,7 +17,7 @@ extension PigWalletSpinearnExtension on String {
   }
 
   String image() {
-    return "assets/images/$this.webp";
+    return "assets/images/${PSLocale.resolveImage(this)}.webp";
   }
 
   String files() {
@@ -58,11 +59,7 @@ void printLongString(String text) {
 extension ScreenExtension on int {
 
   String dolasType(){
-    // if (isBrazilianPortuguese(homeKey.currentContext!)){
-    //   return 'R\$';
-    // } else {
-      return '\$';
-    // }
+    return PSLocale.current.symbol;
   }
 
   bool isBrazilianPortuguese(BuildContext context) {
@@ -70,7 +67,7 @@ extension ScreenExtension on int {
     Locale currentLocale = Localizations.localeOf(context);
 
     // 判断是否是巴西葡萄牙语
-    return currentLocale.languageCode == 'pt' || currentLocale.countryCode == 'BR';
+    return PSLocale.current.country == 'BR';
   }
 
   double width(BuildContext context) {
@@ -86,7 +83,7 @@ extension ScreenExtension on int {
   }
 
   double safeBottom(BuildContext context) {
-    return MediaQuery.of(context).padding.top;
+    return MediaQuery.of(context).padding.bottom;
   }
 
   String to2SelfString() {

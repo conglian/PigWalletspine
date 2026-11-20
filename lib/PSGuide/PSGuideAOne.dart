@@ -1,3 +1,4 @@
+import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
@@ -94,7 +95,9 @@ class _PSGuideOneState extends State<PSGuideOne>
                       children: [
                         SizedBox(height: 40),
                         PSText(
-                          text: 'Answer fun quizzes to collect diamonds.',
+                          text: PSLocale.tr(
+                            "Answer fun quizzes to collect diamonds.",
+                          ),
                           size: 14,
                           color: '#11407A'.color(),
                           weight: FontWeight.w900,
@@ -104,8 +107,9 @@ class _PSGuideOneState extends State<PSGuideOne>
                           width: 303,
                           height: 34,
                           child: PSText(
-                            text:
-                                'Every diamond helps your Piggy level up — all the way to the Gold Pig!',
+                            text: PSLocale.tr(
+                              "Every diamond helps your Piggy level up — all the way to the Gold Pig!",
+                            ),
                             size: 14,
                             color: '#962929'.color(),
                             weight: FontWeight.w900,
@@ -133,7 +137,7 @@ class _PSGuideOneState extends State<PSGuideOne>
                       decoration: BoxDecoration(image: PSDImg('ps_green_btn')),
                       child: Center(
                         child: PSStrokeText(
-                          text: 'Got It',
+                          text: PSLocale.tr("Got It"),
                           size: 24,
                           color: '#FFFFFF'.color(),
                           weight: FontWeight.w900,

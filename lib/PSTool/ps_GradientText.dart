@@ -1,3 +1,5 @@
+import 'PSLocale.dart';
+import 'PSResponsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,20 +34,15 @@ class PSGradientText extends StatelessWidget {
       shaderCallback: (bounds) => gradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
+      child: PSFitText(
+        span: TextSpan(text: PSLocale.tr(text), style: TextStyle(
           fontWeight: FontWeight.w700,
-          fontSize: fontSize,
-          fontFamily: 'Black_mianfeiziti',
-          color: Colors.white, // 必须为白色，否则渐变不会生效
-        ),
-        textAlign: textAlign,
-        textDirection: textDirection,
-        overflow: overflow,
-        softWrap: softWrap,
+          fontSize: fontSize * (textScaleFactor ?? 1),
+          fontFamily: 'Black_mianfeiziti', fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+          color: Colors.white,
+        )),
+        align: textAlign ?? TextAlign.start,
         maxLines: maxLines,
-        textScaleFactor: textScaleFactor,
       ),
     );
   }
@@ -73,105 +70,15 @@ class PSGradientStrokeText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      height: height,
-      child: CustomPaint(
-        painter: _PSGradientStrokeTextPainter(
-          text: text,
-          gradientColors: gradientColors,
-          strokeColor: strokeColor,
-          strokeWidth: strokeWidth,
-          fontSizes: fontSize,
-        ),
-      ),
-    );
+    final localized = PSLocale.tr(text);
+    final style = TextStyle(fontSize: fontSize.toDouble(), fontWeight: FontWeight.bold,
+        fontFamily: 'Black_mianfeiziti', fontFamilyFallback: const ['PSFallback', 'PSJapanese'], height: 1.15);
+    return SizedBox(width: width, height: height, child: Stack(alignment: Alignment.center, children: [
+      PSFitText(span: TextSpan(text: localized, style: style.copyWith(foreground: Paint()
+        ..style = PaintingStyle.stroke ..strokeWidth = strokeWidth ..color = strokeColor)), align: TextAlign.center),
+      ShaderMask(blendMode: BlendMode.srcIn,
+        shaderCallback: (bounds) => LinearGradient(colors: gradientColors).createShader(bounds),
+        child: PSFitText(span: TextSpan(text: localized, style: style.copyWith(color: Colors.white)), align: TextAlign.center)),
+    ]));
   }
-}
-
-class _PSGradientStrokeTextPainter extends CustomPainter {
-  final String text;
-  final List<Color> gradientColors;
-  final Color strokeColor;
-  final double strokeWidth;
-  final int fontSizes;
-
-  _PSGradientStrokeTextPainter({
-    required this.text,
-    required this.gradientColors,
-    required this.strokeColor,
-    required this.strokeWidth,
-    required this.fontSizes,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final baseStyle = TextStyle(
-      fontSize: fontSizes.toDouble(),
-      fontWeight: FontWeight.bold,
-      fontFamily: 'Black_mianfeiziti',
-      color: Colors.white,
-    );
-
-    // 文字布局
-    final textSpan = TextSpan(text: text, style: baseStyle);
-    final textPainter = TextPainter(
-      text: textSpan,
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    )..layout();
-
-    // 居中绘制 offset
-    final offset = Offset(
-      (size.width - textPainter.width) / 2,
-      (size.height - textPainter.height) / 2,
-    );
-
-    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-
-    // 描边
-    final strokePaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
-      ..color = strokeColor
-      ..isAntiAlias = true;
-
-    final strokeTextSpan = TextSpan(
-      text: text,
-      style: baseStyle.copyWith(foreground: strokePaint),
-    );
-
-    final strokeTextPainter = TextPainter(
-      text: strokeTextSpan,
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    )..layout();
-
-    strokeTextPainter.paint(canvas, offset);
-
-    // 渐变填充
-    final fillPaint = Paint()
-      ..shader = LinearGradient(
-        colors: gradientColors,
-        begin: Alignment.centerLeft,
-        end: Alignment.centerRight,
-      ).createShader(rect)
-      ..isAntiAlias = true;
-
-    final fillTextSpan = TextSpan(
-      text: text,
-      style: baseStyle.copyWith(foreground: fillPaint),
-    );
-
-    final fillTextPainter = TextPainter(
-      text: fillTextSpan,
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr,
-    )..layout();
-
-    fillTextPainter.paint(canvas, offset);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
