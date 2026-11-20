@@ -1,7 +1,61 @@
-*~
-# Xcode
+# 系统文件、编辑器和日志
 .DS_Store
-/build/
+._*
+Thumbs.db
+Desktop.ini
+*~
+*.swp
+*.swo
+*.log
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Flutter 和 Dart 依赖缓存、生成文件
+.dart_tool/
+.pub-cache/
+.pub/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.fvm/
+**/doc/api/
+/coverage/
+
+# 构建产物和调试符号
+build/
+*.apk
+*.aab
+*.apks
+*.idsig
+*.ipa
+*.xcarchive/
+*.xcresult/
+*.dSYM/
+*.dSYM.zip
+app.*.symbols
+app.*.map.json
+
+# Android 和 Gradle 本地文件
+.gradle/
+.kotlin/
+.cxx/
+.externalNativeBuild/
+local.properties
+.local.properties
+/android/captures/
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
+GeneratedPluginRegistrant.java
+*.hprof
+
+# Xcode、CocoaPods 和 SwiftPM 本地文件
+DerivedData/
+xcuserdata/
+*.xcuserstate
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -10,48 +64,44 @@
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata
-profile
 *.moved-aside
-DerivedData
-.idea/
 *.hmap
 *.xccheckout
-*.xcworkspace
-!default.xcworkspace
-#CocoaPods
-Pods
-!Podfile
-# 最好也忽略Podfile.lock
-# !Podfile.lock
-.DS_Store
-# 构建产物
-/build/
+*.xcscmblueprint
+Pods/
+.symlinks/
+.swiftpm/
+.build/
+/.bundle/
+/vendor/bundle/
+/ios/Runner.xcworkspace/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/App.framework/
+**/ios/Flutter/Flutter.framework/
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Runner/GeneratedPluginRegistrant.*
 
-# 本地开发配置
-.idea/
-.vscode/
-.DS_Store
-.gradle/
-.local.properties
-android/.gradle/
-android/app/build/
-android/build/
-ios/Flutter/Flutter.podspec
-ios/Pods/
-ios/.symlinks/
-ios/Flutter/Generated.xcconfig
-ios/Runner/GeneratedPluginRegistrant.*
-ios/Runner.xcworkspace/
-ios/Runner.xcodeproj/xcuserdata/
-
-# Dart 依赖缓存
-.dart_tool/
-.pub-cache/
-.pub/
-
-# 日志文件
-*.log
-
-# 本地配置文件
+# 本地环境配置和签名文件
 .env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+key.properties
+keystore.properties
+*.jks
+*.keystore
+*.p12
+*.pfx
+*.mobileprovision
+*.provisionprofile
+
+# 应用项目保留 pubspec.lock、Podfile 和 Podfile.lock
+# 如果团队明确要求忽略 CocoaPods 锁文件，取消下一行注释
+# /ios/Podfile.lock
