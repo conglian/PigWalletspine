@@ -127,6 +127,7 @@ extension ForegroundStyleInfomationMapper on ForegroundStyleInformation {
     ..addAll(<String, Object?>{
       'value': value,
       'image': image,
+      'logo': logo,
       'button': button,
     });
 }

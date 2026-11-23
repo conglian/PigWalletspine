@@ -107,9 +107,10 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                         ),
                         Positioned(
                           left: 48,
+                          right: 24,
                           top: 20,
                           child: PSFitText(
-                            align: TextAlign.center,
+                            align: TextAlign.start,
                             span: TextSpan(
                               style: TextStyle(
                                 fontSize: 16.0,
@@ -212,10 +213,10 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                     decoration: BoxDecoration(image: PSDImg('ps_guide_tip_bg')),
                     child: Column(
                       children: [
-                        SizedBox(height: 30),
+                        SizedBox(height: 21),
                         SizedBox(
                           width: 303,
-                          height: 34,
+                          height: 48,
                           child: PSText(
                             text: PSLocale.tr(
                               "Every quiz boosts your knowledge — and your Piggy’s evolution!",
@@ -223,7 +224,7 @@ class _PSGuideTwoState extends State<PSGuideTwo>
                             size: 14,
                             color: '#11407A'.color(),
                             weight: FontWeight.w900,
-                            maxLines: 2,
+                            maxLines: 3,
                             align: TextAlign.center,
                           ),
                         ),

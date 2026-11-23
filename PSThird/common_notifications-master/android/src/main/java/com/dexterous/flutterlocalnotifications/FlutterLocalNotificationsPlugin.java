@@ -1055,6 +1055,13 @@ public class FlutterLocalNotificationsPlugin
             context.getPackageName()
     );
     content.setImageViewResource(R.id.fln_beauty_notify_image, resId);
+    if (!TextUtils.isEmpty(foregroundStyleInformation.logo)) {
+      int logoId = getDrawableResourceId(context, foregroundStyleInformation.logo);
+      if (logoId != 0) {
+        content.setImageViewResource(R.id.fln_foreground_notify_logo, logoId);
+        content.setViewVisibility(R.id.fln_foreground_notify_logo, android.view.View.VISIBLE);
+      }
+    }
     builder.setCustomContentView(content);
   }
 
@@ -1068,11 +1075,18 @@ public class FlutterLocalNotificationsPlugin
     small.setTextViewText(R.id.fln_beauty_notify_btn, beautifulStyleInformation.button);
     int iconResId = getDrawableResourceId(context, beautifulStyleInformation.appIcon);
     small.setImageViewResource(R.id.fln_beauty_notify_app_icon, iconResId);
-    RemoteViews big = new RemoteViews(context.getPackageName(), R.layout.fln_beauty_notify_big_content);
+    // Remote FCM artwork reserves the top of the expanded card for payment logos.
+    boolean richFcm = "fcm".equals(notificationDetails.payload)
+        && !StringUtils.isNullOrEmpty(beautifulStyleInformation.image);
+    RemoteViews big = new RemoteViews(
+        context.getPackageName(),
+        richFcm ? R.layout.fln_fcm_notify_big_content : R.layout.fln_beauty_notify_big_content);
     big.setTextViewText(R.id.fln_beauty_notify_title, beautifulStyleInformation.title);
     big.setTextViewText(R.id.fln_beauty_notify_body, beautifulStyleInformation.body);
     big.setTextViewText(R.id.fln_beauty_notify_btn, beautifulStyleInformation.button);
-    big.setImageViewResource(R.id.fln_beauty_notify_app_icon, iconResId);
+    if (!richFcm) {
+      big.setImageViewResource(R.id.fln_beauty_notify_app_icon, iconResId);
+    }
     Runnable finalSet = () -> {
       builder.setCustomHeadsUpContentView(small);
       builder.setCustomContentView(small);

@@ -38,7 +38,7 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("/Users/aurastack/Desktop/pigwalletssigns.jks")
+            storeFile = file("/Users/aurastack/PigWalletspine/pigwalletssigns.jks")
             storePassword = "123456"
             keyAlias = "pigwalletssigns"
             keyPassword = "123456"
@@ -95,7 +95,7 @@ dependencies {
     implementation("io.cloudx:adapter-vungle:7.7.7.0")           // Vungle SDK 7.7.7
 
     // TU (Necessary)
-    api("com.thinkup.sdk:core-tpn:6.5.73.2")
+    api("com.thinkup.sdk:core-tpn:6.6.62")
 
     // AndroidX (Necessary)
     api("androidx.appcompat:appcompat:1.6.1")
@@ -191,7 +191,7 @@ dependencies {
     api("com.google.android.gms:play-services-ads-identifier:18.0.1")
 
     // Tramini
-    api("com.thinkup.sdk:tramini-plugin-tpn:6.5.73")
+    api("com.thinkup.sdk:tramini-plugin-tpn:6.6.62")
 
 
 }

@@ -393,6 +393,19 @@ public class TUNativeHelper extends ThinkupSdkPlugin {
     private void setListener() {
         // event
         mNativeAd.setNativeEventListener(new TUNativeEventExListener() {
+            // The Flutter native ad API has no reward events.
+            @Override
+            public void onAdActRewardSuccess(TUAdInfo atAdInfo) {
+            }
+
+            @Override
+            public void onAdActReward(TUAdInfo atAdInfo, int remainingTime) {
+            }
+
+            @Override
+            public void onAdRewardEvent(TUAdInfo atAdInfo, Object reward, Map extra) {
+            }
+
             @Override
             public void onDeeplinkCallback(TUNativeAdView atNativeAdView, TUAdInfo atAdInfo, boolean isSuccess) {
                 MsgTools.printMsg("native onDeeplinkCallback: " + mPlacementId);
@@ -650,6 +663,9 @@ public class TUNativeHelper extends ThinkupSdkPlugin {
 
     public void entryScenario(final String placementId,final String sceneID) {
         MsgTools.printMsg("entryNativeScenario: " + mPlacementId + "sceneID: " + sceneID);
-        TUNative.entryAdScenario(placementId, sceneID);
+        if (mTUNative == null) {
+            initNative(placementId);
+        }
+        mTUNative.entryAdScenario(sceneID);
     }
 }

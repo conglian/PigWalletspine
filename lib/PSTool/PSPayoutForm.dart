@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'PSLocale.dart';
@@ -23,7 +25,7 @@ class PSPaymentSelector extends StatelessWidget {
         final methods = PSLocale.current.payments;
         final columns = methods.length == 1 ? 1 : 2;
         final width = methods.length == 1
-            ? 157.0
+            ? min(157.0, constraints.maxWidth)
             : (constraints.maxWidth - 12 * (columns - 1)) / columns;
         return Wrap(
           alignment: methods.length == 1
@@ -140,6 +142,7 @@ class _PSPayoutFormState extends State<PSPayoutForm> {
           errorText: _errors.contains(id)
               ? PSLocale.tr('The format you entered is incorrect.')
               : null,
+          errorMaxLines: 3,
           filled: true,
           fillColor: const Color(0xFFF0F8FA),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
@@ -200,9 +203,11 @@ class _PSPayoutFormState extends State<PSPayoutForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          Stack(
+            alignment: Alignment.center,
             children: [
-              Expanded(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 48),
                 child: PSText(
                   text: PSLocale.tr('Confirm Payment Information'),
                   size: 20,
@@ -211,9 +216,13 @@ class _PSPayoutFormState extends State<PSPayoutForm> {
                   maxLines: 2,
                 ),
               ),
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.close),
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  tooltip: MaterialLocalizations.of(context).closeButtonLabel,
+                  icon: const Icon(Icons.close),
+                ),
               ),
             ],
           ),
@@ -242,6 +251,7 @@ class _PSPayoutFormState extends State<PSPayoutForm> {
               padding: const EdgeInsets.only(top: 16),
               child: DropdownButtonFormField<String>(
                 initialValue: _type,
+                isExpanded: true,
                 decoration: InputDecoration(
                   labelText: PSLocale.tr('Account Type:'),
                 ),
@@ -271,16 +281,18 @@ class _PSPayoutFormState extends State<PSPayoutForm> {
           ),
           const SizedBox(height: 24),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.verified_user_outlined,
                 color: Color(0xFF566D7E),
               ),
               const SizedBox(width: 8),
-              Expanded(
+              Flexible(
                 child: Text(
                   PSLocale.tr('Safe & Secure'),
                   style: const TextStyle(color: Color(0xFF566D7E)),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
@@ -312,9 +324,9 @@ class _PSPayoutFormState extends State<PSPayoutForm> {
           image: widget.fullScreen ? PSDImg('ps_tx_infos_bg') : null,
         ),
         child: SafeArea(
-          child: LayoutBuilder(
-            builder: (context, constraints) => SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+          child: SizedBox.expand(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
               child: Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 375),

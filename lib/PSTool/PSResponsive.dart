@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+const psFontFallback = ['PSFallback', 'PSJapanese', 'Noto Color Emoji'];
+
 /// 复用游戏的 375×812 设计坐标，在窄屏和短屏等比适配，大屏限制放大倍数。
 /// 键盘、安全区与点击坐标同步换算，弹窗与页面共用同一套尺寸。
 class PSResponsiveViewport extends StatelessWidget {
@@ -70,9 +72,9 @@ class PSFitText extends StatelessWidget {
       builder: (context, constraints) {
         final scaler = MediaQuery.textScalerOf(context);
         final effectiveSpan = TextSpan(
-          style: DefaultTextStyle.of(context).style.copyWith(
-            fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
-          ),
+          style: DefaultTextStyle.of(
+            context,
+          ).style.copyWith(fontFamilyFallback: psFontFallback),
           children: [span],
         );
         var scale = 1.0;

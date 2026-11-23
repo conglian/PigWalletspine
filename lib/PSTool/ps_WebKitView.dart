@@ -82,9 +82,24 @@ class _PSWebkitviewState extends State<PSWebkitview> {
 
   @override
   Widget build(BuildContext context) {
+    return PSWebkitScaffold(
+      title: widget.title,
+      child: WebViewWidget(controller: _controller),
+    );
+  }
+}
+
+class PSWebkitScaffold extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  const PSWebkitScaffold({super.key, required this.title, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
         elevation: 0,
         leading: Navigator.canPop(context)
             ? IconButton(
@@ -93,7 +108,7 @@ class _PSWebkitviewState extends State<PSWebkitview> {
               )
             : null,
       ),
-      body: SafeArea(child: WebViewWidget(controller: _controller)),
+      body: SafeArea(child: child),
     );
   }
 }

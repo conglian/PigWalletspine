@@ -2,14 +2,11 @@ import 'PSLocale.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import 'package:piggywalletspinearn/PSTool/ps_img.dart';
-import 'package:piggywalletspinearn/PSTool/ps_stroke_text.dart';
 import 'package:piggywalletspinearn/PSTool/ps_text.dart';
 import '../PSBase/PSTbaBar.dart';
-import '../PSHome/PSHome.dart';
 import 'PSTBAEventTool.dart';
 
 class PSInAppNotification {
@@ -25,7 +22,14 @@ class PSInAppNotification {
   // 可随机金额列表
   final List<int> _amounts = [100, 120, 150, 200];
 
-  final List<String> _names = ['Mary', 'James', 'Linda', 'Robert', 'Sarah', 'Michael'];
+  final List<String> _names = [
+    'Mary',
+    'James',
+    'Linda',
+    'Robert',
+    'Sarah',
+    'Michael',
+  ];
 
   int _currentIndex = 0;
 
@@ -47,7 +51,9 @@ class PSInAppNotification {
     _timer = Timer(Duration(minutes: minutes), () {
       final amount = _amounts[_random.nextInt(_amounts.length)];
       final content = PSLocale.tr('{p0} received {p1} via {p2} successfully', {
-        'p0': _names[_currentIndex], 'p1': PSLocale.money(amount), 'p2': PSLocale.payment(0),
+        'p0': _names[_currentIndex],
+        'p1': PSLocale.money(amount),
+        'p2': PSLocale.payment(0),
       });
       _showNotification(PSLocale.tr('Withdrawal Sent'), content);
       _currentIndex = (_currentIndex + 1) % _names.length;
@@ -101,7 +107,12 @@ class _NotificationWidget extends StatefulWidget {
   final String content;
   final int row;
   final VoidCallback onComplete;
-  const _NotificationWidget({required this.title, required this.content, required this.onComplete, required this.row});
+  const _NotificationWidget({
+    required this.title,
+    required this.content,
+    required this.onComplete,
+    required this.row,
+  });
 
   @override
   State<_NotificationWidget> createState() => _NotificationWidgetState();
@@ -117,11 +128,14 @@ class _NotificationWidgetState extends State<_NotificationWidget>
     super.initState();
 
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
-
-    _animation = Tween<double>(begin: -104, end: 0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
     );
+
+    _animation = Tween<double>(
+      begin: -104,
+      end: 0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -144,76 +158,97 @@ class _NotificationWidgetState extends State<_NotificationWidget>
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Transform.translate(
+    return Positioned(
+      top: MediaQuery.paddingOf(context).top + 8,
+      left: 7,
+      right: 7,
+      child: IgnorePointer(
+        child: AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) => Transform.translate(
             offset: Offset(0, _animation.value),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 104,
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 28,
-                    left: 7,
-                    child: PSImg(
-                      name: 'ps_inapp_notice_bg',
-                      width: MediaQuery.of(context).size.width - 14,
-                      height: 76,
-                    ),
-                  ),
-                  Positioned(
-                    right: 14.w,
-                    top: 32,
-                    child: PSImg(
-                      name: 'ps_inapp_notice_icon',
-                      width: 68,
-                      height: 68,
-                    ),
-                  ),
-                  Positioned(
-                    left: 25.w,
-                    top: 46,
-                    child: PSImg(
-                      name: 'ps_user_s_${widget.row}',
-                      width: 49,
-                      height: 49,
-                    ),
-                  ),
-                  Positioned(
-                    left: 85.w,
-                    top: 46,
-                    height: 21,
-                    child: PSText(
-                      text: widget.title,
-                      size: 18,
-                      color: '#000000'.color(),
-                      weight: FontWeight.w900,
-                    ),
-                  ),
-                  Positioned(
-                    left: 85.w,
-                    top: 71,
-                    child: SizedBox(
-                      width: 227.w,
-                      height: 14,
-                      child: PSText(
-                        text: widget.content,
-                        size: 12,
-                        color: '#152456'.color(),
-                        weight: FontWeight.w600,
-                        maxLines: 3,
-                        align: TextAlign.left,
+            child: child,
+          ),
+          child: PSInAppNotificationCard(
+            title: widget.title,
+            content: widget.content,
+            row: widget.row,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class PSInAppNotificationCard extends StatelessWidget {
+  final String title;
+  final String content;
+  final int row;
+
+  const PSInAppNotificationCard({
+    super.key,
+    required this.title,
+    required this.content,
+    required this.row,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 76,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          const PSImg(name: 'ps_inapp_notice_bg', width: 361, height: 76),
+          Padding(
+            padding: const EdgeInsets.only(left: 18, right: 7),
+            child: Row(
+              children: [
+                PSImg(name: 'ps_user_s_$row', width: 49, height: 49),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 23,
+                        child: PSText(
+                          text: title,
+                          size: 18,
+                          color: Colors.black,
+                          weight: FontWeight.w900,
+                          align: TextAlign.left,
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 2),
+                      SizedBox(
+                        height: 34,
+                        child: PSText(
+                          text: content,
+                          size: 13,
+                          color: '#152456'.color(),
+                          weight: FontWeight.w600,
+                          maxLines: 2,
+                          align: TextAlign.left,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 5),
+                const SizedBox(
+                  width: 68,
+                  child: Icon(
+                    Icons.payments_rounded,
+                    size: 50,
+                    color: Color(0xFF6098B7),
+                  ),
+                ),
+              ],
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }

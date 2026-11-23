@@ -126,9 +126,9 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                           ),
                           Positioned(
                             left: 48,
+                            right: 26,
                             top: 20,
                             child: PSFitText(
-                              align: TextAlign.center,
                               span: TextSpan(
                                 style: TextStyle(
                                   fontSize: 16.0,
@@ -191,27 +191,33 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                             ),
                           ),
                           Positioned(
-                            left: 150,
-                            top: 56,
-                            child: PSStrokeText(
-                              text:
-                                  '${provider.ps_pig_level_index}/${provider.ps_pig_level == 0 ? '20' : '10'}',
-                              size: 18,
-                              color: '#FFFFFF'.color(),
-                              weight: FontWeight.w900,
-                              skWidth: 1,
-                              skColor: '#042267'.color(),
-                            ),
-                          ),
-                          Positioned(
-                            left: 200,
-                            top: provider.ps_pig_level == 0 ? 58 : 62,
-                            child: PSImg(
-                              name: provider.ps_pig_level == 0
-                                  ? 'ps_domand_s'
-                                  : 'ps_zhuan_smail',
-                              width: provider.ps_pig_level == 0 ? 18 : 13,
-                              height: provider.ps_pig_level == 0 ? 17 : 11,
+                            left: 64,
+                            right: 64,
+                            top: 55,
+                            height: 23,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: PSStrokeText(
+                                    text:
+                                        '${provider.ps_pig_level_index}/${provider.ps_pig_level == 0 ? '20' : '10'}',
+                                    size: 18,
+                                    color: '#FFFFFF'.color(),
+                                    weight: FontWeight.w900,
+                                    skWidth: 1,
+                                    skColor: '#042267'.color(),
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                PSImg(
+                                  name: provider.ps_pig_level == 0
+                                      ? 'ps_domand_s'
+                                      : 'ps_zhuan_smail',
+                                  width: provider.ps_pig_level == 0 ? 18 : 13,
+                                  height: provider.ps_pig_level == 0 ? 17 : 11,
+                                ),
+                              ],
                             ),
                           ),
                           Positioned(
@@ -373,12 +379,16 @@ class _PSHomeState extends State<PSHome> with TickerProviderStateMixin {
                                 ),
                                 Positioned(
                                   left: 88,
-                                  top: 24,
+                                  right: 72,
+                                  top: 9,
+                                  bottom: 9,
                                   child: PSText(
                                     text: names[index],
                                     size: 20,
                                     color: '#873709'.color(),
                                     weight: FontWeight.w900,
+                                    align: TextAlign.left,
+                                    maxLines: 2,
                                   ),
                                 ),
                                 Positioned(

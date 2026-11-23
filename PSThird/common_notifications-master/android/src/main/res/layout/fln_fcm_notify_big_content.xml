@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="216dp">
+
+    <ImageView
+        android:id="@id/fln_beauty_notify_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="52dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@id/fln_beauty_notify_title"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:autoSizeMaxTextSize="16sp"
+            android:autoSizeMinTextSize="10sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:ellipsize="end"
+            android:gravity="center_vertical|start"
+            android:includeFontPadding="false"
+            android:maxLines="3"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            tools:text="Sua recompensa de acesso diário está pronta" />
+
+        <TextView
+            android:id="@id/fln_beauty_notify_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_weight="1"
+            android:autoSizeMaxTextSize="14sp"
+            android:autoSizeMinTextSize="9sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:ellipsize="end"
+            android:gravity="center_vertical|start"
+            android:includeFontPadding="false"
+            android:maxLines="4"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Abra agora para resgatar moedas extras" />
+
+        <TextView
+            android:id="@id/fln_beauty_notify_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:autoSizeMaxTextSize="16sp"
+            android:autoSizeMinTextSize="11sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/fln_beauty_notify_btn_bg"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Sacar" />
+    </LinearLayout>
+</FrameLayout>

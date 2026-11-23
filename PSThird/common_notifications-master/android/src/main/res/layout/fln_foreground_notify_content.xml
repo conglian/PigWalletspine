@@ -12,6 +12,16 @@
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
+    <ImageView
+        android:id="@+id/fln_foreground_notify_logo"
+        android:layout_width="104dp"
+        android:layout_height="19dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="4dp"
+        android:scaleType="fitCenter"
+        android:visibility="gone"
+        tools:ignore="ContentDescription" />
+
     <TextView
         android:id="@+id/fln_beauty_notify_title"
         android:layout_width="match_parent"

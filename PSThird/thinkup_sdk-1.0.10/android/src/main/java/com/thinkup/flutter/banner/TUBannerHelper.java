@@ -543,7 +543,10 @@ public class TUBannerHelper extends ThinkupSdkPlugin {
 
     public void entryScenario(final String placementId,final String sceneID) {
         MsgTools.printMsg("entryBannerScenario: " + mPlacementId + "sceneID: " + sceneID);
-        TUBannerView.entryAdScenario(placementId, sceneID);
+        if (mBannerView == null) {
+            initBanner(placementId);
+        }
+        mBannerView.entryAdScenario(sceneID);
     }
 
 }

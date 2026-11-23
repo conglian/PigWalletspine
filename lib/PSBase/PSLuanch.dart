@@ -135,13 +135,17 @@ class PSLaunchState extends State<PSLaunch>
                 ),
               ),
               Spacer(),
-              PSStrokeText(
-                text: PSLocale.tr("Grow your piggy, unlock real cash"),
-                size: 14,
-                color: '#FFFFFF'.color(),
-                weight: FontWeight.w900,
-                skWidth: 1,
-                skColor: '#4C0E0E'.color(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: PSStrokeText(
+                  text: PSLocale.tr("Grow your piggy, unlock real cash"),
+                  size: 14,
+                  maxLines: 2,
+                  color: '#FFFFFF'.color(),
+                  weight: FontWeight.w900,
+                  skWidth: 1,
+                  skColor: '#4C0E0E'.color(),
+                ),
               ),
               SizedBox(height: 12.h),
               SJGradientProgressBar(

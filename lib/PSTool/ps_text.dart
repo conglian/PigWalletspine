@@ -34,7 +34,7 @@ class PSText extends StatelessWidget {
         height: 1.15,
         fontWeight: weight,
         fontFamily: is_btn ? '' : 'Black_mianfeiziti',
-        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+        fontFamilyFallback: psFontFallback,
         decoration: TextDecoration.none,
       );
     } else {
@@ -44,7 +44,7 @@ class PSText extends StatelessWidget {
         height: 1.15,
         fontWeight: weight,
         fontFamily: is_btn ? '' : 'Black_mianfeiziti',
-        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+        fontFamilyFallback: psFontFallback,
         decoration: TextDecoration.none,
       );
     }
@@ -99,7 +99,7 @@ class PSUnderlineTextButton extends StatelessWidget {
       text,
       style: TextStyle(
         fontFamily: 'Black_mianfeiziti',
-        fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+        fontFamilyFallback: psFontFallback,
         fontSize: fontSize,
         color: gradient == null ? textColor : Colors.white,
         decoration: TextDecoration.underline,
@@ -202,7 +202,7 @@ class _PSBouncyTextState extends State<PSBouncyText>
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'Black_mianfeiziti',
-          fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+          fontFamilyFallback: psFontFallback,
           fontSize: widget.fontSize,
           color: widget.color,
           fontWeight: widget.fontWeight,
@@ -217,7 +217,7 @@ class _PSBouncyTextState extends State<PSBouncyText>
         textAlign: TextAlign.center,
         style: TextStyle(
           fontFamily: 'Black_mianfeiziti',
-          fontFamilyFallback: const ['PSFallback', 'PSJapanese'],
+          fontFamilyFallback: psFontFallback,
           fontSize: widget.fontSize,
           color: widget.color,
           fontWeight: widget.fontWeight,

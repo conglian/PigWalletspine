@@ -20,8 +20,13 @@ import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
 import '../test/widget_test.dart' show host;
 
-Widget page({bool home = false, LayerLink? wheelIconLink}) => Scaffold(
-  body: home ? const PSPigHome.preview() : const PSPigCash(),
+Widget page({
+  bool home = false,
+  LayerLink? wheelIconLink,
+  Widget? body,
+  int? tabIndex,
+}) => Scaffold(
+  body: body ?? (home ? const PSPigHome.preview() : const PSPigCash()),
   bottomNavigationBar: CustomNavBarWidget(
     [
       for (final item in [
@@ -37,7 +42,7 @@ Widget page({bool home = false, LayerLink? wheelIconLink}) => Scaffold(
           activeColorPrimary: Colors.transparent,
         ),
     ],
-    selectedIndex: home ? 0 : 3,
+    selectedIndex: tabIndex ?? (home ? 0 : 3),
     onItemSelected: (_) {},
     wheelIconLink: wheelIconLink,
   ),

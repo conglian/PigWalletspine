@@ -338,7 +338,7 @@ class _PSPigCashState extends State<PSPigCash>
                             ),
                           ),
                           Positioned(
-                            left: (0.width(context) - 172) * 0.5,
+                            left: (349 - 172) * 0.5,
                             bottom: 24,
                             child: ParticleButton(
                               onTap: () {
@@ -388,6 +388,10 @@ class _PSPigCashState extends State<PSPigCash>
                               child: Container(
                                 width: 172,
                                 height: 34,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
                                 decoration: BoxDecoration(
                                   image: PSDImg('ps_wtd_btn'),
                                 ),
@@ -560,19 +564,24 @@ class _PSPigCashState extends State<PSPigCash>
                 ],
               ),
               SizedBox(height: 9),
-              PSText(
-                text: getCenterTips(),
-                size: 11,
-                color: '#AF7C1E'.color(),
-                weight: FontWeight.w900,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: PSText(
+                  text: getCenterTips(),
+                  size: 11,
+                  color: '#AF7C1E'.color(),
+                  weight: FontWeight.w900,
+                ),
               ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  SizedBox(width: 16),
-                  Flexible(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SizedBox(
+                  height: 34,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
                     child: PSFitText(
                       align: TextAlign.center,
+                      maxLines: 2,
                       span: TextSpan(
                         style: TextStyle(
                           fontSize: 10.0,
@@ -597,7 +606,7 @@ class _PSPigCashState extends State<PSPigCash>
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
               SizedBox(height: 8),
               Row(
@@ -623,7 +632,9 @@ class _PSPigCashState extends State<PSPigCash>
                         ),
                         Positioned(
                           top: 5,
-                          left: (189 - 45) * 0.55,
+                          left: 10,
+                          right: 10,
+                          height: 11,
                           child: PSStrokeText(
                             text: getTaskSize(),
                             size: 10,

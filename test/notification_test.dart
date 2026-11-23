@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -116,9 +117,21 @@ void main() {
   );
 
   test(
-    'foreground notification sends localized wallet copy and button',
+    'foreground notification sends the local wallet copy and payout logo',
     () async {
       const copy = '{p0} is waiting in your wallet.';
+      const expectedLogos = {
+        'US': 'paypal',
+        'ID': 'gopay',
+        'PH': 'gcash',
+        'BR': 'pix',
+        'MX': 'paypal',
+        'JP': 'paypal',
+        'AR': 'mercado',
+        'RU': 'sbp',
+        'DE': 'paypal',
+        'FR': 'paypal',
+      };
       final provider = PSLocalProvider.instance;
       final oldBalance = provider.ps_dolas_number;
       provider.ps_dolas_number = 12.5;
@@ -147,6 +160,16 @@ void main() {
         expect(platform['channelName'], channel);
         expect(platform['styleInformation']['value'], amount);
         expect(platform['styleInformation']['button'], PSLocale.tr('Withdraw'));
+        final logo = 'ps_foreground_${expectedLogos[country.country]!}';
+        expect(platform['styleInformation']['logo'], logo);
+        expect(platform['styleInformation']['image'], 'ps_freground');
+        expect(
+          File(
+            'android/app/src/main/res/drawable-nodpi/$logo.png',
+          ).existsSync(),
+          isTrue,
+          reason: 'Missing Android logo for ${country.country}',
+        );
         final systemChannel = calls.singleWhere(
           (c) => c.method == 'createNotificationChannel',
         );

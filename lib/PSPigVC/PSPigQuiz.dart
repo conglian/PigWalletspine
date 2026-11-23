@@ -21,6 +21,7 @@ import '../PSGuide/PSGuideAThree.dart';
 import '../PSModel/PSQuestionModel.dart';
 import '../PSTool/AESHelper.dart';
 import '../PSTool/PSTBAEventTool.dart';
+import '../PSTool/PSQuizPanel.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import '../PSTool/ps_stroke_text.dart';
@@ -194,6 +195,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final japanese = PSLocale.current.language == 'ja';
     return Scaffold(
       body: Stack(
         children: [
@@ -228,7 +230,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                 ),
                 SizedBox(height: 20.h),
                 // 底部 Container 自动动画
-                SlideTransition(
+                PSQuizPanel(
                   position: _bottomContainerOffset,
                   child: Container(
                     width: 343.w,
@@ -237,9 +239,10 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                     child: Stack(
                       children: [
                         Positioned(
-                          left: -16.w,
+                          left: 52.w,
+                          right: 52.w,
                           top: 12.h,
-                          width: 0.width(context),
+                          height: 43.h,
                           child: PSStrokeText(
                             text: PSLocale.tr("Right Answer Wins Cash"),
                             size: 18,
@@ -247,6 +250,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                             weight: FontWeight.w900,
                             skWidth: 1,
                             skColor: '#026724'.color(),
+                            maxLines: 2,
                           ),
                         ),
                         Positioned(
@@ -262,7 +266,7 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                             .instance
                                             .ps_quiz_num_index]
                                         .localizedQuestion,
-                                size: 24.sp,
+                                size: (japanese ? 22 : 24).sp,
                                 color: '#FCFFE5'.color(),
                                 weight: FontWeight.w900,
                                 skWidth: 2,
@@ -367,6 +371,10 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                             child: Container(
                               width: 260.w,
                               height: 58.78.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 34.w,
+                                vertical: 5.h,
+                              ),
                               decoration: BoxDecoration(
                                 image: PSDImg(
                                   is_quizing
@@ -383,7 +391,8 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                               .instance
                                               .ps_quiz_num_index]
                                           .localizedA,
-                                  size: 24,
+                                  size: japanese ? 21 : 24,
+                                  maxLines: 2,
                                   color: '#FFFFFF'.color(),
                                   weight: FontWeight.w900,
                                   skWidth: 2,
@@ -487,6 +496,10 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                             child: Container(
                               width: 260.w,
                               height: 58.78.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 34.w,
+                                vertical: 5.h,
+                              ),
                               decoration: BoxDecoration(
                                 image: PSDImg(
                                   is_quizing
@@ -503,7 +516,8 @@ class _PSPigQuiztate extends State<PSPigQuiz> with TickerProviderStateMixin {
                                               .instance
                                               .ps_quiz_num_index]
                                           .localizedB,
-                                  size: 24,
+                                  size: japanese ? 21 : 24,
+                                  maxLines: 2,
                                   color: '#FFFFFF'.color(),
                                   weight: FontWeight.w900,
                                   skWidth: 2,

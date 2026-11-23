@@ -167,12 +167,15 @@ class _PSGuideThreeState extends State<PSGuideThree>
                                 ),
                                 Positioned(
                                   left: 88,
-                                  top: 20,
+                                  right: 70,
+                                  top: 5,
+                                  height: 59,
                                   child: PSText(
                                     text: names[index],
                                     size: 24,
                                     color: '#A14D20'.color(),
                                     weight: FontWeight.w900,
+                                    align: TextAlign.start,
                                   ),
                                 ),
                                 Positioned(

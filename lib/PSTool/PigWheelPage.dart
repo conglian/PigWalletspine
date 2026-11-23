@@ -132,29 +132,33 @@ class _PigWheelPageState extends State<PigWheelPage>
                   child: Container(
                     width: 340.w,
                     height: 340.w,
-                    decoration: BoxDecoration(
-                      image: PSDImg(widget.imagePath)
-                    ),
+                    decoration: BoxDecoration(image: PSDImg(widget.imagePath)),
                     child: Consumer<PSLocalProvider>(
                       builder: (context, provider, child) {
+                        final prizes = PSNumberHelpers().getPrizeWithDolasNSize(
+                          provider.ps_dolas_number,
+                        );
+                        final label = SizedBox(
+                          width: 120.w,
+                          height: 34,
+                          child: PSStrokeText(
+                            text:
+                                '${PSLocale.money(prizes.first)} – ${PSLocale.money(prizes.last)}',
+                            size: 14,
+                            maxLines: 2,
+                            color: Colors.white,
+                            weight: FontWeight.w900,
+                            skWidth: 2,
+                            skColor: '#038719'.color(),
+                          ),
+                        );
                         return Column(
                           children: [
-                            SizedBox(height: 50.h),
-                            PSStrokeText(text: '${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first)}-${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last)}', size: 14, color: '#FFFFFF'.color(), weight: FontWeight.w900, skWidth: 2, skColor: '#038719'.color()),
-                            Spacer(),
-                            Transform(
-                              alignment: Alignment.center, // 旋转的中心点
-                              transform: Matrix4.rotationZ(3.14159265), // 180度 = π 弧度
-                              child: PSStrokeText(
-                                text: '${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).first)}-${PSLocale.money(PSNumberHelpers().getPrizeWithDolasNSize(provider.ps_dolas_number).last)}',
-                                size: 14,
-                                color: '#FFFFFF'.color(),
-                                weight: FontWeight.w900,
-                                skWidth: 2,
-                                skColor: '#038719'.color(),
-                              ),
-                            ),
-                            SizedBox(height: 48.h),
+                            SizedBox(height: 45.h),
+                            label,
+                            const Spacer(),
+                            Transform.rotate(angle: pi, child: label),
+                            SizedBox(height: 45.h),
                           ],
                         );
                       },

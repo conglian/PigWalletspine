@@ -91,21 +91,24 @@ class _PSGuideOneState extends State<PSGuideOne>
                     width: 351,
                     height: 151,
                     decoration: BoxDecoration(image: PSDImg('ps_guide_tip_bg')),
+                    padding: const EdgeInsets.fromLTRB(24, 27, 24, 20),
                     child: Column(
                       children: [
-                        SizedBox(height: 40),
-                        PSText(
-                          text: PSLocale.tr(
-                            "Answer fun quizzes to collect diamonds.",
-                          ),
-                          size: 14,
-                          color: '#11407A'.color(),
-                          weight: FontWeight.w900,
-                        ),
-                        SizedBox(height: 20),
                         SizedBox(
-                          width: 303,
-                          height: 34,
+                          height: 38,
+                          child: PSText(
+                            text: PSLocale.tr(
+                              "Answer fun quizzes to collect diamonds.",
+                            ),
+                            size: 14,
+                            color: '#11407A'.color(),
+                            weight: FontWeight.w900,
+                            maxLines: 2,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        SizedBox(
+                          height: 48,
                           child: PSText(
                             text: PSLocale.tr(
                               "Every diamond helps your Piggy level up — all the way to the Gold Pig!",
@@ -113,7 +116,7 @@ class _PSGuideOneState extends State<PSGuideOne>
                             size: 14,
                             color: '#962929'.color(),
                             weight: FontWeight.w900,
-                            maxLines: 2,
+                            maxLines: 3,
                             align: TextAlign.center,
                           ),
                         ),

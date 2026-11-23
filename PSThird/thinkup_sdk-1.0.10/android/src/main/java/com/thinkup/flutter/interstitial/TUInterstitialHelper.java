@@ -45,6 +45,11 @@ public class TUInterstitialHelper {
         mInterstitialAd = new TUInterstitial(mActivity, placementId);
         mInterstitialAd.setAdListener(new TUInterstitialExListener() {
             @Override
+            public void onInterstitialAdReward(TUAdInfo atAdInfo) {
+                // The Flutter interstitial API has no reward event.
+            }
+
+            @Override
             public void onDeeplinkCallback(TUAdInfo atAdInfo, boolean isSuccess) {
                 MsgTools.printMsg("interstitial onDeeplinkCallback: " + mPlacementId);
 
@@ -391,6 +396,9 @@ public class TUInterstitialHelper {
 
     public void entryScenario(final String placementId,final String sceneID) {
         MsgTools.printMsg("entryInterstitialScenario: " + mPlacementId + "sceneID: " + sceneID);
-        TUInterstitial.entryAdScenario(placementId, sceneID);
+        if (mInterstitialAd == null) {
+            initInterstitial(placementId);
+        }
+        mInterstitialAd.entryAdScenario(sceneID);
     }
 }

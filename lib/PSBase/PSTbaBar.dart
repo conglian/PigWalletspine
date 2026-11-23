@@ -246,15 +246,10 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
           if (isSelected)
             Positioned(
               left: 0,
-              top: 6, // 背景可以稍微比icon大
-              child: SizedBox(
-                width: 0.width(context) / widget.items.length,
-                height: 78,
-                child: Image.asset(
-                  'ps_tabbar_s'.image(), // 你的背景图资源
-                  fit: BoxFit.fill,
-                ),
-              ),
+              top: 6,
+              right: 0,
+              bottom: 0,
+              child: Image.asset('ps_tabbar_s'.image(), fit: BoxFit.fill),
             ),
 
           /// 图标
@@ -274,7 +269,10 @@ class _CustomNavBarWidgetState extends State<CustomNavBarWidget>
 
           /// 文字
           Positioned(
+            left: 5,
+            right: 5,
             bottom: 8,
+            height: 20,
             child: AnimatedOpacity(
               duration: const Duration(milliseconds: 250),
               opacity: isSelected ? 1 : 0,

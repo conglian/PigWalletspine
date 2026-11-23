@@ -1,4 +1,4 @@
-
+import 'dart:async';
 import 'dart:convert';
 
 // import 'package:anythink_sdk/at_init.dart';
@@ -19,12 +19,14 @@ import 'package:piggywalletspinearn/PSTool/PSNumberHelpers.dart';
 import 'package:piggywalletspinearn/PSTool/ps_LocalProvider.dart';
 import 'package:piggywalletspinearn/PSTool/ps_ad_manger.dart';
 import 'package:piggywalletspinearn/PSTool/ps_extension_help.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thinkup_sdk/at_init.dart';
 
 import '../PSModel/PSAdModel.dart';
 import '../PSModel/PSFkModel.dart';
 import '../PSModel/PSNumberModel.dart';
 import 'PSTBAEventTool.dart';
+import 'PSToponChannel.dart';
 
 String decsgerew(String st) => utf8.decode(base64Decode(st));
 
@@ -45,10 +47,19 @@ class PSSDKHelpers {
 
   bool is_ad_suc = false;
 
+  static const _toponChannelKey = 'ps_topon_channel';
+  static const _attributionTimeout = Duration(seconds: 2);
+  PSToponChannel? _toponChannel;
+  bool _toponChannelUpdatesEnabled = false;
+
   Future<void> initSDK() async {
-    _initAdjustSDk();
+    final adjustReady = _initAdjustSDk().catchError((Object error) {
+      'Adjust initialization or attribution lookup failed: $error'.log();
+    });
     _initCloudx();
-    _initTopon();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_initTopon(adjustReady));
+    });
     _psinitloadFireBase();
   }
 
@@ -73,45 +84,84 @@ class PSSDKHelpers {
 
   }
 
-  void _initTopon() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // 这里保证在主线程
+  Future<void> _initTopon(Future<void> adjustReady) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final cachedChannel = PSToponChannel.values.asNameMap()[
+        prefs.getString(_toponChannelKey)
+      ];
+      if (_toponChannel == null && cachedChannel == null) {
+        await adjustReady.timeout(_attributionTimeout, onTimeout: () {});
+      }
+
+      // 先设置全局流量分组，再初始化并加载广告。
+      _toponChannelUpdatesEnabled = true;
+      await _setToponChannel(
+        _toponChannel ?? cachedChannel ?? PSToponChannel.other,
+      );
       sj_topon_start = DateTime.now();
-      ATInitManger.initThinkUpSDK(
+      await ATInitManger.initThinkUpSDK(
         appidStr: 'h69fbf5b324d2e',
         appidkeyStr: 'a6a5fd430dcfc69adb4220359cd1ad784',
-      )
-          .then((value) {
-        ps_event_fire('nskdh_ad_initsuc', {
-          'ad_source_client': 'topon',
-          'ad_init_time': DateTime.now()
-              .difference(sj_topon_start)
-              .inMilliseconds,
-        });
-        'topon init Success'.log();
-        PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
-        PSPigAds().init_suc = true;
-        ps_session_fire();
-        if (PSLocalProvider.instance.ps_install_status == false) {
-          ps_install_fire();
-          PSLocalProvider.instance.updateBool(
-            PSLocalProvider.instance.ps_install_statusName,
-            true,
-          );
-        }
-      })
-          .catchError((error) {
-        'topon init error=$error'.log();
-        Future.delayed(Duration(seconds: 1), () {
-          _initTopon();
-        });
+      );
+      ps_event_fire('nskdh_ad_initsuc', {
+        'ad_source_client': 'topon',
+        'ad_init_time': DateTime.now().difference(sj_topon_start).inMilliseconds,
       });
-      // 打开SDK的Debug log，强烈建议在测试阶段打开，方便排查问题。
-      ATInitManger.setLogEnabled(logEnabled: kDebugMode ? true : false);
-    });
+      'topon init Success'.log();
+      PSPigAds().init(inputAd: PSPigAds().psPigAdModel);
+      PSPigAds().init_suc = true;
+      ps_session_fire();
+      if (PSLocalProvider.instance.ps_install_status == false) {
+        ps_install_fire();
+        PSLocalProvider.instance.updateBool(
+          PSLocalProvider.instance.ps_install_statusName,
+          true,
+        );
+      }
+      ATInitManger.setLogEnabled(logEnabled: kDebugMode);
+    } catch (error) {
+      'topon init error=$error'.log();
+      Timer(const Duration(seconds: 1), () {
+        unawaited(_initTopon(adjustReady));
+      });
+    }
   }
 
-  _initAdjustSDk() async {
+  Future<void> _setToponChannel(PSToponChannel channel) async {
+    await ATInitManger.setCustomDataMap(
+      customDataMap: {'channel': channel.name},
+    );
+  }
+
+  void _recordToponChannel(AdjustAttribution attribution) {
+    final channel = PSToponChannel.fromAdjust(
+      network: attribution.network,
+      trackerName: attribution.trackerName,
+    );
+    if (channel == null || channel == _toponChannel) return;
+
+    _toponChannel = channel;
+    unawaited(_saveToponChannel(channel));
+    if (_toponChannelUpdatesEnabled) {
+      unawaited(_setToponChannel(channel).catchError((Object error) {
+        'TopOn channel update failed: $error'.log();
+      }));
+    }
+  }
+
+  Future<void> _saveToponChannel(PSToponChannel channel) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      if (channel == _toponChannel) {
+        await prefs.setString(_toponChannelKey, channel.name);
+      }
+    } catch (error) {
+      'TopOn channel cache failed: $error'.log();
+    }
+  }
+
+  Future<void> _initAdjustSDk() async {
     const String appToken1 = 't84ar6u7tse8'; // relsease
     var disId = await FlutterTbaInfo.instance.getDistinctId();
     'disId=$disId'.log();
@@ -120,6 +170,7 @@ class PSSDKHelpers {
     config.logLevel = AdjustLogLevel.verbose;
     // 归因信息
     config.attributionCallback = (AdjustAttribution attributionChangedData) {
+      _recordToponChannel(attributionChangedData);
       print('[Adjust]: Attribution changed!');
       if (attributionChangedData.trackerToken != null) {
         print(
@@ -166,6 +217,12 @@ class PSSDKHelpers {
     };
     Adjust.initSdk(config);
     ps_event_fire('adjust_req', {});
+    final attribution = await Adjust.getAttributionWithTimeout(
+      _attributionTimeout.inMilliseconds,
+    );
+    if (attribution != null && _toponChannel == null) {
+      _recordToponChannel(attribution);
+    }
   }
 
   void _psinitloadFireBase() async {

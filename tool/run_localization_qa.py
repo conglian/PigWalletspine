@@ -35,7 +35,7 @@ if link.exists() or link.is_symlink():
     raise SystemExit('Remove or move the existing spine_flutter.framework before running this helper.')
 link.symlink_to(framework)
 try:
-    raise SystemExit(subprocess.run([str(flutter.resolve()), 'test', 'tool/check_all_localized_views_test.dart', '--no-pub'], cwd=root).returncode)
+    raise SystemExit(subprocess.run([str(flutter.resolve()), 'test', 'tool/check_all_localized_views_test.dart', '--no-pub', *sys.argv[2:]], cwd=root).returncode)
 finally:
     if link.is_symlink() and link.resolve() == framework:
         link.unlink()

@@ -269,6 +269,7 @@ class PSNoticeHelp with WidgetsBindingObserver {
   Future<void> startSJForegroundService() async {
     const channelId = 'pigwalletForeground';
     final country = PSLocale.current;
+    final brand = PSLocale.paymentAssets[country.payments.first] ?? 'paypal';
     final balance = PSLocale.money(
       PSLocalProvider.instance.ps_dolas_number,
       country: country,
@@ -302,6 +303,7 @@ class PSNoticeHelp with WidgetsBindingObserver {
         styleInformation: ForegroundStyleInformation(
           value: balance,
           image: 'ps_freground',
+          logo: 'ps_foreground_$brand',
           button: withdraw,
         ),
       ),

@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../PSGuide/PSGuideAThree.dart';
 import '../PSModel/PSQuestionModel.dart';
 import '../PSTool/AESHelper.dart';
+import '../PSTool/PSQuizPanel.dart';
 import '../PSTool/ps_extension_help.dart';
 import '../PSTool/ps_img.dart';
 import '../PSTool/ps_stroke_text.dart';
@@ -175,6 +176,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final japanese = PSLocale.current.language == 'ja';
     return Scaffold(
       body: Stack(
         children: [
@@ -211,9 +213,9 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                             ),
                             Positioned(
                               left: 48,
+                              right: 26,
                               top: 20,
                               child: PSFitText(
-                                align: TextAlign.center,
                                 span: TextSpan(
                                   style: TextStyle(
                                     fontSize: 16.0,
@@ -280,27 +282,35 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                               ),
                             ),
                             Positioned(
-                              left: 150,
-                              top: 56,
-                              child: PSStrokeText(
-                                text:
-                                    '${provider.ps_pig_level_index}/${provider.ps_pig_level == 0 ? '20' : '10'}',
-                                size: 18,
-                                color: '#FFFFFF'.color(),
-                                weight: FontWeight.w900,
-                                skWidth: 1,
-                                skColor: '#042267'.color(),
-                              ),
-                            ),
-                            Positioned(
-                              left: 200,
-                              top: provider.ps_pig_level == 0 ? 58 : 62,
-                              child: PSImg(
-                                name: provider.ps_pig_level == 0
-                                    ? 'ps_domand_s'
-                                    : 'ps_zhuan_smail',
-                                width: provider.ps_pig_level == 0 ? 18 : 13,
-                                height: provider.ps_pig_level == 0 ? 17 : 11,
+                              left: 64,
+                              right: 64,
+                              top: 55,
+                              height: 23,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    child: PSStrokeText(
+                                      text:
+                                          '${provider.ps_pig_level_index}/${provider.ps_pig_level == 0 ? '20' : '10'}',
+                                      size: 18,
+                                      color: '#FFFFFF'.color(),
+                                      weight: FontWeight.w900,
+                                      skWidth: 1,
+                                      skColor: '#042267'.color(),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  PSImg(
+                                    name: provider.ps_pig_level == 0
+                                        ? 'ps_domand_s'
+                                        : 'ps_zhuan_smail',
+                                    width: provider.ps_pig_level == 0 ? 18 : 13,
+                                    height: provider.ps_pig_level == 0
+                                        ? 17
+                                        : 11,
+                                  ),
+                                ],
                               ),
                             ),
                             Positioned(
@@ -335,7 +345,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                 SizedBox(height: 88.h),
 
                 // 底部 Container 自动动画
-                SlideTransition(
+                PSQuizPanel(
                   position: _bottomContainerOffset,
                   child: Container(
                     width: 343.w,
@@ -344,8 +354,10 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                     child: Stack(
                       children: [
                         Positioned(
-                          left: 108.w,
-                          top: 12.h,
+                          left: 52.w,
+                          right: 52.w,
+                          top: 8.h,
+                          height: 47.h,
                           child: PSStrokeText(
                             text: PSLocale.tr("Quiz Cash"),
                             size: 32,
@@ -353,6 +365,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                             weight: FontWeight.w900,
                             skWidth: 1,
                             skColor: '#026724'.color(),
+                            maxLines: 2,
                           ),
                         ),
                         Positioned(
@@ -368,7 +381,7 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                                             .instance
                                             .ps_quiz_num_index]
                                         .localizedQuestion,
-                                size: 24,
+                                size: japanese ? 22 : 24,
                                 color: '#FCFFE5'.color(),
                                 weight: FontWeight.w900,
                                 skWidth: 2,
@@ -421,6 +434,10 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                             child: Container(
                               width: 260.w,
                               height: 58.78.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 34.w,
+                                vertical: 5.h,
+                              ),
                               decoration: BoxDecoration(
                                 image: PSDImg(
                                   is_quizing
@@ -437,7 +454,8 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                                               .instance
                                               .ps_quiz_num_index]
                                           .localizedA,
-                                  size: 24,
+                                  size: japanese ? 21 : 24,
+                                  maxLines: 2,
                                   color: '#FFFFFF'.color(),
                                   weight: FontWeight.w900,
                                   skWidth: 2,
@@ -489,6 +507,10 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                             child: Container(
                               width: 260.w,
                               height: 58.78.h,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 34.w,
+                                vertical: 5.h,
+                              ),
                               decoration: BoxDecoration(
                                 image: PSDImg(
                                   is_quizing
@@ -505,7 +527,8 @@ class _PSQuizState extends State<PSQuiz> with TickerProviderStateMixin {
                                               .instance
                                               .ps_quiz_num_index]
                                           .localizedB,
-                                  size: 24,
+                                  size: japanese ? 21 : 24,
+                                  maxLines: 2,
                                   color: '#FFFFFF'.color(),
                                   weight: FontWeight.w900,
                                   skWidth: 2,

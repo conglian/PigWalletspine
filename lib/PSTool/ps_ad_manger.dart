@@ -110,7 +110,7 @@ class PSPigAds {
   // 是否显示广告中
   late bool is_showAd = false;
   // 测试打开，上线关闭
-  final bool skipAd = true;
+  final bool skipAd = false;
 
   Future<void> init({PSAdModel? inputAd}) async {
     _ads = [];
@@ -430,7 +430,7 @@ class PSPigAds {
     String adunit_format = extMap['adunit_format'] ?? '';
     ps_ad_fire({
       "strange": ecpms * 1000000,
-      "shiv": extMap["network_name"],
+      "shiv": (extMap["network_name"] as String?)?.toLowerCase(),
       "pothole": 'topon_sdk',
       "pharmacy": extMap['adunit_id'],
       "lenin": quizAdPlaceID,
@@ -453,7 +453,7 @@ class PSPigAds {
     print('adunit_format=$adunit_format');
     ps_ad_fire({
       "strange": ecpms * 1000000,
-      "shiv": cloudxAd.networkName,
+      "shiv": cloudxAd.networkName.toLowerCase(),
       "pothole": 'cloudx_sdk',
       "pharmacy": cloudxAd.adUnitId,
       "lenin": quizAdPlaceID,

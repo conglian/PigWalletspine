@@ -3,12 +3,12 @@ import 'package:piggywalletspinearn/PSTool/PSResponsive.dart';
 import '../PSTool/PSPayoutForm.dart';
 import 'package:piggywalletspinearn/PSTool/PSLocale.dart';
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:piggywalletspinearn/PSBase/PSTbaBar.dart';
 import 'package:piggywalletspinearn/PSDialog/PSGuideManager.dart';
 import 'package:piggywalletspinearn/PSHome/PSHome.dart';
@@ -108,37 +108,39 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                   ),
                   Positioned(
                     left: 32,
-                    top: 29,
-                    child: PSFitText(
-                      align: TextAlign.center,
-                      span: TextSpan(
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w900,
-                          color: '#873709'.color(),
-                          fontFamily: 'Black_mianfeiziti',
-                          fontFamilyFallback: const [
-                            'PSFallback',
-                            'PSJapanese',
-                          ],
+                    right: 26,
+                    top: 25,
+                    height: 28,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 3,
+                          child: PSText(
+                            text: PSLocale.tr("Growing Balance:"),
+                            size: 16,
+                            weight: FontWeight.w900,
+                            color: '#873709'.color(),
+                            align: TextAlign.start,
+                            maxLines: 2,
+                          ),
                         ),
-                        children: <TextSpan>[
-                          TextSpan(text: PSLocale.tr("Growing Balance:") + " "),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: 174,
-                    top: 27,
-                    child: PSGradientNumberRoller(
-                      value: PSNumberHelpers().intModel!.eqRange.first,
-                      duration: 1500,
-                      fontSize: 16.0,
-                      gradientColors: ['#0BA408'.color(), '#0BA408'.color()],
-                      borderColor: Colors.transparent,
-                      borderWidth: 0.0,
-                      decimalPlaces: 2,
+                        SizedBox(width: 6),
+                        Flexible(
+                          flex: 2,
+                          child: PSGradientNumberRoller(
+                            value: PSNumberHelpers().intModel!.eqRange.first,
+                            duration: 1500,
+                            fontSize: 16.0,
+                            gradientColors: [
+                              '#0BA408'.color(),
+                              '#0BA408'.color(),
+                            ],
+                            borderColor: Colors.transparent,
+                            borderWidth: 0.0,
+                            decimalPlaces: 2,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Positioned(
@@ -221,7 +223,8 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                     child: PSImg(name: 'ps_guide1_1', width: 327, height: 198),
                   ),
                   Positioned(
-                    left: (0.width(context) - 100) * 0.52,
+                    left: 105,
+                    right: 105,
                     top: 150,
                     child: PSText(
                       text: PSLocale.tr("Piggy Payout"),
@@ -233,21 +236,25 @@ class PSGuideNew1DialogState extends State<PSGuideNew1Dialog>
                   Positioned(
                     left: 20,
                     bottom: 10,
+                    width: 125,
                     child: PSText(
                       text: PSLocale.tr("Advertisers"),
                       size: 14,
                       color: '#FCF9E5'.color(),
                       weight: FontWeight.w900,
+                      align: TextAlign.start,
                     ),
                   ),
                   Positioned(
                     right: 4,
                     bottom: 10,
+                    width: 125,
                     child: PSText(
                       text: PSLocale.tr("Your Wallet"),
                       size: 14,
                       color: '#FCF9E5'.color(),
                       weight: FontWeight.w900,
+                      align: TextAlign.end,
                     ),
                   ),
                 ],
@@ -666,6 +673,37 @@ class PSGuideNew3DialogState extends State<PSGuideNew3Dialog>
   }
 }
 
+class _GuideNarration extends StatelessWidget {
+  const _GuideNarration({
+    required this.text,
+    this.size = 16,
+    this.maxLines = 5,
+  });
+
+  final String text;
+  final double size;
+  final int maxLines;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 335,
+      height: 139,
+      decoration: BoxDecoration(image: PSDImg('ps_guide4_2')),
+      padding: const EdgeInsets.fromLTRB(20, 38, 16, 15),
+      alignment: Alignment.topLeft,
+      child: PSText(
+        text: text,
+        size: size,
+        color: '#733A1B'.color(),
+        weight: FontWeight.w900,
+        align: TextAlign.left,
+        maxLines: maxLines,
+      ),
+    );
+  }
+}
+
 class PSGuideNew4Dialog extends StatefulWidget {
   const PSGuideNew4Dialog({super.key});
 
@@ -706,13 +744,13 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog>
     // 第一段文本动画
     _firstTextAnimation = IntTween(
       begin: 0,
-      end: firstText.length,
+      end: firstText.characters.length,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     // 第二段文本动画
     _secondTextAnimation = IntTween(
       begin: 0,
-      end: secondText.length,
+      end: secondText.characters.length,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     // 启动第一段文字的动画
@@ -728,23 +766,6 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog>
         _controller.forward(); // 启动第二段文本的动画
       });
     });
-
-    // 延迟9秒后显示按钮和图片
-    Timer(Duration(seconds: 3), () {
-      if (!mounted) return;
-      setState(() {});
-    });
-  }
-
-  String cleanInvalidUtf16Characters(String text) {
-    // 转换为 UTF-8 字符串，然后再转换回字符串
-    try {
-      List<int> bytes = utf8.encode(text);
-      return utf8.decode(bytes, allowMalformed: true);
-    } catch (e) {
-      print('Error cleaning invalid UTF-16 characters: $e');
-      return text;
-    }
   }
 
   @override
@@ -783,6 +804,7 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog>
                           Container(
                             width: 141,
                             height: 34,
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
                             decoration: BoxDecoration(
                               image: PSDImg('ps_act_bg'),
                             ),
@@ -814,46 +836,18 @@ class PSGuideNew4DialogState extends State<PSGuideNew4Dialog>
                   Positioned(
                     left: (0.width(context) - 335) * 0.5,
                     top: 240,
-                    child: Container(
-                      width: 335,
-                      height: 139,
-                      decoration: BoxDecoration(image: PSDImg('ps_guide4_2')),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 38, left: 20, right: 12),
-                        child: SizedBox(
-                          width: 261,
-                          height: 76,
-                          child: AnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child) {
-                              String textToShow = showFirstText
-                                  ? cleanInvalidUtf16Characters(
-                                      firstText.substring(
-                                        0,
-                                        _firstTextAnimation.value,
-                                      ),
-                                    )
-                                  : cleanInvalidUtf16Characters(
-                                      secondText.substring(
-                                        0,
-                                        _secondTextAnimation.value,
-                                      ),
-                                    );
-
-                              return Text(
-                                textToShow,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w900,
-                                  color: '#733A1B'.color(), // 默认颜色
-                                  fontFamily: 'Black_mianfeiziti',
-                                ),
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        final text = showFirstText
+                            ? firstText.characters.take(
+                                _firstTextAnimation.value,
+                              )
+                            : secondText.characters.take(
+                                _secondTextAnimation.value,
                               );
-                            },
-                          ),
-                        ),
-                      ),
+                        return _GuideNarration(text: text.toString());
+                      },
                     ),
                   ),
                   Positioned(
@@ -954,7 +948,7 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog>
     // 文本逐渐显示的动画
     _textAnimation = IntTween(
       begin: 0,
-      end: firstText.length,
+      end: firstText.characters.length,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
 
     // 启动文本动画
@@ -973,16 +967,6 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog>
         });
       },
     );
-  }
-
-  String cleanInvalidUtf16Characters(String text) {
-    try {
-      List<int> bytes = utf8.encode(text);
-      return utf8.decode(bytes, allowMalformed: true);
-    } catch (e) {
-      print('Error cleaning invalid UTF-16 characters: $e');
-      return text;
-    }
   }
 
   @override
@@ -1010,37 +994,15 @@ class PSGuideNew5DialogState extends State<PSGuideNew5Dialog>
                   Positioned(
                     left: (0.width(context) - 335) * 0.5,
                     top: 140.h,
-                    child: Container(
-                      width: 335,
-                      height: 139,
-                      decoration: BoxDecoration(image: PSDImg('ps_guide4_2')),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 38, left: 20, right: 12),
-                        child: SizedBox(
-                          width: 261,
-                          height: 76,
-                          child: AnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child) {
-                              // 获取当前显示的文字
-                              String textToShow = cleanInvalidUtf16Characters(
-                                firstText.substring(0, _textAnimation.value),
-                              );
-
-                              return Text(
-                                textToShow,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w900,
-                                  color: '#733A1B'.color(), // 默认颜色
-                                  fontFamily: 'Black_mianfeiziti',
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        return _GuideNarration(
+                          text: firstText.characters
+                              .take(_textAnimation.value)
+                              .toString(),
+                        );
+                      },
                     ),
                   ),
                   Positioned(
@@ -1283,6 +1245,7 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog>
                     Container(
                       width: 141,
                       height: 34,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       decoration: BoxDecoration(image: PSDImg('ps_act_bg')),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -1330,26 +1293,35 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog>
                           Column(
                             children: [
                               Spacer(),
-                              Row(
-                                mainAxisAlignment: .center,
-                                children: [
-                                  PSImg(
-                                    name:
-                                        'ps_act_0${isBrazilianPortuguese(context) == true ? 'pt' : ''}',
-                                    width: 120,
-                                    height: 32,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Flexible(
-                                    child: PSText(
-                                      text:
-                                          '+${PSLocale.money(0.to2Double(PSLocalProvider.instance.ps_dolas_number))}',
-                                      size: 24,
-                                      color: '#8B0002'.color(),
-                                      weight: FontWeight.w900,
+                              SizedBox(
+                                height: 32,
+                                child: Center(
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxWidth: 240,
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const PSImg(
+                                          name: 'ps_act_0',
+                                          width: 78,
+                                          height: 30,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Flexible(
+                                          child: PSText(
+                                            text:
+                                                '+${PSLocale.money(0.to2Double(PSLocalProvider.instance.ps_dolas_number))}',
+                                            size: 24,
+                                            color: '#8B0002'.color(),
+                                            weight: FontWeight.w900,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
                               SizedBox(height: 190),
                             ],
@@ -1365,14 +1337,6 @@ class PSGuideNew6DialogState extends State<PSGuideNew6Dialog>
         ),
       ),
     );
-  }
-
-  bool isBrazilianPortuguese(BuildContext context) {
-    // 获取当前语言环境
-    Locale currentLocale = Localizations.localeOf(context);
-
-    // 判断是否是巴西葡萄牙语
-    return PSLocale.current.country == 'BR';
   }
 }
 
@@ -1422,6 +1386,7 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog>
                   Container(
                     width: 141,
                     height: 34,
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     decoration: BoxDecoration(image: PSDImg('ps_act_bg')),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1447,30 +1412,40 @@ class PSGuideNew7DialogState extends State<PSGuideNew7Dialog>
             Container(
               width: 325,
               height: 300,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(image: PSDImg('ps_guide7_0')),
               child: Column(
                 children: [
-                  SizedBox(height: 24),
-                  PSText(
-                    text: PSLocale.tr("💰 Your First commission has arrived!"),
-                    size: 16,
-                    color: '#620F0F'.color(),
-                    weight: FontWeight.w900,
+                  SizedBox(height: 18),
+                  SizedBox(
+                    height: 36,
+                    child: PSText(
+                      text: PSLocale.tr(
+                        "💰 Your First commission has arrived!",
+                      ),
+                      size: 16,
+                      color: '#620F0F'.color(),
+                      weight: FontWeight.w900,
+                      maxLines: 2,
+                    ),
                   ),
                   PSImg(name: 'ps_guide7_1', width: 86, height: 78),
-                  PSStrokeText(
-                    text: PSLocale.tr("Deposit amount：{p0}", {
-                      'p0': PSLocale.money(
-                        PSLocalProvider.instance.ps_dolas_number,
-                      ),
-                    }),
-                    size: 24,
-                    color: '#FFE11C'.color(),
-                    weight: FontWeight.w900,
-                    skWidth: 2,
-                    skColor: '#1D0808'.color(),
+                  SizedBox(
+                    height: 34,
+                    child: PSStrokeText(
+                      text: PSLocale.tr("Deposit amount：{p0}", {
+                        'p0': PSLocale.money(
+                          PSLocalProvider.instance.ps_dolas_number,
+                        ),
+                      }),
+                      size: 24,
+                      color: '#FFE11C'.color(),
+                      weight: FontWeight.w900,
+                      skWidth: 2,
+                      skColor: '#1D0808'.color(),
+                    ),
                   ),
-                  SizedBox(height: 12),
+                  SizedBox(height: 6),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: SizedBox(
@@ -1610,29 +1585,12 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog>
                   Positioned(
                     left: (0.width(context) - 335) * 0.5,
                     bottom: 0.h,
-                    child: Container(
-                      width: 335,
-                      height: 139,
-                      decoration: BoxDecoration(image: PSDImg('ps_guide4_2')),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 38, left: 20, right: 12),
-                        child: SizedBox(
-                          width: 261,
-                          height: 76,
-                          child: Text(
-                            PSLocale.tr(
-                              "Answer And Unlock!\nAdvertisers want to confirm you're Real.\n🎁 Pass their quiz = Unlock withdrawal Access!\n👉 Start now – only 3 Easy Questions!",
-                            ),
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w900,
-                              color: '#733A1B'.color(), // 默认颜色
-                              fontFamily: 'Black_mianfeiziti',
-                            ),
-                          ),
-                        ),
+                    child: _GuideNarration(
+                      text: PSLocale.tr(
+                        "Answer And Unlock!\nAdvertisers want to confirm you're Real.\n🎁 Pass their quiz = Unlock withdrawal Access!\n👉 Start now – only 3 Easy Questions!",
                       ),
+                      size: 12,
+                      maxLines: 7,
                     ),
                   ),
                   Positioned(
@@ -1656,23 +1614,27 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog>
               child: Stack(
                 children: [
                   Positioned(
-                    left: -22.w,
-                    top: 12.h,
-                    width: 0.width(context),
-                    child: PSStrokeText(
-                      text: PSLocale.tr("Right Answer Wins Cash"),
-                      size: 18,
-                      color: '#F8FFAD'.color(),
-                      weight: FontWeight.w900,
-                      skWidth: 1,
-                      skColor: '#026724'.color(),
+                    left: 48.w,
+                    right: 48.w,
+                    top: 5.h,
+                    height: 36.h,
+                    child: Center(
+                      child: PSStrokeText(
+                        text: PSLocale.tr("Right Answer Wins Cash"),
+                        size: 18,
+                        color: '#F8FFAD'.color(),
+                        weight: FontWeight.w900,
+                        skWidth: 1,
+                        skColor: '#026724'.color(),
+                        maxLines: 2,
+                      ),
                     ),
                   ),
                   Positioned(
-                    left: (343.w - 300.w) * 0.5,
+                    left: 26.w,
+                    right: 26.w,
                     top: 94.h,
                     child: SizedBox(
-                      width: 288.w,
                       height: 120.h,
                       child: Center(
                         child: PSStrokeText(
@@ -1727,6 +1689,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog>
                       child: Container(
                         width: 260.w,
                         height: 58.78.h,
+                        padding: EdgeInsets.symmetric(horizontal: 42.w),
                         decoration: BoxDecoration(
                           image: PSDImg(
                             is_quizing
@@ -1744,6 +1707,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog>
                             weight: FontWeight.w900,
                             skWidth: 2,
                             skColor: '#711A00'.color(),
+                            maxLines: 2,
                           ),
                         ),
                       ),
@@ -1778,6 +1742,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog>
                       child: Container(
                         width: 260.w,
                         height: 58.78.h,
+                        padding: EdgeInsets.symmetric(horizontal: 42.w),
                         decoration: BoxDecoration(
                           image: PSDImg(
                             is_quizing
@@ -1795,6 +1760,7 @@ class PSGuideNew8DialogState extends State<PSGuideNew8Dialog>
                             weight: FontWeight.w900,
                             skWidth: 2,
                             skColor: '#711A00'.color(),
+                            maxLines: 2,
                           ),
                         ),
                       ),
@@ -1873,6 +1839,12 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog>
 
   @override
   Widget build(BuildContext context) {
+    final country = PSLocale.current;
+    final language = country.language == 'fil' ? 'en' : country.language;
+    final weeklyPayoutCount = NumberFormat.decimalPattern(
+      '${language}_${country.country}',
+    ).format(28783);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -1899,6 +1871,7 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog>
                   Container(
                     width: 273.w,
                     height: 37.h,
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
                     decoration: BoxDecoration(
                       color: '#F54E00'.color(),
                       borderRadius: BorderRadius.circular(19.h),
@@ -1906,6 +1879,7 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog>
                     child: Center(
                       child: PSFitText(
                         align: TextAlign.center,
+                        maxLines: 2,
                         span: TextSpan(
                           style: TextStyle(
                             fontSize: 12.0,
@@ -1919,7 +1893,7 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog>
                           ),
                           children: <TextSpan>[
                             TextSpan(
-                              text: '28,783 ',
+                              text: '$weeklyPayoutCount ',
                               style: TextStyle(color: '#FFE313'.color()),
                             ),
                             TextSpan(
@@ -1942,56 +1916,62 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog>
                   ),
                   SizedBox(height: 8.h),
                   SizedBox(
-                    width: 0.width(context),
                     height: 122,
-                    child: Row(
-                      children: [
-                        SizedBox(width: 38),
-                        PSImg(name: 'ps_dui_iconsss', width: 27, height: 108),
-                        SizedBox(width: 12),
-                        Column(
-                          children: [
-                            SizedBox(height: 10),
-                            SizedBox(
-                              width: 241,
-                              height: 19,
-                              child: PSText(
-                                text: PSLocale.tr("Quiz passed"),
-                                size: 15,
-                                color: '#24313F'.color(),
-                                weight: FontWeight.w900,
-                              ),
-                            ),
-                            SizedBox(height: 22),
-                            SizedBox(
-                              width: 250,
-                              height: 19,
-                              child: PSText(
-                                text: PSLocale.tr(
-                                  "Now confirm your payout info.",
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 28),
+                      child: Row(
+                        children: [
+                          PSImg(name: 'ps_dui_iconsss', width: 27, height: 108),
+                          SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                SizedBox(height: 3),
+                                SizedBox(
+                                  height: 30,
+                                  child: PSText(
+                                    text: PSLocale.tr("Quiz passed"),
+                                    size: 15,
+                                    color: '#24313F'.color(),
+                                    weight: FontWeight.w900,
+                                    align: TextAlign.start,
+                                    maxLines: 2,
+                                  ),
                                 ),
-                                size: 15,
-                                color: '#A5A5A5'.color(),
-                                weight: FontWeight.w900,
-                              ),
-                            ),
-                            SizedBox(height: 14),
-                            SizedBox(
-                              width: 250,
-                              height: 38,
-                              child: PSText(
-                                text: PSLocale.tr(
-                                  "Fill Your Piggy Bank, Cash Out Instantly",
+                                SizedBox(height: 8),
+                                SizedBox(
+                                  height: 39,
+                                  child: PSText(
+                                    text: PSLocale.tr(
+                                      "Now confirm your payout info.",
+                                    ),
+                                    size: 15,
+                                    color: '#A5A5A5'.color(),
+                                    weight: FontWeight.w900,
+                                    align: TextAlign.start,
+                                    maxLines: 2,
+                                  ),
                                 ),
-                                size: 15,
-                                color: '#A5A5A5'.color(),
-                                weight: FontWeight.w900,
-                                maxLines: 2,
-                              ),
+                                SizedBox(height: 3),
+                                SizedBox(
+                                  height: 39,
+                                  child: PSText(
+                                    text: PSLocale.tr(
+                                      "Fill Your Piggy Bank, Cash Out Instantly",
+                                    ),
+                                    size: 15,
+                                    color: '#A5A5A5'.color(),
+                                    weight: FontWeight.w900,
+                                    align: TextAlign.start,
+                                    maxLines: 2,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: 12.h),
@@ -2004,6 +1984,7 @@ class PSGuideNew9DialogState extends State<PSGuideNew9Dialog>
                     child: Container(
                       width: 301,
                       height: 50,
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
                       decoration: BoxDecoration(
                         color: '#0E79C6'.color(),
                         borderRadius: BorderRadius.circular(25),
@@ -2191,51 +2172,65 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog>
                         Container(
                           width: 239,
                           height: 84,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 7,
+                          ),
                           decoration: BoxDecoration(
                             image: PSDImg('ps_notice_center_bg'),
                           ),
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: 12),
-                              PSFitText(
-                                align: TextAlign.left,
-                                span: TextSpan(
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w900,
-                                    color: '#122C5B'.color(),
-                                    fontFamily: 'Black_mianfeiziti',
-                                    fontFamilyFallback: const [
-                                      'PSFallback',
-                                      'PSJapanese',
-                                    ],
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(text: PSLocale.tr("Only") + " "),
-                                    TextSpan(
-                                      text:
-                                          '${PSLocale.money(0.to2Double(PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number))} ',
+                              SizedBox(
+                                height: 33,
+                                child: Center(
+                                  child: PSFitText(
+                                    align: TextAlign.center,
+                                    maxLines: 2,
+                                    span: TextSpan(
                                       style: TextStyle(
-                                        color: '#199D28'.color(),
-                                        fontSize: 14.0,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w900,
+                                        color: '#122C5B'.color(),
+                                        fontFamily: 'Black_mianfeiziti',
+                                        fontFamilyFallback: const [
+                                          'PSFallback',
+                                          'PSJapanese',
+                                        ],
                                       ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: PSLocale.tr("Only") + " ",
+                                        ),
+                                        TextSpan(
+                                          text:
+                                              '${PSLocale.money(0.to2Double(PSNumberHelpers().intModel!.eqRange.first - PSLocalProvider.instance.ps_dolas_number))} ',
+                                          style: TextStyle(
+                                            color: '#199D28'.color(),
+                                            fontSize: 14.0,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: PSLocale.tr("Left To Withdraw"),
+                                        ),
+                                      ],
                                     ),
-                                    TextSpan(
-                                      text: PSLocale.tr("Left To Withdraw"),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                              SizedBox(height: 11),
-                              PSText(
-                                text: PSLocale.tr(
-                                  "Want to stack up more cash? Keep earning now!",
+                              SizedBox(height: 4),
+                              Flexible(
+                                child: PSText(
+                                  text: PSLocale.tr(
+                                    "Want to stack up more cash? Keep earning now!",
+                                  ),
+                                  size: 12,
+                                  color: '#E34C06'.color(),
+                                  weight: FontWeight.w900,
+                                  maxLines: 2,
+                                  align: .center,
                                 ),
-                                size: 12,
-                                color: '#E34C06'.color(),
-                                weight: FontWeight.w900,
-                                maxLines: 2,
-                                align: .center,
                               ),
                             ],
                           ),
@@ -2250,6 +2245,7 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog>
                           child: Container(
                             width: 239.w,
                             height: 50.h,
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
                             decoration: BoxDecoration(
                               color: '#0E79C6'.color(),
                               borderRadius: BorderRadius.circular(25),
@@ -2274,7 +2270,7 @@ class PSGuideNew11DialogState extends State<PSGuideNew11Dialog>
             ),
             Positioned(
               left: (0.width(context) - 87) * 0.5,
-              top: 184.h,
+              top: (0.height(context) - 357.h - 87) * 0.5,
               child: PSImg(name: 'ps_notice_big_icon', width: 87, height: 87),
             ),
           ],

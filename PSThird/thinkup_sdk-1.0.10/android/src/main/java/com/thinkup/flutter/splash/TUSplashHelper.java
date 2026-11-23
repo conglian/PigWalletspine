@@ -46,6 +46,11 @@ public class TUSplashHelper {
         mPlacementId = placementId;
         TUSplashExListener splashExListener = new TUSplashExListener() {
             @Override
+            public void onSplashAdReward(TUAdInfo atAdInfo) {
+                // The Flutter splash API has no reward event.
+            }
+
+            @Override
             public void onDeeplinkCallback(TUAdInfo atAdInfo, boolean isSuccess) {
                 MsgTools.printMsg("splash onDeeplinkCallback: " + mPlacementId + ", isSuccess: " + isSuccess);
 
@@ -400,6 +405,11 @@ public class TUSplashHelper {
 
     public void entryScenario(final String placementId,final String sceneID) {
         MsgTools.printMsg("entrySplashScenario: " + mPlacementId + "sceneID: " + sceneID);
-        TUSplashAd.entryAdScenario(placementId, sceneID);
+        TUSplashAd splashAd = mSplashAd;
+        if (splashAd == null) {
+            // The real load will still create its own ad with the caller's timeout.
+            splashAd = new TUSplashAd(mActivity, placementId, null);
+        }
+        splashAd.entryAdScenario(sceneID);
     }
 }

@@ -443,6 +443,9 @@ public class TURewardVideoHelper {
 
     public void entryScenario(final String placementId,final String sceneID) {
         MsgTools.printMsg("entryRewardVideoScenario: " + mPlacementId + "sceneID: " + sceneID);
-        TURewardVideoAd.entryAdScenario(placementId, sceneID);
+        if (mRewardVideoAd == null) {
+            initRewardVideo(placementId);
+        }
+        mRewardVideoAd.entryAdScenario(sceneID);
     }
 }

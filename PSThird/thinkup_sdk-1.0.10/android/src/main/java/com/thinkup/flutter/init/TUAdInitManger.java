@@ -13,6 +13,7 @@ import com.thinkup.flutter.utils.Const;
 import com.thinkup.flutter.utils.FlutterPluginUtil;
 import com.thinkup.flutter.utils.MsgTools;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,7 @@ public class TUAdInitManger implements HandleThinkUpMethod {
                     MsgTools.printMsg("setCustomDataDic: " + argument);
                     TUSDK.initCustomMap(argument);
                 }
+                result.success(argument == null ? Collections.emptyMap() : argument);
                 break;
             case "setExludeBundleIDArray":
                 MsgTools.printMsg("setExludeBundleIDArray");

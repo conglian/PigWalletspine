@@ -70,9 +70,9 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                           ),
                           Positioned(
                             left: 48,
+                            right: 26,
                             top: 20,
                             child: PSFitText(
-                              align: TextAlign.center,
                               span: TextSpan(
                                 style: TextStyle(
                                   fontSize: 16.0,
@@ -135,27 +135,33 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                             ),
                           ),
                           Positioned(
-                            left: 150,
-                            top: 56,
-                            child: PSStrokeText(
-                              text:
-                                  '${provider.ps_pig_level_index}/${provider.ps_pig_level == 0 ? '20' : '10'}',
-                              size: 18,
-                              color: '#FFFFFF'.color(),
-                              weight: FontWeight.w900,
-                              skWidth: 1,
-                              skColor: '#042267'.color(),
-                            ),
-                          ),
-                          Positioned(
-                            left: 200,
-                            top: provider.ps_pig_level == 0 ? 58 : 62,
-                            child: PSImg(
-                              name: provider.ps_pig_level == 0
-                                  ? 'ps_domand_s'
-                                  : 'ps_zhuan_smail',
-                              width: provider.ps_pig_level == 0 ? 18 : 13,
-                              height: provider.ps_pig_level == 0 ? 17 : 11,
+                            left: 64,
+                            right: 64,
+                            top: 55,
+                            height: 23,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: PSStrokeText(
+                                    text:
+                                        '${provider.ps_pig_level_index}/${provider.ps_pig_level == 0 ? '20' : '10'}',
+                                    size: 18,
+                                    color: '#FFFFFF'.color(),
+                                    weight: FontWeight.w900,
+                                    skWidth: 1,
+                                    skColor: '#042267'.color(),
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                PSImg(
+                                  name: provider.ps_pig_level == 0
+                                      ? 'ps_domand_s'
+                                      : 'ps_zhuan_smail',
+                                  width: provider.ps_pig_level == 0 ? 18 : 13,
+                                  height: provider.ps_pig_level == 0 ? 17 : 11,
+                                ),
+                              ],
                             ),
                           ),
                           Positioned(
@@ -202,7 +208,7 @@ class _PSWheelState extends State<PSWheel> with SingleTickerProviderStateMixin {
                         ),
                       ),
                       Positioned(
-                        left: (0.width(context) - 47) * 0.48,
+                        left: (364.w - 47) * 0.5,
                         top: -8,
                         child: PSImg(
                           name: 'ps_wheel_zhi_iocn',

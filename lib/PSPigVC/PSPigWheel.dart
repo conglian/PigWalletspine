@@ -96,7 +96,7 @@ class _PSPigWheelState extends State<PSPigWheel>
                         },
                       ),
                       Positioned(
-                        left: (0.width(context) - 47) * 0.48,
+                        left: (364.w - 47) * 0.5,
                         top: -8,
                         child: PSImg(
                           name: 'ps_wheel_zhi_iocn',
@@ -149,7 +149,7 @@ class _PSPigWheelState extends State<PSPigWheel>
                       ),
                       Positioned(
                         right: 96.w,
-                        bottom: 88.h,
+                        bottom: 88.w,
                         child: ParticleButton(
                           onTap: () {
                             tapWheel();
